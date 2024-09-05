@@ -371,7 +371,7 @@ $ r_i = r_(i)^(+) - r_(i)^(-) = k_(i)^+ product_(j, nu_(i,j) < 0) [A_j]^(|nu_(i,
 Of course, whether one chooses to consider a reversible reaction as a single composite reaction or as two separately enumerated reactions is entirely a matter of preference and convenience.
 
 For reversible reactions, an additional property known as the reversibility, $z_i$, can be helpful to introduce.
-The reversibility of reaction $i$ is nothing more than ratio of forward and reverse rates:
+The reversibility of reaction $i$ is nothing more than a ratio of the forward and reverse rates:
 $ z_i equiv r_(i)^(-)/r_(i)^+. $<eq:reversibility>
 The reason that the reverse reaction rate is in the numerator is that a lower value of $z_i$ would imply that the forward reaction rate is greater, which is internally consistent with the notion that it would also be less reversible.
 
@@ -381,23 +381,49 @@ The reason that the reverse reaction rate is in the numerator is that a lower va
 
 === The Arrhenius Equation <the-arrhenius-equation>
 
-The most common expression used to evaluate the rate constant is the empirical Arrhenius equation:
+The most common expression used to evaluate the rate constant is the Arrhenius equation:
 $ k = A exp(-E_"a " / (R T)), $<eq:arrhenius>
 where $A$ is the pre-exponential factor, $E_"a " $ is the activation energy, $R$ is the ideal gas constant, and $T$ is the absolute temperature.
 #footnote[The units of $A$ depend on the molecularity of the reaction to ensure that $k$ itself has appropriate units.]
 By linearizing the equation, one finds that
+#footnote[Strictly speaking, one must divide by the corresponding units before taking the logarithm, but we will omit this for brevity. Nonetheless, the units that were divded out should always be mentioned on the axis labels.]
 $ ln(k) = -E_"a "/R (1/T) + ln(A), $
-such that plotting $ln(k)$ vs. $1\/T$ should yield a straight line of slope $-E_"a " \/R$ and $y$-intercept of $ln(A)$.
+such that plotting $ln(k)$ vs. $1\/T$ should yield a straight line of slope $-E_"a " \/R$ and $y$-intercept of $ln(A)$, as depicted in #ref(<fig:arrhenius>).
+
+#figure(
+  image("figures/arrhenius.svg", width: 30%),
+  caption: [Linearized Arrhenius plot.]
+)<fig:arrhenius>
+
+
 One can also use #ref(<eq:arrhenius>) to find the ratio of two rate constants, $k_1$ and $k_2$, at different absolute temperatures, $T_1$ and $T_2$, via
-$ k_2 / k_1 = exp(-E_"a "/R (1/T_2 - 1/T_1)). $
+$ k_2 / k_1 = exp(-E_"a "/R (1/T_2 - 1/T_1)). $<eq:arrhenius_ratio>
+In general, if one has a plot of $ln(k)$ vs. $1\/T$ though, it is better to rely on regression and/or interpolation rather than using #ref(<eq:arrhenius_ratio>) since the former will more naturally account for statistical uncertainty in the underlying data.
+
+Since one is rarely studying a single, isolated, elementary reaction, there is no inherent guarantee that the Arrhenius plot will be linear when plotted as $ln(k)$ vs. $1\/T$.
+A common example in heterogeneous catalysis is shown in #ref(<fig:arrhenius_multiple>), where the increasing temperature can cause different kinetic processes to dominate, such as diffusion limitations, mass transfer limitations, or even the reaction proceeding in homogeneously (e.g. in the gas phase).
+Different linear regimes in an Arrhenius plot can also indicate a change in the underlying mechanism with temperature.
+
+#figure(
+image("figures/arrhenius_multiple.png", width: 40%),
+  caption: [Different linear regimes in an Arrhenius plot for a surface-catalyzed reaction.]
+)<fig:arrhenius_multiple>
 
 The astute observer might question what thermodynamic property $E_"a " $ refers to in #ref(<eq:arrhenius>).
 For now, we will simply state that the Arrhenius equation is an empirical relationship and so $E_"a "$ is best thought of as simply a parameter describing the sensitivity of the rate, and thereby rate constant, to changes in temperature.
 #footnote[Speaking of empirical, the start date and temperature dependence of the Japanese cherry blossom blooming season is often modeled with the Arrhenius equation: http://dx.doi.org/10.1016/j.agrformet.2017.04.001.]
-This somewhat abstract approach immediately becomes necessary when considering the fact that #ref(<eq:arrhenius>) can be used to describe non-elementary reactions, in which case it is more rigorous to refer to an apparent activation energy $E_"a,app"$ rather than intrinsic energy barrier $E_"a "$.
+
+The somewhat abstract approach to defining $E_"a "$ becomes more understandable when considering the fact that #ref(<eq:arrhenius>) can be used to describe non-elementary reactions, in which case it is more rigorous to refer to an apparent activation energy $E_"a,app"$ rather than intrinsic activation energy $E_"a "$.
 We will revisit the Arrhenius equation from a more rigorous, thermodynamic perspective when we cover transition state theory.
 
 === Apparent Activation Energy
+
+The intrinsic activation energy differs from the apparent activation energy in that the latter may represent the kinetics of many constituent reactions, as depicted in #ref(<fig:apparent_activation>).
+#figure(
+image("figures/apparent_activation.png", width: 50%),
+  caption: [Potential energy diagram highlighting how the apparent activation energy, $E_"app"$, accounts for the kinetics of multiple underlying processes that collectively make up a non-elementary reaction.]
+)<fig:apparent_activation>
+
 
 The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature:
 $
@@ -408,12 +434,6 @@ E_"app" &equiv R T^2 (diff ln(k_"app"))/(diff T).
 $<eq:apparent_e_a>
 Here, the "app" subscript is referring to an apparent (i.e. observed) rate constant determined from experiments, meaning that it may describe a net, non-elementary reaction consisting of several elementary steps.
 Naturally, this approach implicitly assumes that both $E_"app"$ and $A_"app"$ are reasonably independent of temperature (at least over the range of temperatures being investigated), which is what we are invoking when using the Arrhenius equation anyway.
-
-You may also see the apparent activation energy defined as
-$ E_"app" &equiv R T^2 (diff ln(r))/(diff T), $<eq:apparent_e_a_rate>
-where $r$ is the reaction rate.
-This form is still suitable in most cases since we generally have the temperature-dependence of the rate within the definition of $k$, whereas the concentration terms are considered to be independently controlled operating parameters.
-Written in this way, it is clear that the apparent activation energy provides a formalism for measuring an "activation energy" for any arbitrary reaction (even non-elementary reactions) so long as one has a measurement of the net rate of reaction as a function of temperature.
 
 === Apparent Reaction Orders
 
@@ -1578,7 +1598,7 @@ $ alpha_("A,app") = p_"A " (diff ln(r))/(diff p_"A ") = p_"A " (diff ln(k_2 conc
 In this scenario, the apparent rate constant would simply be
 $ k_"app" = k quad (K_"ads" p_"A " >>1). $
 By extension, the apparent activation energy is the activation energy associated with $k_2$, which we will denote $E_("a,2")$.
-This too can be derived from the formal definition given in #ref(<eq:apparent_e_a_rate>):
+This too can be derived from the formal definition given in #ref(<eq:apparent_e_a>):
 $ E_"app" = R T^2 (diff ln(k_"app"))/(diff T) $
 $ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A_2 - E_("a,2")/(R T)))/(diff T) = R T^2 (E_("a,2")/(R T^2)) = E_("a,2"). $
 
