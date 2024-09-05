@@ -161,7 +161,7 @@ While likely many decades away from commercialization, nuclear fusion reactors a
 
 We start by considering a generic chemical reaction given by the following expression:
 $ alpha ce("A ") + beta ce("B ") --> gamma ce("C ") + delta ce("D "), $<eq:general_rxn>
-where A and B are reactants, C and D are products, and $alpha$, $beta$, $gamma$, and $delta$ are the corresponding stoichiometric coefficients to ensure that mass is conserved.
+where A and B are reactants, C and D are products, and $alpha$, $beta$, $gamma$, and $delta$ are the corresponding stoichiometric numbers to ensure that mass is conserved.
 For now, we will assume that this reaction is an _elementary_ reaction, meaning that it is a single, well-defined reaction step.
 
 It is often useful to think about chemical reactions in a more mathematically oriented framework.
@@ -176,23 +176,16 @@ $
 where $A_1$, $A_2$, $A_3$, and $A_4$ are synonymous with species A, B, C, and D, respectively.
 
 From this convenient set of mathematical notation, we can rewrite our chemical reaction as
+$ -alpha A_1 -beta A_2 + gamma A_3 + delta A_4 = 0 $
+or more generally as
 $ sum_j nu_j A_j = 0, $ <eq:summation_stoichs>
-which is how we can write any balanced chemical reaction.
-For our example reaction given by #ref(<eq:general_rxn>), we would have
-$ -alpha A_1 -beta A_2 + gamma A_3 + delta A_4 = 0. $
-This is nothing more than a restatement of our original chemical equation.
-
-We can equivalently write this in matrix form as
-$ bold(nu) bold(A)^"T " = 0, $
-where the superscript "T" indicates that the row vector is transposed to form a column vector.
-For our example, we would have
-$ mat(-alpha, -beta, gamma, delta) dot mat(A_1; A_2; A_3; A_4) = 0, $
-which is identical to the summation-based expression.
+the latter of which is true for any balanced chemical reaction.
+#footnote[This can be written in matrix form as $bold(nu) dot.op bold(A)^"T " = 0$, where the superscript "T" indicates that the row vector is transposed to form a column vector.]
 
 === Stoichiometry for Multiple Reactions <stoich-multiple-rxns>
 
 Naturally, the next step is to consider multiple chemical reactions taking place.
-For instance, perhaps we instead have the following two elementary reactions
+For instance, perhaps we instead have the following two elementary reactions:
 $
 alpha ce("A") + beta ce("B") -> gamma ce("C")\
 gamma ce("C") -> delta ce("D").
@@ -206,18 +199,14 @@ bold(A) = mat(A_1, A_2, A_3, A_4)\
 bold(nu) = mat(-alpha, -beta, gamma, 0; 0, 0, -gamma, delta).
 $
 
-With this, #ref(<eq:summation_stoichs>) is still valid except now it is applied separately to each reaction:
-$ sum_j nu_(i,j) A_j = 0 $
-or written in matrix form as
-$ bold(nu) bold(A)^"T " = bold(0). $
-
 For our example reaction, we have 
 $ 
--alpha x_1 -beta x_2 + gamma x_3 = 0, quad -gamma x_3 + delta x_4 = 0,
+-alpha A_1 -beta A_2 + gamma A_3 = 0, quad -gamma A_3 + delta A_4 = 0.
 $
-which is equivalent to
-$ mat(-alpha, -beta, gamma, 0; 0, 0, -gamma, delta) dot mat(A_1; A_2; A_3; A_4) = mat(0;0). $
-Again, this is nothing more than a compact restatement of our two chemical equations.
+In analogy with #ref(<eq:summation_stoichs>), we can write a general expression for a balanced set of chemical equations in nearly the same way:
+$ sum_j nu_(i,j) A_j = 0, $
+where the above expression is written for each reaction $i$.
+#footnote[This can be written more compactly in matrix form as $bold(nu) dot.op bold(A)^"T " = bold(0)$.]
 
 Throughout this course, we will mostly write out the systems of equations, avoiding the need for a linear algebra-based perspective.
 However, the matrix representations were nonetheless included in our prior discussion to emphasize a different way of thinking about expressing chemical reactions.
@@ -232,8 +221,8 @@ The matrix forms are also convenient from a computational perspective, as they a
 With the generic reactions introduced in #ref(<generic-reactions>), we can ask the fundamental question: what is the rate of change of the $j$-th species in a given reaction, denoted $r_j$?
 Intuitively, one might say that $r_(j)$ is simply the number of moles of $A_j$ being generated per unit time.
 Most commonly, however, we will define $r_j$ in an intensive manner such that it has the following units:
-$ r_j = ("moles of " A_j) / ("time" dot "reaction space"). $<eq:rate_units>
-Here, the reaction space is a representative volume used to normalize the rate so that it is an intensive property.
+$ r_j = ["moles of " A_j] / (["time"] dot ["reaction space"]). $<eq:rate_units>
+Here, the reaction space is typically a representative volume used to normalize the rate so that it is an intensive property.
 When the chemical reactor and its contents are spatially uniform, the reaction space can be the reactor volume itself; otherwise, it is limited to a differential, volumetric element in the reactor under consideration.
 
 Written algebraically, the rate of generation for species $A_j$ can be given as
@@ -253,64 +242,75 @@ $ r_j = 1/V (V (dif [A_j])/(dif t)) = (dif [A_j])/(dif t). $
 
 For a system of several reactions, we will likely be interested in the _net_ rate of change in species $A_j$. 
 This is nothing more than the sum of all the rates of change for species $A_j$ across each reaction.
-In other words,
-$ r_j = sum_i r_(i,j), $ <eq:sum_of_rxn_species>
-where the summation is taken over each reaction in the reaction scheme.
-For the species in the reaction given by #ref(<eq:multiple_rxns>), we would have
+Returning to the set of reactions given in #ref(<eq:multiple_rxns>),
+$ alpha ce("A") + beta ce("B") -> gamma ce("C")\
+gamma ce("C") -> delta ce("D"), $
+we can define the individual rates of change for each species as
 $
 r_"A " &= r_(1,"A ")\
 r_"B " &= r_(1,"B ")\
-r_"C " &= r_(1,"C ") - r_(2,"C ")\
+r_"C " &= r_(1,"C ") + r_(2,"C ")\
 r_"D " &= r_(2,"D ").
-$ <eq:r_c_species>
+$<eq:r_c_species>
+
+More generally, the species rates of change can be expressed as
+$ r_j = sum_i r_(i,j), $ <eq:sum_of_rxn_species>
+where the summation is taken over each reaction $i$ in the reaction scheme.
 
 ==== Rate of a Reaction
 
 ===== In Relation to Rates of Change for Species 
 
-Continuing our terminology adventure, we can ask: what is the rate for the $i$-th reaction?
+Continuing our terminology adventure, we can ask: what is the rate for the $i$-th reaction (instead of the $j$-th species)?
 We will define the rate of reaction, $r_i$, to be proportional to the rate of generation or consumption of each species based on the corresponding stoichiometric coefficients.
-In mathematical terms, we can state that for the $i$-th reaction and $j$-th species that
-$ r_i equiv r_(i,j)/nu_(i,j). $<eq:stoichs>
-For instance, the rates of the two reactions in #ref(<eq:multiple_rxns>) can be written as
+
+For instance, the rates of the two reactions in #ref(<eq:multiple_rxns>),
+$ alpha ce("A") + beta ce("B") -> gamma ce("C")\
+gamma ce("C") -> delta ce("D"), $
+can be written out as
 $
 r_1 &= -r_(1,"A ")/alpha = -r_(1,"B ")/beta  = r_(1,"C ")/gamma \ 
 r_2 &= -r_(2,"C ")/gamma  = r_(2,"D ")/delta .
 $
+In mathematical terms, we can state more generally that for the $i$-th reaction and $j$-th species that
+$ r_i equiv r_(i,j)/nu_(i,j). $<eq:stoichs>
+
 Unlike the rate of change for a species, the rate of reaction is always a positive quantity, which is the motivation behind the sign conventions in the above expression.
 
 With this formalism, we can rewrite the net rate of change for a given species across multiple reactions (originally presented in #ref(<eq:sum_of_rxn_species>)) in terms of the individual reaction rates.
-Generally, the rate of change for a given species is simply the sum of each reaction rate scaled by the corresponding stoichiometric coefficients.
-In other words,
-$ r_j = sum_(i) nu_(i,j) r_i, $<eq:sum_stoichs_rate>
-where the summation is taken over each reaction in the reaction scheme.
-For the species in #ref(<eq:multiple_rxns>), we would have
+For our example set of reactions, we would have
 $
-r_"A " &= alpha r_1\
-r_"B " &= beta r_1\
-r_"C " &= gamma r_1 -gamma r_2\
+r_"A " &= -alpha r_1\
+r_"B " &= -beta r_1\
+r_"C " &= gamma r_1 - gamma r_2\
 r_"D " &= delta r_2.
 $<eq:r_change_example>
 Take a moment to contrast the above expressions with #ref(<eq:r_c_species>), which was written in terms of the rate of change for each species rather than the rates of reaction.
 
-We can rewrite #ref(<eq:r_change_example>) more generally in matrix form as
-$ bold(r)_"species"^" T" = bold(nu)^"T " bold(r), $
+More generally, we can express the rate of change for a given species as simply the sum of each reaction rate scaled by the corresponding stoichiometric coefficients.
+In other words,
+$ r_j = sum_(i) nu_(i,j) r_i, $<eq:sum_stoichs_rate>
+where the summation is taken over each reaction $i$ in the reaction scheme.
+#footnote[
+  We can rewrite #ref(<eq:sum_stoichs_rate>) more generally in matrix form as
+$bold(r)_"species"^" T" = bold(nu)^"T " dot.op bold(r),$
 where $bold(r)_"species"$ and $bold(r)$ are the _net_ production rates of each species and the _individual_ reaction rates, respectively.
-For #ref(<eq:multiple_rxns>), we would have
-$ mat(r_"A ";r_"B ";r_"C "; r_"D ") = mat(-alpha, 0; -beta, 0; gamma, -gamma; 0, delta) dot mat(r_1;r_2). $
+]
 
 ===== In Relation to the Extent of Reaction
 
-Thus far, we have defined the rate of a reaction as being some property that is defined by the rates of change of each species, defined in an internally consistent manner that is not dependent on the choice of species.
-However, we can provide a slightly more proper mathematical definition if we introduce a new term: the extent of reaction.
-The extent of a reaction, $xi$, is a measure of the reaction progress based on the number of chemical transformations, typically defined as
+Thus far, we have defined the rate of a reaction as being some property that is defined by the rates of change of each species, normalized in an internally consistent manner that is not dependent on the choice of species.
+However, we can provide a slightly more proper definition if we introduce a new term: the extent of reaction.
+The extent of a reaction, $xi$, is a measure of the reaction progress (typically in units of moles) based on the number of chemical transformations,
+#footnote[For a reaction #ce("2A -> B + C") with an initial value of $n_ce("A")= 2 "mol"$ and final value of $n_ce("A") = 0.5 "mol"$, we would have $xi = -(0.5 "mol" - 2 "mol")\/2 = 0.75 "mol"$. This value of $xi$ could then be used to find the relative change in #ce("B") and #ce("C") based on their stoichiometric coefficients.]
+typically defined as
 $ dif xi equiv (dif n_j)/nu_j. $
-Therefore, the rate of reaction of the $i$-th reaction can be expressed as
+With this, we can define the rate of the $i$-th reaction as
 $ r_i = 1/V (dif xi_i)/(dif t). $
 We can confirm that our definitions are internally consistent via substitution:
-$ r_i = 1/V (dif (n_j/nu_(i,j)))/(dif t) $
-$ r_i = 1/nu_(i,j) 1/V (dif n_j)/(dif t) $
-$ r_i = r_j/nu_(i,j), $
+$ r_i = 1/V ((dif n_(i,j))/nu_(i,j))/(dif t) $
+$ r_i = 1/nu_(i,j) 1/V (dif n_(i,j))/(dif t) $
+$ r_i = r_(i,j)/nu_(i,j), $
 which is identical to #ref(<eq:stoichs>).
 
 At this point, it may feel like this is all just a dozen different ways to say very similar things.
@@ -323,17 +323,18 @@ A "rate" can mean many different things depending on the context.
 In general, we write the rate of reaction as being the product of temperature- and concentration-dependent terms,
 $ r = f("temperature") dot f("concentration"). $
 For elementary reactions, we can generally describe this relationship via a power-law expression.
-By way of example, for the elementary reaction given by #ref(<eq:general_rxn>), we can state
+By way of example, for the elementary reaction given by #ref(<eq:general_rxn>), $alpha ce("A ") + beta ce("B ") --> gamma ce("C ") + delta ce("D ")$, we can state
 $ r prop conc("A")^alpha conc("B")^beta. $<eq:rate_propto>
 Here, [A] and [B] refer to the molar concentrations of species A and B, respectively.
 Each exponent is referred to as a partial order, and the overall reaction order is the sum of the exponents.
-For $alpha = beta = 1$, the reaction would be said to be first-order in both A and B, and it would be a second-order reaction.
+For $alpha = beta = 1$, the reaction would be said to be first-order in both #conc("A") and #conc("B"), and it would be a second-order reaction.
 
 As a matter of convention, we will define a temperature-dependent proportionality factor, $k$, such that we can rewrite #ref(<eq:rate_propto>) as
 $ r = k conc("A")^alpha conc("B")^beta. $<eq:rate_equation>
 To ensure that the rate has the units given by #ref(<eq:rate_units>), the units of $k$ in #ref(<eq:rate_equation>) must be $"s "^(-1) dot ("mol"\/"m "^3)^(1 - (alpha + beta))$
 when the rate is normalized on a per-unit volume basis.
 Typically, $k$ is referred to as the rate constant or rate coefficient.
+#footnote[While some in the community have pushed to refer to $k$ as a rate coefficient rather than a rate constant, it begs the question --- what about an equilibrium constant?]
 Regardless of the name, it is important to emphasize that the value of $k$ is not a constant and can depend on several factors, most notably temperature.
 The key assumption here is that the effects of temperature and effects of composition are fully decoupled.
 
@@ -343,7 +344,8 @@ where $p_j$ is the partial pressure of the $j$-th species (i.e. the pressure of 
 In the case of #ref(<eq:rate_pressure>), the units of $k$ instead must be given by $"s "^(-1) dot ("mol"\/"m "^3) dot "bar"^(-(alpha + beta))$.
 
 For a set of several plausible reactions, we can fully generalize this approach by defining the rate of the $i$-th reaction as
-$ r_i = k product_(j, nu_(i,j) < 0) [A_j]^(|nu_(i,j)|). $<eq:general_math_irreversible_rxn>
+$ r_i = k product_(j, nu_(i,j) < 0) [A_j]^(|nu_(i,j)|), $<eq:general_math_irreversible_rxn>
+where $nu_(i,j)<0$ is simply stating that the multplication is being carried out for the reactants only.
 As previously alluded to, if we are dealing with gas-phase species, it may be more convenient to replace $[A_j]$ with  $p_j$, but otherwise the expression remains the same.
 
 Before continuing, it is important to reiterate that #ref(<eq:general_math_irreversible_rxn>) is only strictly valid for elementary reactions. 
@@ -355,9 +357,9 @@ There are also many instances, as we will show throughout this course, where a p
 === Reversible Reactions <reversible-reactions>
 
 Now, we will consider a slight variation on #ref(<eq:general_rxn>) wherein the reaction is reversible:
-$ alpha"A " + beta"B " eqArrow(k^(+),opposite:k^(-)) gamma"C " + delta"D ", $<eq:general_reversible_rxn>
+$ alpha"A " + beta"B " eqArrow(k^(+),opposite:k^(-)) gamma"C " + delta"D ". $<eq:general_reversible_rxn>
 In principle, all reactions are reversible, although if one direction is orders of magnitude slower than the other, invoking irreversibility is often a logical assumption.
-Using the law of mass-action, we can write the rate expression for #ref(<eq:general_reversible_rxn>) in essentially the same was as for #ref(<eq:general_rxn>).
+We can write the rate expression for #ref(<eq:general_reversible_rxn>) in essentially the same was as for #ref(<eq:general_rxn>).
 To do so, we simply write the rate expression given by #ref(<eq:rate_equation>) for each reaction --- forward and reverse:
 $ r^(+) = k^(+) conc("A")^alpha conc("B")^beta $<eq:forward_reversible>
 $ r^(-) = k^(-) conc("C")^gamma conc("D")^delta. $<eq:reverse_reversible>
@@ -373,18 +375,20 @@ The reversibility of reaction $i$ is nothing more than ratio of forward and reve
 $ z_i equiv r_(i)^(-)/r_(i)^+. $<eq:reversibility>
 The reason that the reverse reaction rate is in the numerator is that a lower value of $z_i$ would imply that the forward reaction rate is greater, which is internally consistent with the notion that it would also be less reversible.
 
+
+
 == Expressions for the Rate Constant <expressions-for-the-rate-coefficient>
 
 === The Arrhenius Equation <the-arrhenius-equation>
 
 The most common expression used to evaluate the rate constant is the empirical Arrhenius equation:
 $ k = A exp(-E_"a " / (R T)), $<eq:arrhenius>
-where $A$ is the pre-exponential factor and $E_"a " $ is the activation energy.
+where $A$ is the pre-exponential factor, $E_"a " $ is the activation energy, $R$ is the ideal gas constant, and $T$ is the absolute temperature.
 #footnote[The units of $A$ depend on the molecularity of the reaction to ensure that $k$ itself has appropriate units.]
 By linearizing the equation, one finds that
 $ ln(k) = -E_"a "/R (1/T) + ln(A), $
 such that plotting $ln(k)$ vs. $1\/T$ should yield a straight line of slope $-E_"a " \/R$ and $y$-intercept of $ln(A)$.
-One can also use #ref(<eq:arrhenius>) to find the ratio of two rate constants, $k_1$ and $k_2$ at different temperatures, $T_1$ and $T_2$, via
+One can also use #ref(<eq:arrhenius>) to find the ratio of two rate constants, $k_1$ and $k_2$, at different absolute temperatures, $T_1$ and $T_2$, via
 $ k_2 / k_1 = exp(-E_"a "/R (1/T_2 - 1/T_1)). $
 
 The astute observer might question what thermodynamic property $E_"a " $ refers to in #ref(<eq:arrhenius>).
@@ -393,9 +397,9 @@ For now, we will simply state that the Arrhenius equation is an empirical relati
 This somewhat abstract approach immediately becomes necessary when considering the fact that #ref(<eq:arrhenius>) can be used to describe non-elementary reactions, in which case it is more rigorous to refer to an apparent activation energy $E_"a,app"$ rather than intrinsic energy barrier $E_"a "$.
 We will revisit the Arrhenius equation from a more rigorous, thermodynamic perspective when we cover transition state theory.
 
-=== Apparent Activation Energy and Reaction Orders
+=== Apparent Activation Energy
 
-The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature.
+The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature:
 $
 ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app")\
 (diff ln(k_"app"))/(diff T) &= -E_"app"/R (diff (1/T))/(diff T) + (diff ln(A_"app"))/(diff T)\
@@ -403,16 +407,15 @@ ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app")\
 E_"app" &equiv R T^2 (diff ln(k_"app"))/(diff T).
 $<eq:apparent_e_a>
 Here, the "app" subscript is referring to an apparent (i.e. observed) rate constant determined from experiments, meaning that it may describe a net, non-elementary reaction consisting of several elementary steps.
-Naturally, this approach implicitly assumes that both $E_"app"$ and $A$ are reasonably independent of temperature (at least over the range of temperatures being investigated), which is what we are invoking when using the Arrhenius equation anyway.
+Naturally, this approach implicitly assumes that both $E_"app"$ and $A_"app"$ are reasonably independent of temperature (at least over the range of temperatures being investigated), which is what we are invoking when using the Arrhenius equation anyway.
 
 You may also see the apparent activation energy defined as
 $ E_"app" &equiv R T^2 (diff ln(r))/(diff T), $<eq:apparent_e_a_rate>
-where $r$ is the net reaction rate.
+where $r$ is the reaction rate.
 This form is still suitable in most cases since we generally have the temperature-dependence of the rate within the definition of $k$, whereas the concentration terms are considered to be independently controlled operating parameters.
 Written in this way, it is clear that the apparent activation energy provides a formalism for measuring an "activation energy" for any arbitrary reaction (even non-elementary reactions) so long as one has a measurement of the net rate of reaction as a function of temperature.
 
-Analogously, one can write an apparent reaction order $alpha_(j,"app")$ for the $j$-th species as 
-$ alpha_(j,"app") = [A_j] (diff ln(r))/(diff [A_j]). $<eq:apparent_order>
+=== Apparent Reaction Orders
 
 We can also define an apparent reaction order, $alpha_(j,"app")$, for each species in a similar manner by writing out the definition of the reaction rate and differentiating with respect to $[A_j]$ (holding all other concentrations fixed) as follows:
 $ r = k product_j [A_j]^(alpha_(j,"app")) $
@@ -424,7 +427,7 @@ $ (diff ln(r))/(diff [A_1]) = alpha_(1,"app") (diff ln([A_1]))/(diff [A_1]). $
 $ (diff ln(r))/(diff [A_1]) = alpha_(1,"app")/[A_1]. $
 $ alpha_(1,"app") = [A_1] (diff ln(r))/(diff [A_1]). $
 Returning to our more general case, we have
-$ alpha_(j,"app") equiv [A_j] (diff ln(r))/(diff [A_j]). $
+$ alpha_(j,"app") equiv [A_j] (diff ln(r))/(diff [A_j]). $<eq:apparent_order>
 Despite the slightly lengthy derivation, this expression is simply stating that one can measure the differential change in the net reaction rate as a function of species concentration to find the apparent reaction order of that species for any arbitrary (even non-elementary) reaction.
 It is worth noting, as we will demonstrate throughout this course, that apparent reaction orders of non-elementary reactions may be non-integer or even negative.
 
@@ -696,11 +699,6 @@ $ conc("C")_t = conc("A")_0 - conc("A")_0 e^(-k_1 t) - (k_1 conc("A")_0)/(k_2 - 
 $ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t) - k_1/(k_2 - k_1) (e^(-k_1 t)- e^(-k_2 t))). $
 
 #plot[#align(center)[https://marimo.app/l/pahlfk]]
-
-== Practical Considerations in Measuring Rates
-
-// Neil's plots (mixing, diffusion limitations, gas-phase)
-#self[todo]
 
 == Stochastic Reactions <stochastic-reactions>
 
