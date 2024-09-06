@@ -401,6 +401,7 @@ $ k_2 / k_1 = exp(-E_"a "/R (1/T_2 - 1/T_1)). $<eq:arrhenius_ratio>
 In general, if one has a plot of $ln(k)$ vs. $1\/T$ though, it is better to rely on regression and/or interpolation rather than using #ref(<eq:arrhenius_ratio>) since the former will more naturally account for statistical uncertainty in the underlying data.
 
 Since one is rarely studying a single, isolated, elementary reaction, there is no inherent guarantee that the Arrhenius plot will be linear when plotted as $ln(k)$ vs. $1\/T$.
+#footnote[Refer to W. Wang and C.J. Roberts, "Non-Arrhenius Protein Aggregation", _AAPS J._, 15, 840--851 (2013) for several examples in the biochemistry literature.]
 A common example in heterogeneous catalysis is shown in #ref(<fig:arrhenius_multiple>), where the increasing temperature can cause different kinetic processes to dominate, such as diffusion limitations, mass transfer limitations, or even the reaction proceeding in homogeneously (e.g. in the gas phase).
 Different linear regimes in an Arrhenius plot can also indicate a change in the underlying mechanism with temperature.
 
@@ -411,10 +412,18 @@ image("figures/arrhenius_multiple.png", width: 40%),
 
 The astute observer might question what thermodynamic property $E_"a " $ refers to in #ref(<eq:arrhenius>).
 For now, we will simply state that the Arrhenius equation is an empirical relationship and so $E_"a "$ is best thought of as simply a parameter describing the sensitivity of the rate, and thereby rate constant, to changes in temperature.
-#footnote[Speaking of empirical, the start date and temperature dependence of the Japanese cherry blossom blooming season is often modeled with the Arrhenius equation: http://dx.doi.org/10.1016/j.agrformet.2017.04.001.]
-
-The somewhat abstract approach to defining $E_"a "$ becomes more understandable when considering the fact that #ref(<eq:arrhenius>) can be used to describe non-elementary reactions, in which case it is more rigorous to refer to an apparent activation energy $E_"a,app"$ rather than intrinsic activation energy $E_"a "$.
+#footnote[Speaking of empirical, the start date and temperature dependence of the Japanese cherry blossom blooming season is often modeled with the Arrhenius equation. This has been used to better understand the effects of climate change, as in P. Shi, et al., "Timing of Cherry Tree Blooming: Contrasting Effects of Rising Winter Low Temperatures and Early Spring Temperatures", _Agric. For. Meteorol._, 240, 78–89 (2017). For other unusual examples, refer to K.J. Laidler, "Unconventional Applications of the Arrhenius Law", _J. Chem. Educ._, 49, 343--344 (1972).]
 We will revisit the Arrhenius equation from a more rigorous, thermodynamic perspective when we cover transition state theory.
+
+=== Modifications to the Arrhenius Equation
+
+While the original formulation of the Arrhenius equation remains widely used to this day, it has limitations. Most notably, #ref(<eq:arrhenius>) assumes that the pre-exponential factor is a constant.
+In reality, the pre-exponential factor exhibits some degree of temperature-dependence. A modified form of the Arrhenius equation can be used to account for this fact:
+$ k = A' T^n exp(-E_"a " / (R T)), $<eq:arrhenius_mod>
+where $n$ is an additional fitting parameter known as the temperature exponent.
+As we will show in #ref(<transition-state-theory>), there is theoretical justification for having $n > 0$.
+The use of the modified Arrhenius equation in #ref(<eq:arrhenius_mod>) does limit the physical interpretability of the activation energy and pre-refactor terms in this way.
+Regardless, the effect of $T^n$ is generally relatively small and is difficult to observe experimentally without highly precise measurements.
 
 === Apparent Activation Energy
 
@@ -426,12 +435,11 @@ image("figures/apparent_activation.png", width: 50%),
 
 
 The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature:
-$
-ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app")\
-(diff ln(k_"app"))/(diff T) &= -E_"app"/R (diff (1/T))/(diff T) + (diff ln(A_"app"))/(diff T)\
-(diff ln(k_"app"))/(diff T) &=  E_"app"/(R T^2)\
-E_"app" &equiv R T^2 (diff ln(k_"app"))/(diff T).
-$<eq:apparent_e_a>
+$ ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app") $
+$ (diff ln(k_"app"))/(diff T) &= -E_"app"/R (diff (1/T))/(diff T) + (diff ln(A_"app"))/(diff T) $
+$ (diff ln(k_"app"))/(diff T) &=  E_"app"/(R T^2) $
+$ E_"app" &equiv R T^2 (diff ln(k_"app"))/(diff T). $<eq:apparent_e_a>
+
 Here, the "app" subscript is referring to an apparent (i.e. observed) rate constant determined from experiments, meaning that it may describe a net, non-elementary reaction consisting of several elementary steps.
 Naturally, this approach implicitly assumes that both $E_"app"$ and $A_"app"$ are reasonably independent of temperature (at least over the range of temperatures being investigated), which is what we are invoking when using the Arrhenius equation anyway.
 
@@ -451,60 +459,14 @@ $ alpha_(j,"app") equiv [A_j] (diff ln(r))/(diff [A_j]). $<eq:apparent_order>
 Despite the slightly lengthy derivation, this expression is simply stating that one can measure the differential change in the net reaction rate as a function of species concentration to find the apparent reaction order of that species for any arbitrary (even non-elementary) reaction.
 It is worth noting, as we will demonstrate throughout this course, that apparent reaction orders of non-elementary reactions may be non-integer or even negative.
 
-=== The van~'t Hoff Equation
-
-As for Arrhenius, he came to the conclusion of #ref(<eq:arrhenius>) by making an analogy to prior work by van~'t Hoff.
-Let us assume we have a reaction in equilibrium, such as the isomerization reaction of $ce("P <=> Q")$.
-We start with the definition of Gibbs free energy given by
-$ Delta G^std = Delta H^std - T Delta S^std, $
-where $Delta G^std$, $Delta H^std$, and $Delta S^std$ are the standard-state Gibbs free energy, enthalpy, and entropy changes of reaction, respectively.
-The equilibrium constant-based definition of Gibbs free energy is
-$ Delta G^std = -R T ln(K_"a "). $
-Combining the two expressions, we have
-$ ln(K_"a ") = -(Delta H^std)/ (R T) + (Delta S^std)/R. $
-If we differentiate with respect to $T$ and make a fairly large assumption that $Delta H^std$ and $Delta S^std$ are independent of temperature (an approximation that is only reasonable when considering small differences in $T$), we arrive at
-$ (dif ln(K_"a "))/(dif T) = (Delta H^std)/(R T^2), $<eq:vant_hoff>
-which is the famous van~'t Hoff equation.
-
-We can rewrite #ref(<eq:vant_hoff>) using the definition of the equilibrium constant as
-$ (dif ln(k^(+) \/ k^(-))) / (dif T) = (Delta H^std) / (R T^2) $
-and thereby
-$ (dif ln(k^(+))) / (dif T) - (dif ln(k^(-))) / (dif T) = (Delta H^std) / (R T^2). $
-By invoking $Delta H^std = E_"a,f" - E_"a,r"$,
-where $E_"a,f"$ and $E_"a,r"$ are activation energies for the forward and reverse reactions, respectively, Arrhenius concluded that, entirely by analogy, the following is likely to be true:
-$
-(dif ln(k^(+))) / (dif T) = E_"a,f" / (R T^2),quad
-(dif ln(k^(-))) / (dif T) = E_"a,r" / (R T^2)
-$
-which is equivalent to #ref(<eq:arrhenius>) following integration.
-Clearly, this "derivation" lacks rigor.
-The Eyring equation that will be introduced when discussing transition state theory will further help us rationalize why the Arrhenius equation works so well, but for now, we will take it largely based on empirical evidence.
-
-=== Modifications to the Arrhenius Equation
-
-While the original formulation of the Arrhenius equation remains widely used to this day, it has limitations. Most notably, #ref(<eq:arrhenius>) assumes that the pre-exponential factor is a constant.
-In reality, the pre-exponential factor exhibits some degree of temperature-dependence. A modified form of the Arrhenius equation can be used to account for this fact:
-$ k = A' T^n exp(-E_"a " / (R T)), $<eq:arrhenius_mod>
-where $n$ is an additional fitting parameter known as the temperature exponent.
-As we will show in #ref(<transition-state-theory>), there is theoretical justification for having $n > 0$.
-That said, the use of the modified Arrhenius equation in #ref(<eq:arrhenius_mod>) does limit the physical interpretability of the activation energy and pre-refactor terms in this way.
-Regardless, the effect of $T^n$ is generally relatively small and is difficult to observe experimentally without highly precise measurements.
-
-// TEACHING NOTES:
-// Take a break to go over practical uses of the Arrhenius equation
-// Draw an Arrhenius plot for ln(k) vs 1/T to highlight its use
-// Show one with a kink in the plot to emphasize two mechanisms
-// Show a nonlinear one where in one T regime it may look linear, but in reality, the full expression is best described with temperature dependence on the pre-factor
-// Show a negative activation energy, emphasizing that this happens 
-// Examples: https://link.springer.com/article/10.1208/s12248-013-9485-3
-
-
 == Thermodynamic Equilibrium
+While this is a course on the kinetics of chemical reactions, we must also acknowledge the importance of thermodynamics, which dictates the equilibrium conditions of a reacting system.
 
-=== Equilibrium Constants and Reversibility <equilibrium-constants>
+
+=== Equilibrium Constants Based on Concentrations and Partial Pressures<equilibrium-constants>
 
 When a reversible reaction reaches chemical equilibrium ("eq"), the net rate is precisely zero since the forward and reverse rates of reaction must be equal to one another.
-For 
+For the elementary reaction
 $ alpha ce("A") + beta ce("B") eqArrow(k^+,opposite:k^(-)) gamma ce("C") + delta ce("D"), $
 we have
 $ 0 = k^(+) conc("A")_("eq")^alpha conc("B")_("eq")^beta - k^(-) conc("C")_("eq")^gamma conc("D")_("eq")^delta.  $<eq:reversible_eq>
@@ -515,24 +477,23 @@ k^(+) / k^(-) =
 /
 (conc("A")_("eq")^alpha conc("B")_("eq")^beta).
 $<eq:reversible_eq_rearrange>
-The expression given by #ref(<eq:reversible_eq_rearrange>) leads to the definition of the equilibrium constant, $K$:
-$ K equiv k^(+) / k^(-). $<eq:equilibrium_constant>
-
-As shown in #ref(<eq:equilibrium_constant>), the equilibrium constant is defined as the ratio of the forward to reverse reactions at equilibrium.
-This can be expressed in numerous ways depending on the experimental observables of interest.
-For instance, the expression given by #ref(<eq:reversible_eq_rearrange>) is the concentration-based equilibrium constant, often denoted $K_"C "$ for clarity, and can be more generally written as
-$ K_"C " equiv product_(j) [A_j]^(nu_j). $<eq:kc>
+The expression given by #ref(<eq:reversible_eq_rearrange>) leads to the definition of the concentration-based equilibrium constant, $K_"c "$, which can be expressed compactly as
+$ K_"C " equiv product_(j) [A_j]^(nu_j) $<eq:kc>
+and describes the ratio of the forward to reverse rate constants at equilibrium.
+#footnote[From here on out, we will omit the "eq" subscript from here on out since it is implicit when dealing with an equilibrium constant.]
 If one were to use partial pressures, $p_j$, instead of concentrations, one can define a pressure-based equilibrium constant, $K_"p "$, as
-#footnote[For an ideal gas, one can conveniently state $K_"p " = K_"C " (R T)^delta$ where $delta$ is the change in stoichiometric numbers. Note that this is different than saying the change in moles, $Delta n$, because the former is unitless as would be expected from the use of $nu_j$ in the exponentials.
+#footnote[For an ideal gas, one can conveniently state $K_"p " = K_"C " (R T)^delta$ where $delta$ is the change in stoichiometric numbers.
 ]
 $ K_"p " equiv product_(j) p_(j)^(nu_j), $<eq:kp>
 where --- for ideal gases --- we have $p_j = y_j p$ with $y_j$ the mole fraction of species $j$ and $p$ the total pressure.
 
-The astute observer may notice a potential conundrum with #ref(<eq:kc>) and #ref(<eq:kp>).
-In this kinetic-based description of the equilibrium constant, the resulting expression may not be dimensionless (depending on the values for $nu_(j)$).
-You may recall from thermodynamics that the standard Gibbs free energy of a reaction, $Delta G^std$, can be related to the equilibrium constant via $-R T ln(K)$, where $R$ is the ideal gas constant and $T$ is the absolute temperature.
+=== Thermodynamic Non-Idealities
+
+The astute observer may notice a potential conundrum with #ref(<eq:kc>) and #ref(<eq:kp>): the resulting expressions may not be dimensionless (depending on the values for $nu_(j)$).
+You may recall from thermodynamics that the standard Gibbs free energy of a reaction, $Delta G^std$, can be related to the equilibrium constant via
+$-R T ln(K)$, where $R$ is the ideal gas constant and $T$ is the absolute temperature.
 Therefore, $K$ must be dimensionless in order to properly take the natural logarithm.
-How can we rationalize this anomaly?
+How can we rationalize this anomaly, and what kind of $K$ is appropriate to use?
 
 The answer comes down to activities.
 The activity of a species, $a_j$, is unitless and is the effective concentration (or pressure) of that species in a mixture.
@@ -548,24 +509,36 @@ When describing the activities of gases, it is general convention to refer to th
 $ a_j = f_j/p^std = phi_j y_j p/p^std, $<eq:activity2>
 where $p^std$ is the standard-state reference pressure typically taken as 1 bar but should always be mentioned when reporting data.
 For an ideal gas ($phi_j=1$), we can state that $f_j=y_j p =p_j$, such that the partial fugacity is the same as the partial pressure.
-The concept of fugacity is simply a matter of terminology and bookkeeping.
+The concept of fugacity is simply a matter of terminology and bookkeeping, which will account for attractive intermolecular interactions that can occur at low temperatures or high pressures.
 From a pedagogical perspective, the main takeaway is that activities are the true property of interest for equilibrium calculations, rather than concentrations of partial pressures, in order for everything to be internally consistent.
+
+#caution[When we refer to a standard state, this is a choice that the practicioner makes. The standard state thermodynamic properties are independent of the pressure at which the reaction is actually carried out; rather, they are associated with a hypothetical process.
+In contrast, the standard state does _not_ indicate a particular temperature, which must be specified separately and is typically the observed temperature. #footnote[While similar in name, the standard state is not the same concept as the standard temperature and pressure (STP).]
+As such, state thermodynamic properties taken from a database may need too be adjusted to the experimentally relevant temperature.
+As such, you may need to adjust thermodynamic data to the experimentally relevant temperature.
+]
+
+=== Equilibrium Constants Based on Activity
 
 #ref(<eq:activity1>) and #ref(<eq:activity2>) allow us to rationalize the unit conundrum of #ref(<eq:kc>) and #ref(<eq:kp>): there is a "missing" standard state reference that will ensure the equilibrium constant is unitless, even in the case of an ideal mixture.
 To tie it all together, we can state
 $ K_"a " = product_(j) a_(j)^(nu_j). $
-With this, we note that the $K$ in #ref(<eq:equilibrium_constant>) is technically $K_"a "$ in its most rigorous interpretation.
-Therefore, the ratio of the forward and reverse rate constants (i.e. the $K$ in #ref(<eq:equilibrium_constant>)) is most precisely defined as
-$k^(+) \/ k^(-) = K_"a "$.
+As such, we have
+$ Delta G^std = -R T ln(K_"a "), $
+where the equilibrium constant must formally be based on activities.
+
 For the sake of convenience later on, we can also now interrelate $K_"C "$ and $K_"a "$ as follows:
 $ K_"a " =  product_j (gamma_j [A_j]/C^std)^(nu_j) = K_"C "/(C^std)^delta product_j gamma_(j)^(nu_j), $<eq:k_a_k_c_relationship>
-where $delta$ is the change in stoichiometric numbers given simply as
-$ delta equiv sum_(j,nu_j>0) nu_j - sum_(j,nu_j<0) |nu_j|. $
+where $delta$ is the change in stoichiometric numbers given simply as $delta equiv sum_(j) nu_j$.
+If ideal conditions can be assumed, then $gamma_j=1$ and $K_"a " = K_"c "\/(C^std)^delta$.
+In this form, we can see that units are appropriately addressed even though concentrations are used directly. 
+
 In most practical cases, the deviations from non-ideality can be assumed to be small, and we will oftentimes use concentrations or partial pressures in place of activities.
 However, for concentrated solutions and gases at low temperature or high pressures, the differences can become noticeable and should be considered.
 #footnote[ 
-To learn more about potential pitfalls when neglecting activity in equilibrium expressions, refer to C.G. McCarty, E. Vitz, pH Paradoxes: Demonstrating That It Is Not True That pH ≡ -log[H+], _Journal of Chemical Education_, 83, 752--757 (2006). https://doi.org/10.1021/ed083p752.
-]
+To learn more about potential pitfalls when neglecting activity in equilibrium expressions, refer to C.G. McCarty, E. Vitz, pH Paradoxes: Demonstrating That It Is Not True That pH ≡ -log[H+], _Journal of Chemical Education_, 83, 752--757 (2006).]
+
+
 
 === Thermodynamic Considerations
 
@@ -599,6 +572,38 @@ Industrially, iron-based catalysts are often used for this process, and the oper
 As for the pressures, they are kept relatively high at 100--200 bar to shift the equilibrium toward the production of ammonia.
 The discovery of a heterogeneous catalyst that can more efficiently synthesize ammonia at near-ambient temperatures and pressures is one of the holy grails of reaction engineering. 
 
+=== The van~'t Hoff Equation
+
+With our understanding of the role of thermodynamics, we can understand how Arrhenius came about his famous equation through making an analogy to prior work by van~'t Hoff.
+Let us assume we have a reaction in equilibrium, such as the isomerization reaction of $ce("P <=> Q")$.
+We start with the definition of Gibbs free energy given by
+$ Delta G^std = Delta H^std - T Delta S^std, $
+where $Delta G^std$, $Delta H^std$, and $Delta S^std$ are the standard-state Gibbs free energy, enthalpy, and entropy changes of reaction, respectively.
+
+As previously emphasized, the equilibrium constant-based definition of Gibbs free energy is
+$ Delta G^std = -R T ln(K_"a "), $
+Combining the two expressions, we have
+$ ln(K_"a ") = -(Delta H^std)/ (R T) + (Delta S^std)/R. $
+If we differentiate with respect to $T$ and make a fairly notable assumption that $Delta H^std$ and $Delta S^std$ are independent of temperature (an approximation that is typically reasonable when considering small differences in $T$), we arrive at
+$ (dif ln(K_"a "))/(dif T) = (Delta H^std)/(R T^2), $<eq:vant_hoff>
+which is the famous van~'t Hoff equation.
+#footnote[Recall that $Delta H^std$, which is the enthalpy change associated with the reaction, can be calculated from the tabulated standard state enthalpy of formation, $Delta H_("f ",j)^std$, for each species via $Delta H^std = sum_j nu_j Delta H_("f ",j)^std$. The enthalpies of formation of many species are tabulated in thermochemical handbooks.]
+
+We can rewrite #ref(<eq:vant_hoff>) using $K_"a " = k^+\/k^-$ to state
+$ (dif ln(k^(+) \/ k^(-))) / (dif T) = (Delta H^std) / (R T^2) $
+and thereby
+$ (dif ln(k^(+))) / (dif T) - (dif ln(k^(-))) / (dif T) = (Delta H^std) / (R T^2). $
+By invoking $Delta H^std = E_"a,f" - E_"a,r"$,
+where $E_"a,f"$ and $E_"a,r"$ are activation energies for the forward and reverse reactions, respectively, Arrhenius concluded that, entirely by analogy, the following is likely to be true:
+$
+(dif ln(k^(+))) / (dif T) = E_"a,f" / (R T^2),quad
+(dif ln(k^(-))) / (dif T) = E_"a,r" / (R T^2)
+$
+which is equivalent to #ref(<eq:arrhenius>) following integration.
+Clearly, this "derivation" lacks rigor, and we will later show that $Delta H^std$ is not generally synonymous with the difference in activation energy.
+For now, we will accept the applicability of the Arrhenius equation largely based on empirical evidence until we cover transition state theory.
+
+
 == Integrated Rate Expressions <integrated-rate-expressions>
 
 When studying a new reaction of interest, one is typically interested in how the species concentrations change as a function of time, which is the focus of this subsection.
@@ -618,7 +623,7 @@ $ integral_(conc("A")_0)^(conc("A")_t) 1 / conc("A")' dif conc("A")' = -k integr
 $ ln(conc("A")_t / conc("A")_0)  = -k t. $<eq:first_order_irreversible>
 We can simplify #ref(<eq:first_order_irreversible>) to
 $ conc("A")_t = conc("A")_0 e^(-k t). $<eq:first_order_irreversible2>
-From #ref(<eq:first_order_irreversible2>), a plot of $ln(conc("A")_t)$ from the experimental data should be linear for a first-order, irreversible reaction.
+From #ref(<eq:first_order_irreversible2>), a plot of $ln(conc("A")_t)$ vs. $t$ from the experimental data should be linear for a first-order, irreversible reaction.
 As a sanity check, we can see that when $t->infinity$, $[A]_t -> 0$ as expected.
 
 === Irreversible Reactions of Arbitrary Order <irreversible-reactions-of-arbitrary-order>
@@ -627,7 +632,7 @@ As a sanity check, we can see that when $t->infinity$, $[A]_t -> 0$ as expected.
 
 For simplicity, we will start by considering an irreversible, elementary reaction given by the expression
 $ n ce("A") fwdArrow(k) m ce("B") $
-where $n$ is an arbitrary stoichiometric coefficient.
+where $n$ is an arbitrary stoichiometric number.
 The rate law for this reaction can be given by
 #footnote[Many sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=-r_"A " \/n$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency.]
 
@@ -652,13 +657,13 @@ This time, we have
 $ conc("A")_(t)^3 = conc("A")_(0)^3 + 6 k dot infinity $
 $ conc("A")_(t) = (conc("A")_(0)^3 + 6 k dot infinity)^(1\/3) $
 At first glance, this may seems unusual.
-We have $[A]_t$ increasing with $t$ without bound.
-The reason for this seemingly odd behavior is that we specifically derived the integrated rate law for an elementary reaction.
+We have $[A]_t$ increasing with $t$ without bound despite beingthe reactant.
+The reason for this seemingly odd behavior is that we specifically derived the integrated rate law for an _elementary_ reaction.
 If we have $n<0$, then we must instead be describing the reverse reaction, such that $[A]_t$ increases with time from its starting value of $conc("A")_0$.
 
 ==== Non-Elementary Reactions
 
-This discussion brings up the question: what about if we were considering the effective rate law for a non-elementary reaction?
+The prior discussion brings up the question: what about if we were considering the effective rate law for a non-elementary reaction?
 In this case, there is no direct correlation between the stoichiometry and the power with which the concentration is raised.
 For instance, consider now that we have
 $ alpha "A " fwdArrow(k) beta "B " $
@@ -686,10 +691,10 @@ We need to invoke an extra condition, which is that
 $ (dif conc("A"))/(dif t) = cases(- alpha k conc("A")^n quad &"if" conc("A")>0,0 quad &"if" conc("A")=0.) $
 This is the true rate expression, albeit one we do not often need to specifically invoke.
 We can see from our expression that the integration forward in time should (for all practical purposes) stop when $conc("A")_t=0$.
-In other words, for our example of $n=-2$, we have
+In other words, for our example of $n=-2$, we have the following the moment #ce("A") is all consumed:
 $ 0 = conc("A")_(0)^3 - 3 alpha k t $
 $ t = conc("A")_(0)^3/(3 alpha k), $
-after which we get the trivial solution of $conc("A")_t = 0$ by definition for our example of $n=-2$.
+after which we continue to get the trivial solution of $conc("A")_t = 0$ for our example of $n=-2$.
 
 === Coupled Reactions <coupled-reactions>
 
@@ -2134,7 +2139,7 @@ The value for $kappa$ is between 0 and 1, representing the probability that the 
 #footnote[In contrast with statements made in J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
 In other words, the rate constant (and rate) from transition state theory is generally an upper-estimate, even if all variables in the uncorrected rate expression were computed with perfect accuracy.
 
-=== Relationship with Activation Energy
+=== Relationship with Activation Energy <relationship-with-activation-energy>
 
 We can also ask how the apparent activation energy commonly reported in experiments from an Arrhenius plot is related to $Delta H^std^ddagger$.
 First, we recall the definition of the activation energy from #ref(<eq:apparent_e_a>):
