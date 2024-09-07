@@ -645,9 +645,8 @@ The conversion of a species, $X_j$, is defined as
 $ X_j equiv ("moles of " A_j "reacted")/("moles of " A_j "fed"). $
 For a reaction taking place in a constant-volume reactor like a flask, 
 $ X_j = ([A_j]_0 - [A_j])/[A_j]_0. $
-For a differential reactor where reagents are flowed through a bed of catalyst, one will use molar flow rates in place of concentrations.
-The differential reactor is analogous to an initial rate experiment, as it  allows the practitioner to measure $r$ in a regime where $conc("A") approx conc("A")_0$ and $conc("B") approx conc("B")_0$ since the conversion of starting reagents is infinitesimally small.
-
+For a differential reactor where reagents are flowed through a bed of catalyst, it is oftentime more natural to use molar flow rates in place of concentrations.
+The differential reactor is analogous to an initial rate experiment, as it  allows the practitioner to measure $r$ in a regime where the consumption of starting reagents is near-infinitesimal.
 
 == Integrated Rate Expressions <integrated-rate-expressions>
 
@@ -670,18 +669,17 @@ $ ln(conc("A")_t / conc("A")_0)  = -k t. $<eq:first_order_irreversible>
 We can simplify #ref(<eq:first_order_irreversible>) to
 $ conc("A")_t = conc("A")_0 e^(-k t). $<eq:first_order_irreversible2>
 From #ref(<eq:first_order_irreversible2>), a plot of $ln(conc("A")_t)$ vs. $t$ from the experimental data should be linear for a first-order, irreversible reaction.
+#footnote[If experimental data is collected and found to fit well to #ref(<eq:first_order_irreversible2>), it would be consistent with a first-order, irreversible reaction but that does not guarantee that it is truly first order nor does it imply that the reaction is necessarily elementary. For instance, a true rate law of $r = k conc("A") conc("B")$ might appear first order in #conc("A") if #conc("B") is in great excesss, such that only changes in $conc("A")$ appreciably alter the rate. This would be more precisely referred to as pseudo-first order in #conc("A").]
 As a sanity check, we can see that when $t->infinity$, $[A]_t -> 0$ as expected.
 
 === Irreversible Reactions of Arbitrary Order <irreversible-reactions-of-arbitrary-order>
-
-==== Elementary Reactions
 
 For simplicity, we will start by considering an irreversible, elementary reaction given by the expression
 $ n ce("A") fwdArrow(k) m ce("B") $
 where $n$ is an arbitrary stoichiometric number.
 The rate of change in $conc("A")$ can be given by
 $ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $
-#caution[Many sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you can likely accept that the rate law is $r = k conc("A")^n$. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
+#caution[Many sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
 
 Separating the variables and integrating this expression yields
 $ integral_(conc("A")_0)^conc("A")_t 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
@@ -705,42 +703,7 @@ $ conc("A")_(t) = (conc("A")_(0)^3 + 6 k dot infinity)^(1\/3) $
 At first glance, this may seem unusual.
 We have $[A]_t$ increasing with $t$ without bound despite being the reactant.
 The reason for this seemingly odd behavior is that we specifically derived the integrated rate law for an _elementary_ reaction.
-If we have $n<0$, then we must instead be describing the reverse reaction, such that $[A]_t$ increases with time from its starting value of $conc("A")_0$.
-
-==== Non-Elementary Reactions
-
-The prior discussion brings up the question: what about if we were considering the apparent rate law for a non-elementary reaction?
-In this case, there is no direct correlation between the stoichiometry and the power with which the concentration is raised.
-For instance, consider now that we have
-$ alpha "A " fwdArrow(k) beta "B " $
-that we believe to potentially be well-described by 
-$ r_ce("A ") = (dif conc("A")) / (dif t) = -alpha k conc("A")^n. $
-Separating the variables and integrating this expression yields
-$ integral_(conc("A")_0)^conc("A")_t 1 / conc("A")'^n dif conc("A")' = - alpha k integral_0^t dif t' $
-$ conc("A")_t^(-n+1) / (-n+1) - conc("A")_0^(-n+1) / (-n+1) = -alpha k t quad (n != 1). $
-We can simplify the above expression to
-$ conc("A")_t^(-n+1) = conc("A")_0^(-n+1) + alpha (n-1) k t. $<eq:irreversible_n_order_final_nonelementary>
-Naturally, #ref(<eq:irreversible_n_order_final_nonelementary>) is the same as #ref(<eq:irreversible_n_order_final>) when $alpha=n$.
-
-It is time to return to our sanity checks.
-If we have $n=2$, then as $t->infinity$ we have
-$ 1/conc("A")_t = 1/conc("A")_0 + alpha k dot infinity $
-$ conc("A")_t = 1/(1/conc("A")_0 + infinity) = 0, $
-which is once again as expected and the same as the elementary case.
-
-If we have $n=-2$, then as $t->infinity$ we have
-$ conc("A")_(t)^3 = conc("A")_(0)^3 - 3 alpha k dot infinity $
-$ conc("A")_(t) = (conc("A")_(0)^3 - infinity)^(1/3) = - infinity. $
-Well, clearly $conc("A")_t$ decreases with $t$ now, but why do we have a negative concentration as $t->infinity$?
-This is often a consequence of solving differential equations.
-We need to invoke an extra condition, which is that
-$ (dif conc("A"))/(dif t) = cases(- alpha k conc("A")^n quad &"if" conc("A")>0,0 quad &"if" conc("A")=0.) $
-This is the true rate expression, albeit one we do not often need to specifically invoke.
-We can see from our expression that the integration forward in time should (for all practical purposes) stop when $conc("A")_t=0$.
-In other words, for our example of $n=-2$, we have the following the moment #ce("A") is all consumed:
-$ 0 = conc("A")_(0)^3 - 3 alpha k t $
-$ t = conc("A")_(0)^3/(3 alpha k), $
-after which we continue to get the trivial solution of $conc("A")_t = 0$ for our example of $n=-2$ by definition.
+If we have $n<0$, then we must instead be describing the reverse reaction, such that $conc("A")_t$ increases with time from its starting value of $conc("A")_0$.
 
 === Coupled Reactions <coupled-reactions>
 
@@ -769,7 +732,7 @@ $ conc("C")_t = conc("A")_0 - conc("A")_t -conc("B")_t $
 $ conc("C")_t = conc("A")_0 - conc("A")_0 e^(-k_1 t) - (k_1 conc("A")_0)/(k_2 - k_1) (e^(-k_1 t)- e^(-k_2 t)) $
 $ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t) - k_1/(k_2 - k_1) (e^(-k_1 t)- e^(-k_2 t))). $
 
-#plot[#align(center)[https://marimo.app/l/pahlfk]]
+#plot[#align(center)[https://marimo.app/l/2emhpu]]
 
 == Stochastic Reactions <stochastic-reactions>
 
