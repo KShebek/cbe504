@@ -501,7 +501,7 @@ In this form, we can see that units are appropriately addressed even though conc
 In most practical cases, the deviations from non-ideality can be assumed to be small, and we will oftentimes use concentrations or partial pressures in place of activities.
 However, for concentrated solutions and gases at low temperature or high pressures, the differences can become noticeable and should be considered.
 #footnote[ 
-To learn more about potential pitfalls when neglecting activity in equilibrium expressions, refer to C.G. McCarty, E. Vitz, pH Paradoxes: Demonstrating That It Is Not True That pH ≡ -log[H+], _Journal of Chemical Education_, 83, 752--757 (2006).]
+To learn more about potential pitfalls when neglecting activity in equilibrium expressions, refer to C.G. McCarty, E. Vitz, pH Paradoxes: Demonstrating That It Is Not True That pH ≡ -log[H+], _J. Chem. Educ._, 83, 752--757 (2006).]
 
 
 
@@ -570,7 +570,7 @@ which is equivalent to #ref(<eq:arrhenius>) following integration.
 Clearly, this "derivation" lacks rigor, and we will later show that $Delta H^std$ is not generally synonymous with the difference in activation energy.
 For now, we will accept the applicability of the Arrhenius equation largely based on empirical evidence until we cover transition state theory.
 
-== Apparent Rate Parameters
+== Differential Kinetic Analysis
 
 // cut this whole section..
 
@@ -616,21 +616,25 @@ First, for a reaction #ce("A + B -> C"), we will postulate a power-law rate expr
 $ r = k_"app" conc("A")^alpha conc("B")^beta, $
 which can be rewritten as
 $ ln(r) = ln(k_"app") + alpha ln(conc("A")) + beta ln(conc("B")). $
+
 We can determine $alpha$ by holding $ln(conc("B"))$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("A"))$.
 #footnote[This assumes that $beta$ does not change with #conc("A"), which is a fairly reasonable assumption unless changes in #conc("A") alter the mechanism.]
 Similarly, we can determine $beta$ by holding $ln(conc("A"))$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("B"))$.
 In differential form, this can be expressed as follows:
 $ alpha_(j,"app") equiv  [A_j] ((diff ln(r))/(diff [A_j]))_([A_i], i!=j). $<eq:apparent_order>
+Given enough rate and concentration data, one can also carry out a multiple linear regression analysis to determine the apparent reaction orders if preferred.
+
 It is worth noting, as we will demonstrate throughout this course, that apparent reaction orders of non-elementary reactions may be non-integer or even negative.
 Reaction orders will appear as zero if the concentration of a particular species does not notably influence the observed rate, as is commonly the case if that species is in great excess.
 #footnote[For additional discussion about apparent 0#super[th] order kinetics, refer to F.J. Arnáiz, "Mice in the Box for Zero-Order Kinetics", _J. Chem. Educ._, 76, 10, 1458 (1999).]
 
-=== Initial Rate and Differential Reactor Experiments
+=== Practical Measurements
 
 A few questions may naturally arise when thinking about how one would measure the rate parameters in practice.
 Perhaps the most notable to ask is: how can one monitor the change in rate as a function of only _one_ reactant's concentration?
+Arguably the most natural solution is to carry out the reaction such that all reactants except one are present in large excess, such that the reaction appears 0#super[th] order in every species except the one for which the reation order is desired.
 
-The most common answer to this challenge is to carry out an _initial rate_ experiment, where you measure $r$ at extremely small values of $t$.
+Beyond relying on reagents being in exccess, one can carry out an _initial rate_ experiment, where you measure $r$ at extremely small values of $t$.
 Consider $conc("A")_0$ and $conc("B")_0$ as the initial concentration of reactants.
 For $t approx 0$, the concentrations of the reactants remain largely unchanged from their initial values: $conc("A") approx conc("A")_0$ and $conc("B") approx conc("B")_0$.
 This allows you to measure changes in $r$ with respect to isolated changes in either $conc("A")$ or $conc("B")$ by modifying the initial concentration of either species.
@@ -643,6 +647,7 @@ For a reaction taking place in a constant-volume reactor like a flask,
 $ X_j = ([A_j]_0 - [A_j])/[A_j]_0. $
 For a differential reactor where reagents are flowed through a bed of catalyst, one will use molar flow rates in place of concentrations.
 The differential reactor is analogous to an initial rate experiment, as it  allows the practitioner to measure $r$ in a regime where $conc("A") approx conc("A")_0$ and $conc("B") approx conc("B")_0$ since the conversion of starting reagents is infinitesimally small.
+
 
 == Integrated Rate Expressions <integrated-rate-expressions>
 
