@@ -402,7 +402,7 @@ In general, if one has a plot of $ln(k)$ vs. $1\/T$ though, it is better to rely
 
 Since one is rarely studying a single, isolated, elementary reaction, there is no inherent guarantee that the Arrhenius plot will be linear when plotted as $ln(k)$ vs. $1\/T$.
 #footnote[Refer to W. Wang and C.J. Roberts, "Non-Arrhenius Protein Aggregation", _AAPS J._, 15, 840--851 (2013) for several examples in the biochemistry literature.]
-A common example in heterogeneous catalysis is shown in #ref(<fig:arrhenius_multiple>), where the increasing temperature can cause different kinetic processes to dominate, such as diffusion limitations, mass transfer limitations, or even the reaction proceeding in homogeneously (e.g. in the gas phase).
+A common example in heterogeneous catalysis is shown in #ref(<fig:arrhenius_multiple>), where the increasing temperature can cause different kinetic processes to dominate, such as diffusion limitations, mass transfer limitations, or even the reaction proceeding homogeneously (e.g. in the gas phase).
 Different linear regimes in an Arrhenius plot can also indicate a change in the underlying mechanism with temperature.
 
 #figure(
@@ -421,47 +421,13 @@ While the original formulation of the Arrhenius equation remains widely used to 
 In reality, the pre-exponential factor exhibits some degree of temperature-dependence. A modified form of the Arrhenius equation can be used to account for this fact:
 $ k = A' T^n exp(-E_"a " / (R T)), $<eq:arrhenius_mod>
 where $n$ is an additional fitting parameter known as the temperature exponent.
-As we will show in #ref(<transition-state-theory>), there is theoretical justification for having $n > 0$.
+As we will show when covering transition state theory, there is theoretical justification for having $n > 0$.
 The use of the modified Arrhenius equation in #ref(<eq:arrhenius_mod>) does limit the physical interpretability of the activation energy and pre-refactor terms in this way.
 Regardless, the effect of $T^n$ is generally relatively small and is difficult to observe experimentally without highly precise measurements.
 
-=== Apparent Activation Energy
-
-The intrinsic activation energy differs from the apparent activation energy in that the latter may represent the kinetics of many constituent reactions, as depicted in #ref(<fig:apparent_activation>).
-#figure(
-image("figures/apparent_activation.png", width: 50%),
-  caption: [Potential energy diagram highlighting how the apparent activation energy, $E_"app"$, accounts for the kinetics of multiple underlying processes that collectively make up a non-elementary reaction.]
-)<fig:apparent_activation>
-
-
-The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature:
-$ ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app") $
-$ (diff ln(k_"app"))/(diff T) &= -E_"app"/R (diff (1/T))/(diff T) + (diff ln(A_"app"))/(diff T) $
-$ (diff ln(k_"app"))/(diff T) &=  E_"app"/(R T^2) $
-$ E_"app" &equiv R T^2 (diff ln(k_"app"))/(diff T). $<eq:apparent_e_a>
-
-Here, the "app" subscript is referring to an apparent (i.e. observed) rate constant determined from experiments, meaning that it may describe a net, non-elementary reaction consisting of several elementary steps.
-Naturally, this approach implicitly assumes that both $E_"app"$ and $A_"app"$ are reasonably independent of temperature (at least over the range of temperatures being investigated), which is what we are invoking when using the Arrhenius equation anyway.
-
-=== Apparent Reaction Orders
-
-We can also define an apparent reaction order, $alpha_(j,"app")$, for each species in a similar manner by writing out the definition of the reaction rate and differentiating with respect to $[A_j]$ (holding all other concentrations fixed) as follows:
-$ r = k product_j [A_j]^(alpha_(j,"app")) $
-$ ln(r) = ln(k product_j [A_j]^(alpha_(j,"app"))) $
-$ (diff ln(r))/(diff [A_j]) = (diff ln(k product_j [A_j]^(alpha_(j,"app"))))/(diff [A_j]). $
-This might look a bit tricky, so we will write out a few steps explicitly assuming $j=1$ for demonstration purposes:
-$ (diff ln(r))/(diff [A_1]) = (diff ln(k))/(diff [A_1]) + (diff ln([A_1]^(alpha_1,"app")))/(diff [A_1]) + (diff ln([A_2]^(alpha_(2,"app"))))/(diff [A_1]) + (diff ln([A_3]^(alpha_(3,"app"))))/(diff [A_1]) + ... $
-$ (diff ln(r))/(diff [A_1]) = alpha_(1,"app") (diff ln([A_1]))/(diff [A_1]). $
-$ (diff ln(r))/(diff [A_1]) = alpha_(1,"app")/[A_1]. $
-$ alpha_(1,"app") = [A_1] (diff ln(r))/(diff [A_1]). $
-Returning to our more general case, we have
-$ alpha_(j,"app") equiv [A_j] (diff ln(r))/(diff [A_j]). $<eq:apparent_order>
-Despite the slightly lengthy derivation, this expression is simply stating that one can measure the differential change in the net reaction rate as a function of species concentration to find the apparent reaction order of that species for any arbitrary (even non-elementary) reaction.
-It is worth noting, as we will demonstrate throughout this course, that apparent reaction orders of non-elementary reactions may be non-integer or even negative.
-
 == Thermodynamic Equilibrium
-While this is a course on the kinetics of chemical reactions, we must also acknowledge the importance of thermodynamics, which dictates the equilibrium conditions of a reacting system.
 
+While this is a course on the kinetics of chemical reactions, we must also acknowledge the importance of thermodynamics, which dictates the equilibrium conditions of a reacting system.
 
 === Equilibrium Constants Based on Concentrations and Partial Pressures<equilibrium-constants>
 
@@ -473,14 +439,14 @@ $ 0 = k^(+) conc("A")_("eq")^alpha conc("B")_("eq")^beta - k^(-) conc("C")_("eq"
 We can algebraically rearrange #ref(<eq:reversible_eq>) to yield
 $
 k^(+) / k^(-) =
-(conc("C")_("eq")^delta conc("D")_("eq")^gamma)
+(conc("C")_("eq")^gamma conc("D")_("eq")^delta)
 /
 (conc("A")_("eq")^alpha conc("B")_("eq")^beta).
 $<eq:reversible_eq_rearrange>
-The expression given by #ref(<eq:reversible_eq_rearrange>) leads to the definition of the concentration-based equilibrium constant, $K_"c "$, which can be expressed compactly as
+The expression given by the right-hand side of #ref(<eq:reversible_eq_rearrange>) leads to the definition of the concentration-based equilibrium constant, $K_"c "$, which can be expressed compactly as
 $ K_"C " equiv product_(j) [A_j]^(nu_j) $<eq:kc>
 and describes the ratio of the forward to reverse rate constants at equilibrium.
-#footnote[From here on out, we will omit the "eq" subscript from here on out since it is implicit when dealing with an equilibrium constant.]
+#footnote[From here on out, we will omit the "eq" subscript since it is implicit when dealing with an equilibrium constant.]
 If one were to use partial pressures, $p_j$, instead of concentrations, one can define a pressure-based equilibrium constant, $K_"p "$, as
 #footnote[For an ideal gas, one can conveniently state $K_"p " = K_"C " (R T)^delta$ where $delta$ is the change in stoichiometric numbers.
 ]
@@ -503,7 +469,7 @@ where $gamma_j$ is the dimensionless activity coefficient, and $C^std$ is the st
 The activity coefficient is simply whatever value is needed to account for non-idealities.
 Physically, $gamma_j<1$ if species attract one another, whereas $gamma_j>1$ if they repel one another.
 For an ideal mixture, $gamma_j$ is a value of 1.
-The value for $C^std$ is typically taken as $P\/(R T)$ for gases or 1 mol/L for liquids but should always be mentioned when reporting data.
+The value for $C^std$ is typically taken as 1 mol/L for liquids but should always be mentioned when reporting data.
 
 When describing the activities of gases, it is general convention to refer to the fugacity (the effective partial pressure) of a species, $f_j$, or a dimensionless fugacity coefficient $phi_j$ as follows:
 $ a_j = f_j/p^std = phi_j y_j p/p^std, $<eq:activity2>
@@ -514,8 +480,7 @@ From a pedagogical perspective, the main takeaway is that activities are the tru
 
 #caution[When we refer to a standard state, this is a choice that the practicioner makes. The standard state thermodynamic properties are independent of the pressure at which the reaction is actually carried out; rather, they are associated with a hypothetical process.
 In contrast, the standard state does _not_ indicate a particular temperature, which must be specified separately and is typically the observed temperature. #footnote[While similar in name, the standard state is not the same concept as the standard temperature and pressure (STP).]
-As such, state thermodynamic properties taken from a database may need too be adjusted to the experimentally relevant temperature.
-As such, you may need to adjust thermodynamic data to the experimentally relevant temperature.
+As such, state thermodynamic properties taken from a database may need to be adjusted to the experimentally relevant temperature.
 ]
 
 === Equilibrium Constants Based on Activity
@@ -530,7 +495,7 @@ where the equilibrium constant must formally be based on activities.
 For the sake of convenience later on, we can also now interrelate $K_"C "$ and $K_"a "$ as follows:
 $ K_"a " =  product_j (gamma_j [A_j]/C^std)^(nu_j) = K_"C "/(C^std)^delta product_j gamma_(j)^(nu_j), $<eq:k_a_k_c_relationship>
 where $delta$ is the change in stoichiometric numbers given simply as $delta equiv sum_(j) nu_j$.
-If ideal conditions can be assumed, then $gamma_j=1$ and $K_"a " = K_"c "\/(C^std)^delta$.
+If ideal conditions can be assumed, then $gamma_j=1$ and $K_"a " = K_"C "\/(C^std)^delta$.
 In this form, we can see that units are appropriately addressed even though concentrations are used directly. 
 
 In most practical cases, the deviations from non-ideality can be assumed to be small, and we will oftentimes use concentrations or partial pressures in place of activities.
@@ -548,18 +513,17 @@ However, understanding equilibrium behavior of a chemical reaction can be incred
 For this example, we will consider the ammonia synthesis reaction given by
 $ ce("N2 + 3 H2 <--> 2 NH3"). $
 It is known from experiments that at 298 K, $Delta G^std = -32.8 $ kJ/mol and $Delta H^std = -91.8$ kJ/mol.
-#caution[One must be careful about how thermodynamic data is reported. For instance, if the thermodynamic data was reported per mole of #ce("NH3"), then we would need to double the tabulated value reported for it to be compatible with the stoichiometry as-written.]
-We can state that the equilibrium constant is 
+The equilibrium constant for this reaction is 
 $ K_"a " = (f_ce("NH3")/p^std)^2/((f_ce("N2")/p^std) (f_ce("H2")/p^std)^3) = f_ce("NH3")^2/((f_ce("N2")) (f_ce("H2"))^3) (1/p^std)^(-2). $
 If we rewrite the expression in terms of mole fractions,
 $ K_"a " = (phi_ce("NH3") y_ce("NH3"))^2/((phi_ce("N2") y_ce("N2")) (phi_ce("H2") y_ce("H2"))^3) (p/p^std)^(-2), $
 it becomes clear that increasing the total pressure will increase the equilibrium concentration of #ce("NH3") in order for $K_"a "$ to remain constant.
 
 We can also state that
-$ K_"a " = exp(- (Delta G^std)/(R T)) = exp(- (Delta H^std)/ (R T)) exp((Delta S^std)/ (R T)), $
+$ K_"a " = exp(- (Delta G^std)/(R T)) = exp(- (Delta H^std)/ (R T)) exp((Delta S^std)/ R), $
 such that
-$ exp(- (Delta H^std)/ (R T)) exp((Delta S^std)/ (R T)) = (phi_ce("NH3") y_ce("NH3"))^2/((phi_ce("N2") y_ce("N2")) (phi_ce("H2") y_ce("H2"))^3) (p/p^std)^(-2). $
-From this expression, it becomes immediately clear that for an exothermic process (i.e. $Delta H^std <0$), the equilibrium mole fraction of #ce("NH3") will increase with decreasing temperature.
+$ exp(- (Delta H^std)/ (R T)) exp((Delta S^std)/ R) = (phi_ce("NH3") y_ce("NH3"))^2/((phi_ce("N2") y_ce("N2")) (phi_ce("H2") y_ce("H2"))^3) (p/p^std)^(-2). $
+From this expression, one can conclude that for an exothermic process (i.e. $Delta H^std <0$), the equilibrium mole fraction of #ce("NH3") will increase with decreasing temperature.
 
 To summarize, increasing the total pressure and decreasing temperature both increase the equilibrium mole fraction of #ce("NH3").
 However, this is clearly a problem when we think back to our kinetic perspective.
@@ -574,8 +538,10 @@ The discovery of a heterogeneous catalyst that can more efficiently synthesize a
 
 === The van~'t Hoff Equation
 
+// Note to self: The Arrhenius aside was more problematic than not. Should probably avoid going forward.
+
 With our understanding of the role of thermodynamics, we can understand how Arrhenius came about his famous equation through making an analogy to prior work by van~'t Hoff.
-Let us assume we have a reaction in equilibrium, such as the isomerization reaction of $ce("P <=> Q")$.
+Let us assume we have a reaction an elementary isomerization reaction of $ce("P <=> Q")$ in equilibrium.
 We start with the definition of Gibbs free energy given by
 $ Delta G^std = Delta H^std - T Delta S^std, $
 where $Delta G^std$, $Delta H^std$, and $Delta S^std$ are the standard-state Gibbs free energy, enthalpy, and entropy changes of reaction, respectively.
@@ -589,12 +555,13 @@ $ (dif ln(K_"a "))/(dif T) = (Delta H^std)/(R T^2), $<eq:vant_hoff>
 which is the famous van~'t Hoff equation.
 #footnote[Recall that $Delta H^std$, which is the enthalpy change associated with the reaction, can be calculated from the tabulated standard state enthalpy of formation, $Delta H_("f ",j)^std$, for each species via $Delta H^std = sum_j nu_j Delta H_("f ",j)^std$. The enthalpies of formation of many species are tabulated in thermochemical handbooks.]
 
-We can rewrite #ref(<eq:vant_hoff>) using $K_"a " = k^+\/k^-$ to state
+If we rewrite #ref(<eq:vant_hoff>) using $K_"a " = k^+\/k^-$,
+we can state
 $ (dif ln(k^(+) \/ k^(-))) / (dif T) = (Delta H^std) / (R T^2) $
 and thereby
 $ (dif ln(k^(+))) / (dif T) - (dif ln(k^(-))) / (dif T) = (Delta H^std) / (R T^2). $
 By invoking $Delta H^std = E_"a,f" - E_"a,r"$,
-where $E_"a,f"$ and $E_"a,r"$ are activation energies for the forward and reverse reactions, respectively, Arrhenius concluded that, entirely by analogy, the following is likely to be true:
+where $E_"a,f"$ and $E_"a,r"$ are activation energies for the forward and reverse reactions, respectively, Arrhenius concluded that, largely by analogy, the following is likely to be true:
 $
 (dif ln(k^(+))) / (dif T) = E_"a,f" / (R T^2),quad
 (dif ln(k^(-))) / (dif T) = E_"a,r" / (R T^2)
@@ -603,6 +570,79 @@ which is equivalent to #ref(<eq:arrhenius>) following integration.
 Clearly, this "derivation" lacks rigor, and we will later show that $Delta H^std$ is not generally synonymous with the difference in activation energy.
 For now, we will accept the applicability of the Arrhenius equation largely based on empirical evidence until we cover transition state theory.
 
+== Apparent Rate Parameters
+
+// cut this whole section..
+
+Consider a reaction of the form #ce("A + B -> C").
+In practice, we may not know _a priori_ whether this reaction proceeds precisely as written (i.e. if it is elementary or not).
+We may propose a rate law of the form
+$ r = k conc("A")^alpha conc("B")^beta, $
+although there is no guarantee that $alpha$ and $beta$ are the stoichiometric numbers.
+#footnote[
+Additionally, there is no guarantee that the rate law model parameters will be a sufficient fit to the experimental data over a range of operating conditions.
+]
+
+This is where the concept of "apparent" kinetics comes in.
+Strictly speaking, $k$, $alpha$, and $beta$ that are determined from experiments will be "apparent" rate parameters, meaning that they are based on empirical observations that may or may not reflect the underlying (i.e. intrinsic) reactions.
+
+=== Apparent Activation Energy
+
+The intrinsic activation energy differs from the apparent activation energy in that the latter may represent the kinetics of many constituent reactions, as depicted in #ref(<fig:apparent_activation>).
+#figure(
+image("figures/apparent_activation.png", width: 50%),
+  caption: [Potential energy diagram highlighting how the apparent activation energy, $E_"app"$, accounts for the kinetics of multiple underlying processes that collectively make up a non-elementary reaction.]
+)<fig:apparent_activation>
+
+The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature:
+$ ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app") $
+$ (diff ln(k_"app"))/(diff T) &= -E_"app"/R (diff (1/T))/(diff T) $<eq:apparent_e_a_pre>
+$ (diff ln(k_"app"))/(diff T) &=  E_"app"/(R T^2) $
+$ E_"app" &equiv R T^2 (diff ln(k_"app"))/(diff T). $<eq:apparent_e_a>
+
+Here, the "app" subscript is referring to an apparent (i.e. observed) rate constant determined from experiments, meaning that it may describe a net, non-elementary reaction consisting of several elementary steps.
+
+While #ref(<eq:apparent_e_a>) is the formal definition of the apparent activation energy,
+#footnote[Some references define the apparent activation energy as $E_"app" equiv R T^2 (diff ln(r))/(diff T)$. However, this is only strictly true if one is not varying the reactant concentrations. Similarly, one should exercise caution when interpreting rate law parameters from a plot of $ln(r)$ vs. $1\/T$ if the reactant concentrations may vary.]
+we should not lose sight of the fact that we can still use a plot of $ln(k_"app")$ vs. $1\/T$ to back out $E_"app"$ over a particular range of temperatures.
+In fact, that is precisely what #ref(<eq:apparent_e_a_pre>) is stating: take the instantaneous slope at a particular value of $T$ in a plot of $ln(k_"app")$ vs. $1\/T$, and you will get a value of $-E_"app"\/R$.
+
+=== Apparent Reaction Orders
+
+// NOTE TO SELF: This one did not go well in class. A bit too abstract without a concrete example. Probably best to avoid altogether in the future.
+
+We can also define an apparent reaction order, $alpha_(j,"app")$, for each species in a similar manner.
+First, for a reaction #ce("A + B -> C"), we will postulate a power-law rate expression of the form
+$ r = k_"app" conc("A")^alpha conc("B")^beta, $
+which can be rewritten as
+$ ln(r) = ln(k_"app") + alpha ln(conc("A")) + beta ln(conc("B")). $
+We can determine $alpha$ by holding $ln(conc("B"))$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("A"))$.
+#footnote[This assumes that $beta$ does not change with #conc("A"), which is a fairly reasonable assumption unless changes in #conc("A") alter the mechanism.]
+Similarly, we can determine $beta$ by holding $ln(conc("A"))$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("B"))$.
+In differential form, this can be expressed as follows:
+$ alpha_(j,"app") equiv  [A_j] ((diff ln(r))/(diff [A_j]))_([A_i], i!=j). $<eq:apparent_order>
+It is worth noting, as we will demonstrate throughout this course, that apparent reaction orders of non-elementary reactions may be non-integer or even negative.
+Reaction orders will appear as zero if the concentration of a particular species does not notably influence the observed rate, as is commonly the case if that species is in great excess.
+#footnote[For additional discussion about apparent 0#super[th] order kinetics, refer to F.J. Arnáiz, "Mice in the Box for Zero-Order Kinetics", _J. Chem. Educ._, 76, 10, 1458 (1999).]
+
+=== Initial Rate and Differential Reactor Experiments
+
+A few questions may naturally arise when thinking about how one would measure the rate parameters in practice.
+Perhaps the most notable to ask is: how can one monitor the change in rate as a function of only _one_ reactant's concentration?
+
+The most common answer to this challenge is to carry out an _initial rate_ experiment, where you measure $r$ at extremely small values of $t$.
+Consider $conc("A")_0$ and $conc("B")_0$ as the initial concentration of reactants.
+For $t approx 0$, the concentrations of the reactants remain largely unchanged from their initial values: $conc("A") approx conc("A")_0$ and $conc("B") approx conc("B")_0$.
+This allows you to measure changes in $r$ with respect to isolated changes in either $conc("A")$ or $conc("B")$ by modifying the initial concentration of either species.
+
+A very similar concept exists for surface-catalyzed reaction, in which the reaction is typically run in a differential reactor.
+A differential reactor has an extremely small amount of catalyst, such that the _conversion_ of the starting reagents is extremely small.
+The conversion of a species, $X_j$, is defined as
+$ X_j equiv ("moles of " A_j "reacted")/("moles of " A_j "fed"). $
+For a reaction taking place in a constant-volume reactor like a flask, 
+$ X_j = ([A_j]_0 - [A_j])/[A_j]_0. $
+For a differential reactor where reagents are flowed through a bed of catalyst, one will use molar flow rates in place of concentrations.
+The differential reactor is analogous to an initial rate experiment, as it  allows the practitioner to measure $r$ in a regime where $conc("A") approx conc("A")_0$ and $conc("B") approx conc("B")_0$ since the conversion of starting reagents is infinitesimally small.
 
 == Integrated Rate Expressions <integrated-rate-expressions>
 
@@ -726,6 +766,8 @@ $ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t) - k_1/(k_2 - k_1) (e^(-k_1 t)- e^(-k
 #plot[#align(center)[https://marimo.app/l/pahlfk]]
 
 == Stochastic Reactions <stochastic-reactions>
+
+_This is an "advanced topic" not discussed in class and provided solely for the interested reader._
 
 In the previous subsection, we took a deterministic approach to modeling the behavior of reaction events.
 In the limit of small numbers of molecules, however, this approach begins to break down.
@@ -869,8 +911,7 @@ $ r_ce("NO2") = (A_1 A_2) / (A_(-1)) exp(-(E_"a,1" + E_("a,"-1) - E_"a,2") / (R 
 If we define
 $ A_"app." equiv (A_1 A_2) / A_(-1) $
 $ E_"a,app." equiv E_"a,1" + E_("a,"-1) - E_"a,2", $
-where $A_"app."$ and $E_"a,app."$ are an apparent pre-factor and activation barrier.
-Then,
+where $A_"app."$ and $E_"a,app."$ are an apparent pre-factor and activation barrier, then
 $ r_ce("NO2") = A_"app." exp(-E_"a,app." / (R T)) conc("NO")^2 conc("O2"). $
 
 If $E_"a,app." < 0$, then the reaction can have anti-Arrhenius behavior where the rate _decreases_ with increasing temperature.
