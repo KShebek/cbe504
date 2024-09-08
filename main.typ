@@ -664,11 +664,11 @@ The rate law for this reaction can be given by
 $ r_ce("A ") = (dif conc("A")) / (dif t) = -k conc("A"). $
 Separating the variables and integrating this expression yields
 #footnote[The \' marks are included simply to indicate a variable of integration that differs from the integral bounds.]
-$ integral_(conc("A")_0)^(conc("A")_t) 1 / conc("A")' dif conc("A")' = -k integral_(0)^(t) dif t' $
-$ ln(conc("A")_t / conc("A")_0)  = -k t. $<eq:first_order_irreversible>
+$ integral_(conc("A")_0)^(conc("A")) 1 / conc("A")' dif conc("A")' = -k integral_(0)^(t) dif t' $
+$ ln(conc("A") / conc("A")_0)  = -k t. $<eq:first_order_irreversible>
 We can simplify #ref(<eq:first_order_irreversible>) to
-$ conc("A")_t = conc("A")_0 e^(-k t). $<eq:first_order_irreversible2>
-From #ref(<eq:first_order_irreversible2>), a plot of $ln(conc("A")_t)$ vs. $t$ from the experimental data should be linear for a first-order, irreversible reaction.
+$ conc("A") = conc("A")_0 e^(-k t). $<eq:first_order_irreversible2>
+From #ref(<eq:first_order_irreversible2>), a plot of $ln(conc("A"))$ vs. $t$ from the experimental data should be linear for a first-order, irreversible reaction.
 #footnote[If experimental data is collected and found to fit well to #ref(<eq:first_order_irreversible2>), it would be consistent with a first-order, irreversible reaction but that does not guarantee that it is truly first order nor does it imply that the reaction is necessarily elementary. For instance, a true rate law of $r = k conc("A") conc("B")$ might appear first order in #conc("A") if #conc("B") is in great excesss, such that only changes in $conc("A")$ appreciably alter the rate. This would be more precisely referred to as pseudo-first order in #conc("A").]
 As a sanity check, we can see that when $t->infinity$, $[A]_t -> 0$ as expected.
 
@@ -682,18 +682,18 @@ $ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $
 #caution[Most sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
 
 Separating the variables and integrating this expression yields
-$ integral_(conc("A")_0)^conc("A")_t 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
-$ conc("A")_t^(-n+1) / (-n+1) - conc("A")_0^(-n+1) / (-n+1) = -n k t quad (n != 1). $<eq:irreversible_n_order>
+$ integral_(conc("A")_0)^conc("A") 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
+$ conc("A")^(-n+1) / (-n+1) - conc("A")_0^(-n+1) / (-n+1) = -n k t quad (n != 1). $<eq:irreversible_n_order>
 We can simplify #ref(<eq:irreversible_n_order>) to
-$ conc("A")_t^(-n+1) = conc("A")_0^(-n+1) - n (-n+1) k t $
-$ conc("A")_t^(-n+1) = conc("A")_0^(-n+1) + n(n-1) k t $<eq:irreversible_n_order_final>
-From #ref(<eq:irreversible_n_order_final>), a plot of $conc("A")_t^(-n+1)$ vs. $t$ from the experimental data should be linear for a given stoichiometric coefficient $n$.
+$ conc("A")^(-n+1) = conc("A")_0^(-n+1) - n (-n+1) k t $
+$ conc("A")^(-n+1) = conc("A")_0^(-n+1) + n(n-1) k t $<eq:irreversible_n_order_final>
+From #ref(<eq:irreversible_n_order_final>), a plot of $conc("A")^(-n+1)$ vs. $t$ from the experimental data should be linear for a given stoichiometric coefficient $n$.
 The same procedure can be done for bimolecular reactions; the only difference is that the algebra is slightly more complicated.
 
 It is always a good practice to do some sanity checks.
 For this analysis, let us take $n=2$ just for demonstration purposes and see what happens when $t->infinity$.
-$ 1/conc("A")_t = 1/conc("A")_0 + 2 k dot infinity $
-$ conc("A")_t = 1/(1/conc("A")_0 + infinity) = 0. $
+$ 1/conc("A") = 1/conc("A")_0 + 2 k dot infinity $
+$ conc("A") = 1/(1/conc("A")_0 + infinity) = 0. $
 This is just as we would expect.
 
 Now let us take $n=-2$ instead for demonstration purposes and see what happens when $t->infinity$.
@@ -703,7 +703,7 @@ $ conc("A")_(t) = (conc("A")_(0)^3 + 6 k dot infinity)^(1\/3) $
 At first glance, this may seem unusual.
 We have $[A]_t$ increasing with $t$ without bound despite being the reactant.
 The reason for this seemingly odd behavior is that we specifically derived the integrated rate law for an _elementary_ reaction.
-If we have $n<0$, then we must instead be describing the reverse reaction, such that $conc("A")_t$ increases with time from its starting value of $conc("A")_0$.
+If we have $n<0$, then we must instead be describing the reverse reaction, such that $conc("A")$ increases with time from its starting value of $conc("A")_0$.
 
 === Coupled Reactions <coupled-reactions>
 
@@ -722,15 +722,14 @@ $
 To understand the behavior of this coupled reaction, our next step is to integrate with respect to time.
 We will consider the reaction starting at $t=0$ with only the reagent (A) and no intermediates (B) or products (C).
 As before, we know that
-$ conc("A")_t = conc("A")_0 e^(-k_1 t). $<eq:sequentiial_A>
+$ conc("A") = conc("A")_0 e^(-k_1 t). $<eq:sequentiial_A>
 Now we can substitute #ref(<eq:sequentiial_A>) into the expression for $r_"B "$ to arrive at
-$ (dif conc("B")) / (dif t) = conc("A")_0 e^(-k_1 t) - k_2 conc("B"). $
+$ (dif conc("B")) / (dif t) = k_1 conc("A")_0 e^(-k_1 t) - k_2 conc("B"). $
 The integration here is a bit messy, but one can show with some effort that
-$ conc("B")_t = (k_1 conc("A")_0) / (k_2 - k_1) (e^(-k_1 t) - e^(-k_2 t)). $<eq:sequential_B>
-From here, we can find $conc("C")_t$ by simplying relying on the conservation of mass:
-$ conc("C")_t = conc("A")_0 - conc("A")_t -conc("B")_t $
-$ conc("C")_t = conc("A")_0 - conc("A")_0 e^(-k_1 t) - (k_1 conc("A")_0)/(k_2 - k_1) (e^(-k_1 t)- e^(-k_2 t)) $
-$ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t) - k_1/(k_2 - k_1) (e^(-k_1 t)- e^(-k_2 t))). $
+$ conc("B") = conc("A")_0 (k_1) / (k_2 - k_1) (e^(-k_1 t) - e^(-k_2 t)). $<eq:sequential_B>
+From here, we could once again substitute and integrate to find $conc("C")$.
+That said, it is a fair bit simpler to just invoke the conservation of mass:
+$ conc("C") = conc("A")_0 - conc("A") -conc("B"). $
 
 #plot[#align(center)[https://marimo.app/l/2emhpu]]
 
@@ -804,40 +803,43 @@ While this procedure may show that a proposed reaction mechanism is consistent w
 
 ==== Mathematical Argument
 
-One of the most widely used assumptions in reaction network analysis is the pseudo-state state hypothesis (PSSH), which allows for the assumption that the net rate of change of a species, $r_j$, can be approximated as zero if the $j$-th intermediate is extremely short-lived.
+One of the most widely used assumptions in reaction network analysis is the pseudo-state state hypothesis (PSSH), which allows for the assumption that the net rate of change of a species, $r_j$, can be approximated as zero if $A_j$ is extremely short-lived.
 This approximation is most commonly invoked for high-energy intermediates, such as radical species, and is valid after a (typically brief) induction period.
 It generally requires that the intrinsic rate of consumption of the intermediate is much greater than the rate(s) of production, such as species B in the elementary reaction sequence
 $ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C"), quad r_2>>r_1. $
 
-This is the typical description of PSSH, but it is worth being a bit more precise.
-Whenever we say that something can be approximated as zero in kinetics, we should be asking "with respect to what?"
-As we will show below, it does _not_ mean that #conc("B") is constant, and this is a subtle but important distinction to make.
+If we were to invoke PSSH, we would state $r_ce("B") approx 0$.
+Note that it does _not_ mean that we directly set #conc("B") to zero or a constant value, which would have the potential to over-simplify the equations, as we will justify below.
 
-To demonstrate this point, we will revisit the solutions to the differential equations that were derived for the #ce("A->B->C") series reaction in #ref(<coupled-reactions>):
-$ conc("A")_t = conc("A")_0 e^(-k_1 t). $
-$ conc("B")_t = (k_1 conc("A")_0) / (k_2 - k_1) (e^(-k_1 t) - e^(-k_2 t)). $
-$ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t) - k_1/(k_2 - k_1) (e^(-k_1 t)- e^(-k_2 t))). $
+To demonstrate the PSSH, we will revisit the solutions to the differential equations that were derived for the #ce("A->B->C") series reaction in #ref(<coupled-reactions>):
+$ conc("A") = conc("A")_0 e^(-k_1 t). $
+$ conc("B") = conc("A")_0 (k_1 ) / (k_2 - k_1) (e^(-k_1 t) - e^(-k_2 t)). $
+$ conc("C") = conc("A")_0 - conc("A") -conc("B"). $
 
-If $r_2>>r_1$ and we treat $conc("B")_t$ as small (e.g. in the case of B being a highly reactive intermediate), then $k_2>>k_1$ and we have
-$ conc("A")_t = conc("A")_0 e^(-k_1 t) $
-$ conc("B")_t = (k_1 conc("A")_0) / (k_2) e^(-k_1 t) $
-$ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t)). $
+If $r_2>>r_1$ and we treat $conc("B")$ as small (e.g. in the case of B being a highly reactive intermediate), then we can conclude $k_2>>k_1$ and we can approximate the above expressions as follows:
+#footnote[Note that, although $k_1\/k_2 <<0$, we cannot directly set $conc("B") = 0$ because never producing B would mean that C would never be produced.]
+$ conc("A") = conc("A")_0 e^(-k_1 t) $
+$ conc("B") = conc("A")_0 (k_1) / (k_2) e^(-k_1 t) = k_1/k_2 conc("A") $<eq:b_before_pssh>
+$ conc("C") = conc("A")_0 (1- e^(-k_1 t)). $
 
-Note how $conc("B")_t$ is not a constant and, in fact, changes with $t$.
-Of course, the value of $conc("B")_t$ at any given point in time is extremely small since $r_2>>r_1$, but it is an ever-changing value all the same.
+Now what would the expressions look like if we specifically invoked the PSSH condition of $r_ce("B") approx 0$ from the very beginning?
+Given that we are dealing with elementary reactions, we can state
+$ r_ce("B") = k_1 conc("A") - k_2 conc("B") $
+and, therefore, by setting $r_ce("B") approx 0$ we have
+$ conc("B") = k_1/k_2 conc("A"). $
+This is exactly the same expression as #ref(<eq:b_before_pssh>), justifying our use of the PSSH in this scenario.
+Also note that #conc("B") is not a constant, and --- while certainly small --- it changes linearly with #conc("A").
 
-If we take the time derivatives of each expression, we have
-$ r_"A " = (dif conc("A")_t)/(dif t) = -k_1 conc("A")_0 e^(-k_1 t) $
-$ r_"B " = (dif conc("B")_t)/(dif t) = - (k_1^2 conc("A")_0) / (k_2) e^(-k_1 t) $
-$ r_"C " = (dif conc("C")_t)/(dif t) = k_1 conc("A")_0 e^(-k_1 t). $
 
-Even though $conc("B")_t$ is not a constant value, it is clear from the above expressions that $r_"B " approx 0$ since $k_2>>k_1$.
-This is the proper way to think about PSSH.
-After all, if $r_"B " = 0$ exactly then it would be true steady-state, not a pseudo-steady state.
-We can also see from the above expressions that $r_"A " = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
+If we take the time derivatives of each expression, we can observe some other interesting behavior:
+$ r_"A " = (dif conc("A"))/(dif t) = - conc("A")_0 k_1 e^(-k_1 t) $
+$ r_"B " = (dif conc("B"))/(dif t) = - conc("A")_0 (k_1^2) / (k_2) e^(-k_1 t) $
+$ r_"C " = (dif conc("C"))/(dif t) = conc("A")_0 k_1 e^(-k_1 t). $
+
+We can see from the above expressions that $r_"A " = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
 Of course, this is merely an _approximation_, but it is a quite useful one.
 
-#plot[#align(center)[https://marimo.app/l/gfflq4]]
+#plot[#align(center)[https://marimo.app/l/bxr9r8]]
 
 ==== Demonstration
 
@@ -969,7 +971,7 @@ It is for this reason that these steps are excluded in the provided mechanism.
   caption: "Bond dissociation enthalpies at 298 K."
 )  <table:bdes>
 
-Later in the course, we will describe a related principle known as the Bell--Evans--Polanyi principle, which states that for $E_"a " prop Delta H^std$ for a given reaction family.#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
+Later in the course, we will describe a related principle known as the Bell--Evans--Polanyi principle, which states that for $E_"a " prop Delta H^std$ for a given reaction family (linaerly via the empirical relationship $E_"a "  = E_0 + alpha Delta H^std$).#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
 The more endothermic the reaction enthalpy is, the higher the activation barrier may be.
 
 === Quasi-Equilibrium Approximation
@@ -979,15 +981,16 @@ Note that we are referring to a _reaction_ here rather than the lifetime of a _s
 
 Let us consider
 $
-ce("NO + Br2") &eqArrow(k_1,opposite:k_(-1)) ce("NOBr_2") quad (r_(1), r_(-1) >> r_2)\
-ce("NOBr2 + NO") &fwdArrow(k_2) ce("2 NOBr").
+ce("NO + Br2") &eqArrow(k_1,opposite:k_(-1)) ce("NOBr_2") quad ("fast")\
+ce("NOBr2 + NO") &fwdArrow(k_2) ce("2 NOBr") quad ("slow"),
 $
+where we are stating $r_(1), r_(-1) >> r_2$.
 
 We can write out our rate of product production as
 $ r_"P " = 2 k_2 conc("NOBr2") conc("NO"). $<eq:rate_pre_eq>
 Since we would not like to deal with a concentration of an intermediate, we will need to get rid of #conc("NOBr2").
 If were to proceed as usual, we would write out $r_ce("NOBr2")$ and continue from there.
-However, by acknowledging the fact that the first step (both forward and reverse) is much faster than the second step, we can assume that it is in quasi-equilibrium.
+However, by acknowledging the fact that the first step (both forward and reverse) is much faster than the second step, we can assume that it is in quasi-equilibrium (also referred to as rapidly equilibrated).
 The way to rationalize this is that perturbing the system slightly (e.g. removing #ce("NOBr2")) would cause a near-immediate return to its original state (e.g. by producing more #ce("NOBr2")).
 This allows us to state that the forward and reverse rates for step one are approximately the same:
 $ k_1 conc("NO") conc("Br2") approx k_(-1) conc("NOBr2") $
@@ -996,7 +999,7 @@ $ conc("NOBr2") approx K_1 conc("NO") conc("Br2"), $
 as expected from the definition of the equilibrium constant: $K_1 equiv k_1 \/k_(-1)$.
 Substituting in #conc("NOBr2") into #ref(<eq:rate_pre_eq>) yields
 $ r_"P " = 2 k_2  K_1 conc("NO") conc("Br2") conc("NO"). $
-Naturally, we can combine constants together via $k_"app" equiv k_2 K_1$ and arrive at
+Naturally, we can combine constants together via $k_"app" equiv k_2 K_1$ if desired and arrive at
 $ r_"P " = 2 k_"app" conc("NO")^2 conc("Br2"). $
 
 Importantly, it must be emphasized that the result would be very different if we instead invoked PSSH.
@@ -1013,9 +1016,11 @@ $ ce("NO2 + CO -> NO + CO2"). $
 
 From experiments, it is known that the rate appears to only be dependent on #ce("NO2") and is second order in #ce("NO2"). Once more, it is clear from the net reaction above that there must be elementary steps not shown. In fact, there are two:
 $
-ce("2 NO2") &fwdArrow(k_1) ce("NO + NO3^∙") quad (r_1 << r_(-2),r_2)\
-ce("NO3^∙ + CO") &eqArrow(k_2,opposite:k_(-2)) ce("NO2 + CO2").
+ce("2 NO2") &fwdArrow(k_1) ce("NO + NO3^∙") quad ("slow")\
+ce("NO3^∙ + CO") &eqArrow(k_2,opposite:k_(-2)) ce("NO2 + CO2") quad ("fast"),
 $
+where we are stating $r_1 << r_(-2),r_2$.
+
 For the reaction to be second-order in #conc("NO2") and not depend on other species, it is evident that the first step must be substantially slower than the second step such that it dominates the kinetic expression.
 Indeed, that is the case: the bimolecular reaction of two #ce("NO2") molecules is substantially slower than the reaction of #ce("NO3^∙") and #ce("CO"), such that it is the former that dominates.
 The rate law in this case is
@@ -2945,7 +2950,7 @@ This is much simpler, but there is still more to be done here.
 We will take advantage of another thermodynamic relationship
 $ ((diff P)/(diff n_j))_(T,V,n_(k != j)) = accent(V,macron)_j / (V kappa), $
 where $accent(V,macron)_j$ is the partial molar volume of species $j$ and $kappa$ is the isothermal compressibility defined as
-$ kappa equiv -1/V ((diff V)/(diff P))_T. $
+$ kappa equiv -1/V ((diff V)/(diff P)). $
 Plugging this in, we get
 $ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T  sum_j accent(V,macron)_j  (dif n_j)/(dif t)   &= - V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
 
