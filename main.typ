@@ -474,7 +474,7 @@ The value for $C^std$ is typically taken as 1 mol/L for liquids but should alway
 When describing the activities of gases, it is general convention to refer to the fugacity (the effective partial pressure) of a species, $f_j$, or a dimensionless fugacity coefficient $phi_j$ as follows:
 $ a_j = f_j/p^std = phi_j y_j p/p^std, $<eq:activity2>
 where $p^std$ is the standard-state reference pressure typically taken as 1 bar but should always be mentioned when reporting data.
-For an ideal gas ($phi_j=1$), we can state that $f_j=y_j p =p_j$, such that the partial fugacity is the same as the partial pressure.
+For an ideal gas ($phi_j=1$), we can state that $f_j=y_j p =p_j$, such that the fugacity is the same as the partial pressure.
 The concept of fugacity is simply a matter of terminology and bookkeeping, which will account for attractive intermolecular interactions that can occur at low temperatures or high pressures.
 From a pedagogical perspective, the main takeaway is that activities are the true property of interest for equilibrium calculations, rather than concentrations of partial pressures, in order for everything to be internally consistent.
 
@@ -613,7 +613,7 @@ In fact, that is precisely what #ref(<eq:apparent_e_a_pre>) is stating: take the
 
 We can also define an apparent reaction order, $alpha_(j,"app")$, for each species in a similar manner.
 First, for a reaction #ce("A + B -> C"), we will postulate a power-law rate expression of the form
-$ r = k_"app" conc("A")^alpha conc("B")^beta, $
+$ r = k_"app" conc("A")^(alpha) conc("B")^beta, $
 which can be rewritten as
 $ ln(r) = ln(k_"app") + alpha ln(conc("A")) + beta ln(conc("B")). $
 
@@ -679,7 +679,7 @@ $ n ce("A") fwdArrow(k) m ce("B") $
 where $n$ is an arbitrary stoichiometric number.
 The rate of change in $conc("A")$ can be given by
 $ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $
-#caution[Many sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
+#caution[Most sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
 
 Separating the variables and integrating this expression yields
 $ integral_(conc("A")_0)^conc("A")_t 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
@@ -804,9 +804,9 @@ While this procedure may show that a proposed reaction mechanism is consistent w
 
 ==== Mathematical Argument
 
-One of the most widely used assumptions in reaction network analysis is the pseudo-state state hypothesis (PSSH), which allows for the assumption that the net rate of appearance of a species, $r_j$, can be approximated as zero if the $j$-th intermediate is extremely short-lived.
+One of the most widely used assumptions in reaction network analysis is the pseudo-state state hypothesis (PSSH), which allows for the assumption that the net rate of change of a species, $r_j$, can be approximated as zero if the $j$-th intermediate is extremely short-lived.
 This approximation is most commonly invoked for high-energy intermediates, such as radical species, and is valid after a (typically brief) induction period.
-It generally requires that the intrinsic rate of production of the intermediate is much less than the rate(s) of consumption, such as species B in
+It generally requires that the intrinsic rate of consumption of the intermediate is much greater than the rate(s) of production, such as species B in the elementary reaction sequence
 $ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C"), quad r_2>>r_1. $
 
 This is the typical description of PSSH, but it is worth being a bit more precise.
@@ -823,10 +823,8 @@ $ conc("A")_t = conc("A")_0 e^(-k_1 t) $
 $ conc("B")_t = (k_1 conc("A")_0) / (k_2) e^(-k_1 t) $
 $ conc("C")_t = conc("A")_0 (1 - e^(-k_1 t)). $
 
-#caution[
 Note how $conc("B")_t$ is not a constant and, in fact, changes with $t$.
 Of course, the value of $conc("B")_t$ at any given point in time is extremely small since $r_2>>r_1$, but it is an ever-changing value all the same.
-]
 
 If we take the time derivatives of each expression, we have
 $ r_"A " = (dif conc("A")_t)/(dif t) = -k_1 conc("A")_0 e^(-k_1 t) $
@@ -839,9 +837,7 @@ After all, if $r_"B " = 0$ exactly then it would be true steady-state, not a pse
 We can also see from the above expressions that $r_"A " = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
 Of course, this is merely an _approximation_, but it is a quite useful one.
 
-// TEACHING NOTES:
-// draw this on the board: https://public.websites.umich.edu/~elements/course/lectures/seven/index.htm
-// make a game --- offer candy to the person who guesses the experimentally measured barrier of the rxn below the closest
+#plot[#align(center)[https://marimo.app/l/gfflq4]]
 
 ==== Demonstration
 
@@ -862,7 +858,7 @@ $ ce("NO + O2") eqArrow(k_1, opposite: k_(-1)) ce("NO3^∙") $
 $ ce("NO3^∙ + NO") fwdArrow(k_2) ce("2 NO2") $<eq:no2_slow_step>
 Then we write out the true elementary rate law for $r_ce("NO2")$:
 $ r_ce("NO2") = 2k_2 [ce("NO3^∙")] [ce("NO")]. $<eq:rate_no2>
-Note the factor of two in #ref(<eq:rate_no2>), which is needed because two #ce("NO2") molecules are produced for every reaction of #ce("NO3^∙") and #ce("NO"), as originally noted in #ref(<eq:stoichs>).
+Note the factor of 2 in #ref(<eq:rate_no2>), which is needed because two #ce("NO2") molecules are produced for every reaction of #ce("NO3^∙") and #ce("NO"), as originally noted in #ref(<eq:stoichs>).
 
 At this point, we can invoke the PSSH to simplify matters.
 Namely, the short-lived intermediate #ce("NO3^∙") will have a net rate of formation that is essentially zero:
@@ -875,18 +871,21 @@ $ r_ce("NO2") = (2 k_1 k_2 conc("NO")^2 conc("O2")) / (k_(-1) + k_2 conc("NO")).
 
 There is some particularly unusual behavior for this reaction that is worth taking a further look at.
 It is known that  #ref(<eq:no2_slow_step>) is relatively slow, such that we can state $k_2 conc("NO")<<k_(-1)$ and we can simplify #ref(<eq:rate_no2_rearrange>) to the following:
-$ r_ce("NO2") = (k_1 k_2) / (k_(-1)) conc("NO")^2 conc("O2"), $
+$ r_ce("NO2") = (2 k_1 k_2) / (k_(-1)) conc("NO")^2 conc("O2"). $<eq:r_no2_k>
 which can be rewritten as
-$ r_ce("NO2") = (A_1 A_2) / (A_(-1)) exp(-(E_"a,1" + E_("a,"-1) - E_"a,2") / (R T)) conc("NO")^2 conc("O2"). $<eq:no2_rate_law_real>
+$ r_ce("NO2") = 2 (A_1 A_2) / (A_(-1)) exp(-(E_"a,1" + E_("a,"-1) - E_"a,2") / (R T)) conc("NO")^2 conc("O2"). $<eq:no2_rate_law_real>
 If we define
-$ A_"app." equiv (A_1 A_2) / A_(-1) $
-$ E_"a,app." equiv E_"a,1" + E_("a,"-1) - E_"a,2", $
-where $A_"app."$ and $E_"a,app."$ are an apparent pre-factor and activation barrier, then
-$ r_ce("NO2") = A_"app." exp(-E_"a,app." / (R T)) conc("NO")^2 conc("O2"). $
+$ A_"app" equiv (A_1 A_2) / A_(-1) $
+$ E_"a,app" equiv E_"a,1" + E_("a,"-1) - E_"a,2", $
+where $A_"app"$ and $E_"a,app"$ are an apparent pre-factor and activation barrier,
+#footnote[Note that applying the definition of the apparent activation energy (#ref(<eq:apparent_e_a>)) to $k_"app" equiv k_1 k_2 \/ k_(-1)$ would yield the same expression for $E_"a,app"$.]
+then
+$ r_ce("NO2") = 2 A_"app" exp(-E_"a,app" / (R T)) conc("NO")^2 conc("O2"). $
+From here, the rate of reaction, $r$, can be computed simply as $r_ce("NO2")\/2$.
 
-If $E_"a,app." < 0$, then the reaction can have anti-Arrhenius behavior where the rate _decreases_ with increasing temperature.
+If $E_"a,app" < 0$, then the reaction can have anti-Arrhenius behavior where the rate _decreases_ with increasing temperature.
 Indeed, this reaction is known from experiments to have an empirically measured kinetic barrier of --3.3 kJ/mol.
-This example is also a good demonstration of the fact that one cannot definitively prove a mechanism is accurate, as both #ref(<eq:no2_rate_law>) and #ref(<eq:no2_rate_law_real>) have the same functional form, but the former implies an elementary reaction, whereas the latter implies that there exist multiple steps.
+This example is also a good demonstration of the fact that one cannot definitively prove a mechanism is accurate, as both #ref(<eq:no2_rate_law>) and #ref(<eq:r_no2_k>) have the same functional form, but the former implies an elementary reaction, whereas the latter implies that there exist multiple steps.
 
 === Radical Chain Reactions <radical-chain-propagation>
 
@@ -926,7 +925,7 @@ $ conc("H^∙") = (k_2 sqrt((k_1 conc("Br2")) / k_(-1)) conc("H2")) / (k_(-2) co
 Plugging #ref(<eq:rate_br_rad>) and #ref(<eq:rate_h_rad>) into #ref(<eq:rate_hbr>) yields the desired rate expression, after slogging through some algebra:
 $ r_ce("HBr") = 2k_2 sqrt(k_1 / k_(-1)) conc("H2") sqrt(conc("Br2")) (1 + (k_(-2) conc("HBr")) / (k_3 conc("Br2")))^(-1). $<eq:rate_hbr_big>
 
-As was originally stated, it is known from experiments that the rate expression is one-half order in #ce("Br2") at low conversions.
+As was originally stated, it is known from experiments that the rate expression is one-half order in #conc("Br2") at low conversions.
 A low conversion implies that there is negligible product, such that $conc("HBr") approx 0$. With this observation, we can simplify #ref(<eq:rate_hbr_big>) to
 $ r_ce("HBr") = 2k_2 sqrt(k_1 / k_(-1)) conc("H2") sqrt(conc("Br2")). $
 With such expressions, one will typically combine rate constants for the sake of simplicity and to reduce the number of fitted parameters when validating a rate expression.
@@ -1023,7 +1022,7 @@ The rate law in this case is
 $ r = k_1 conc("NO2")^2, $<eq:rate_no>
 which is based solely on the rate-determing step (i.e. the first reaction).
 It does not contain any transient intermediates in it, so we can leave it as-is without further manipulation.
-Clearly, #ref(<eq:rate_no>) agrees with the experimental observation that the rate appears to be dependent on #ce("NO2") but not #ce("CO").
+Clearly, #ref(<eq:rate_no>) agrees with the experimental observation that the rate appears to be dependent on #conc("NO2") but not #conc("CO").
 
 This example also highlights how the presence of a rate-determining step inherently implies that any other reversible steps are in quasi-equilibrium.
 This is because quasi-equilibrium can generally be invoked when the forward and reverse rates are much faster than the surrounding steps in the proposed mechanism.
