@@ -701,7 +701,7 @@ This time, we have
 $ conc("A")^3 = conc("A")_(0)^3 + 6 k dot infinity $
 $ conc("A") = (conc("A")_(0)^3 + 6 k dot infinity)^(1\/3) $
 At first glance, this may seem unusual.
-We have $[A]$ increasing with $t$ without bound despite being the reactant.
+We have #conc("A") increasing with $t$ without bound despite being the reactant.
 The reason for this seemingly odd behavior is that we specifically derived the integrated rate law for an _elementary_ reaction.
 If we have $n<0$, then we must instead be describing the reverse reaction, such that $conc("A")$ increases with time from its starting value of $conc("A")_0$.
 
@@ -872,7 +872,7 @@ Substituting in #ref(<eq:rate_no3_rad_rearrange>) into #ref(<eq:rate_no2>) yield
 $ r_ce("NO2") = (2 k_1 k_2 conc("NO")^2 conc("O2")) / (k_(-1) + k_2 conc("NO")). $<eq:rate_no2_rearrange>
 
 There is some particularly unusual behavior for this reaction that is worth taking a further look at.
-It is known that  #ref(<eq:no2_slow_step>) is relatively slow compared to the reverse of #ref(<eq:no2_rxn>), such that we can state $k_2 conc("NO")<<k_(-1)$ and we can simplify #ref(<eq:rate_no2_rearrange>) to the following:
+It is known that  #ref(<eq:no2_slow_step>) is relatively slow compared to the reverse of #ref(<eq:no2_rxn>), such that we can state $k_2 <<k_(-1)$ and simplify #ref(<eq:rate_no2_rearrange>) to the following:
 $ r_ce("NO2") = (2 k_1 k_2) / (k_(-1)) conc("NO")^2 conc("O2"). $<eq:r_no2_k>
 which can be rewritten as
 $ r_ce("NO2") = 2 (A_1 A_2) / (A_(-1)) exp(-(E_"a,1" - E_("a,"-1) + E_"a,2") / (R T)) conc("NO")^2 conc("O2"). $<eq:no2_rate_law_real>
