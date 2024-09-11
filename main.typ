@@ -15,13 +15,24 @@
   icon: icon,
   ..args
 )
+#let alternate(title: "Alternate Approach", icon: emoji.face.explode, ..args) = clue(
+  accent-color: blue,
+  title: title,
+  icon: icon,
+  ..args
+)
 #let plot(title: "Interactive Plot", icon: emoji.chart, ..args) = clue(
   accent-color: purple,
   title: title,
   icon: icon,
   ..args
 )
-
+#let tip(title: "Helpful Tip", icon: emoji.brain, ..args) = clue(
+  accent-color: yellow,
+  title: title,
+  icon: icon,
+  ..args
+)
 #let self(title: "Note to Self", icon: emoji.mirror, ..args) = clue(
   accent-color: gray,
   title: title,
@@ -846,36 +857,45 @@ Of course, this is merely an _approximation_, but it is a quite useful one.
 We will now demonstrate the utility of the PSSH in action.
 Consider the following reaction:
 $ ce("2NO + O2 -> 2NO2") $<eq:no2_rxn>
-One might propose based on the stoichiometry a rate law of the form
+One might propose based on the stoichiometry an elementary rate law of the form
 $ r =^? k conc("NO")^2 conc("O2"). $<eq:no2_rate_law>
-It is known from experiments that the rate of production of the product, $r_ce("NO2")$, is second-order in #ce("NO") and first-order in #ce("O2").
-However, termolecular reactions are extremely rare.
-Even stranger, $r_ce("NO2")$ is found to _decrease_ with increasing temperature.
-These details allow us to conclude that #ref(<eq:no2_rxn>) cannot actually be an elementary reaction. 
-We will explain the so-called "anti-Arrhenius" behavior below.
+It is known from experiments that the reaction does appear to be second order in #conc("NO") and first order in #ce("O2").
+However, termolecular reactions are extremely rare, so one might conclude that it would be unlikely for the reaction to proceed as written despite the observed rate law. 
+Unusually, $r$ has also been observed to _decrease_ with increasing temperature.
+These details allow us to definitively conclude that #ref(<eq:no2_rxn>) cannot actually be an elementary reaction. 
+We will rationalize this so-called "anti-Arrhenius" behavior below.
 
 First, we must propose a mechanism.
 Since it is not expected that you know the intricacies of atmospheric chemistry, we will simply take the following as provided to us:
 $ ce("NO + O2") eqArrow(k_1, opposite: k_(-1)) ce("NO3^∙") $
 $ ce("NO3^∙ + NO") fwdArrow(k_2) ce("2 NO2") $<eq:no2_slow_step>
-Then we write out the true elementary rate law for $r_ce("NO2")$:
+Then we write out the elementary rate law for $r_ce("NO2")$ based on #ref(<eq:no2_slow_step>):
 $ r_ce("NO2") = 2k_2 [ce("NO3^∙")] [ce("NO")]. $<eq:rate_no2>
 Note the factor of 2 in #ref(<eq:rate_no2>), which is needed because two #ce("NO2") molecules are produced for every reaction of #ce("NO3^∙") and #ce("NO"), as originally noted in #ref(<eq:stoichs>).
 
-At this point, we can invoke the PSSH to simplify matters.
-Namely, the short-lived intermediate #ce("NO3^∙") will have a net rate of formation that is essentially zero:
+Since #ce("NO3^∙") is a short-lived radical species, we can choose to invoke the PSSH to simplify matters.
+Namely, the PSSH lets us state that the #ce("NO3^∙") will have a net rate of formation that is essentially zero:
 $ r_ce("NO3^∙") approx 0 = k_1 conc("NO") conc("O2") - k_(-1) conc("NO3^∙") - k_2 conc("NO3^∙") conc("NO"). $<eq:rate_no3_rad>
 Ideally, we would like to substitute in for #ce("NO3^∙") in #ref(<eq:rate_no2>) since it is not easy to observe experimentally given its short lifetime.
 With this in mind, we will solve for #ce("NO3^∙") in #ref(<eq:rate_no3_rad>) to get
 $ conc("NO3^∙") = (k_1 conc("NO") conc("O2")) / (k_(-1) + k_2 conc("NO")). $<eq:rate_no3_rad_rearrange>
 Substituting in #ref(<eq:rate_no3_rad_rearrange>) into #ref(<eq:rate_no2>) yields
 $ r_ce("NO2") = (2 k_1 k_2 conc("NO")^2 conc("O2")) / (k_(-1) + k_2 conc("NO")). $<eq:rate_no2_rearrange>
+From here, the rate of reaction, $r$, can be computed simply as $r_ce("NO2")\/2$ since $r = r_j\/nu_j$.
 
-There is some particularly unusual behavior for this reaction that is worth taking a further look at.
-It is known that  #ref(<eq:no2_slow_step>) is relatively slow compared to the reverse of #ref(<eq:no2_rxn>), such that we can state $k_2 <<k_(-1)$ and simplify #ref(<eq:rate_no2_rearrange>) to the following:
+In principle, we can stop with the above expression.
+However, it would not explain the observed rate law.
+If we invoke that $k_(-1)>>k_2 conc("NO")$,
+#footnote[This would be the case if the reverse reaction in Step 1 is much faster than Step 2 since this would imply that $k_(-1) conc("NO3^∙")>>k_2 conc("NO3^∙") conc("NO")$. Most references state that Step 2 is much slower than Step 1 (both forward and reverse), but this would be more consistent with a quasi-equilibrium approximation rather than PSSH.]
+the rate expression would simplify to
 $ r_ce("NO2") = (2 k_1 k_2) / (k_(-1)) conc("NO")^2 conc("O2"). $<eq:r_no2_k>
-which can be rewritten as
-$ r_ce("NO2") = 2 (A_1 A_2) / (A_(-1)) exp(-(E_"a,1" - E_("a,"-1) + E_"a,2") / (R T)) conc("NO")^2 conc("O2"). $<eq:no2_rate_law_real>
+
+This leads us to the first important observation.
+While the simplified rate law above is second order in #conc("NO") and first order in #conc("O2"), which matches the stoichiometry of the net reaction #ce("2NO + O2 -> 2 NO2"), the rate law is clearly not that of an elementary reaction.
+This example illustrates that even if the apparent orders of a reaction match those from the elementary rate law, it does not necessarily imply that a reaction is elementary.
+
+The second important observation is that #ref(<eq:r_no2_k>) can be rewritten as
+$ r_ce("NO2") = (2 A_1 A_2) / (A_(-1)) exp(-(E_"a,1" - E_("a,"-1) + E_"a,2") / (R T)) conc("NO")^2 conc("O2"). $<eq:no2_rate_law_real>
 If we define
 $ A_"app" equiv (A_1 A_2) / A_(-1) $
 $ E_"a,app" equiv E_"a,1" - E_("a,"-1) + E_"a,2", $
@@ -883,26 +903,30 @@ where $A_"app"$ and $E_"a,app"$ are an apparent pre-factor and activation barrie
 #footnote[Note that applying the definition of the apparent activation energy (#ref(<eq:apparent_e_a>)) to $k_"app" equiv k_1 k_2 \/ k_(-1)$ would yield the same expression for $E_"a,app"$.]
 then
 $ r_ce("NO2") = 2 A_"app" exp(-E_"a,app" / (R T)) conc("NO")^2 conc("O2"). $
-From here, the rate of reaction, $r$, can be computed simply as $r_ce("NO2")\/2$.
-
-If $E_"a,app" < 0$, then the reaction can have anti-Arrhenius behavior where the rate _decreases_ with increasing temperature.
-Indeed, this reaction is known from experiments to have an empirically measured kinetic barrier of --3.3 kJ/mol.
-This example is also a good demonstration of the fact that one cannot definitively prove a mechanism is accurate, as both #ref(<eq:no2_rate_law>) and #ref(<eq:r_no2_k>) have the same functional form, but the former implies an elementary reaction, whereas the latter implies that there exist multiple steps.
+Depending on the relative magnitudes of the intrinsic activation energies, it is possible for $E_"a,app" < 0$, in which case the reaction would have anti-Arrhenius behavior where the rate actually _decreases_ with increasing temperature.
+Indeed, this reaction is known from experiments to have an empirically measured kinetic barrier of --3.3 kJ/mol (albeit via a more complex mechanism than the two elementary steps proposed here).
 
 === Radical Chain Reactions <radical-chain-propagation>
 
 Consider the following gas-phase, photochemical reaction:
 $ ce("H2 + Br2 -> 2 HBr"). $<eq:hbr_eq>
 If the reaction were elementary, the rate law would be $r = k conc("H2") conc("Br2")$.
-However, this functional form is known to disagree with kinetic data, which points to a one-half order in #ce("Br2") at low conversions.
+However, this functional form is known to disagree with kinetic data, which points to a one-half order in #ce("Br2") at low conversions of the reagents.
 For this reason, one can immediately conclude that the reaction is not elementary and must, instead, be composed of several substituent elementary reactions with the formation of transient --- but kinetically important --- intermediates.
-The true rate law for #ref(<eq:hbr_eq>) can be found by postulating elementary steps, applying approximations as needed, and solving for a closed-form solution, which we will do below.
+A more representative rate law for #ref(<eq:hbr_eq>) can be found by postulating elementary steps, applying approximations as needed, and solving for a closed-form solution, which we will do below.
 
 First, we must come up with plausible mechanistic steps.
 For pedagogical purposes, we will start by assuming that the following reaction mechanism is known and will back-justify why it makes sense:
 $ ce("Br2") &eqArrow(k_1,opposite:k_(-1)) ce("2 Br^∙") $<eq:rxn_br_1>
 $ ce("Br^∙ + H2") &eqArrow(k_2,opposite:k_(-2)) ce("HBr + H^∙") $<eq:rxn_br_2>
 $ ce("H^∙ + Br2") &fwdArrow(k_3) ce("HBr + Br^∙"). $<eq:rxn_br_3>
+The reaction scheme is depicted in 
+#figure(
+image("figures/br_chain_propagation.svg", width: 33%),
+  caption: [Reaction cycle for the radical chain reaction involving #ce("Br2") and #ce("H2").]
+)<fig:br_chain_prop>
+
+
 
 This mechanism is known as a radical chain propagation mechanism, as radicals are perpetually consumed and produced over the course of the reaction.
 In the forward direction, #ref(<eq:rxn_br_1>) is known as an initiation reaction since it generates radical species that will initiate the larger reaction cascade.
@@ -913,18 +937,32 @@ Note how each elementary step in the mechanism consists of clearly defined colli
 
 With a greater understanding of the proposed mechanism, we will start by writing the elementary rate law for the production of #ce("HBr"), the species produced in the net reaction:
 $ r_ce("HBr") = k_2 conc("Br^∙") conc("H2") - k_(-2) conc("HBr") conc("H^∙") + k_3 conc("H^∙") conc("Br2"). $<eq:rate_hbr>
-To simplify #ref(<eq:rate_hbr>), we will invoke the PSSH, approximating the rate of formation/consumption of both the #ce("Br^∙") and #ce("H^∙") radicals to zero:
+To simplify #ref(<eq:rate_hbr>), we will invoke the PSSH, approximating the rate of formation/consumption of both the #ce("Br^∙") and #ce("H^∙") radicals as zero given their transient nature:
 $
 r_ce("Br^∙") &approx 0 = 2 k_1 conc("Br2") - 2k_(-1) conc("Br^∙")^2 - k_2 conc("Br^∙") conc("H2") + k_(-2) conc("HBr") conc("H^∙") + k_3 conc("H^∙") conc("Br2")
 $<eq:rate_br_rad>
 $
 r_ce("H^∙") &approx 0 = k_2 conc("Br^∙") conc("H2") - k_(-2) conc("HBr") conc("H^∙") - k_3 conc("H^∙") conc("Br2").
 $<eq:rate_h_rad>
-By adding #ref(<eq:rate_br_rad>) and #ref(<eq:rate_h_rad>), we get
-$ conc("Br^∙") = sqrt((k_1 conc("Br2")) / k_(-1)), $<eq:rate_br_dot>
-which we can plug back into #ref(<eq:rate_h_rad>) to yield
-$ conc("H^∙") = (k_2 sqrt((k_1 conc("Br2")) / k_(-1)) conc("H2")) / (k_(-2) conc("HBr") + k_3 conc("Br2")). $
-Plugging #ref(<eq:rate_br_rad>) and #ref(<eq:rate_h_rad>) into #ref(<eq:rate_hbr>) yields the desired rate expression, after slogging through some algebra:
+Ultimately, we want to be able to write $r_ce("HBr")$ without any transient intermediates in it.
+We can start by noting that if we add together #ref(<eq:rate_br_rad>) and #ref(<eq:rate_h_rad>), then we get
+#footnote[Naturally, we ignore the negative root, which would be unphysical.]
+$ conc("Br^∙") = sqrt((k_1 conc("Br2")) / k_(-1)). $<eq:rate_br_dot>
+
+#alternate[
+Before continuing, it is worth noting a slightly simpler way we could have approached this problem.
+In invoking the pseudo-steady state hypothesis on $ce("Br^∙")$, we were able to assume that $r_ce("Br^∙") approx 0$.
+Since initiation and termination reactions alter the concentration of radical species but propagation reactions collectively do not, we can state that the rate of initiation must equal the rate of termination for the free radical species.
+Applying this to $ce("Br^∙")$ results in
+$ 2 k_1 conc("Br2") = 2k_(-1) conc("Br^∙")^2, $
+which is the same as
+$ conc("Br^∙") = sqrt((k_1 conc("Br2"))/k_(-1)) $
+that was found with #ref(<eq:rate_br_dot>).
+]
+
+With an expression for #conc("Br^∙"), we can plug #ref(<eq:rate_br_dot>) plug back into #ref(<eq:rate_h_rad>) to yield
+$ conc("H^∙") = (k_2 sqrt((k_1 conc("Br2")) / k_(-1)) conc("H2")) / (k_(-2) conc("HBr") + k_3 conc("Br2")). $<eq:rate_h_dot>
+Plugging #ref(<eq:rate_br_dot>) and #ref(<eq:rate_h_dot>) into #ref(<eq:rate_hbr>) yields the desired rate expression, after slogging through some algebra:
 $ r_ce("HBr") = 2k_2 sqrt(k_1 / k_(-1)) conc("H2") sqrt(conc("Br2")) (1 + (k_(-2) conc("HBr")) / (k_3 conc("Br2")))^(-1). $<eq:rate_hbr_big>
 
 As was originally stated, it is known from experiments that the rate expression is one-half order in #conc("Br2") at low conversions.
@@ -936,26 +974,17 @@ $ k_"app" equiv k_2 sqrt(k_1 / k_(-1)), $
 such that
 $ r_ce("HBr") = 2 k_"app" conc("H2") sqrt(conc("Br2")) $<eq:rate_hbr_low_conversions>
 at low conversions.
-As expected, #ref(<eq:rate_hbr_low_conversions>) has an apparent one-half order in #conc("Br2").
-
-Before continuing, it is worth noting a slightly simpler way we could have approached this problem.
-In invoking the pseudo-steady state hypothesis on $ce("Br^∙")$, we were able to assume that $r_ce("Br^∙") approx 0$.
-Since initiation and termination reactions alter the concentration of radical species but propagation reactions collectively do not, we can state that the rate of initiation equals the rate of termination for the free radical species.
-Applying this to $ce("Br^∙")$ results in
-$ 2 k_1 conc("Br2") = 2k_(-1) conc("Br^∙")^2, $
-which is the same as
-$ conc("Br^∙") = sqrt((k_1 conc("Br2"))/k_(-1)) $
-that was found with #ref(<eq:rate_br_dot>).
+As expected, #ref(<eq:rate_hbr_low_conversions>) has an apparent one-half order in #conc("Br2") in this regime and is consistent with observations from experiments.
+Of course, that does not necessarily prove that the proposed mechanism is the true mechanism, but it does mean it is at the very least plausible.
 
 === Using Bond-Dissociation Enthalpies
 
 When looking at the proposed mechanism in #ref(<radical-chain-propagation>), one might ask why certain plausible reactions were omitted.
+For instance, it would be worth asking why we did not include the following reactions:
+$ ce("H2 -> 2H^∙"), quad quad ce("HBr -> H^∙ + Br^∙"). $
 This can be explained from an analysis of the bond dissociation energies for each relevant species.
 A bond dissociation energy is, as the name suggests, the reaction energy required to dissociate a chemical bond.
-The room-temperature bond dissociation enthalpies, $Delta H^std_"rxn"$, can be found in #ref(<table:bdes>).
-As is evident from looking at a potential energy diagram, the definition of the transition state implies that it must be _at least_ as large as the bond-dissociation energy, so bond-dissociation energies can be thought of as a lower-bound on the possible value for $E_"a "$.
-With this in mind, based on #ref(<table:bdes>) we can state that the rate constants for #ce("H2 -> 2H^∙") and #ce("HBr -> H^∙ + Br^∙") would be small relative to the rate constants of the other steps, such that their rates of reaction can be neglected under most reasonable reaction conditions.
-It is for this reason that these steps are excluded in the provided mechanism.
+The room-temperature bond dissociation enthalpies, $Delta H^std_"rxn"$, for several gas-phase species relevant to the #ce("H2 + Br -> 2 HBr") radical chain reaction can be found in #ref(<table:bdes>).
 
 #figure(
   table(
@@ -971,50 +1000,66 @@ It is for this reason that these steps are excluded in the provided mechanism.
   caption: "Bond dissociation enthalpies at 298 K."
 )  <table:bdes>
 
-Later in the course, we will describe a related principle known as the Bell--Evans--Polanyi principle, which states that for $E_"a " prop Delta H^std$ for a given reaction family (linaerly via the empirical relationship $E_"a "  = E_0 + alpha Delta H^std$).#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
-The more endothermic the reaction enthalpy is, the higher the activation barrier may be.
+As is evident from looking at a potential energy diagram, the definition of the transition state implies that it must be _at least_ as large as the bond-dissociation energy, so bond-dissociation energies can be thought of as a lower-bound on the possible value for $E_"a "$.
+With this in mind, based on #ref(<table:bdes>) we can reasonably conclude that the rate constants for #ce("H2 -> 2H^∙") and #ce("HBr -> H^∙ + Br^∙") would likely be small relative to the rate constants of the other steps, such that their rates of reaction can be neglected under most reasonable reaction conditions.
+It is for this reason that these steps are excluded in the provided mechanism.
+
+#self[Draw a potential energy diagram here.]
+
+Later in the course, we will describe a related rule-of-thumb known as the Bell--Evans--Polanyi (BEP) principle, which states that for $E_"a " prop Delta H^std$ for a given reaction family.#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
+Namely, as we will later show,
+$ E_"a "  = E_0 + alpha Delta H^std, $
+where this relationship can be thought of as being largely empirical.
+Nonetheless, it implies that --- for a given reaction family --- the more endothermic the reaction enthalpy is, the higher the activation barrier tends to be.
 
 === Quasi-Equilibrium Approximation
 
+==== Description
+
 Distinct from the PSSH, we can consider a scenario where one or more of the reversible reaction steps are effectively in equilibrium.
 Note that we are referring to a _reaction_ here rather than the lifetime of a _species_, the latter of which was the case when invoking PSSH.
+For the sake of clarity, the following categorization typically applies: $ eqArrow("slow",opposite:"fast") ce("X") fwdArrow("fast") quad ("PSSH"), quad quad quad eqArrow("fast",opposite:"fast") ce("X") fwdArrow("slow") quad ("quasi-equilibrium"), $
+where PSSH would imply that $r_ce("X") approx 0$, and the quasi-equilibrium approxmation would imply that $r_1 = r_(1)^+ - r_(1)^- approx 0$, where $r_1$ is the net rate of the fast equilibrium step.
+The way to rationalize the quasi-equilibrium approximation is that perturbing the system slightly (e.g. removing #ce("X")) would cause a near-immediate return to its original state (e.g. by producing more #ce("X")).
+In other words, the reaction is rapidly equilibrated.
 
-Let us consider
+==== Demonstration
+
+Let us consider the net reaction #ce("2 NO + Br2 <--> 2 NOBr"). A proposed mechanism can be given as follows:
 $
 ce("NO + Br2") &eqArrow(k_1,opposite:k_(-1)) ce("NOBr_2") quad ("fast")\
 ce("NOBr2 + NO") &fwdArrow(k_2) ce("2 NOBr") quad ("slow"),
 $
-where we are stating $r_(1), r_(-1) >> r_2$.
+where we are stating $r_(1), r_(-1) >> r_2$, and we have an intermediate #ce("NOBr2") that does not appear in the net reaction equation.
 
-We can write out our rate of product production as
+We can write out our rate of product production, $r_ce("P")$, as
 $ r_"P " = 2 k_2 conc("NOBr2") conc("NO"). $<eq:rate_pre_eq>
-Since we would not like to deal with a concentration of an intermediate, we will need to get rid of #conc("NOBr2").
+Since we would not like to deal with a concentration of an intermediate in our rate expression, we will need to get rid of #conc("NOBr2").
 If were to proceed as usual, we would write out $r_ce("NOBr2")$ and continue from there.
-However, by acknowledging the fact that the first step (both forward and reverse) is much faster than the second step, we can assume that it is in quasi-equilibrium (also referred to as rapidly equilibrated).
-The way to rationalize this is that perturbing the system slightly (e.g. removing #ce("NOBr2")) would cause a near-immediate return to its original state (e.g. by producing more #ce("NOBr2")).
-This allows us to state that the forward and reverse rates for step one are approximately the same:
+However, by acknowledging the fact that the first step (both forward and reverse) is much faster than the second step, we can assume that it is in quasi-equilibrium.
+This allows us to state that the forward and reverse rates for Step 1 are approximately the same:
 $ k_1 conc("NO") conc("Br2") approx k_(-1) conc("NOBr2") $
 or
 $ conc("NOBr2") approx K_1 conc("NO") conc("Br2"), $
 as expected from the definition of the equilibrium constant: $K_1 equiv k_1 \/k_(-1)$.
 Substituting in #conc("NOBr2") into #ref(<eq:rate_pre_eq>) yields
-$ r_"P " = 2 k_2  K_1 conc("NO") conc("Br2") conc("NO"). $
+$ r_"P " = 2 k_2  K_1 conc("NO")^2 conc("Br2"). $
 Naturally, we can combine constants together via $k_"app" equiv k_2 K_1$ if desired and arrive at
 $ r_"P " = 2 k_"app" conc("NO")^2 conc("Br2"). $
-
-Importantly, it must be emphasized that the result would be very different if we instead invoked PSSH.
-If we were to invoke the PSSH here, we would be saying that $r_"I "=0$.
-This assumption is not valid in the current scenario because #ce("NOBr2") is not short-lived due to the slow nature of step two.
+The rate law for the reaction, $r$, would simply be $r = r_ce("P")\/2$ due to the fact that $r = r_j\/nu_j$.
+The rate law derived here is consistent with the experimentally observed rate law, which is reassuring.
+Before continuing, it must be re-emphasized that the result would be quite different if we instead invoked PSSH where we would instead be saying that $r_ce("NOBr2")=0$.
 
 === Rate-Determining Step <rate-determining-step>
 
-Here, we will assumptions to the logical extreme  and consider what happens when one reaction step completely dominates the overall kinetics: a concept known as the rate-determining step.
+Here, we will take our assumptions to the logical extreme and consider what happens when one reaction step completely dominates the overall kinetics: a concept known as the rate-determining step.
 
 Consider the following reaction:
 
 $ ce("NO2 + CO -> NO + CO2"). $
 
-From experiments, it is known that the rate appears to only be dependent on #ce("NO2") and is second order in #ce("NO2"). Once more, it is clear from the net reaction above that there must be elementary steps not shown. In fact, there are two:
+From experiments, it is known that the rate appears to only be dependent on #conc("NO2"), for which it is second order in #conc("NO2"). Since this does not match the stoichiometry, we cacn immediately conclude that there must be elementary steps not shown.
+In fact, there are two:
 $
 ce("2 NO2") &fwdArrow(k_1) ce("NO + NO3^∙") quad ("slow")\
 ce("NO3^∙ + CO") &eqArrow(k_2,opposite:k_(-2)) ce("NO2 + CO2") quad ("fast"),
@@ -1022,23 +1067,24 @@ $
 where we are stating $r_1 << r_(-2),r_2$.
 
 For the reaction to be second-order in #conc("NO2") and not depend on other species, it is evident that the first step must be substantially slower than the second step such that it dominates the kinetic expression.
-Indeed, that is the case: the bimolecular reaction of two #ce("NO2") molecules is substantially slower than the reaction of #ce("NO3^∙") and #ce("CO"), such that it is the former that dominates.
-The rate law in this case is
+Indeed, that is the case: the bimolecular reaction of two #ce("NO2") molecules is substantially slower than the reaction of #ce("NO3^∙") and #ce("CO").
+The rate law in this case can be approximated as
 $ r = k_1 conc("NO2")^2, $<eq:rate_no>
 which is based solely on the rate-determing step (i.e. the first reaction).
 It does not contain any transient intermediates in it, so we can leave it as-is without further manipulation.
-Clearly, #ref(<eq:rate_no>) agrees with the experimental observation that the rate appears to be dependent on #conc("NO2") but not #conc("CO").
+Clearly, #ref(<eq:rate_no>) agrees with the experimental observation that the rate appears to be dependent on $conc("NO2")^2$ but not on #conc("CO").
 
-This example also highlights how the presence of a rate-determining step inherently implies that any other reversible steps are in quasi-equilibrium.
+This example also highlights how the presence of a rate-determining step inherently implies that any other reversible steps are inherently in quasi-equilibrium.
 This is because quasi-equilibrium can generally be invoked when the forward and reverse rates are much faster than the surrounding steps in the proposed mechanism.
 
 #caution[
 While it is tempting to invoke a rate-determining step since it greatly simplifies the algebra, one should be cautious about doing so without being extremely precise about what is being invoked.
 Let's revisit a similar set of reactions:
 $
-ce("A") &eqArrow(k_1, opposite:k_(-1)) ce("B") quad (k_1 << k_(-1), k_2)\
-ce("B") &fwdArrow(k_2) ce("C").
+ce("A") &eqArrow(k_1, opposite:k_(-1)) ce("B") quad (k_1 "extremely small")\
+ce("B") &fwdArrow(k_2) ce("C"),
 $
+where $k_1<<k_(-1),k_2$.
 Here, we are considering a set of reactions where the forward rate constant of the first step is very small with respect to that of the reverse reaction and second step.
 Without invoking any assumptions about rate-determining steps yet, the rate of reaction can be derived in the usual way as
 $ r = (k_1 k_2) / (k_(-1) + k_2) conc("A"). $<eq:rds_1>
@@ -1049,8 +1095,8 @@ If $k_(-1) << k_2$, then indeed we can state that #ref(<eq:rds_1>) can be correc
 However, we have made no specific assumption in the problem statement about the value of $k_(-1)$ with respect to $k_2$.
 If $k_(-1) >> k_2$, then we have
 $ r = (k_1 k_2) / k_(-1) conc("A"), $
-which does not equal the rate-determining step solution either.
-As such, it is difficult to justify calling $ce("A") -> ce("B")$ the rate-limiting step if $k_1$ does not necessarily have an outsized influence on the rate.
+which does not equal the rate-determining step solution.
+Furthermore, it would be difficult to justify calling $ce("A") --> ce("B")$ the rate-determining step if $k_1$ has precisely the same weight as $k_(-1)$ and $k_2$.
 This exercise is simply to demonstrate that a rate-determining step cannot necessarily be invoked from information about $k$ alone.
 #footnote[For additional details, refer to S. Kozuch, J.M.L. Martin, "The Rate-Determining Step is Dead. Long Live the Rate-Determining State!", _ChemPhysChem_, 12, 1413--1418 (2011).]
 ]
@@ -1058,16 +1104,18 @@ This exercise is simply to demonstrate that a rate-determining step cannot neces
 
 === Pressure-Dependent Rate Constants <pressure-dependent-rate-coefficients>
 
+While pressure is not a component in the definition of the intrinsic rate constant, it turns out that some reactions do exhibit pressure-dependent apparent rate constants, which we will demonstrate below.
+
 Consider the following isomerization reaction:
 $ ce("CH3NC -> CH3CN"). $
 If this reaction were elementary, first-order kinetics would be observed. However, experiments have shown that this is only true at high pressures.
 Herein, we will explain this anomaly by invoking the Lindemann mechanism.
 #footnote[The Lindemann mechanism is useful from a pedagogical standpoint, but, in reality, it is not quantitatively accurate. For a more accurate treatment, refer to the Rice--Ramsperger--Kassel--Marcus (RRKM) theory.]
 
-The Lindemann mechanism states that the unimolecular reaction #ce("A -> B") can be described by the following steps:
+The Lindemann mechanism states that a unimolecular reaction #ce("A -> B") can be described by the following steps:
 $ ce("A + M") eqArrow(k_1,opposite:k_(-1)) ce("A^* + M") $<eq:lindemann_rxn>
 $ ce("A^*") fwdArrow(k_2) ce("B "), $
-where #ce("A ") is the reactant, #ce("A^*") is the "activated" form of #ce("A "), and #ce("M ") is a gas molecule that imparts sufficient energy into #ce("A ") to cause its further reaction.
+where #ce("A ") is the reactant, #ce("A^*") is the "activated" form of #ce("A "), and #ce("M ") is a gas molecule that imparts sufficient energy into #ce("A ") to initiate the reaction.
 
 The rate of production of B based on the above mechanism can be given by
 $ r_ce("B ") = k_2 conc("A^*"). $
@@ -1075,17 +1123,17 @@ Since #ce("A^*") is a high-energy species that can spontaneously decompose, we c
 This allows us to state
 $ r_ce("A^*") approx 0 = k_1 conc("A") conc("M") - k_(-1) conc("A^*") conc("M") - k_2 conc("A^*"). $
 Solving for #conc("A^*") yields
-$ conc("A^*") = (k_1 conc("M") conc("A")) / (k_2 + k_(-1) conc("M")). $<eq:lindemann_a_rad>
+$ conc("A^*") = (k_1 conc("A") conc("M") ) / (k_(-1) conc("M") + k_2). $<eq:lindemann_a_rad>
 Combining #ref(<eq:lindemann_rxn>) and #ref(<eq:lindemann_a_rad>) results in the following rate expression without any transient intermediates in it:
-$ r_ce("B ") = (k_1 k_2 conc("M") conc("A")) / (k_2 + k_(-1) conc("M")). $
+$ r_ce("B ") = (k_1 k_2 conc("M") conc("A")) / (k_(-1) conc("M") + k_2). $
 
 Let's now consider the behavior in different pressure regimes.
 In the low pressure limit, $conc("M") approx 0$ since there are few other particles for #ce("A ") to collide with.
-In such scenarios, we have
-$ r_("B ") approx k_1 conc("M") conc("A") quad ("low" P). $
-At high pressures, $conc("M") >> 0$ since there are many opportunities for collisions, resulting in
+In such scenarios, it is reasonable to propose that we have $k_(-1) conc("M") << k_2$, such that
+$ r_("B ") approx k_1 conc("A") conc("M") quad ("low" P). $
+At high pressures, $conc("M") >> 0$ since there are many opportunities for collisions, resulting in $k_(-1) conc("M") >> k_2$, such that
 $ r_("B ") approx (k_1 k_2) / (k_(-1)) conc("A") quad ("high" P). $
-From this analysis, we can conclude that at low pressures, the rate expression would appear as second-order, whereas at high pressures, the rate expression would appear first-order.
+From this analysis, we can conclude that at low pressures, the rate expression would appear as second-order overall, whereas at high pressures, the rate expression would appear first-order overall.
 
 
 == Enzyme Kinetics <enzyme-kinetics>
@@ -1394,6 +1442,8 @@ Both the Freundlich and Tóth isotherms were proposed as ways to deal with surfa
 The Temkin isotherm was proposed as a way to indirectly deal with adsorbate--adsorbate interactions.
 
 ==== BET Theory for Multilayer Adsorption
+
+_This is an "advanced topic" not discussed in class and provided solely for the interested reader._
 
 The models we have discussed so far assume that there is only a monolayer of adsorbates along the surface.
 However, multiple layers of adsorbates that are stabilized by van der Waals interactions are oftentimes possible, particularly at low temperatures and high gas pressures.
