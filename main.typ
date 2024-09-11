@@ -1143,7 +1143,7 @@ From this analysis, we can conclude that at low pressures, the rate expression w
 The reactions described in this chapter are entirely general.
 In fact, the same governing principles can be used to understand biological reactions like those occurring in the presence of enzymes.
 Enzymes, like all catalysts, alter the reaction mechanism in such a way as to reduce the apparent activation energy, increasing the overall rate of reaction.
-In biological systems, this is achieve through the adsorption of a substrate (i.e. reactant), S, at a binding pocket of the enzyme to ultimately produce a given product P via the presence of one or more catalytic intermediates ES (e.g. an enzyme--substrate complex). If we define the free enzyme as E, we can write a simplified reaction mechanism as follows:
+In biological systems, this is achieved through the adsorption of a substrate (i.e. reactant), S, at a binding pocket of the enzyme to ultimately produce a given product P via the presence of one or more catalytic intermediates ES (e.g. an enzyme--substrate complex). If we define the free enzyme as E, we can write a simplified reaction mechanism as follows:
 $
 ce("E + S") &eqArrow(k_1,opposite:k_(-1)) ce("ES") \
 ce("ES") &fwdArrow(k_2) ce("E + P").
@@ -1162,8 +1162,8 @@ $ conc("ES") = (k_1 conc("E") conc("S")) / (k_(-1) + k_2). $
 Knowing the concentration of free enzyme, E, at a given point in time can be quite difficult.
 Fortunately, we can take advantage of the conservation of mass to simplify things a bit. 
 Namely, we can state that the total concentration of enzyme, $#ce("E")_0$, does not change over the course of the reaction such that
-$ conc("E")_0 = conc("E") + conc("ES"). $<eq:michaelis_menten_e_t>
-
+$ conc("E")_0 = conc("E") + conc("ES"), $<eq:michaelis_menten_e_t>
+where we have implicitly assumed that we are starting the reaction from scratch, such that $conc("ES")_0 = 0$.
 By solving for the concentration of E in #ref(<eq:michaelis_menten_e_t>) and substituting the resulting expression into #ref(<eq:michaelis_menten_es>), after a bit of algebraic manipulation we arrive at
 $ conc("ES") = (conc("E")_0 conc("S")) / ((k_(-1) + k_2) / k_1 + conc("S")). $<eq:michaelis_menten_es2>
 Substituting #ref(<eq:michaelis_menten_es2>) into #ref(<eq:rate_michaelis_menten_p>) yields
@@ -1188,7 +1188,7 @@ We have also assumed in this derivation that the production of P is irreversible
 
 === Linearizing the Michelis--Menten Equation <linearizing-the-michaelis-menten-equation>
 
-When analyzing experimental data, it is oftentimes fit to a linear equation.
+When analyzing experimental data, it is oftentimes useful to fit to a linear equation.
 This can be achieved quite readily be rearranging the Michaelis--Menten equation to
 $ 1/r_"P " = K_"M "/V_"max" 1/conc("S") + 1/V_"max". $
 
@@ -1197,7 +1197,8 @@ Such a plot is known as a Linweaver--Burk plot.
 
 #plot[#align(center)[https://marimo.app/l/hbhzeu]]
 
-There is, however, a very important limitation in using Lineweaver--Burk plots; by relying on inverse rate on the $y$-axis and inverse concentration on the $x$-axis, the experimental data will not be distributed evenly across the range of values.
+There is, however, a very important limitation in using Lineweaver--Burk plots.
+By relying on inverse rate on the $y$-axis and inverse concentration on the $x$-axis, the experimental data will not be distributed evenly across the range of values.
 This may result in poorly determined fit parameters $V_"max"$ and $K_"M "$.
 There are many other ways to linearize the Michaelis--Menten equation, which have their own limitations.
 In modern times, it is generally recommended to do nonlinear regression on the Michaelis--Menten equation directly to avoid such complications.
