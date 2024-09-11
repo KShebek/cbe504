@@ -886,7 +886,7 @@ From here, the rate of reaction, $r$, can be computed simply as $r_ce("NO2")\/2$
 In principle, we can stop with the above expression.
 However, it would not explain the observed rate law.
 If we invoke that $k_(-1)>>k_2 conc("NO")$,
-#footnote[This would be the case if the reverse reaction in Step 1 is much faster than Step 2 since this would imply that $k_(-1) conc("NO3^∙")>>k_2 conc("NO3^∙") conc("NO")$. Most references state that Step 2 is much slower than Step 1 (both forward and reverse), but this would be more consistent with a quasi-equilibrium approximation rather than PSSH.]
+#footnote[This would be the case if the reverse reaction in Step 1 is much faster than Step 2 since this would imply that $k_(-1) conc("NO3^∙")>>k_2 conc("NO3^∙") conc("NO")$ and, therefore, $k_(-1) >>k_2 conc("NO")$.]
 the rate expression would simplify to
 $ r_ce("NO2") = (2 k_1 k_2) / (k_(-1)) conc("NO")^2 conc("O2"). $<eq:r_no2_k>
 
@@ -904,7 +904,7 @@ where $A_"app"$ and $E_"a,app"$ are an apparent pre-factor and activation barrie
 then
 $ r_ce("NO2") = 2 A_"app" exp(-E_"a,app" / (R T)) conc("NO")^2 conc("O2"). $
 Depending on the relative magnitudes of the intrinsic activation energies, it is possible for $E_"a,app" < 0$, in which case the reaction would have anti-Arrhenius behavior where the rate actually _decreases_ with increasing temperature.
-Indeed, this reaction is known from experiments to have an empirically measured kinetic barrier of --3.3 kJ/mol (albeit via a more complex mechanism than the two elementary steps proposed here).
+Indeed, this reaction is known from experiments to have an empirically measured kinetic barrier of --3.3 kJ/mol (albeit via a slightly more complex mechanism than the elementary steps proposed here).
 
 === Radical Chain Reactions <radical-chain-propagation>
 
@@ -1000,11 +1000,16 @@ The room-temperature bond dissociation enthalpies, $Delta H^std_"rxn"$, for seve
   caption: "Bond dissociation enthalpies at 298 K."
 )  <table:bdes>
 
-As is evident from looking at a potential energy diagram, the definition of the transition state implies that it must be _at least_ as large as the bond-dissociation energy, so bond-dissociation energies can be thought of as a lower-bound on the possible value for $E_"a "$.
+As is evident from looking at a potential energy diagram (#ref(<fig:pe_diagram>)), the definition of the transition state implies that it must be _at least_ as large as the bond-dissociation energy, so bond-dissociation energies can be thought of as a lower-bound on the possible value for $E_"a "$.
 With this in mind, based on #ref(<table:bdes>) we can reasonably conclude that the rate constants for #ce("H2 -> 2H^∙") and #ce("HBr -> H^∙ + Br^∙") would likely be small relative to the rate constants of the other steps, such that their rates of reaction can be neglected under most reasonable reaction conditions.
 It is for this reason that these steps are excluded in the provided mechanism.
 
-#self[Draw a potential energy diagram here.]
+
+#figure(
+  image("figures/pe_diagram.svg", width: 40%),
+  caption: [Sample potential energy diagram for an endothermic reaction.]
+)<fig:pe_diagram>
+
 
 Later in the course, we will describe a related rule-of-thumb known as the Bell--Evans--Polanyi (BEP) principle, which states that for $E_"a " prop Delta H^std$ for a given reaction family.#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
 Namely, as we will later show,
@@ -1019,7 +1024,8 @@ Nonetheless, it implies that --- for a given reaction family --- the more endoth
 Distinct from the PSSH, we can consider a scenario where one or more of the reversible reaction steps are effectively in equilibrium.
 Note that we are referring to a _reaction_ here rather than the lifetime of a _species_, the latter of which was the case when invoking PSSH.
 For the sake of clarity, the following categorization typically applies: $ eqArrow("slow",opposite:"fast") ce("X") fwdArrow("fast") quad ("PSSH"), quad quad quad eqArrow("fast",opposite:"fast") ce("X") fwdArrow("slow") quad ("quasi-equilibrium"), $
-where PSSH would imply that $r_ce("X") approx 0$, and the quasi-equilibrium approxmation would imply that $r_1 = r_(1)^+ - r_(1)^- approx 0$, where $r_1$ is the net rate of the fast equilibrium step.
+where we have $k_(1)<<k_(-1),k_2$ and $k_(1),k_(-1)>>k_2$ for PSSH and quasi-equilibrium, respectively.
+PSSH would imply that $r_ce("X") approx 0$, and the quasi-equilibrium approxmation would imply that $r_1 = r_(1)^+ - r_(1)^- approx 0$, where $r_1$ is the net rate of the fast equilibrium step.
 The way to rationalize the quasi-equilibrium approximation is that perturbing the system slightly (e.g. removing #ce("X")) would cause a near-immediate return to its original state (e.g. by producing more #ce("X")).
 In other words, the reaction is rapidly equilibrated.
 
@@ -1128,10 +1134,10 @@ Combining #ref(<eq:lindemann_rxn>) and #ref(<eq:lindemann_a_rad>) results in the
 $ r_ce("B ") = (k_1 k_2 conc("M") conc("A")) / (k_(-1) conc("M") + k_2). $
 
 Let's now consider the behavior in different pressure regimes.
-In the low pressure limit, $conc("M") approx 0$ since there are few other particles for #ce("A ") to collide with.
+In the low pressure limit, $conc("M")$ is small since there are few other particles for #ce("A ") to collide with.
 In such scenarios, it is reasonable to propose that we have $k_(-1) conc("M") << k_2$, such that
 $ r_("B ") approx k_1 conc("A") conc("M") quad ("low" P). $
-At high pressures, $conc("M") >> 0$ since there are many opportunities for collisions, resulting in $k_(-1) conc("M") >> k_2$, such that
+In the high pressure limit, $conc("M") >> 0$ since there are many opportunities for collisions, resulting in $k_(-1) conc("M") >> k_2$, such that
 $ r_("B ") approx (k_1 k_2) / (k_(-1)) conc("A") quad ("high" P). $
 From this analysis, we can conclude that at low pressures, the rate expression would appear as second-order overall, whereas at high pressures, the rate expression would appear first-order overall.
 
