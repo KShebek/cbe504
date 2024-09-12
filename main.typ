@@ -817,7 +817,7 @@ While this procedure may show that a proposed reaction mechanism is consistent w
 One of the most widely used assumptions in reaction network analysis is the pseudo-state state hypothesis (PSSH), which allows for the assumption that the net rate of change of a species, $r_j$, can be approximated as zero if $A_j$ is extremely short-lived.
 This approximation is most commonly invoked for high-energy intermediates, such as radical species, and is valid after a (typically brief) induction period.
 It generally requires that the intrinsic rate of consumption of the intermediate is much greater than the rate(s) of production, such as species B in the elementary reaction sequence
-$ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C"), quad r_2>>r_1. $
+$ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C"), quad k_2>>k_1. $
 
 If we were to invoke PSSH, we would state $r_ce("B") approx 0$.
 Note that it does _not_ mean that we directly set #conc("B") to zero or a constant value, which would have the potential to over-simplify the equations, as we will justify below.
@@ -827,7 +827,7 @@ $ conc("A") = conc("A")_0 e^(-k_1 t). $
 $ conc("B") = conc("A")_0 (k_1 ) / (k_2 - k_1) (e^(-k_1 t) - e^(-k_2 t)). $
 $ conc("C") = conc("A")_0 - conc("A") -conc("B"). $
 
-If $r_2>>r_1$ and we treat $conc("B")$ as small (e.g. in the case of B being a highly reactive intermediate), then we can conclude $k_2>>k_1$ and we can approximate the above expressions as follows:
+If we invoke $k_2>>k_1$, we can approximate the above expressions as follows:
 #footnote[Note that, although $k_1\/k_2 <<0$, we cannot directly set $conc("B") = 0$ because never producing B would mean that C would never be produced.]
 $ conc("A") = conc("A")_0 e^(-k_1 t) $
 $ conc("B") = conc("A")_0 (k_1) / (k_2) e^(-k_1 t) = k_1/k_2 conc("A") $<eq:b_before_pssh>
@@ -886,7 +886,7 @@ From here, the rate of reaction, $r$, can be computed simply as $r_ce("NO2")\/2$
 In principle, we can stop with the above expression.
 However, it would not explain the observed rate law.
 If we invoke that $k_(-1)>>k_2 conc("NO")$,
-#footnote[This would be the case if the reverse reaction in Step 1 is much faster than Step 2 since this would imply that $k_(-1) conc("NO3^∙")>>k_2 conc("NO3^∙") conc("NO")$ and, therefore, $k_(-1) >>k_2 conc("NO")$.]
+#footnote[This would be the case if the reverse reaction rate for Step 1 is much faster than Step 2 since this would imply that $k_(-1) conc("NO3^∙")>>k_2 conc("NO3^∙") conc("NO")$ and, therefore, $k_(-1) >>k_2 conc("NO")$.]
 the rate expression would simplify to
 $ r_ce("NO2") = (2 k_1 k_2) / (k_(-1)) conc("NO")^2 conc("O2"). $<eq:r_no2_k>
 
@@ -1011,20 +1011,21 @@ It is for this reason that these steps are excluded in the provided mechanism.
 )<fig:pe_diagram>
 
 
-Later in the course, we will describe a related rule-of-thumb known as the Bell--Evans--Polanyi (BEP) principle, which states that for $E_"a " prop Delta H^std$ for a given reaction family.#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
+Later in the course, we will describe a related rule-of-thumb known as the Bell--Evans--Polanyi (BEP) principle, which states that $E_"a " prop Delta H^std$ for a given reaction family.#footnote[It is a bit of a tautology in that a reaction family is one that follows the Bell--Evans--Polanyi principle.]
 Namely, as we will later show,
 $ E_"a "  = E_0 + alpha Delta H^std, $
-where this relationship can be thought of as being largely empirical.
+where this relationship can be thought of as being largely empirical, and $0<= alpha <=1$.
 Nonetheless, it implies that --- for a given reaction family --- the more endothermic the reaction enthalpy is, the higher the activation barrier tends to be.
 
 === Quasi-Equilibrium Approximation
 
 ==== Description
 
-Distinct from the PSSH, we can consider a scenario where one or more of the reversible reaction steps are effectively in equilibrium.
+Distinct from the PSSH, we can consider a scenario where one or more of the reversible reaction steps are effectively in equilibrium, which we will refer to as the quasi-equilibrium hypothesis.
 Note that we are referring to a _reaction_ here rather than the lifetime of a _species_, the latter of which was the case when invoking PSSH.
-For the sake of clarity, the following categorization typically applies: $ eqArrow("slow",opposite:"fast") ce("X") fwdArrow("fast") quad ("PSSH"), quad quad quad eqArrow("fast",opposite:"fast") ce("X") fwdArrow("slow") quad ("quasi-equilibrium"), $
-where we have $k_(1)<<k_(-1),k_2$ and $k_(1),k_(-1)>>k_2$ for PSSH and quasi-equilibrium, respectively.
+For the sake of clarity, the PSSH and quasi-equilibrium approximations generally differ in which steps are considered relatively fast: $ eqArrow("slow",opposite:"fast") ce("X") fwdArrow("fast") quad ("PSSH"), quad quad quad eqArrow("fast",opposite:"fast") ce("X") fwdArrow("slow") quad ("quasi-equilibrium"), $
+where, for the model reaction schemes, we have $k_(1)<<k_(-1),k_2$ and $k_(1),k_(-1)>>k_2$ for PSSH and quasi-equilibrium, respectively.
+#footnote[For additional details, refers to J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017).]
 PSSH would imply that $r_ce("X") approx 0$, and the quasi-equilibrium approxmation would imply that $r_1 = r_(1)^+ - r_(1)^- approx 0$, where $r_1$ is the net rate of the fast equilibrium step.
 The way to rationalize the quasi-equilibrium approximation is that perturbing the system slightly (e.g. removing #ce("X")) would cause a near-immediate return to its original state (e.g. by producing more #ce("X")).
 In other words, the reaction is rapidly equilibrated.
@@ -1036,7 +1037,7 @@ $
 ce("NO + Br2") &eqArrow(k_1,opposite:k_(-1)) ce("NOBr_2") quad ("fast")\
 ce("NOBr2 + NO") &fwdArrow(k_2) ce("2 NOBr") quad ("slow"),
 $
-where we are stating $r_(1), r_(-1) >> r_2$, and we have an intermediate #ce("NOBr2") that does not appear in the net reaction equation.
+where we are stating $k_(1), k_(-1) >> k_2$, and we have an intermediate #ce("NOBr2") that does not appear in the net reaction equation.
 
 We can write out our rate of product production, $r_ce("P")$, as
 $ r_"P " = 2 k_2 conc("NOBr2") conc("NO"). $<eq:rate_pre_eq>
@@ -1064,7 +1065,8 @@ Consider the following reaction:
 
 $ ce("NO2 + CO -> NO + CO2"). $
 
-From experiments, it is known that the rate appears to only be dependent on #conc("NO2"), for which it is second order in #conc("NO2"). Since this does not match the stoichiometry, we cacn immediately conclude that there must be elementary steps not shown.
+From experiments, it is known that the rate appears to only be dependent on #conc("NO2"), for which it is second order in #conc("NO2").
+Since this does not match the stoichiometry, we cacn immediately conclude that there must be elementary steps not shown.
 In fact, there are two:
 $
 ce("2 NO2") &fwdArrow(k_1) ce("NO + NO3^∙") quad ("slow")\
@@ -1103,7 +1105,7 @@ If $k_(-1) >> k_2$, then we have
 $ r = (k_1 k_2) / k_(-1) conc("A"), $
 which does not equal the rate-determining step solution.
 Furthermore, it would be difficult to justify calling $ce("A") --> ce("B")$ the rate-determining step if $k_1$ has precisely the same weight as $k_(-1)$ and $k_2$.
-This exercise is simply to demonstrate that a rate-determining step cannot necessarily be invoked from information about $k$ alone.
+This exercise is simply to demonstrate that a rate-determining step cannot necessarily be invoked from information about $k$ for a particular step, particularly when reversible reactions are considered.
 #footnote[For additional details, refer to S. Kozuch, J.M.L. Martin, "The Rate-Determining Step is Dead. Long Live the Rate-Determining State!", _ChemPhysChem_, 12, 1413--1418 (2011).]
 ]
 
