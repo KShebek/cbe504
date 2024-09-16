@@ -1265,7 +1265,7 @@ $<eq:molecular_ads_eq_constant>
 
 It is difficult to directly interpret #ref(<eq:molecular_ads_eq_constant>) given the fact that #conc("*") is difficult to measure.
 Instead, the property that is generally measured is $#conc("*")_0$, which is the number density of all adsorption sites both vacant and occupied.
-We can write a site balance that states
+We can write a site balance that states the number of sites does not change:
 $ conc("*")_0 equiv conc("*") + sum_j [A_j^"*"], $
 where the summation accounts for all possible adsorbate species at the surface sites.
 #footnote[This assumes that the concentration of surface sites remains constant over the course of the reaction, which is not always the case (e.g. if catalyst deactivation or coking occurs, such that the sites must be regenerated).]
@@ -1307,6 +1307,18 @@ Again, this can be easily explained by the fact that a more exothermic adsorptio
 
 #plot[#align(center)[See https://marimo.app/l/e0dix3.]]
 
+Before continuing, in catalysis it can sometimes be more natural to think about rates in terms of surface coverages.
+In this case, we can divide through by $conc("*")_0$ to obtain a site-normalized rate, $r'$, which has units of 1/time.
+In other words,
+$
+r_"ads" &= k_"ads" p_"A " conc("*")\
+r_"des" &= k_"des" conc("A^*").
+$
+would become
+$
+r'_"ads" &= k_"ads" p_"A " theta_("*") = k_"ads" p_"A " (1-theta_ce("A")) \
+r'_"des" &= k_"des" theta_ce("A").
+$<eq:rate_ads_des>
 === Multi-Site Adsorption
 
 It is natural to think about how one might modify the Langmuir equation for a scenario where there are two or more energetically distinct adsorption sites on the catalyst surface.
@@ -1385,32 +1397,36 @@ To make sure we do not make a logical error here, we will temporarily rewrite ou
 $ ce("A2 + **") eqArrow(k_"ads",opposite:k_"des") ce("A**A"), $
 where #ce("**") indicates a pair of adjacent, accessible surface sites, and #ce("A**A") is a pair of adjacent, occupied surface sites.
 
-We know that the probability of a single site being occupied is given by $conc("*")\/conc("*")_0$.
-We also know that the probability of finding two adjacent sites is simply $(conc("*")\/conc("*")_0)^2$.
-Naively, we might then say that the probability of there being viable pairs of adjacent sites is given by $(conc("*")\/conc("*")_0)^2$ times the number of nearest neighbors to an adsorption site (i.e. the coordination number), $z$.
-However, this will result in over-counting because if the surface sites are statistically indistinguishable, then there are multiple identical ways to form a pair of adjacent sites.
-Instead, we need to include a multiplicative factor of $z\/2$.
-
-#self[Make a figure showing z/2. Start with a 1D line with adsorbates. Then 2D cube like in Davis. Then extrapolate to z/2]
-
-We can state
-$ conc("**")/conc("*")_0 = z/2 (conc("*")/conc("*")_0)^2 therefore conc("**") = z/2 conc("*")^2/conc("*")_0 $
+We now need an expression for #conc("**") and #conc("A**A").
+We will start by introducing the answer and then justifying why it is the case.
+Namely, lattice statistics allows us to state:
+$ conc("**") = z/2 conc("*")^2/conc("*")_0 $
 and
-$ conc("A**A")/conc("*")_0 = z/2 (conc("A^*")/conc("*")_0)^2 therefore conc("A**A") = z/2 (conc("A^*")^2)/conc("*")_0. $
+$ conc("A**A") = z/2 (conc("A^*")^2)/conc("*")_0, $
+where $z$ is the coordination number of the site, and a $1\/2$ factor is introduced to avoid over-counting when dealing with identical pairs of species or sites.
 
+The way we can justify the above expressions is as follows.
+Consider the expression for #conc("**").
+We want to find the the number density of adjacent pairs of vacant sites.
+The probability of randomly picking a vacant site on the lattice is $conc("*")\/conc("*")_0$, and we can start by considering all possible sites on the surface: $conc("*")_0 dot.op (conc("*")\/conc("*")_0)$.
+Once we have picked a vacant site, we want to see if we can pick another one that is adjacent to our choice.
+For this, the probability of finding a vacant site is again $conc("*")\/conc("*")_0$, but this time we are not considering all possible sites ($conc("*")_0$); rather, we are considering only the sites adjacent to the first pick (i.e. the number of coordinating sites), such that we have $z dot.op (conc("*")\/conc("*")_0)$.
+For the probability of both events, we multiply the two independent probabilities together to arrive at
+$conc("**") =z dot.op (conc("*")^2\/conc("*")_0)$.
+The final factor of $1\/2$ comes in to prevent double-counting when dealing with statistically identical pairs of sites or species on the surface.
 
 The equations for the rate of adsorption and desorption can now be written as$
-r_"ads" &= k_"ads" p_ce("A2") conc("**") = (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0) \
+r_"ads" &= k_"ads" p_ce("A2") conc("**") = (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0)\
 r_"des" &= k_"des" conc("A**A") = (z k_"des" conc("A^*")^2)/(2 conc("*")_0) .
 $
-#caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption. That said, there would be no change in our expression for $K_"ads"$.]
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
+#caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption. That said, there would be no change in our expression for $K_"ads"$.]
 The site balance is given by
 $ conc("*")_0 = conc("*") + conc("A^*"). $<eq:dissociative_site_balance>
 Since we want to have an expression for $theta_ce("A")$ that is independent of #conc("*"), we can solve for #conc("*") in #ref(<eq:dissociative_K_a>) and plug it into #ref(<eq:dissociative_site_balance>) to get
 $
-conc("*")_0 &= (conc("A^*")^2 / sqrt(K_"ads" p_ce("A2"))) + conc("A^*")\
+conc("*")_0 &= conc("A^*") / sqrt(K_"ads" p_ce("A2")) + conc("A^*")\
 conc("*")_0 &= conc("A^*") (1 / sqrt(K_"ads" p_ce("A2")) + 1).
 $
 
@@ -1419,6 +1435,7 @@ $
 theta_"A " &= 1 / (1 / sqrt(K_"ads" p_ce("A2")) + 1)\
 theta_"A " &= sqrt(K_"ads" p_("A ")) / (1 + sqrt(K_"ads" p_("A "))).
 $
+We can see that when $K_"ads" p_ce("A") <<1$ (i.e. in the limit of low partial pressures of #ce("A2")), $theta_ce("A")->sqrt(K_"ads" p_ce("A"))$, which is significantly different than the linear behavior observed for the non-dissociative Langmuir adsorption isotherm.
 
 === Non-Langmuir Isotherms
 
@@ -1551,7 +1568,7 @@ However, this is not the case.
 Species $"A "^*$ cannot react with species $"B "^*$ unless they are nearest neighbors.
 Therefore, we need to account for this in our rate expression, similar how we needed to account for the probability of adjacent sites in our dissociative adsorption example from #ref(<dissociative-adsorption>).
 
-With this knowledge and in analogy with the corrections introduced in #ref(<dissociative-adsorption>),
+With this knowledge and in analogy with the statistical corrections introduced in #ref(<dissociative-adsorption>),
 the proper rate expression is given by
 $
 r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0,
