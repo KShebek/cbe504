@@ -64,7 +64,8 @@
 
 Licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License (the "License"). You may not use this file except in compliance with the License. You may obtain a copy of the License at https://creativecommons.org/licenses/by-nc-sa/4.0.
 
-A.S.R gratefully acknowledges Prof. Aditya Bhan, Prof. Linda Broadbelt, and Prof. Justin Notestein for inspiration on various topics covered within this course.
+A.S.R acknowledges Prof. Aditya Bhan, Prof. Linda Broadbelt, and Prof. Justin Notestein for inspiration on various topics covered within this course.
+Most importantly, A.S.R. is grateful for the thoughtful questions, comments, and corrections provided by his students who have helped shaped this text during their journey.
 
 This document was typeset using Typst (https://typst.app).]
 ],
@@ -549,8 +550,6 @@ The discovery of a heterogeneous catalyst that can more efficiently synthesize a
 
 === The van~'t Hoff Equation
 
-// Note to self: The Arrhenius aside was more problematic than not. Should probably avoid going forward.
-
 With our understanding of the role of thermodynamics, we can understand how Arrhenius came about his famous equation through making an analogy to prior work by van~'t Hoff.
 Let us assume we have a reaction an elementary isomerization reaction of $ce("P <=> Q")$ in equilibrium.
 We start with the definition of Gibbs free energy given by
@@ -582,8 +581,6 @@ Clearly, this "derivation" lacks rigor, and we will later show that $Delta H^std
 For now, we will accept the applicability of the Arrhenius equation largely based on empirical evidence until we cover transition state theory.
 
 == Differential Kinetic Analysis
-
-// cut this whole section..
 
 Consider a reaction of the form #ce("A + B -> C").
 In practice, we may not know _a priori_ whether this reaction proceeds precisely as written (i.e. if it is elementary or not).
@@ -619,8 +616,6 @@ we should not lose sight of the fact that we can still use a plot of $ln(k_"app"
 In fact, that is precisely what #ref(<eq:apparent_e_a_pre>) is stating: take the instantaneous slope at a particular value of $T$ in a plot of $ln(k_"app")$ vs. $1\/T$, and you will get a value of $-E_"app"\/R$.
 
 === Apparent Reaction Orders
-
-// NOTE TO SELF: This one did not go well in class. A bit too abstract without a concrete example. Probably best to avoid altogether in the future.
 
 We can also define an apparent reaction order, $alpha_(j,"app")$, for each species in a similar manner.
 First, for a reaction #ce("A + B -> C"), we will postulate a power-law rate expression of the form
@@ -738,9 +733,10 @@ Now we can substitute #ref(<eq:sequentiial_A>) into the expression for $r_"B "$ 
 $ (dif conc("B")) / (dif t) = k_1 conc("A")_0 e^(-k_1 t) - k_2 conc("B"). $
 The integration here is a bit messy, but one can show with some effort that
 $ conc("B") = conc("A")_0 (k_1) / (k_2 - k_1) (e^(-k_1 t) - e^(-k_2 t)). $<eq:sequential_B>
-From here, we could once again substitute and integrate to find $conc("C")$.
+From here, we could substitute #ref(<eq:sequential_B>) into the expression for $r_ce("C")$ and integrate to find an expression for $conc("C")$ with respect to time.
 That said, it is a fair bit simpler to just invoke the conservation of mass:
-$ conc("C") = conc("A")_0 - conc("A") -conc("B"). $
+$ conc("C") = conc("A")_0 - conc("A") -conc("B"), $
+where we have assumed $conc("B")_0 = conc("C")_0 = 0$.
 
 #plot[#align(center)[https://marimo.app/l/2emhpu]]
 
@@ -1023,7 +1019,9 @@ Nonetheless, it implies that --- for a given reaction family --- the more endoth
 
 Distinct from the PSSH, we can consider a scenario where one or more of the reversible reaction steps are effectively in equilibrium, which we will refer to as the quasi-equilibrium hypothesis.
 Note that we are referring to a _reaction_ here rather than the lifetime of a _species_, the latter of which was the case when invoking PSSH.
-For the sake of clarity, the PSSH and quasi-equilibrium approximations generally differ in which steps are considered relatively fast: $ eqArrow("slow",opposite:"fast") ce("X") fwdArrow("fast") quad ("PSSH"), quad quad quad eqArrow("fast",opposite:"fast") ce("X") fwdArrow("slow") quad ("quasi-equilibrium"), $
+For the sake of clarity, the PSSH and quasi-equilibrium approximations generally differ in which steps are considered relatively fast.
+For example,
+$ eqArrow("slow",opposite:"fast") ce("X") fwdArrow("fast") quad ("PSSH"), quad quad quad eqArrow("fast",opposite:"fast") ce("X") fwdArrow("slow") quad ("quasi-equilibrium"), $
 where, for the model reaction schemes, we have $k_(1)<<k_(-1),k_2$ and $k_(1),k_(-1)>>k_2$ for PSSH and quasi-equilibrium, respectively.
 #footnote[For additional details, refers to J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017).]
 PSSH would imply that $r_ce("X") approx 0$, and the quasi-equilibrium approxmation would imply that $r_1 = r_(1)^+ - r_(1)^- approx 0$, where $r_1$ is the net rate of the fast equilibrium step.
@@ -1146,7 +1144,7 @@ From this analysis, we can conclude that at low pressures, the rate expression w
 
 == Enzyme Kinetics <enzyme-kinetics>
 
-=== Michaelis-Mentin Kinetics <michaelis-menten-kinetics>
+=== Michaelis--Mentin Kinetics <michaelis-menten-kinetics>
 
 The reactions described in this chapter are entirely general.
 In fact, the same governing principles can be used to understand biological reactions like those occurring in the presence of enzymes.
@@ -1165,6 +1163,7 @@ However, the concentration of ES is not a quantity than can be experimentally me
 Writing out the rate expression for ES, we get
 $ r_"ES" approx 0 = k_1 conc("E") conc("S") - k_(-1) conc("ES") - k_2 conc("ES"), $<eq:michaelis_menten_es>
 where we have set the expression equal to zero by invoking the pseudo-state state hypothesis given the transient nature of the ES intermediate.
+#footnote[In reality, there is an induction period before pseudo-steady state is reached. If the enzyme concentration is much larger than that of the substrate, this induction period may be large. However, it is typically the case that there is much more substrate than enzyme.]
 Solving for the concentration of ES in #ref(<eq:michaelis_menten_es>) yields
 $ conc("ES") = (k_1 conc("E") conc("S")) / (k_(-1) + k_2). $
 Knowing the concentration of free enzyme, E, at a given point in time can be quite difficult.
