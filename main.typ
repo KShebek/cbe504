@@ -1155,23 +1155,26 @@ ce("E + S") &eqArrow(k_1,opposite:k_(-1)) ce("ES") \
 ce("ES") &fwdArrow(k_2) ce("E + P").
 $
 
-The goal is to find an expression for the rate of appearance of P. From the elementary reaction steps, we can state that
+The goal is to find an expression for the rate of production of P. From the elementary reaction steps, we can state that
 #footnote[In the literature, you may see $v$ used in place of $r_"P "$. The $v$ is meant to symbolize reaction velocity.]
-$ r_"P " = k_2 conc("ES") $<eq:rate_michaelis_menten_p>
-However, the concentration of ES is not a quantity than can be experimentally measured. As such, our next step is to find a way to rewrite the concentration of ES in terms of observables and constants.
+$ r_"P " = k_2 conc("ES"). $<eq:rate_michaelis_menten_p>
+However, the concentration of ES is not a quantity than can be easily measured. As such, our next step is to find a way to rewrite the concentration of ES in terms of observables and constants.
 
 Writing out the rate expression for ES, we get
 $ r_"ES" approx 0 = k_1 conc("E") conc("S") - k_(-1) conc("ES") - k_2 conc("ES"), $<eq:michaelis_menten_es>
 where we have set the expression equal to zero by invoking the pseudo-state state hypothesis given the transient nature of the ES intermediate.
 #footnote[In reality, there is an induction period before pseudo-steady state is reached. If the enzyme concentration is much larger than that of the substrate, this induction period may be large. However, it is typically the case that there is much more substrate than enzyme.]
 Solving for the concentration of ES in #ref(<eq:michaelis_menten_es>) yields
-$ conc("ES") = (k_1 conc("E") conc("S")) / (k_(-1) + k_2). $
-Knowing the concentration of free enzyme, E, at a given point in time can be quite difficult.
+$ conc("ES") = (k_1 conc("E") conc("S")) / (k_(-1) + k_2). $<eq:mm_es>
+Knowing the concentration of free enzyme, #conc("E"), at a given point in time can be quite difficult.
 Fortunately, we can take advantage of the conservation of mass to simplify things a bit. 
-Namely, we can state that the total concentration of enzyme, $#ce("E")_0$, does not change over the course of the reaction such that
+Namely, we can state that the total concentration of enzyme, $#conc("E")_0$, does not change over the course of the reaction such that
 $ conc("E")_0 = conc("E") + conc("ES"), $<eq:michaelis_menten_e_t>
 where we have implicitly assumed that we are starting the reaction from scratch, such that $conc("ES")_0 = 0$.
-By solving for the concentration of E in #ref(<eq:michaelis_menten_e_t>) and substituting the resulting expression into #ref(<eq:michaelis_menten_es>), after a bit of algebraic manipulation we arrive at
+By solving for the #conc("E") in #ref(<eq:michaelis_menten_e_t>) and substituting the resulting expression into #ref(<eq:mm_es>), we arrive at
+$ conc("ES") = (k_1 (conc("E")_0 - conc("ES")) conc("S")) / (k_(-1) + k_2) $
+$ conc("ES") + (k_1 conc("ES") conc("S")) / (k_(-1) + k_2) = (k_1 conc("E")_0 conc("S")) / (k_(-1) + k_2) $
+$ conc("ES")  = ((k_1 conc("E")_0 conc("S")) / (k_(-1) + k_2))/(1 + (k_1 conc("S")) / (k_(-1) + k_2)) $
 $ conc("ES") = (conc("E")_0 conc("S")) / ((k_(-1) + k_2) / k_1 + conc("S")). $<eq:michaelis_menten_es2>
 Substituting #ref(<eq:michaelis_menten_es2>) into #ref(<eq:rate_michaelis_menten_p>) yields
 $ r_"P " = (k_2 conc("E")_0 conc("S")) / ( (k_(-1) + k_2) / k_1 + conc("S")). $<eq:michaelis_menten_p2>
@@ -1182,14 +1185,14 @@ where
 $ V_"max" equiv k_2 conc("E")_0 $
 and
 $ K_"M " equiv (k_(-1) + k_2) / k_1. $
-
 The expression given in #ref(<eq:michaelis_menten>) is known as the Michaelis--Menten equation and is a simple model of enzyme reaction kinetics.
-In the limit of high concentrations of S with respect to $K_"M "$, the rate is pseudo zeroth-order in S, approaching a value of $V_"max"$, thereby giving it its name of the maximum rate.
-At low concentrations of S with respect to $K_"M "$, the rate is pseudo first-order in S.
+
+In the limit of $conc("S")>>K_"M "$, the rate is pseudo zeroth-order in #conc("S"), approaching a value of $V_"max"$, thereby giving it its name of the maximum rate.
+In the limit of $conc("S")<<K_"M "$, the rate is pseudo first-order in #conc("S").
 $K_"M "$ is known as the Michaelis constant and describes the concentration of S at which the reaction rate is half of $V_"max"$.
 
 It is worth noting that S is the free substrate, whereas one often measures the total substrate in experiments.
-In practice, one can typically assume that the concentration of substrate is much greater than the total enzyme concentration, such that the aforementioned assumption is valid.
+In practice, one can typically assume that the concentration of substrate is much greater than the total enzyme concentration, such that the total substrate can be used.
 This is known as the free ligand approximation.
 We have also assumed in this derivation that the production of P is irreversible. One can re-derive $r_"P "$ with reversible product binding in precisely the same way; the math simply gets slightly messier.
 
@@ -1199,19 +1202,18 @@ When analyzing experimental data, it is oftentimes useful to fit to a linear equ
 This can be achieved quite readily be rearranging the Michaelis--Menten equation to
 $ 1/r_"P " = K_"M "/V_"max" 1/conc("S") + 1/V_"max". $
 
-Here, the inverse of the reaction rate is plotted against the inverse concentration of the substrate, which in turn can be used to obtain $V_"max"$ and $K_"M "$ from the slope and $y$-intercept, respectively.
+Here, the inverse of the reaction rate is plotted against the inverse concentration of the substrate, which in turn can be used to obtain $K_"M "$ and  $V_"max"$ from the slope and $y$-intercept.
 Such a plot is known as a Linweaver--Burk plot.
 
-#plot[#align(center)[https://marimo.app/l/hbhzeu]]
+#plot[#align(center)[https://marimo.app/l/pbceww]]
 
 There is, however, a very important limitation in using Lineweaver--Burk plots.
 By relying on inverse rate on the $y$-axis and inverse concentration on the $x$-axis, the experimental data will not be distributed evenly across the range of values.
 This may result in poorly determined fit parameters $V_"max"$ and $K_"M "$.
 There are many other ways to linearize the Michaelis--Menten equation, which have their own limitations.
 In modern times, it is generally recommended to do nonlinear regression on the Michaelis--Menten equation directly to avoid such complications.
-The recommendation to use nonlinear regression methods when determining the parameters of a rate expression is generally true throughout much of kinetics.
 
-#plot[#align(center)[https://marimo.app/l/hwiap9]]
+#plot[#align(center)[https://marimo.app/l/f43w0q]]
 
 = Rate Expressions for Heterogeneous Reactions <rate-expressions-for-heterogeneous-reactions>
 
@@ -1234,7 +1236,6 @@ Molecule A can adsorb to a surface site \* via one of two main mechanisms: chemi
 Chemisorption involves the formation of a bond between the adsorbate and the surface and involves a change in the electronic structure of the adsorbate.
 In contrast, physisorption is largely due to electrostatic and van der Waals interactions without a significant change in the electronic structure of the adsorbate.
 Chemisorption is typically a much stronger interaction than physisorption but both are incredibly important.
-In both cases, the activation energy for the adsorption process is typically negligible, although there are exceptions (e.g. when the adsorption process involves a concurrent spin state change).
 Additionally, it is possible for a molecule to dissociate upon adsorption to form two separate adsorbate.
 This does not need to be a diatomic molecule.
 For instance, #ce("CH4") can dissociatively adsorb to form #ce("CH3^∙") and #ce("H^∙").
@@ -1256,35 +1257,40 @@ $
 r_"ads" &= k_"ads" p_"A " conc("*")\
 r_"des" &= k_"des" conc("A^*").
 $<eq:rate_ads_des>
-If we consider the situation where the adsorption and desorption processes are in equilibrium, then $r_"ads" = r_"des"$, such that
+From here, we are going to investigate equilibrium adsorption behavior to better understand this phenomena.
+In other words, we will consider the situation where the rates of the adsorption and desorption processes are equal (i.e. $r_"ads" = r_"des"$), such that
 $
-k_"ads" / k_"des" &= conc("A^*") / (p_"A " conc("*"))\
-K_"ads" &= conc("A^*") / (p_"A " conc("*")).
+K_"ads" equiv k_"ads" / k_"des" &= conc("A^*") / (p_"A " conc("*"))\
 $<eq:molecular_ads_eq_constant>
 
-One of the critical aspects in constructing catalytic reaction mechanisms is the site balance, which is simply a mass balance around the adsorption sites.
-If we define $#conc("*")_0$ as the concentration of the total number of adsorption sites, the site balance states that
+It is difficult to directly interpret #ref(<eq:molecular_ads_eq_constant>) given the fact that #conc("*") is difficult to measure.
+Instead, the property that is generally measured is $#conc("*")_0$, which is the number density of all adsorption sites both vacant and occupied.
+We can write a site balance that states
 $ conc("*")_0 equiv conc("*") + sum_j [A_j^"*"], $
 where the summation accounts for all possible adsorbate species at the surface sites.
 #footnote[This assumes that the concentration of surface sites remains constant over the course of the reaction, which is not always the case (e.g. if catalyst deactivation or coking occurs, such that the sites must be regenerated).]
 In the case of #ref(<eq:molecular_ads>), the site balance becomes
 $ conc("*")_0 = conc("*") + conc("A^*"). $<eq:molecular_ads_site_balance>
-We want to get rid of #conc("*") since it is not a directly observable quantity.
-Solving for #conc("*") in #ref(<eq:molecular_ads>) and substituting into #ref(<eq:molecular_ads_site_balance>) yields
+Solving for #conc("*") in #ref(<eq:molecular_ads_eq_constant>) and substituting into #ref(<eq:molecular_ads_site_balance>) yields
 $
 conc("*")_0 &= conc("A^*") / (K_"ads" p_"A ") + conc("A^*")\
 conc("*")_0 &= conc("A^*") (1/(K_"ads" p_"A ") + 1).
 $
 Typically, a parameter $theta_j$ is defined that describes the fractional surface coverage of species $j$, such that
-$ theta_"A " equiv conc("A^*") / conc("*")_0 = 1 / (1 / (K_"ads" conc("A")) + 1) = (K_"ads" p_"A ") / (1 + K_"ads" p_"A "). $<eq:langmuir>
+$ theta_"A " equiv conc("A^*") / conc("*")_0 = 1 / (1 / (K_"ads" p_ce("A")) + 1) = (K_"ads" p_"A ") / (1 + K_"ads" p_"A "). $<eq:langmuir>
 
-#ref(<eq:langmuir>) is referred to as a Langmuir adsorption isotherm.
+#ref(<eq:langmuir>) is referred to as a Langmuir adsorption isotherm, which describes the equilibrium adsorption behavior and is depicted in #ref(<fig:langmuir>).
+For $p_ce("A")K_"ads"<<1$ (i.e. at low partial pressure of #ce("A")), $theta_ce("A")-> K_"ads" p_ce("A")$.
+For $p_ce("A")K_"ads">>1$ (i.e. at high partial pressure of #ce("A")), $theta_ce("A")->1$.  
 
-#self[Show a plot of the Langmuir isotherm, showing the sharp rise and chemisorption.]
+#figure(
+  image("figures/langmuir.png", width: 60%),
+  caption: [Langmuir adsorption isotherm.]
+)<fig:langmuir>
 
 It is important to note several implicit assumptions for classical Langmuir theory to hold.
 Generally speaking, a Langmuir adsorption isotherm does not account for multilayer coverages.
-As such, it is best suited for describing monolayer chemisorption. 
+As such, it is best suited for describing monolayer adsorption. 
 Furthermore, it assumes that all the adsorption sites are energetically uniform, such that the probability of an adsorbate binding to a given adsorption site is identical across the catalyst surface.
 #footnote[Metal ions or clusters hosted on an amorphous support like silica is a clear example of a material where the active sites are energetically diverse.]
 It also assumes that there are no adsorbate--adsorbate interactions, which in reality can depend on the adsorbate and the interatomic distance between adsorption sites.
@@ -1298,13 +1304,12 @@ From this expression, it can be readily shown that increasing $T$ will decrease 
 This is easily explained in physical terms by the fact that the adsorbate has more kinetic energy and, therefore, is more likely to be liberated from the surface.
 It can also be shown that decreasing $Delta H^std$ (i.e. making it more negative since adsorption is generally exothermic) will increase $theta_"A "$.
 Again, this can be easily explained by the fact that a more exothermic adsorption energy implies a stronger bond to the surface, making the species less likely to desorb.
-Naturally, it is also trivial to discern from the equations for $theta_" A"$ that at high partial pressure of A, $theta_"A "$ approaches 1, whereas at low partial pressures, it approaches $K_"ads" p_"A ".$
 
-#plot[See https://marimo.app/l/e0dix3.]
+#plot[#align(center)[See https://marimo.app/l/e0dix3.]]
 
 === Multi-Site Adsorption
 
-It is natural to think about how one might modify the Langmuir equation for a scenario where there are two or more distinct adsorption sites on the catalyst surface.
+It is natural to think about how one might modify the Langmuir equation for a scenario where there are two or more energetically distinct adsorption sites on the catalyst surface.
 The procedure is no different than before if we make a leap of faith and assume that the adsorption at each binding site is independent from one another, such that we can treat the adsorption as a sum of individual Langmuir models.
 In other words, we can write
 $ theta_"A " = sum_s M_s (K_("ads",s) p_("A ")) / (1 + K_("ads",s) p_("A ")), $
@@ -1329,43 +1334,43 @@ $
 For the sake of simplicity, we will invoke the same assumptions for the Langmuir adsorption isotherm as in #ref(<molecular-adsorption>) with the additional caveat that each site must only hold one molecule of A or B but not both simultaneously.
 
 Under equilibrium conditions, we can build from #ref(<eq:molecular_ads_eq_constant>) to state
-$ K_"ads.,A " = conc("A^*") / (p_("A ") conc("*")) $<eq:competitive_ads_Ka>
-$ K_"ads.,B" = conc("B^*") / (p_("B ") conc("*")). $<eq:competitive_ads_Kb>
-The site balance is
+$ K_"ads,A " = conc("A^*") / (p_("A ") conc("*")) $<eq:competitive_ads_Ka>
+$ K_"ads,B" = conc("B^*") / (p_("B ") conc("*")). $<eq:competitive_ads_Kb>
+The site balance is now
 $ conc("*")_0 = conc("*") + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance>
 Once again, we seek to get rid of #conc("*"). To do so, we start by solving for #conc("*") in #ref(<eq:competitive_ads_Ka>) and plugging this into #ref(<eq:competitive_ads_site_balance>):
-$ conc("*")_0 = conc("A^*") / (K_"ads.,A" p_("A ")) + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance2>
+$ conc("*")_0 = conc("A^*") / (K_"ads,A" p_("A ")) + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance2>
 Since we will ultimately want an expression for $theta_"A "$ that is independent of #conc("B^*"), we will solve for #conc("B^*") in #ref(<eq:competitive_ads_Kb>) and plug this into #ref(<eq:competitive_ads_site_balance2>):
-$ conc("*")_0 = conc("A^*") / (K_"ads.,A" p_("A ")) + conc("A^*") + K_"ads.,B" p_("B ") conc("*"). $
+$ conc("*")_0 = conc("A^*") / (K_"ads,A" p_("A ")) + conc("A^*") + K_"ads,B" p_("B ") conc("*"). $
 It looks like we have #conc("*") in our expression again, so we substitute in #conc("*") from #ref(<eq:competitive_ads_Ka>) to get
 $
 conc("*")_0& =
-conc("A^*") / (K_"ads.,A" p_("A "))
+conc("A^*") / (K_"ads,A" p_("A "))
 + conc("A^*")
-+ (conc("A^*") K_"ads.,B" p_("B ")) / (K_"ads.,A" p_("A "))
-+ 1 \
++ (conc("A^*") K_"ads,B" p_("B ")) / (K_"ads,A" p_("A "))
+ \
 conc("*")_0 &=
-conc("A^*") (1/(K_"ads.,A" p_("A "))
-+ (K_"ads.,B" p_("B "))/(K_"ads.,A" p_("A "))).
+conc("A^*") (1/(K_"ads,A" p_("A "))
++ 1 + (K_"ads,B" p_("B "))/(K_"ads,A" p_("A "))).
 $
 Therefore,
 $
 theta_"A " =
 1 /
 (
-  1 / (K_"ads.,A" p_("A "))
+  1 / (K_"ads,A" p_("A "))
   + 1
-  + (K_"ads.,B" p_("B ")) / (K_"ads.,A" p_("A "))
+  + (K_"ads,B" p_("B ")) / (K_"ads,A" p_("A "))
 )
 =
-(K_"ads.,A" p_("A ")) / (1 + K_"ads.,A" p_("A ") + K_"ads.,B" p_("B ")).
+(K_"ads,A" p_("A ")) / (1 + K_"ads,A" p_("A ") + K_"ads,B" p_("B ")).
 $
 
 By analogy for species B, the following result can be found:
-$ theta_"B " = (K_"ads.,B" p_("B ")) / (1 + K_"ads.,A" p_("A ") + K_"ads.,B" p_("B ")). $
+$ theta_"B " = (K_"ads,B" p_("B ")) / (1 + K_"ads,A" p_("A ") + K_"ads,B" p_("B ")). $
 
 As you might be able to already tell, we can generalize the adsorption isotherm for arbitrary numbers of adsorbates as
-$ theta_"A " = (K_("ads.,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $
+$ theta_"A " = (K_("ads,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $
 
 === Dissociative Adsorption <dissociative-adsorption>
 
