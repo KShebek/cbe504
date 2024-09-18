@@ -563,7 +563,6 @@ $ ln(K_"a ") = -(Delta H^std)/ (R T) + (Delta S^std)/R. $
 If we differentiate with respect to $T$ and make a fairly notable assumption that $Delta H^std$ and $Delta S^std$ are independent of temperature (an approximation that is typically reasonable when considering small differences in $T$), we arrive at
 $ (dif ln(K_"a "))/(dif T) = (Delta H^std)/(R T^2), $<eq:vant_hoff>
 which is the famous van~'t Hoff equation.
-#footnote[Recall that $Delta H^std$, which is the enthalpy change associated with the reaction, can be calculated from the tabulated standard state enthalpy of formation, $Delta H_("f ",j)^std$, for each species via $Delta H^std = sum_j nu_j Delta H_("f ",j)^std$. The enthalpies of formation of many species are tabulated in thermochemical handbooks.]
 
 If we rewrite #ref(<eq:vant_hoff>) using $K_"a " = k^+\/k^-$,
 we can state
@@ -1011,7 +1010,10 @@ Later in the course, we will describe a related rule-of-thumb known as the Bell-
 Namely, as we will later show,
 $ E_"a "  = E_0 + alpha Delta H^std, $
 where this relationship can be thought of as being largely empirical, and $0<= alpha <=1$.
-Nonetheless, it implies that --- for a given reaction family --- the more endothermic the reaction enthalpy is, the higher the activation barrier tends to be.
+Nonetheless, it implies that --- for a given reaction family --- the more endothermic the reaction enthalpy is, the higher the activation barrier tends to be for that process.
+The $Delta H^std$ values can be obtained from experiments or tabulated thermochemical data,
+#footnote[Recall from thermodynamics that $Delta H^std$, which is the enthalpy change associated with the reaction, can be calculated from the tabulated standard state enthalpy of formation, $Delta_"f " H_(j)^std$, for each species via $Delta H^std = sum_j nu_j Delta_"f " H_(j)^std$.]
+such as the CRC Handbook of Chemistry and Physics.
 
 === Quasi-Equilibrium Approximation
 
@@ -1248,7 +1250,7 @@ Porous materials are particularly unique choices for adsorbents, as they can hav
 
 === Molecular Adsorption <molecular-adsorption>
 
-Since adsorption is a pre-requisite for heterogeneous reactions, we will focus on developing a kinetic description of the adsorption process.
+Since adsorption is a pre -requisite for heterogeneous reactions, we will focus on developing a kinetic description of the adsorption process.
 We will start with the simple case of one adsorbate that adsorbs in a non-dissociative (i.e. molecular) fashion to a surface site:
 $ ce("A + *") eqArrow(k_"ads",opposite:k_"des") ce("A^*"). $<eq:molecular_ads>
 For example, this could be #ce("CO + * <=> CO^*").
@@ -1284,7 +1286,7 @@ For $p_ce("A")K_"ads"<<1$ (i.e. at low partial pressure of #ce("A")), $theta_ce(
 For $p_ce("A")K_"ads">>1$ (i.e. at high partial pressure of #ce("A")), $theta_ce("A")->1$.  
 
 #figure(
-  image("figures/langmuir.png", width: 60%),
+  image("figures/langmuir.svg", width: 33%),
   caption: [Langmuir adsorption isotherm.]
 )<fig:langmuir>
 
@@ -1305,20 +1307,14 @@ This is easily explained in physical terms by the fact that the adsorbate has mo
 It can also be shown that decreasing $Delta H^std$ (i.e. making it more negative since adsorption is generally exothermic) will increase $theta_"A "$.
 Again, this can be easily explained by the fact that a more exothermic adsorption energy implies a stronger bond to the surface, making the species less likely to desorb.
 
-#plot[#align(center)[See https://marimo.app/l/e0dix3.]]
+#plot[#align(center)[https://marimo.app/l/e0dix3.]]
 
-Before continuing, in catalysis it can sometimes be more natural to think about rates in terms of surface coverages.
-In this case, we can divide through by $conc("*")_0$ to obtain a site-normalized rate, $r'$, which has units of 1/time.
-In other words,
+Before continuing, we can rewrite our rates of adsorption and desorption in terms of fractional coverage as follows:
+$ r_"ads" &= k_"ads" p_"A " conc("*") = k_"ads" p_"A " conc("*")_0 theta_ce("*") = k_"ads" p_"A " conc("*")_0 (1-theta_ce("A")) \
+r_"des" &= k_"des" conc("A^*") = k_"des" conc("*")_0 theta_ce("A"),
 $
-r_"ads" &= k_"ads" p_"A " conc("*")\
-r_"des" &= k_"des" conc("A^*").
-$
-would become
-$
-r'_"ads" &= k_"ads" p_"A " theta_("*") = k_"ads" p_"A " (1-theta_ce("A")) \
-r'_"des" &= k_"des" theta_ce("A").
-$<eq:rate_ads_des>
+where we took advantage of the fact that $sum_j theta_j =1$, where $j$ includes both the adsorbate species and the vacant sites.
+
 === Multi-Site Adsorption
 
 It is natural to think about how one might modify the Langmuir equation for a scenario where there are two or more energetically distinct adsorption sites on the catalyst surface.
@@ -1330,9 +1326,9 @@ Here, $M_s$ and $K_("ads",s)$ are both fitting parameters determined from an exp
 Generally, it is impossible to enumerate all possible surface sites, and even if one could, the number of fitting parameters would be huge.
 Instead, this model is typically used when it is clear there are (for instance) two major yet distinct adsorption sites that adsorbates can bind to.
 
-#self[
-  Showcase #ce("O2")/#ce("N2") example in https://doi.org/10.1021/jacs.9b12401.
-]
+// #self[
+//   Showcase #ce("O2")/#ce("N2") example in https://doi.org/10.1021/jacs.9b12401.
+// ]
 
 === Competitive Adsorption <competitive-adsorption>
 
@@ -1345,10 +1341,15 @@ $
 
 For the sake of simplicity, we will invoke the same assumptions for the Langmuir adsorption isotherm as in #ref(<molecular-adsorption>) with the additional caveat that each site must only hold one molecule of A or B but not both simultaneously.
 
-Under equilibrium conditions, we can build from #ref(<eq:molecular_ads_eq_constant>) to state
+Under equilibrium conditions, we can equate the rates of adsorption and desorption:
+$
+k_"ads" p_"A " conc("*") &= k_"des" conc("A^*")\
+k_"ads" p_"B " conc("*") &= k_"des" conc("B^*"),
+$
+such that
 $ K_"ads,A " = conc("A^*") / (p_("A ") conc("*")) $<eq:competitive_ads_Ka>
 $ K_"ads,B" = conc("B^*") / (p_("B ") conc("*")). $<eq:competitive_ads_Kb>
-The site balance is now
+The site balance can be rewritten as
 $ conc("*")_0 = conc("*") + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance>
 Once again, we seek to get rid of #conc("*"). To do so, we start by solving for #conc("*") in #ref(<eq:competitive_ads_Ka>) and plugging this into #ref(<eq:competitive_ads_site_balance>):
 $ conc("*")_0 = conc("A^*") / (K_"ads,A" p_("A ")) + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance2>
@@ -1367,7 +1368,7 @@ conc("A^*") (1/(K_"ads,A" p_("A "))
 $
 Therefore,
 $
-theta_"A " =
+theta_"A " equiv conc("A^*")/conc("*")_0 =
 1 /
 (
   1 / (K_"ads,A" p_("A "))
@@ -1384,10 +1385,16 @@ $ theta_"B " = (K_"ads,B" p_("B ")) / (1 + K_"ads,A" p_("A ") + K_"ads,B" p_("B 
 As you might be able to already tell, we can generalize the adsorption isotherm for arbitrary numbers of adsorbates as
 $ theta_"A " = (K_("ads,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $
 
+Finally, we can revisit our rates of adsorption and desorption to write them in terms of fractional coverages:
+$
+r_("ads",ce("A")) &= k_("ads",ce("A")) p_"A " conc("*") = k_("ads",ce("A")) p_"A " conc("*")_0 theta_* = k_("ads",ce("A")) p_"A " conc("*")_0 (1-theta_ce("A") - theta_ce("B"))  \
+r_("des",ce("A")) &= k_("des",ce("A")) conc("A^*") = k_("des",ce("A")) conc("*")_0 theta_ce("A").
+$
+
 === Dissociative Adsorption <dissociative-adsorption>
 
 Now, we will consider a dissociative adsorption process:
-$ ce("A2 + 2*") eqArrow(k_"ads",opposite:k_"des") ce("2 A^*"). $
+$ ce("A2 + 2*") eqArrow(k_"ads",opposite:k_"des") ce("2 A^*"). $<eq:rxn_a2>
 We will again invoke the typical assumptions of the Langmuir adsorption isotherm with the additional caveat that the individual #ce("A^*") species adsorb onto separate surface sites.
 
 However, there is an important subtlety that needs to be emphasized.
@@ -1405,23 +1412,26 @@ and
 $ conc("A**A") = z/2 (conc("A^*")^2)/conc("*")_0, $
 where $z$ is the coordination number of the site, and a $1\/2$ factor is introduced to avoid over-counting when dealing with identical pairs of species or sites.
 
+#self[Draw square lattice with some Astar sites.]
+
 The way we can justify the above expressions is as follows.
 Consider the expression for #conc("**").
-We want to find the the number density of adjacent pairs of vacant sites.
+We want to find the number density of adjacent pairs of vacant sites.
 The probability of randomly picking a vacant site on the lattice is $conc("*")\/conc("*")_0$, and we can start by considering all possible sites on the surface: $conc("*")_0 dot.op (conc("*")\/conc("*")_0)$.
 Once we have picked a vacant site, we want to see if we can pick another one that is adjacent to our choice.
 For this, the probability of finding a vacant site is again $conc("*")\/conc("*")_0$, but this time we are not considering all possible sites ($conc("*")_0$); rather, we are considering only the sites adjacent to the first pick (i.e. the number of coordinating sites), such that we have $z dot.op (conc("*")\/conc("*")_0)$.
-For the probability of both events, we multiply the two independent probabilities together to arrive at
+For the likelihood of both events to occurring, we multiply the two independent event likelihoods together to arrive at
 $conc("**") =z dot.op (conc("*")^2\/conc("*")_0)$.
 The final factor of $1\/2$ comes in to prevent double-counting when dealing with statistically identical pairs of sites or species on the surface.
 
-The equations for the rate of adsorption and desorption can now be written as$
+The equations for the rate of adsorption and desorption can now be written as $
 r_"ads" &= k_"ads" p_ce("A2") conc("**") = (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0)\
 r_"des" &= k_"des" conc("A**A") = (z k_"des" conc("A^*")^2)/(2 conc("*")_0) .
 $
+In other words, there is an additional factor of $z\/2 conc("*")_0$ that needs to be included than if one were to write the elementary rate law solely based on #ref(<eq:rxn_a2>).
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
-#caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption. That said, there would be no change in our expression for $K_"ads"$.]
+#caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$.]
 The site balance is given by
 $ conc("*")_0 = conc("*") + conc("A^*"). $<eq:dissociative_site_balance>
 Since we want to have an expression for $theta_ce("A")$ that is independent of #conc("*"), we can solve for #conc("*") in #ref(<eq:dissociative_K_a>) and plug it into #ref(<eq:dissociative_site_balance>) to get
@@ -1436,6 +1446,12 @@ theta_"A " &= 1 / (1 / sqrt(K_"ads" p_ce("A2")) + 1)\
 theta_"A " &= sqrt(K_"ads" p_("A ")) / (1 + sqrt(K_"ads" p_("A "))).
 $
 We can see that when $K_"ads" p_ce("A") <<1$ (i.e. in the limit of low partial pressures of #ce("A2")), $theta_ce("A")->sqrt(K_"ads" p_ce("A"))$, which is significantly different than the linear behavior observed for the non-dissociative Langmuir adsorption isotherm.
+
+We can also revisit our rate expressions to write them in terms of surface coverages of observable species:
+$
+r_"ads" &= (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0) = z/2 k_"ads" p_ce("A2") conc("*")_0 theta_*^2 = z/2 k_"ads" p_ce("A2") conc("*")_0 (1-theta_ce("A"))^2\
+r_"des" &= (z k_"des" conc("A^*")^2)/(2 conc("*")_0) = z/2 k_"des" conc("*")_0 theta_ce("A")^2 .
+$
 
 === Non-Langmuir Isotherms
 
@@ -1458,13 +1474,14 @@ We can also consider models that capture behavior the Langmuir model does not.
 As previously discussed, the Langmuir model of adsorption made some critical approximations.
 Perhaps the most notable is the assumption that the adsorption enthalpy of each site is constant (i.e. independent of coverage).
 There are many models that attempt to directly or indirectly capture this behavior, some of which are outlined below:
+#footnote[For some cautionary comments about the Temkin isotherm, refer to K. Chu, "Revisiting the Temkin Isotherm: Dimensional Inconsistency and Approximate Forms", _Ind. Eng. Chem. Res._, 60, 13140--13147 (2021).]
 $
 theta_"A " &= alpha p_"A "^(1\/beta) quad ("Freundlich isotherm")\
-theta_"A " &= (K_"ads" p_"A ") / (1 + (K_"ads" p_"A ")^alpha)^(1\/beta) quad ("Tóth isotherm")\
+theta_"A " &= (K_"ads" p_"A ") / (1 + (K_"ads" p_"A ")^beta)^(1\/beta) quad ("Tóth isotherm")\
 theta_"A " &= (R T)/alpha ln(beta p_"A ") quad ("Temkin isotherm").
 $
 There are many other functional forms that have been proposed and that can potentially be dreamed up.
-In all three cases presented here, there is additional flexibility compared to the (single-site) Langmuir adsorption isotherm, as there are two fitting parameters instead of one if one is attempting to fit an experimentally measured adsorption isotherm.
+In all three cases presented here, there is additional flexibility compared to the (single-site) Langmuir adsorption isotherm, as there are two fitting parameters instead of one if the practitioner is attempting to fit an experimentally measured adsorption isotherm.
 Naturally, each of these models have their own limitations.
 Most notably, many alternate models have the unphysical scenario where $theta_"A "$ can become greater than one for large $p_"A "$.
 Nonetheless, these models can capture adsorption on surface complexities better than the single-site Langmuir equation because of their additional flexibility, at the expense of reduced interpretability.
@@ -1537,8 +1554,8 @@ $ ce("A^*") eqArrow(k_2,opposite:k_(-2)) ce("B^*") $
 for the transformation of species A to B on the catalyst surface.
 The net rate for the surface reaction ("SR") is as follows:
 $
-r_"SR" &= k_2 (conc("A^*") - k_(-2) conc("B^*"))\
-r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR")
+r_"SR" &= k_2 conc("A^*") - k_(-2) conc("B^*")\
+r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR"),
 $<eq:single_site>
 where $K_"SR" equiv k_2 \/ k_(-2)$.
 
@@ -1580,7 +1597,8 @@ Since $z$ and $conc("*")_0$ are typically treated as constants, in practice they
 
 === Reaction with Unbound Species <reaction-with-unbound-species>
 
-A reaction can also occur between an adsorbed molecule and a molecule in the continuum (when the adsorbed molecule reacts with a molecule in the gas phase, this is typically referred to as an Eley--Rideal reaction).
+A reaction can also occur between an adsorbed molecule and a molecule in the continuum.
+When the adsorbed molecule reacts with a molecule in the gas phase, this is typically referred to as an Eley--Rideal reaction.
 
 The general equation is
 
@@ -1605,7 +1623,7 @@ r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR").
 $
 Oftentimes, it can be more convenient to report data based on fractional coverages rather than concentrations.
 If we divide through the above expression by $conc("*")_0$ on both sides, we get
-$ r_"SR"/conc("*")_0 = k_2(theta_"A " - theta_"B "/K_"SR"). $
+$ r'_"SR" equiv r_"SR"/conc("*")_0 = k_2(theta_"A " - theta_"B "/K_"SR"). $
 Here, the rate is normalized by the concentration of active sites and, therefore, has units of 1/time.
 This is typically referred to as a turnover frequency (TOF).
 The TOF represents the number of reacting molecules per active site and unit time (assuming that all adsorption sites defined by $conc("*")_0$ are all the possible active sites).
@@ -1645,7 +1663,7 @@ r_ce("H^*") &approx 0 = 2 r_1 - r_3 -r_4 + r_5\
 r_ce("C2H4^*") &approx 0 = r_2 - r_3 - r_5\
 r_ce("C2H5^*") &approx 0 = r_3 - r_4\
 r_ce("CHCH2^*") &approx 0 = r_5 - r_6\
-r_ce("CCH3^*") &approx 0 = r_6\
+r_ce("CCH3^*") &approx 0 = r_6,
 $
 where we are defining $r_i$ to be the net rate for the $i$-th reaction step given by $r_i equiv r_(i)^+ - r_(i)^-$.
 
