@@ -1415,6 +1415,7 @@ where $z$ is the coordination number of the site, and a $1\/2$ factor is introdu
 #self[Draw square lattice with some Astar sites.]
 
 The way we can justify the above expressions is as follows.
+#footnote[Lattice statistics are neglected in many textbooks on the subject. The seminal text _Kinetics of Heterogeneous Catalytic Reactions_ by M. Boudart and G. Djega-Mariadassou properly accounts for it, as does _Fundamentals of Chemical Reaction Engineering_ by M.E. Davis and R.J. Davis (for the special case of a square lattice with $z=4$).]
 Consider the expression for #conc("**").
 We want to find the number density of adjacent pairs of vacant sites.
 The probability of randomly picking a vacant site on the lattice is $conc("*")\/conc("*")_0$, and we can start by considering all possible sites on the surface: $conc("*")_0 dot.op (conc("*")\/conc("*")_0)$.
@@ -1554,29 +1555,18 @@ $ ce("A^*") eqArrow(k_2,opposite:k_(-2)) ce("B^*") $
 for the transformation of species A to B on the catalyst surface.
 The net rate for the surface reaction ("SR") is as follows:
 $
-r_"SR" &= k_2 conc("A^*") - k_(-2) conc("B^*")\
-r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR"),
+r_"SR" &= k_2 conc("A^*") - k_(-2) conc("B^*").
+$
+In practice, you may see the above expression written in terms of the equilibrium constant as follows:
+$ r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR"),
 $<eq:single_site>
 where $K_"SR" equiv k_2 \/ k_(-2)$.
 
-=== Dual-Site Mechanisms <dual-site-mechansims>
+=== Dual-Site Mechanisms <reactions-between-two-surface-species>
 
-A dual-site mechanism is one in which a reactant adsorbed to a site reacts with a separate site.
-One way this can be written is by the following equation:
-
-$ ce("A^* + *") eqArrow(k_2,opposite:k_(-2)) ce("B^* + *"). $
-
-The net rate for the surface reaction is as follows:
-$
-r_"SR" &= k_2 conc("A^*") conc("*") - k_(-2) conc("B^*") conc("*")\
-r_"SR" &= k_2 conc("*") (conc("A^*")  - conc("B^*") / K_"SR"),
-$
-where $K_"SR" equiv k_2 \/ k_(-2).$
-
-=== Reactions Between Two Surface Species <reactions-between-two-surface-species>
-
-Another variation on the dual-site reaction is one that consists of a reaction between two adsorbed species, given by
-$ ce("A^* + B^*") eqArrow(k_2,opposite:k_(-2)) ce("C^* + D^*"). $
+One can also consider a different type of surface reaction that consists of a reaction between two adsorbed species, given by
+#footnote[The surface reaction $ce("A^* + * <=> B^* + *")$ would be another type of dual-site mechanism with an analogous solution.]
+$ ce("A^* + B^*") eqArrow(k_2,opposite:k_(-2)) ce("C^* + D^*"). $<eq:dual_site>
 It might be tempting to write that the net rate for the surface reaction is as follows:
 $
 r_"SR" =^? k_2 conc("A^*") conc("B^*") - k_(-2) conc("C^*") conc("D^*").
@@ -1588,12 +1578,14 @@ Therefore, we need to account for this in our rate expression, similar how we ne
 With this knowledge and in analogy with the statistical corrections introduced in #ref(<dissociative-adsorption>),
 the proper rate expression is given by
 $
-r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0,
+r_"SR" &= (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0
 $<eq:sr_dual>
 where $z$ is the coordination number of the adsorption site.
 Since $z$ and $conc("*")_0$ are typically treated as constants, in practice they can be lumped in as part of the rate constant if desired.
 #caution[We use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two identical species, we would need to retain the 1/2 factor.]
 
+For consistency with the single-site mechanism, we can also take advantage of $K_"SR"$ to state
+$ r_"SR" &= (k_2 z)/conc("*")_0 (conc("A^*") conc("B^*")  - (conc("C^*") conc("D^*"))/K_"SR"). $
 
 === Reaction with Unbound Species <reaction-with-unbound-species>
 
