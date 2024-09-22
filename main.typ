@@ -1261,7 +1261,7 @@ $<eq:rate_ads_des>
 From here, we are going to investigate equilibrium adsorption behavior to better understand this phenomena.
 In other words, we will consider the situation where the rates of the adsorption and desorption processes are equal (i.e. $r_"ads" = r_"des"$), such that
 $
-K_"ads" equiv k_"ads" / k_"des" &= conc("A^*") / (p_"A " conc("*"))\
+K_"ads" equiv k_"ads" / k_"des" &= conc("A^*") / (p_"A " conc("*")).
 $<eq:molecular_ads_eq_constant>
 
 It is difficult to directly interpret #ref(<eq:molecular_ads_eq_constant>) given the fact that #conc("*") is difficult to measure.
@@ -1564,21 +1564,29 @@ for the transformation of species A to B on the catalyst surface.
 The net rate for the surface reaction ("SR") is as follows:
 $
 r_"SR" &= k_2 conc("A^*") - k_(-2) conc("B^*").
-$
-In practice, you may see the above expression written in terms of the equilibrium constant as follows:
-$ r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR"),
 $<eq:single_site>
-where $K_"SR" equiv k_2 \/ k_(-2)$.
+
+At this point, it is worth clarifying some terminology you may see in the literature.
+Oftentimes, it can be more convenient to report or simulate data based on fractional coverages rather than concentrations.
+If we divide through the above expression by $conc("*")_0$ on both sides, we get
+$ r'_"SR" equiv r_"SR"/conc("*")_0 = k_2 theta_ce("A") - k_(-2) theta_ce("B"). $
+Notice how the two rate expressions are analogous, with concentrations replaced by fractional coverages.
+Here, the rate has been normalized by the concentration of active sites and, therefore, has units of 1/time.
+This is typically referred to as a turnover frequency (TOF).
+The TOF represents the number of reacting molecules per active site and unit time (assuming that all adsorption sites defined by $conc("*")_0$ are all the possible active sites) since it represents the number of times the catalytic active sites have "turned over" a reaction. 
+Since TOFs are normalized by the concentration of active sites and most real catalysts have heterogeneity in the active species, the TOF is best thought of as an averaged property.
+#footnote[For additional considerations when reporting and interpreting TOFs, refer to F. Schüth, M.D. Ward, J.M. Buriak, "Common Pitfalls of Catalysis Manuscripts Submitted to Chemistry of Materials", _Chem. Mater._, 30, 3599--3600 (2018). More detailed discussion on this topic can be found in S. Kozuch, J.M.L. Martin, "Turning Over Definitions in Catalytic Cycles", _ACS Catal._, 2, 2787--2794 (2012) and the corresponding response G. Lente, "Comment on 'Turning Over Definitions in Catalytic Cycles'", _ACS Catal._, 3, 381--382 (2013).]
+
 
 === Dual-Site Mechanisms <reactions-between-two-surface-species>
 
-One can also consider a different type of surface reaction that consists of a reaction between two adsorbed species, given by
-#footnote[The surface reaction $ce("A^* + * <=> B^* + *")$ would be another type of dual-site mechanism with an analogous solution.]
+One can also consider a different type of surface reaction that consists of a reaction between two adsorbed species,#footnote[The surface reaction $ce("A^* + * <=> B^* + *")$ would be another type of dual-site mechanism with an analogous solution.]
+given by
 $ ce("A^* + B^*") eqArrow(k_2,opposite:k_(-2)) ce("C^* + D^*"). $<eq:dual_site>
 It might be tempting to write that the net rate for the surface reaction is as follows:
 $
 r_"SR" =^? k_2 conc("A^*") conc("B^*") - k_(-2) conc("C^*") conc("D^*").
-$
+$<eq:fake_dual_sr>
 However, this is not the case.
 Species $"A "^*$ cannot react with species $"B "^*$ unless they are nearest neighbors.
 Therefore, we need to account for this in our rate expression, similar how we needed to account for the probability of adjacent sites in our dissociative adsorption example from #ref(<dissociative-adsorption>).
@@ -1586,14 +1594,18 @@ Therefore, we need to account for this in our rate expression, similar how we ne
 With this knowledge and in analogy with the statistical corrections introduced in #ref(<dissociative-adsorption>),
 the rate expression can be given by
 $
-r_"SR" &= (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0
+r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0
 $<eq:sr_dual>
 where $z$ is the coordination number of the adsorption site.
-Since $z$ and $conc("*")_0$ are typically treated as constants, in practice they can be lumped in as part of the rate constant if desired.
 #caution[We use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two identical species, we would need to retain the 1/2 factor.]
-
-For consistency with the single-site mechanism, we can also take advantage of $K_"SR"$ to state
-$ r_"SR" &= (k_2 z)/conc("*")_0 (conc("A^*") conc("B^*")  - (conc("C^*") conc("D^*"))/K_"SR"). $
+From here on out, we will lump the $z$ (or $z\/2$) factor, where applicable, into the rate constant for the sake of simplicity:
+$
+r_"SR" &= (k'_2 conc("A^*") conc("B^*"))/conc("*")_0  - (k'_(-2) conc("C^*") conc("D^*"))/conc("*")_0.
+$
+If we wanted to write the above expression in terms of a turnover frequency rather than a rate, we would instead have
+$ r'_"SR" equiv r_"SR"/conc("*")_0 = k'_2 theta_ce("A") theta_ce("B") - k'_(-2) theta_ce("C") theta_ce("D").  $
+Notice how the above expression is analogous to #ref(<eq:fake_dual_sr>) with concentrations replaced by fractional coverages.
+If we had not accounted for the $z\/conc("*")_0$ factor, then this analogy would no longer hold.
 
 === Reaction with Unbound Species <reaction-with-unbound-species>
 
@@ -1607,35 +1619,152 @@ $ ce("A^* + B") eqArrow(k_2,opposite:k_(-2)) ce("C^*"). $
 The net rate for the surface reaction is as follows:
 
 $
-r_"SR" &= k_2 conc("A^*") p_("B ") - k_(-2) conc("C^*")\
-r_"SR" &= k_2(conc("A^*") p_("B ") - conc("C^*") / K_"SR"),
+r_"SR" &= k_2 conc("A^*") p_("B ") - k_(-2) conc("C^*").
 $
-where again $K_"SR" equiv k_2 \/ k_(-2)$.
+This is largely analogous to the typical single and dual-site surface reactions, except that here we are considering the partial pressure of species #ce("B") rather than the concentration of #ce("B^*").
+We also do not need to account for lattice statistics since there are no surface site pairs involved.
 
-== Terminology and Conventions
+== Langmuir--Hinshelwood--Hougen--Watson Kinetics <langmuir-hinshelwood-hougen-watson-kinetics>
 
-=== Turnover Frequency
+With our newfound knowledge of the individual steps that take place in a catalytic reaction, we can combine them to produce a kinetic model.
+When invoking Langmuirian adsorption behavior with the assumption that adsorbates are randomly distributed on the surface (known as the Hinshelwood assumption), the resulting kinetic models are known as Langmuir--Hinshelwood--Hougen--Watson (LHHW) models.
 
-At this point, it is worth clarifying some terminology you may see in the literature.
-Consider the single-site surface reaction rate law described in #ref(<eq:single_site>):
+=== Example: The Pedagogical Case
+
+==== Rate Law Derivation
+
+Consider the simple reaction scheme given by
+$ ce("A + *") &eqArrow(k_"ads",opposite:k_"des") ce("A^*") \
+ce("A^*") &fwdArrow(k_2) ce("P + *").
 $
-r_"SR" &= k_2 (conc("A^*") - conc("B^*")/K_"SR").
-$
-Oftentimes, it can be more convenient to report data based on fractional coverages rather than concentrations.
-If we divide through the above expression by $conc("*")_0$ on both sides, we get
-$ r'_"SR" equiv r_"SR"/conc("*")_0 = k_2(theta_"A " - theta_"B "/K_"SR"). $
-Here, the rate is normalized by the concentration of active sites and, therefore, has units of 1/time.
-This is typically referred to as a turnover frequency (TOF).
-The TOF represents the number of reacting molecules per active site and unit time (assuming that all adsorption sites defined by $conc("*")_0$ are all the possible active sites).
-#footnote[Significant care should be taken when reporting and interpreting TOFs and TONs in the literature. Refer to F. Schüth, M.D. Ward, J.M. Buriak, "Common Pitfalls of Catalysis Manuscripts Submitted to Chemistry of Materials", _Chem. Mater._, 30, 3599--3600 (2018). Additional discussion on this topic can be found in S. Kozuch, J.M.L. Martin, "Turning Over Definitions in Catalytic Cycles", _ACS Catal._, 2, 2787--2794 (2012) and the corresponding article G. Lente, "Comment on 'Turning Over Definitions in Catalytic Cycles'", _ACS Catal._, 3, 381--382 (2013).]
-It is important to be careful when reporting or interpreting TOFs in the literature.
-Since they are normalized by the concentration of active sites and most real catalysts have heterogeneity in the active species, the TOF is best thought of as an averaged property.
+for the net reaction $ce("A->P")$.
+The net reaction rate is given by $r = r_"P "$, and so we will focus on the rate of product production from here.
+The rate of product production is given by
+$ r_"P " = k_2 conc("A^*"). $<eq:lhhw_sample_rate>
 
-In enzymatic catalysis especially, one might also see a turnover number (TON) that is similarly defined as the number of molecules reacting normalized by the total number of active sites.
-In other words, it is the number of chemical conversions of the substrate per unit time that a single active site will carry out at a given set of experimental conditions.
-However, in chemical catalysis, a TON may instead refer to the number of moles of the substrate that can be converted before the catalyst itself becomes deactivated.
-In this case, it is simply the TON multiplied by the catalyst lifetime.
-These two definitions are distinct and should not be interchanged.
+We ultimately want to write our rate without transient intermediates.
+If we assume that the adsorption of A is quasi-equilibrated,
+#footnote[If you prefer, you could instead make the slightly less restrictive assumption that #ce("A^*") is in pseudo-steady state without invoking quasi-equilibrium conditions. Doing so would result in an expression that is identical to the one derived herein in the limit of $k_"des">>k_2$.]
+then
+$ k_"ads" p_"A " conc("*") = k_"des" conc("A^*"). $
+$ conc("A^*") = K_"ads" p_"A " conc("*"). $<eq:conc_a_star_lhhw>
+The quasi-equilibrium approximation is fairly reasonable to invoke here because the surface reaction is expected to be substantially slower than the adsorption or desorption steps.
+
+Additionally, we have the site balance of 
+$ conc("*")_0 = conc("*") + conc("A^*"), $
+which if we solve for #conc("*") and plug the resulting expression into #ref(<eq:conc_a_star_lhhw>) yields
+$ conc("A^*") = K_"ads" p_"A " (conc("*")_0-conc("A^*")) $
+$ conc("A^*") +  K_"ads" p_"A " conc("A^*") = K_"ads" p_"A " conc("*")_0 $
+$ conc("A^*") =  (K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
+Plugging this into our original rate expression from #ref(<eq:lhhw_sample_rate>) results in
+$ r_"P " = (k_2 K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
+Note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
+
+==== Limiting Cases
+
+===== Strong Adsorption <strong-adsorption>
+
+We can also explore some limiting cases for the above expression.
+If A adsorbs strongly to the surface, then we arrive at
+$ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_"A ">>1). $
+In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
+We know the apparent reaction order is 0 in A from the fact that there is no $p_"A "$ term in the simplified rate law.
+We can also see this from the formal definition given in #ref(<eq:apparent_order>):
+$ alpha_("A,app") = p_"A " ((diff ln(r))/(diff p_"A "))_(p_i,i!=j) = p_"A " (diff ln(k_2 conc("*")_0))/(diff p_"A ") = 0. $
+
+In this scenario, the apparent rate constant would simply be
+$ k_"app" = k_2. $
+By extension, the apparent activation energy is the activation energy associated with $k_2$, which we will denote $E_("a,2")$.
+This too can be derived from the formal definition given in #ref(<eq:apparent_e_a>):
+$ E_"app" = R T^2 (diff ln(k_"app"))/(diff T) $
+$ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A_2 - E_("a,2")/(R T)))/(diff T) = R T^2 (E_("a,2")/(R T^2)) = E_("a,2"). $
+
+===== Weak Adsorption
+
+In the opposite extreme, if A adsorbs very weakly to the surface, then we arrive at
+$ r_"P " approx k_2 K_"ads" p_"A " conc("*")_0 quad (K_"ads" p_"A "<<1). $
+Here, the apparent reaction order of A is 1.
+Additionally, the apparent rate constant would now be
+$ k_"app" = k_2 K_"ads". $
+We can rewrite the apparent rate constant as
+$ k_"app" = A_2 exp(-E_("a,2")/(R T)) exp(-(Delta G_("ads")^std)/(R T)) $
+$ k_"app" = A_2 exp(-E_("a,2")/(R T)) exp(-(Delta H_("ads")^std)/(R T)) exp((Delta S_("ads")^std)/(R)) $
+$ k_"app" = A_2 exp((Delta S_("ads")^std)/(R)) exp(-(E_("a,2")+ Delta H_("ads")^std)/(R T)). $
+As such, we arrive at a functional form of $ k_"app" = A_"app" exp(-E_("a,app")/(R T)), $
+where
+$ A_"app" = A_2 exp((Delta S_("ads")^std)/(R)), quad quad E_("a,app") = E_("a,2") + Delta H_("ads")^std. $
+The same result can be found from the formal definition of the apparent activation energy like was done in #ref(<strong-adsorption>).
+These apparent kinetic parameters are particularly useful for interpreting kinetic data obtained from experiments, where the net reaction is the main observable phenomena.
+
+=== Example: Carbon Monoxide Oxidation
+
+==== Rate Law Derivation
+
+We will consider the following reaction of #ce("CO") and #ce("O2") to produce #ce("CO2"):
+$
+ce("CO + *") &eqArrow(k_1, opposite:k_(-1)) ce("CO^*")\
+ce("O2 + 2 *") &eqArrow(k_2, opposite:k_(-2)) ce("2 O^*")\
+ce("CO^* + O^*") &fwdArrow(k_3) ce("CO2 + 2 *"),
+$
+with the net reaction $ce("CO + 1/2 O2 -> CO2")$.
+We will also assume that the bimolecular surface reaction of #ce("CO^*") and #ce("O^*") is rate-limiting, which in turn implies that the reversible adsorption steps are quasi-equilibrated.
+
+We know that the rate of reaction can be given by $r = r_ce("CO2")$.
+From here, we will focus on the rate of #ce("CO2") production.
+Based on our prior discussion of bimolecular surface reactions (refer to #ref(<reactions-between-two-surface-species>)), we can write the rate of #ce("CO2") production as
+$ r_ce("CO2") = (k'_3 conc("CO^*") conc("O^*"))/conc("*")_0, $<eq:co_rate>
+where we have defined $k'_3 equiv k_3 z$ as a matter of simplicity.
+
+Since #conc("CO^*") and #conc("O^*") cannot be measured directly, we seek to replace these variables in #ref(<eq:co_rate>).
+Invoking the quasi-equilibrium condition, such that the rate of adsorption and desorption of the reactants are equal in magnitude, yields
+$
+r_1 &= 0 = k_1 p_("CO") conc("*") - k_(-1) conc("CO^*")\
+r_2 &= 0 = (k_2 z p_ce("O2") conc("*")^2)/(2 conc("*")_0) - (k_(-2) z conc("O^*")^2)/(2 conc("*")_0). 
+$
+Solving for the adsorbed species concentrations yields
+$
+conc("CO^*") = k_1/k_(-1) p_("CO") conc("*") = K_1 p_("CO") conc("*")\
+conc("O^*") = sqrt(k_2/k_(-2)  p_ce("O2") conc("*")^2) = conc("*") sqrt(K_2 p_ce("O2")). $<eq:co_ads_species>
+Now we write out the site balance:
+$ conc("*")_0= conc("*") + conc("CO^*") + conc("O^*"). $<eq:co_site_balance>
+Plugging #ref(<eq:co_ads_species>) into #ref(<eq:co_site_balance>) yields
+$
+conc("*")_0 &= conc("*")+ K_1 p_("CO") conc("*") + conc("*") sqrt(K_2 p_ce("O2"))\
+conc("*") &= conc("*")_0 / (1+ K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
+$<eq:co_star>
+Plugging #ref(<eq:co_star>) into #ref(<eq:co_ads_species>) results in
+$
+conc("CO^*") &= (K_1 p_("CO") conc("*")_0) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))\
+conc("O^*") &= (conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
+$<eq:co_final>
+Finally, substituting #ref(<eq:co_final>) into #ref(<eq:co_rate>) results in the desired rate expression based on experimental observables:
+$ r_ce("CO2") = (k'_3 K_1 p_("CO") conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))^2. $
+Once again, you may note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
+
+#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.]
+// #footnote[For an alternate opinion about the $conc("*")_0$ term in catalytic rate expressions, refer to D. Kiani, I.E. Wachs, "The Conundrum of Pair Sites in Langmuir–Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
+
+==== Limiting Cases
+
+As a sanity check, we can see that if $p_ce("CO")->infinity$ or $p_ce("O2")->infinity$, then $r_ce("CO2")->0$, which makes sense since both species need to be present on the surface simultaneously so they can react with one another.
+
+We can also consider what happens in other limiting cases.
+For instance, if #ce("CO") binds very strongly such that $K_1$ is sufficiently large, we may arrive at the simplified equation
+$ r_ce("CO2") approx k'_3 conc("*")_0 sqrt(K_2 p_ce("O2")), $<eq:rxn_CO>
+which has $p_"CO"$ with an apparent order of 0 and $p_ce("O2")$ with an apparent order of 1/2.
+The apparent order of 0 in CO makes sense because the surface is nearly covered by CO adsorbates, so changing CO will have a negligible impact on the rate.
+That said, we still need #ce("O2") species otherwise the reaction will never proceed to begin with.
+
+Conversely, if #ce("O2") binds very strongly such that $K_2$ is sufficiently large, we may arrive at the simplified equation
+$ r_ce("CO2") approx (k'_3 K_1 p_("CO") conc("*")_0) / sqrt(K_2 p_ce("O2")), $
+which has $p_"CO"$ with an apparent order of 1 but $p_ce("O2")$ with an apparent order of -1/2, indicating that #ce("O2") is inhibiting the overall rate, as would be expected.
+
+In each of these limiting cases, it is important to remember that these are not the rate laws themselves but rather what may be observed experimentally.
+Since the mechanism is rarely known _a priori_, it is important to think critically about what the apparent reaction orders may or may not mean in reality.
+Of course, in the case of #ref(<eq:rxn_CO>), measuring 0-th order in $p_"CO"$ does not play a role in the kinetics at all.
+After all, without CO, the reaction does not proceed.
+Rather, it might mean that CO binds so strongly that it is nearly covering the surface.
+
 
 === Reaction Stoichiometric Numbers
 
@@ -1678,137 +1807,6 @@ where $r$ is the net rate of the overall reaction.
 This relationship is applicable for a reaction cycle (e.g. a catalytic reaction or radical-chain reaction) where the pseudo-steady state approximation is applied on the intermediates.
 ]
 
-== Langmuir--Hinshelwood--Hougen--Watson Kinetics <langmuir-hinshelwood-hougen-watson-kinetics>
-
-With our newfound knowledge of the individual steps that take place in a catalytic reaction, we can combine them to produce a kinetic model.
-When invoking Langmuirian adsorption behavior with the assumption that adsorbates are randomly distributed on the surface (known as the Hinshelwood assumption), the resulting kinetic models are known as Langmuir--Hinshelwood--Hougen--Watson (LHHW) models.
-
-=== Example: The Pedagogical Case
-
-==== Rate Law Derivation
-
-Consider the simple reaction scheme given by
-$ ce("A + *") &eqArrow(k_"ads",opposite:k_"des") ce("A^*") \
-ce("A^*") &fwdArrow(k_2) ce("P + *").
-$
-for the net reaction $ce("A->P")$.
-The net reaction rate is given by $r = r_"P "$, and so we will focus on the rate of product production from here.
-The rate of product production is given by
-$ r_"P " = k_2 conc("A^*"). $
-We want to write our rate without transient intermediates.
-
-If we assume that the adsorption of A is quasi-equilibrated,
-#footnote[If you prefer, you could instead make the slightly less restrictive assumption that #ce("A^*") is in pseudo-steady state without invoking quasi-equilibrium conditions. Doing so would result in an expression that is identical to the one derived herein in the limit of $k_"des">>k_2$.]
-then
-$ k_"ads" p_"A " conc("*") = k_"des" conc("A^*"). $
-$ conc("A^*") = K_"ads" p_"A " conc("*"). $<eq:conc_a_star_lhhw>
-The quasi-equilibrium approximation is fairly reasonable to invoke here because the surface reaction is expected to be substantially slower than the adsorption or desorption steps.
-
-Additionally, we have the site balance of 
-$ conc("*")_0 = conc("*") + conc("A^*"), $
-which if we plug into #ref(<eq:conc_a_star_lhhw>) yields
-$ conc("A^*") = K_"ads" p_"A " (conc("*")_0-conc("A^*")) $
-$ conc("A^*") +  K_"ads" p_"A " conc("A^*") = K_"ads" p_"A " conc("*")_0 $
-$ conc("A^*") =  (K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
-Plugging this into our rate expression results in
-$ r_"P " = (k_2 K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
-
-==== Limiting Cases
-
-We can also explore some limiting cases.
-If A adsorbs strongly to the surface, then we arrive at
-$ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_"A ">>1). $
-In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
-We know the apparent reaction order is 0 in A from the fact that there is no $p_"A "$ term in the simplified rate law but also from the formal definition given in #ref(<eq:apparent_order>):
-$ alpha_("A,app") = p_"A " (diff ln(r))/(diff p_"A ") = p_"A " (diff ln(k_2 conc("*")_0))/(diff p_"A ") = 0 quad (K_"ads" p_"A ">>1). $
-
-In this scenario, the apparent rate constant would simply be
-$ k_"app" = k quad (K_"ads" p_"A " >>1). $
-By extension, the apparent activation energy is the activation energy associated with $k_2$, which we will denote $E_("a,2")$.
-This too can be derived from the formal definition given in #ref(<eq:apparent_e_a>):
-$ E_"app" = R T^2 (diff ln(k_"app"))/(diff T) $
-$ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A_2 - E_("a,2")/(R T)))/(diff T) = R T^2 (E_("a,2")/(R T^2)) = E_("a,2"). $
-
-In the opposite extreme, if A adsorbs very weakly to the surface, then we arrive at
-$ r_"P " approx k_2 K_"ads" p_"A " conc("*")_0 quad (K_"ads" p_"A "<<1). $
-Here, the apparent reaction order of A is one.
-Additionally, the apparent rate constant would now be
-$ k_"app" = k_2 K_"ads", $
-which means
-$ E_"app" = R T^2 (dif ln(k_"app"))/(diff T) $
-$ E_"app" = R T^2 (diff (ln( A_2 e^(-E_("a,2")/(R T)) e^(-( Delta H_("ads")^std )/(R T)) e^(-(Delta S_("ads")^std)/R))))/(diff T) $
-$ E_"app" = R T^2 (diff ( ln(A_2) -E_("a,2")/(R T) -( Delta H_("ads")^std )/(R T) -(Delta S_("ads")^std)/R))/(diff T) $
-$ E_"app" = R T^2 (E_("a,2")/(R T^2) + ( Delta H_("ads")^std )/(R T^2)) $
-$ E_"app" = E_("a,2") + Delta H_("ads")^std.  $
-
-These apparent kinetic parameters are particularly useful for interpreting kinetic data obtained from experiments, where the net reaction is the main observable phenomena.
-
-=== Example: Carbon Monoxide Oxidation
-
-==== Rate Law Derivation
-
-We will consider the following reaction of #ce("CO") and #ce("O2") to produce #ce("CO2"):
-$
-ce("CO + *") &eqArrow(k_1, opposite:k_(-1)) ce("CO^*")\
-ce("O2 + 2 *") &eqArrow(k_2, opposite:k_(-2)) ce("2 O^*")\
-ce("CO^* + O^*") &fwdArrow(k_3) ce("CO2 + 2 *"),
-$
-with the net reaction $ce("CO + 1/2 O2 -> CO2")$.
-We will also assume that the adsorption steps are at quasi-equilibrium.
-
-We know that the rate of reaction can be given by $r = r_ce("CO2")$.
-From here, we will focus on the rate of #ce("CO2") production.
-Based on our prior discussion of surface reactions (refer to #ref(<reactions-between-two-surface-species>)), we can write the rate of #ce("CO2") production as
-$ r_ce("CO2") = (k'_3 conc("CO^*") conc("O^*"))/conc("*")_0, $<eq:co_rate>
-where we have defined $k'_3 equiv k_3 z$ as a matter of simplicity.
-
-Since #conc("CO^*") and #conc("O^*") cannot be measured directly, we seek to replace these variables in #ref(<eq:co_rate>).
-Invoking the quasi-equilibrium condition, such that the rate of adsorption and desorption of the reactants are equal in magnitude, yields
-$
-r_1 &= 0 = k_1 p_("CO") conc("*") - k_(-1) conc("CO^*")\
-r_2 &= 0 = (k_2 z p_ce("O2") conc("*")^2)/(2 conc("*")_0) - (k_(-2) z conc("O^*")^2)/(2 conc("*")_0). 
-$
-Solving for the adsorbed species concentrations yields
-$
-conc("CO^*") = k_1/k_(-1) p_("CO") conc("*") = K_1 p_("CO") conc("*")\
-conc("O^*") = sqrt(k_2/k_(-2)  p_ce("O2") conc("*")^2) = conc("*") sqrt(K_2 p_ce("O2")). $<eq:co_ads_species>
-Now we write out the site balance:
-$ conc("*")_0= conc("*") + conc("CO^*") + conc("O^*"). $<eq:co_site_balance>
-Plugging #ref(<eq:co_ads_species>) into #ref(<eq:co_site_balance>) yields
-$
-conc("*")_0 &= conc("*")+ K_1 p_("CO") conc("*") + conc("*") sqrt(K_2 p_ce("O2"))\
-conc("*") &= conc("*")_0 / (1+ K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
-$<eq:co_star>
-Plugging #ref(<eq:co_star>) into #ref(<eq:co_ads_species>) results in
-$
-conc("CO^*") &= (K_1 p_("CO") conc("*")_0) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))\
-conc("O^*") &= (conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
-$<eq:co_final>
-Finally, substituting #ref(<eq:co_final>) into #ref(<eq:co_rate>) results in the desired rate expression based on experimental observables:
-$ r_ce("CO2") = (k'_3 K_1 p_("CO") conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))^2. $
-#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.]
-// #footnote[For some limitations of the pair-site perspective, particularly when the adsorbates are mobile on the surface, refer to D. Kiani, I.E. Wachs, "The Conundrum of “Pair Sites in Langmuir–Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
-
-==== Limiting Cases
-
-As a sanity check, we can see that if $p_ce("CO")->infinity$ or $p_ce("O2")->infinity$, then $r_ce("CO2")->0$, which makes sense since both species need to be present on the surface simultaneously so they can react with one another.
-
-We can also consider what happens in other limiting cases.
-For instance, if #ce("CO") binds very strongly such that $K_1$ is sufficiently large, we may arrive at the simplified equation
-$ r_ce("CO2") approx k'_3 conc("*")_0 sqrt(K_2 p_ce("O2")), $<eq:rxn_CO>
-which has $p_"CO"$ with an apparent order of 0 and $p_ce("O2")$ with an apparent order of 1/2.
-The apparent order of 0 in CO makes sense because the surface is nearly covered by CO adsorbates, so changing CO will have a negligible impact on the rate.
-That said, we still need #ce("O2") species otherwise the reaction will never proceed to begin with.
-
-Conversely, if #ce("O2") binds very strongly such that $K_2$ is sufficiently large, we may arrive at the simplified equation
-$ r_ce("CO2") approx (k'_3 K_1 p_("CO") conc("*")_0) / sqrt(K_2 p_ce("O2")), $
-which has $p_"CO"$ with an apparent order of 1 but $p_ce("O2")$ with an apparent order of -1/2, indicating that #ce("O2") is inhibiting the overall rate, as would be expected.
-
-In each of these limiting cases, it is important to remember that these are not the rate laws themselves but rather what may be observed experimentally.
-Since the mechanism is rarely known _a priori_, it is important to think critically about what the apparent reaction orders may or may not mean in reality.
-Of course, in the case of #ref(<eq:rxn_CO>), measuring 0-th order in $p_"CO"$ does not play a role in the kinetics at all.
-After all, without CO, the reaction does not proceed.
-Rather, it might mean that CO binds so strongly that it is nearly covering the surface.
 
 == Non-LHHW Kinetics
 
@@ -1852,7 +1850,7 @@ In some cases, the catalytic adsorption sites can be part of the catalytic cycle
 This is known as a Mars--van Krevlen cycle.
 There are several authoritative texts that can be read to learn more about the derivation of the rate in a Mars--van Krevlen mechanism.
 We refrain from doing so here simply as a matter of brevity and, in part, because it has been shown that the original derivation has numerous logical inconsistencies that are difficult to justify.
-#footnote[M.A. Vannice, "An analysis of the Mars–van Krevelen rate expression", _Catalysis Today_, 123, 18--22 (2007).]
+#footnote[M.A. Vannice, "An analysis of the Mars–van Krevelen rate expression", _Catal. Today_, 123, 18--22 (2007).]
 
 === Limitations of LHHW
 
