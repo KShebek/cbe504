@@ -1,5 +1,5 @@
 #import "@preview/xarrow:0.3.1": xarrow
-#import "@preview/gentle-clues:0.9.0": tip, clue, tip
+#import "@preview/gentle-clues:1.0.0": tip, clue, tip
 #import "@preview/whalogen:0.2.0": ce
 #import "@preview/ilm:1.2.1": ilm
 
@@ -53,7 +53,7 @@
 #let ddagger = sym.dagger.double
 #let delplot(rank) = $""^rank"P "_"A "$
 
-#set math.equation(numbering: "(1)")
+// #set math.equation(numbering: "(1)")
 
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
@@ -86,7 +86,6 @@ As a field of study, reaction kinetics is fascinating from a metascience perspec
 In my somewhat biased opinion, there is no field of study in the chemical engineering curriculum that is more prone to misconceptions and questionable assumptions.
 Part of the reason for this pedagogical challenge is that kinetics can be both a theoretically rigorous _and_ a purely empirical science depending on how one approaches the topic (naturally, we will lean more towards the former in this course).
 After all, if the rate coefficient $k$ should actually be $4 k$, this is of no major concern if one treats kinetics as merely an exercise in statistical regression, but it can influence the meaning of the underlying kinetic parameters if treated from a theoretical basis.
-One of many examples of this is in the proper treatment of lattice statistics in describing multi-site adsorption and surface reaction phenomena.
 
 Perhaps a more notable cause of pedagogical challenges in the reaction kinetics literature --- including both textbook and research articles --- is that the intersection of kinetics and thermodynamics can become fraught with logical inconsistencies.
 Frequently, derivations in reaction kinetics are carried out under assumptions of thermodynamic ideality.
@@ -490,7 +489,7 @@ For an ideal gas ($phi_j=1$), we can state that $f_j=y_j p =p_j$, such that the 
 The concept of fugacity is simply a matter of terminology and bookkeeping, which will account for attractive intermolecular interactions that can occur at low temperatures or high pressures.
 From a pedagogical perspective, the main takeaway is that activities are the true property of interest for equilibrium calculations, rather than concentrations of partial pressures, in order for everything to be internally consistent.
 
-#caution[When we refer to a standard state, this is a choice that the practicioner makes. The standard state thermodynamic properties are independent of the pressure at which the reaction is actually carried out; rather, they are associated with a hypothetical process.
+#caution[When we refer to a standard state, this is a choice that the practitioner makes. The standard state thermodynamic properties are independent of the pressure at which the reaction is actually carried out; rather, they are associated with a hypothetical process.
 In contrast, the standard state does _not_ indicate a particular temperature, which must be specified separately and is typically the observed temperature. #footnote[While similar in name, the standard state is not the same concept as the standard temperature and pressure (STP).]
 As such, state thermodynamic properties taken from a database may need to be adjusted to the experimentally relevant temperature.
 ]
@@ -513,7 +512,7 @@ In this form, we can see that units are appropriately addressed even though conc
 In most practical cases, the deviations from non-ideality can be assumed to be small, and we will oftentimes use concentrations or partial pressures in place of activities.
 However, for concentrated solutions and gases at low temperature or high pressures, the differences can become noticeable and should be considered.
 #footnote[ 
-To learn more about potential pitfalls when neglecting activity in equilibrium expressions, refer to C.G. McCarty, E. Vitz, pH Paradoxes: Demonstrating That It Is Not True That pH ≡ -log[H+], _J. Chem. Educ._, 83, 752--757 (2006).]
+To learn more about potential pitfalls when neglecting activity in equilibrium expressions, refer to C.G. McCarty, E. Vitz, "pH Paradoxes: Demonstrating That It Is Not True That pH ≡ -log[H+]", _J. Chem. Educ._, 83, 752--757 (2006).]
 
 
 
@@ -1309,11 +1308,12 @@ Again, this can be easily explained by the fact that a more exothermic adsorptio
 
 #plot[#align(center)[https://marimo.app/l/e0dix3.]]
 
-Before continuing, we can rewrite our rates of adsorption and desorption in terms of fractional coverage as follows:
+Before continuing, it should be noted that we can rewrite our rates of adsorption and desorption in terms of fractional coverage as follows:
 $ r_"ads" &= k_"ads" p_"A " conc("*") = k_"ads" p_"A " conc("*")_0 theta_ce("*") = k_"ads" p_"A " conc("*")_0 (1-theta_ce("A")) \
 r_"des" &= k_"des" conc("A^*") = k_"des" conc("*")_0 theta_ce("A"),
 $
 where we took advantage of the fact that $sum_j theta_j =1$, where $j$ includes both the adsorbate species and the vacant sites.
+We can only use #ref(<eq:langmuir>) for the definition of $theta_ce("A")$, however, if the adsorption or desorption process is equilibrated.
 
 === Multi-Site Adsorption
 
@@ -1343,8 +1343,8 @@ For the sake of simplicity, we will invoke the same assumptions for the Langmuir
 
 Under equilibrium conditions, we can equate the rates of adsorption and desorption:
 $
-k_"ads" p_"A " conc("*") &= k_"des" conc("A^*")\
-k_"ads" p_"B " conc("*") &= k_"des" conc("B^*"),
+k_"ads,A" p_"A " conc("*") &= k_"des" conc("A^*")\
+k_"ads,B" p_"B " conc("*") &= k_"des" conc("B^*"),
 $
 such that
 $ K_"ads,A " = conc("A^*") / (p_("A ") conc("*")) $<eq:competitive_ads_Ka>
@@ -1383,17 +1383,19 @@ By analogy for species B, the following result can be found:
 $ theta_"B " = (K_"ads,B" p_("B ")) / (1 + K_"ads,A" p_("A ") + K_"ads,B" p_("B ")). $
 
 As you might be able to already tell, we can generalize the adsorption isotherm for arbitrary numbers of adsorbates as
-$ theta_"A " = (K_("ads,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $
+$ theta_"A " = (K_("ads,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $<eq:general_multi_langmuir>
 
 Finally, we can revisit our rates of adsorption and desorption to write them in terms of fractional coverages:
 $
 r_("ads",ce("A")) &= k_("ads",ce("A")) p_"A " conc("*") = k_("ads",ce("A")) p_"A " conc("*")_0 theta_* = k_("ads",ce("A")) p_"A " conc("*")_0 (1-theta_ce("A") - theta_ce("B"))  \
 r_("des",ce("A")) &= k_("des",ce("A")) conc("A^*") = k_("des",ce("A")) conc("*")_0 theta_ce("A").
 $
+If the adsorption and desorption processes are equilibrated, then we can use #ref(<eq:general_multi_langmuir>) to substitute in for $theta_ce("A")$ and $theta_ce("B")$.
 
 === Dissociative Adsorption <dissociative-adsorption>
 
 Now, we will consider a dissociative adsorption process:
+#footnote[Dissociative chemisorption is both an adsorption and surface reaction process. We include it in the adsorption section to compare and contrast expressions for the adsorption isotherm.]
 $ ce("A2 + 2*") eqArrow(k_"ads",opposite:k_"des") ce("2 A^*"). $<eq:rxn_a2>
 We will again invoke the typical assumptions of the Langmuir adsorption isotherm with the additional caveat that the individual #ce("A^*") species adsorb onto separate surface sites.
 
@@ -1411,11 +1413,14 @@ $ conc("**") = z/2 conc("*")^2/conc("*")_0 $
 and
 $ conc("A**A") = z/2 (conc("A^*")^2)/conc("*")_0, $
 where $z$ is the coordination number of the site, and a $1\/2$ factor is introduced to avoid over-counting when dealing with identical pairs of species or sites.
+#footnote[Implicit in the lattice statistics-based expression is the so-called Hinshelwood assumption, wherein the adsorbates are considered to be randomly distributed on the surface without any degree of spatial correlation.]
 
-#self[Draw square lattice with some Astar sites.]
+#figure(
+  image("figures/lattice.svg", width: 25%),
+  caption: [Schematic of adsorption on a square lattice with vacant sites and adsorbed A species. This cartoon example of a surface would have $z=4$ for each site.]
+)
 
 The way we can justify the above expressions is as follows.
-#footnote[Lattice statistics are neglected in many textbooks on the subject. The seminal text _Kinetics of Heterogeneous Catalytic Reactions_ by M. Boudart and G. Djega-Mariadassou properly accounts for it, as does _Fundamentals of Chemical Reaction Engineering_ by M.E. Davis and R.J. Davis (for the special case of a square lattice with $z=4$).]
 Consider the expression for #conc("**").
 We want to find the number density of adjacent pairs of vacant sites.
 The probability of randomly picking a vacant site on the lattice is $conc("*")\/conc("*")_0$, and we can start by considering all possible sites on the surface: $conc("*")_0 dot.op (conc("*")\/conc("*")_0)$.
@@ -1430,6 +1435,7 @@ r_"ads" &= k_"ads" p_ce("A2") conc("**") = (z k_"ads" p_ce("A2") conc("*")^2)/(2
 r_"des" &= k_"des" conc("A**A") = (z k_"des" conc("A^*")^2)/(2 conc("*")_0) .
 $
 In other words, there is an additional factor of $z\/2 conc("*")_0$ that needs to be included than if one were to write the elementary rate law solely based on #ref(<eq:rxn_a2>).
+// #footnote[Although I admittedly do not fully agree with the argument and corresponding conclusions, a counterpoint to the statistical pair-site treatment can be found in D. Kiani, I.E. Wachs, "The Conundrum of 'Pair Sites' in Langmuir--Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
 #caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$.]
@@ -1443,16 +1449,19 @@ $
 
 Therefore,
 $
-theta_"A " &= 1 / (1 / sqrt(K_"ads" p_ce("A2")) + 1)\
-theta_"A " &= sqrt(K_"ads" p_("A ")) / (1 + sqrt(K_"ads" p_("A "))).
+theta_"A " &= 1 / (1 / sqrt(K_"ads" p_ce("A2")) + 1)
 $
-We can see that when $K_"ads" p_ce("A") <<1$ (i.e. in the limit of low partial pressures of #ce("A2")), $theta_ce("A")->sqrt(K_"ads" p_ce("A"))$, which is significantly different than the linear behavior observed for the non-dissociative Langmuir adsorption isotherm.
+$
+theta_"A " &= sqrt(K_"ads" p_("A ")) / (1 + sqrt(K_"ads" p_("A "))).
+$<eq:competitive_theta>
+We can see that when $sqrt(K_"ads" p_ce("A")) <<1$ (i.e. in the limit of low partial pressures of #ce("A2")), $theta_ce("A")->sqrt(K_"ads" p_ce("A"))$, which is significantly different than the linear behavior observed for the non-dissociative Langmuir adsorption isotherm.
 
 We can also revisit our rate expressions to write them in terms of surface coverages of observable species:
 $
 r_"ads" &= (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0) = z/2 k_"ads" p_ce("A2") conc("*")_0 theta_*^2 = z/2 k_"ads" p_ce("A2") conc("*")_0 (1-theta_ce("A"))^2\
 r_"des" &= (z k_"des" conc("A^*")^2)/(2 conc("*")_0) = z/2 k_"des" conc("*")_0 theta_ce("A")^2 .
 $
+If the adsorption and desorption processes are equilibrated, we can use #ref(<eq:competitive_theta>) to determine the value of $theta_ce("A")$.
 
 === Non-Langmuir Isotherms
 
@@ -1576,7 +1585,7 @@ Species $"A "^*$ cannot react with species $"B "^*$ unless they are nearest neig
 Therefore, we need to account for this in our rate expression, similar how we needed to account for the probability of adjacent sites in our dissociative adsorption example from #ref(<dissociative-adsorption>).
 
 With this knowledge and in analogy with the statistical corrections introduced in #ref(<dissociative-adsorption>),
-the proper rate expression is given by
+the rate expression can be given by
 $
 r_"SR" &= (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0
 $<eq:sr_dual>
@@ -1619,7 +1628,7 @@ $ r'_"SR" equiv r_"SR"/conc("*")_0 = k_2(theta_"A " - theta_"B "/K_"SR"). $
 Here, the rate is normalized by the concentration of active sites and, therefore, has units of 1/time.
 This is typically referred to as a turnover frequency (TOF).
 The TOF represents the number of reacting molecules per active site and unit time (assuming that all adsorption sites defined by $conc("*")_0$ are all the possible active sites).
-#footnote[Significant care should be taken when reporting and interpreting TOFs and TONs in the literature. Refer to F. Schüth, M.D. Ward, J.M. Buriak, "Common Pitfalls of Catalysis Manuscripts Submitted to Chemistry of Materials", _Chemistry of Materials_, 30, 3599--3600 (2018) and S. Kozuh, J.M.L. Martin, "Turning Over Definitions in Catalytic Cycles", _ACS Catalysis_, 2, 2787--2794 (2012).]
+#footnote[Significant care should be taken when reporting and interpreting TOFs and TONs in the literature. Refer to F. Schüth, M.D. Ward, J.M. Buriak, "Common Pitfalls of Catalysis Manuscripts Submitted to Chemistry of Materials", _Chem. Mater._, 30, 3599--3600 (2018). Additional discussion on this topic can be found in S. Kozuch, J.M.L. Martin, "Turning Over Definitions in Catalytic Cycles", _ACS Catal._, 2, 2787--2794 (2012) and the corresponding article G. Lente, "Comment on 'Turning Over Definitions in Catalytic Cycles'", _ACS Catal._, 3, 381--382 (2013).]
 It is important to be careful when reporting or interpreting TOFs in the literature.
 Since they are normalized by the concentration of active sites and most real catalysts have heterogeneity in the active species, the TOF is best thought of as an averaged property.
 
@@ -1778,7 +1787,8 @@ conc("O^*") &= (conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p
 $<eq:co_final>
 Finally, substituting #ref(<eq:co_final>) into #ref(<eq:co_rate>) results in the desired rate expression based on experimental observables:
 $ r_ce("CO2") = (k'_3 K_1 p_("CO") conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))^2. $
-#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that there is a logical error due to neglected lattice statistics.]
+#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.]
+// #footnote[For some limitations of the pair-site perspective, particularly when the adsorbates are mobile on the surface, refer to D. Kiani, I.E. Wachs, "The Conundrum of “Pair Sites in Langmuir–Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
 
 ==== Limiting Cases
 
@@ -1813,7 +1823,7 @@ ce("H2") + ce("2 *") &eqArrow(k_1,opposite:k_(-1)) ce("2 H^*")\
 ce("2 H^*") + ce("C2H2") &fwdArrow(k_"H ") ce("C2H4") + ce("2 *").
 $
 with the net reaction #ce("C2H2 + H2 -> C2H4").
-Here, we will assume that the #ce("H2") adsorption is quasi-equilibrated, such that the hydrogenation reaction (step 2) is rate-limiting.
+We will assume that the #ce("H2") adsorption is quasi-equilibrated, such that the hydrogenation reaction (step 2) is rate-limiting.
 
 Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism).
 The rate of product formation for this reaction is given by
@@ -1864,11 +1874,11 @@ In other words, $r$ should be zero in the jammed state, but this is inconsistent
 
 #self[Draw jammed lattice.]
 
-When statistical treatments like this need to be invoked, it generally means that LHHW is not a perfectly sound theoretical model.
+When statistical modifications need to be invoked like with the jammed lattice example, it generally means that LHHW on its own is not a perfectly sound theoretical model.
 Of course, this does not mean a LHHW model cannot yield a sufficiently good fit to experimentally obtained kinetic data.
 Rather, it means that the interpretability may be limited, and there may be more suitable physical models that can be derived.
-We refer the interested reader to external sources for further discussions about potential improvements to the LHHW formalism.
-#footnote[N.K. Razdan, A. Bhan, "Kinetic description of site ensembles on catalytic surfaces", _Proc. Natl. Acad. Sci. U.S.A._, 118, e2019055118 (2021).]
+We refer the interested reader to external sources for further discussions about potential improvements to the LHHW formalism, particularly as it relates to dealing with site ensembles.
+#footnote[N.K. Razdan, A. Bhan, "Kinetic description of site ensembles on catalytic surfaces", _Proc. Natl. Acad. Sci. U.S.A._, 118, e2019055118 (2021). Also refer to N.K. Razdan, A. Bhan, "Catalytic site ensembles: A context to reexamine the Langmuir--Hinshelwood kinetic description", _J. Catal._, 404, 726--744 (2021). ]
 
 = Transition State Theory <transition-state-theory>
 
