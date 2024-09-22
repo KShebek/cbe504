@@ -1435,7 +1435,6 @@ r_"ads" &= k_"ads" p_ce("A2") conc("**") = (z k_"ads" p_ce("A2") conc("*")^2)/(2
 r_"des" &= k_"des" conc("A**A") = (z k_"des" conc("A^*")^2)/(2 conc("*")_0) .
 $
 In other words, there is an additional factor of $z\/2 conc("*")_0$ that needs to be included than if one were to write the elementary rate law solely based on #ref(<eq:rxn_a2>).
-// #footnote[Although I admittedly do not fully agree with the argument and corresponding conclusions, a counterpoint to the statistical pair-site treatment can be found in D. Kiani, I.E. Wachs, "The Conundrum of 'Pair Sites' in Langmuir--Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
 #caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$.]
