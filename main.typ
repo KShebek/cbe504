@@ -1558,7 +1558,7 @@ Typically, $alpha$ and $V$ are tabulated quantities, and $m_"adsorbent"$ is read
 
 After a reactant has been adsorbed, it can then react.
 A single-site mechanism is one in which the site where the reactant is adsorbed is the only one involved in the reaction.
-Written out, this would be
+One simple example of this kind of mechanism would be
 $ ce("A^*") eqArrow(k_2,opposite:k_(-2)) ce("B^*") $
 for the transformation of species A to B on the catalyst surface.
 The net rate for the surface reaction ("SR") is as follows:
@@ -1580,8 +1580,8 @@ Since TOFs are normalized by the concentration of active sites and most real cat
 
 === Dual-Site Mechanisms <reactions-between-two-surface-species>
 
-One can also consider a different type of surface reaction that consists of a reaction between two adsorbed species,#footnote[The surface reaction $ce("A^* + * <=> B^* + *")$ would be another type of dual-site mechanism with an analogous solution.]
-given by
+One can also consider a different type of surface reaction that consists of a reaction involving two surface sites.#footnote[The surface reaction $ce("A^* + * <=> B^* + *")$ would be another type of dual-site mechanism with an analogous solution.]
+For instance,
 $ ce("A^* + B^*") eqArrow(k_2,opposite:k_(-2)) ce("C^* + D^*"). $<eq:dual_site>
 It might be tempting to write that the net rate for the surface reaction is as follows:
 $
@@ -1594,7 +1594,7 @@ Therefore, we need to account for this in our rate expression, similar how we ne
 With this knowledge and in analogy with the statistical corrections introduced in #ref(<dissociative-adsorption>),
 the rate expression can be given by
 $
-r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0
+r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0,
 $<eq:sr_dual>
 where $z$ is the coordination number of the adsorption site.
 #caution[We use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two identical species, we would need to retain the 1/2 factor.]
@@ -1660,12 +1660,14 @@ Plugging this into our original rate expression from #ref(<eq:lhhw_sample_rate>)
 $ r_"P " = (k_2 K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
 Note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
 
+#plot[#align(center+horizon)[https://marimo.app/l/25oabe]]
+
 ==== Limiting Cases
 
 ===== Strong Adsorption <strong-adsorption>
 
 We can also explore some limiting cases for the above expression.
-If A adsorbs strongly to the surface, then we arrive at
+If A adsorbs strongly to the surface (and/or we are in the high pressure limit of $p_ce("A")$), then we arrive at
 $ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_"A ">>1). $
 In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
 We know the apparent reaction order is 0 in A from the fact that there is no $p_"A "$ term in the simplified rate law.
@@ -1681,7 +1683,7 @@ $ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A
 
 ===== Weak Adsorption
 
-In the opposite extreme, if A adsorbs very weakly to the surface, then we arrive at
+In the opposite extreme, if A adsorbs very weakly to the surface (and/or we are in the low $p_ce("A")$ limit), then we arrive at
 $ r_"P " approx k_2 K_"ads" p_"A " conc("*")_0 quad (K_"ads" p_"A "<<1). $
 Here, the apparent reaction order of A is 1.
 Additionally, the apparent rate constant would now be
@@ -1700,7 +1702,7 @@ These apparent kinetic parameters are particularly useful for interpreting kinet
 
 ==== Rate Law Derivation
 
-We will consider the following reaction of #ce("CO") and #ce("O2") to produce #ce("CO2"):
+We will consider the following reaction of #ce("CO") and #ce("O2") to produce #ce("CO2"), which takes place on Pd:
 $
 ce("CO + *") &eqArrow(k_1, opposite:k_(-1)) ce("CO^*")\
 ce("O2 + 2 *") &eqArrow(k_2, opposite:k_(-2)) ce("2 O^*")\
@@ -1750,14 +1752,13 @@ As a sanity check, we can see that if $p_ce("CO")->infinity$ or $p_ce("O2")->inf
 
 We can also consider what happens in other limiting cases.
 For instance, if #ce("CO") binds very strongly such that $K_1$ is sufficiently large, we may arrive at the simplified equation
-$ r_ce("CO2") approx k'_3 conc("*")_0 sqrt(K_2 p_ce("O2")), $<eq:rxn_CO>
-which has $p_"CO"$ with an apparent order of 0 and $p_ce("O2")$ with an apparent order of 1/2.
-The apparent order of 0 in CO makes sense because the surface is nearly covered by CO adsorbates, so changing CO will have a negligible impact on the rate.
-That said, we still need #ce("O2") species otherwise the reaction will never proceed to begin with.
+$ r_ce("CO2") = (k'_3 conc("*")_0 sqrt(K_2 p_ce("O2"))) / (K_1 p_("CO")) quad (K_1 p_ce("CO") >> 1 + sqrt(K_2 p_ce("O2"))), $<eq:rxn_CO>
+where the apparent order of CO is -1, and the apparent order of #ce("O2") is +1/2.
+The apparent order of -1 in CO makes sense because the surface is nearly covered by CO adsorbates, so increasing CO further will only reduce the overall rate.
 
 Conversely, if #ce("O2") binds very strongly such that $K_2$ is sufficiently large, we may arrive at the simplified equation
-$ r_ce("CO2") approx (k'_3 K_1 p_("CO") conc("*")_0) / sqrt(K_2 p_ce("O2")), $
-which has $p_"CO"$ with an apparent order of 1 but $p_ce("O2")$ with an apparent order of -1/2, indicating that #ce("O2") is inhibiting the overall rate, as would be expected.
+$ r_ce("CO2") approx (k'_3 K_1 p_("CO") conc("*")_0) / sqrt(K_2 p_ce("O2")) quad (sqrt(K_2 p_ce("O2")) >> 1+K_1 p_ce("CO")), $
+which has CO with an apparent order of +1 but $ce("O2")$ with an apparent order of -1/2, indicating that #ce("O2") is now inhibiting the overall rate, as would be expected.
 
 In each of these limiting cases, it is important to remember that these are not the rate laws themselves but rather what may be observed experimentally.
 Since the mechanism is rarely known _a priori_, it is important to think critically about what the apparent reaction orders may or may not mean in reality.
@@ -1817,10 +1818,10 @@ The Eley--Rideal mechanism alluded to in #ref(<reaction-with-unbound-species>) i
 Consider the proposed mechanism
 $
 ce("H2") + ce("2 *") &eqArrow(k_1,opposite:k_(-1)) ce("2 H^*")\
-ce("2 H^*") + ce("C2H2") &fwdArrow(k_"H ") ce("C2H4") + ce("2 *").
+ce("2 H^*") + ce("C2H2") &fwdArrow(k_"H ") ce("C2H4") + ce("2 *")
 $
 with the net reaction #ce("C2H2 + H2 -> C2H4").
-We will assume that the #ce("H2") adsorption is quasi-equilibrated, such that the hydrogenation reaction (step 2) is rate-limiting.
+We will assume that the hydrogenation reaction is rate-limiting #ce("H2"), such that the adsorption is quasi-equilibrated.
 
 Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism).
 The rate of product formation for this reaction is given by
@@ -1829,12 +1830,12 @@ where $k'_"H " equiv k_"H " z \/2$.
 #footnote[The $z \/ 2conc("*")_0$ factor comes in for the same reason as the dissociative adsorption example in #ref(<dissociative-adsorption>).]
 To get rid of the intermediate in our rate expression, we can invoke the quasi-equilibrium assumption on the first step to arrive at
 $
-2 k_1 p_ce("H2") conc("*")^2 = 2 k_(-1) conc("H^*")^2\
+(z k_1 p_ce("H2") conc("*")^2)/(2 conc("*")_0) = (z k_(-1) conc("H^*")^2)/(2 conc("*")_0)\
 conc("H^*") = sqrt(K_1 p_ce("H2") conc("*")^2) = conc("*") sqrt(K_1 p_ce("H2")).
 $
 Plugging this into our expression for $r_ce("C2H4")$ yields
 $ r_ce("C2H4") = (k'_"H " K_1 conc("*")^2 p_ce("H2")  p_ce("C2H2"))/conc("*")_0.  $
-Now we can write our site balance
+Now we can write our site balance:
 $ conc("*")_0 &= conc("*") + conc("H^*") = conc("*") +  conc("*") sqrt(K_1 p_ce("H2"))  = conc("*") (1 + sqrt(K_1 p_ce("H2"))), $
 such that
 $ conc("*") &= conc("*")_0/(1 + sqrt(K_1 p_ce("H2"))). $
@@ -1860,20 +1861,26 @@ If this approximation breaks down, additional complexity must be introduced.
 Additionally, through the Hinshelwood assumption, the adsorbates are assumed to be randomly distributed on the surface.
 
 A clear demonstration of a failure mode with the LHHW model is related to a phenomena described "jamming."
-Consider the simple surface reaction
-$ ce("2 H* -> H2 + 2 *"). $
-We know #ref(<eq:sr_dual>) that the rate of reaction can be given by
-$ r = (k z conc("H^*")^2)/(2 conc("*")_0) = (k z theta_("H ")^2)/2 = (k z (1-theta_*)^2)/2 . $
-If we treat adsorption as occurring on a 2D lattice, it is possible to have a "jammed lattice" at sufficiently high values of $theta_"H "$ like that shown in Figure XYZ.
+Consider the dissociative chemisorption reaction
+$ ce("H2 + 2 *") fwdArrow(k) ce("2 H^*"). $
+We know that the turnover frequency for this process can be given by
+$ r' = k' p_ce("H2") theta_ce("*")^2. $<eq:jam_rate>
+If we treat adsorption as occurring on a 2D lattice, it is possible to have a "jammed lattice" at sufficiently high values of $theta_"H "$ like that shown in #ref(<fig:jammed>).
 Here, there are still vacant sites available (i.e. $theta_*>0$).
 However, none of these vacant sites can lead to a further reaction because there is no space for two H atoms to adsorb at adjacent sites.
-In other words, $r$ should be zero in the jammed state, but this is inconsistent with the fact that $theta_* != 0$.
+In other words, $r$ should be zero in the jammed state, but this is inconsistent with #ref(<eq:jam_rate>) for $theta_* > 0$.
+In other words, $theta_ce("*")>0$ but $theta_ce("**")=0$.
+Clearly, the Langmuir--Hinshelwood formalism cannot reproduce the jammed state.
 
-#self[Draw jammed lattice.]
+#figure(
+  image("figures/jammed.jpg", width: 20%),
+  caption: [Depiction of a jammed lattice.]
+)<fig:jammed>
 
 When statistical modifications need to be invoked like with the jammed lattice example, it generally means that LHHW on its own is not a perfectly sound theoretical model.
 Of course, this does not mean a LHHW model cannot yield a sufficiently good fit to experimentally obtained kinetic data.
 Rather, it means that the interpretability may be limited, and there may be more suitable physical models that can be derived.
+
 We refer the interested reader to external sources for further discussions about potential improvements to the LHHW formalism, particularly as it relates to dealing with site ensembles.
 #footnote[N.K. Razdan, A. Bhan, "Kinetic description of site ensembles on catalytic surfaces", _Proc. Natl. Acad. Sci. U.S.A._, 118, e2019055118 (2021). Also refer to N.K. Razdan, A. Bhan, "Catalytic site ensembles: A context to reexamine the Langmuir--Hinshelwood kinetic description", _J. Catal._, 404, 726--744 (2021). ]
 
