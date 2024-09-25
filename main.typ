@@ -547,6 +547,37 @@ Industrially, iron-based catalysts are often used for this process, and the oper
 As for the pressures, they are kept relatively high at 100--200 bar to shift the equilibrium toward the production of ammonia.
 The discovery of a heterogeneous catalyst that can more efficiently synthesize ammonia at near-ambient temperatures and pressures is one of the holy grails of reaction engineering. 
 
+=== Demonstrating that $K$ is a State Function
+
+In the previous example, you may have noticed that $ce("N2 + 3 H2 <--> 2 NH3")$ is likely not an elementary reaction since it is virtually impossible for four species to react simultaneously. Here, we will demonstrate that the definition of $K_"a "$ holds true regardless of whether the reaction is elementary or non-elementary.
+
+The most straightforward way to convince yourself of this fact is that $Delta G^std$ is a state function, which in turn must mean that $K_"a "$ is a state function as well.
+If we have a non-elementary reaction with $Delta G^std$, the value for $Delta G^std$ will be the same as the sum of all the $Delta G^std$ values for the elementary steps.
+Put another way, $Delta G^std$ does not depend on whether a reaction is elementary or not.
+Since $K_"a " = exp(-Delta G^std\/R T)$, the same holds true for $K_"a "$.
+
+Consider a net reaction given by 
+$ ce("A") eqArrow(K) ce("D"), quad &Delta G^std $
+which in reality is composed of several elementary steps:
+$
+ce("A") &eqArrow(K_1) ce("B"), quad &Delta G^std_1\
+ce("B") &eqArrow(K_2) ce("C"), quad &Delta G^std_2\
+ce("C") &eqArrow(K_3) ce("D"), quad &Delta G^std_3.
+$
+
+We know that $Delta G^std = Delta G^std_1 + Delta G^std_2 + Delta G^std_3$.
+This can be expressed equivalent as
+$ Delta G^std = - R T ln(K_1) - R T ln(K_2) - R T ln(K_3) $
+or
+$ Delta G^std =  - R T ln(K_1 K_2 K_3). $
+Since $ Delta G^std = - R T ln(K), $
+this implies that $ K = K_1 K_2 K_3$.
+Indeed, we see this to be the case:
+$ K = a_ce("D")/a_ce("A") $
+and $ K_1 K_2 K_3 = a_ce("B")/a_ce("A") a_ce("C")/a_ce("B") a_ce("D")/a_ce("C") = a_ce("D")/a_ce("A"). $
+Therefore, the definition of $K = product_j a_(j)^(nu_j)$ holds true regardless of whether the equilibrium expression is elementary.
+
+
 === The van~'t Hoff Equation
 
 With our understanding of the role of thermodynamics, we can understand how Arrhenius came about his famous equation through making an analogy to prior work by van~'t Hoff.
@@ -1485,8 +1516,12 @@ Perhaps the most notable is the assumption that the adsorption enthalpy of each 
 There are many models that attempt to directly or indirectly capture this behavior, some of which are outlined below:
 #footnote[For some cautionary comments about the Temkin isotherm, refer to K. Chu, "Revisiting the Temkin Isotherm: Dimensional Inconsistency and Approximate Forms", _Ind. Eng. Chem. Res._, 60, 13140--13147 (2021).]
 $
-theta_"A " &= alpha p_"A "^(1\/beta) quad ("Freundlich isotherm")\
-theta_"A " &= (K_"ads" p_"A ") / (1 + (K_"ads" p_"A ")^beta)^(1\/beta) quad ("Tóth isotherm")\
+theta_"A " &= alpha p_"A "^(1\/beta) quad ("Freundlich isotherm")
+$
+$
+theta_"A " &= (K_"ads" p_"A ") / (1 + (K_"ads" p_"A ")^beta)^(1\/beta) quad ("Tóth isotherm")
+$
+$
 theta_"A " &= (R T)/alpha ln(beta p_"A ") quad ("Temkin isotherm").
 $
 There are many other functional forms that have been proposed and that can potentially be dreamed up.
@@ -1506,7 +1541,7 @@ However, multiple layers of adsorbates that are stabilized by van der Waals inte
 To address this limitation, we will introduce Brunauer--Emmett--Teller (BET) theory.
 In BET theory, we make the following assumptions:
 
-1. Adsorption occurs on well-defines sites with one molecule adsorbing per surface site.
+1. Adsorption occurs on well-defined sites with one molecule adsorbing per surface site.
 2. The molecule adsorbed at layer $i$ can itself act as an adsorption site for a gas molecule to form at layer $i+1$. There are no interactions between the gas molecules in a given layer.
 3. The uppermost layer of adsorbates is in equilibrium with the gas phase.
 4. The heat of adsorption for the first layer is the strongest and constant. The heat of adsorption for the remaining layers can be approximated as the heat of liquefaction.
@@ -1624,148 +1659,9 @@ $
 This is largely analogous to the typical single and dual-site surface reactions, except that here we are considering the partial pressure of species #ce("B") rather than the concentration of #ce("B^*").
 We also do not need to account for lattice statistics since there are no surface site pairs involved.
 
-== Langmuir--Hinshelwood--Hougen--Watson Kinetics <langmuir-hinshelwood-hougen-watson-kinetics>
+== Catalytic Reaction Mechanisms
 
 With our newfound knowledge of the individual steps that take place in a catalytic reaction, we can combine them to produce a kinetic model.
-When invoking Langmuirian adsorption behavior with the assumption that adsorbates are randomly distributed on the surface (known as the Hinshelwood assumption), the resulting kinetic models are known as Langmuir--Hinshelwood--Hougen--Watson (LHHW) models.
-
-=== Example: The Pedagogical Case
-
-==== Rate Law Derivation
-
-Consider the simple reaction scheme given by
-$ ce("A + *") &eqArrow(k_"ads",opposite:k_"des") ce("A^*") \
-ce("A^*") &fwdArrow(k_2) ce("P + *").
-$
-for the net reaction $ce("A->P")$.
-The net reaction rate is given by $r = r_"P "$, and so we will focus on the rate of product production from here.
-The rate of product production is given by
-$ r_"P " = k_2 conc("A^*"). $<eq:lhhw_sample_rate>
-
-We ultimately want to write our rate without transient intermediates.
-If we assume that the adsorption of A is quasi-equilibrated,
-#footnote[If you prefer, you could instead make the slightly less restrictive assumption that #ce("A^*") is in pseudo-steady state without invoking quasi-equilibrium conditions. Doing so would result in an expression that is identical to the one derived herein in the limit of $k_"des">>k_2$.]
-then
-$ k_"ads" p_"A " conc("*") = k_"des" conc("A^*"). $
-$ conc("A^*") = K_"ads" p_"A " conc("*"). $<eq:conc_a_star_lhhw>
-The quasi-equilibrium approximation is fairly reasonable to invoke here because the surface reaction is expected to be substantially slower than the adsorption or desorption steps.
-
-Additionally, we have the site balance of 
-$ conc("*")_0 = conc("*") + conc("A^*"), $
-which if we solve for #conc("*") and plug the resulting expression into #ref(<eq:conc_a_star_lhhw>) yields
-$ conc("A^*") = K_"ads" p_"A " (conc("*")_0-conc("A^*")) $
-$ conc("A^*") +  K_"ads" p_"A " conc("A^*") = K_"ads" p_"A " conc("*")_0 $
-$ conc("A^*") =  (K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
-Plugging this into our original rate expression from #ref(<eq:lhhw_sample_rate>) results in
-$ r_"P " = (k_2 K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
-Note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
-
-#plot[#align(center+horizon)[https://marimo.app/l/25oabe]]
-
-==== Limiting Cases
-
-===== Strong Adsorption <strong-adsorption>
-
-We can also explore some limiting cases for the above expression.
-If A adsorbs strongly to the surface (and/or we are in the high pressure limit of $p_ce("A")$), then we arrive at
-$ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_"A ">>1). $
-In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
-We know the apparent reaction order is 0 in A from the fact that there is no $p_"A "$ term in the simplified rate law.
-We can also see this from the formal definition given in #ref(<eq:apparent_order>):
-$ alpha_("A,app") = p_"A " ((diff ln(r))/(diff p_"A "))_(p_i,i!=j) = p_"A " (diff ln(k_2 conc("*")_0))/(diff p_"A ") = 0. $
-
-In this scenario, the apparent rate constant would simply be
-$ k_"app" = k_2. $
-By extension, the apparent activation energy is the activation energy associated with $k_2$, which we will denote $E_("a,2")$.
-This too can be derived from the formal definition given in #ref(<eq:apparent_e_a>):
-$ E_"app" = R T^2 (diff ln(k_"app"))/(diff T) $
-$ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A_2 - E_("a,2")/(R T)))/(diff T) = R T^2 (E_("a,2")/(R T^2)) = E_("a,2"). $
-
-===== Weak Adsorption
-
-In the opposite extreme, if A adsorbs very weakly to the surface (and/or we are in the low $p_ce("A")$ limit), then we arrive at
-$ r_"P " approx k_2 K_"ads" p_"A " conc("*")_0 quad (K_"ads" p_"A "<<1). $
-Here, the apparent reaction order of A is 1.
-Additionally, the apparent rate constant would now be
-$ k_"app" = k_2 K_"ads". $
-We can rewrite the apparent rate constant as
-$ k_"app" = A_2 exp(-E_("a,2")/(R T)) exp(-(Delta G_("ads")^std)/(R T)) $
-$ k_"app" = A_2 exp(-E_("a,2")/(R T)) exp(-(Delta H_("ads")^std)/(R T)) exp((Delta S_("ads")^std)/(R)) $
-$ k_"app" = A_2 exp((Delta S_("ads")^std)/(R)) exp(-(E_("a,2")+ Delta H_("ads")^std)/(R T)). $
-As such, we arrive at a functional form of $ k_"app" = A_"app" exp(-E_("a,app")/(R T)), $
-where
-$ A_"app" = A_2 exp((Delta S_("ads")^std)/(R)), quad quad E_("a,app") = E_("a,2") + Delta H_("ads")^std. $
-The same result can be found from the formal definition of the apparent activation energy like was done in #ref(<strong-adsorption>).
-These apparent kinetic parameters are particularly useful for interpreting kinetic data obtained from experiments, where the net reaction is the main observable phenomena.
-
-=== Example: Carbon Monoxide Oxidation
-
-==== Rate Law Derivation
-
-We will consider the following reaction of #ce("CO") and #ce("O2") to produce #ce("CO2"), which takes place on Pd:
-$
-ce("CO + *") &eqArrow(k_1, opposite:k_(-1)) ce("CO^*")\
-ce("O2 + 2 *") &eqArrow(k_2, opposite:k_(-2)) ce("2 O^*")\
-ce("CO^* + O^*") &fwdArrow(k_3) ce("CO2 + 2 *"),
-$
-with the net reaction $ce("CO + 1/2 O2 -> CO2")$.
-We will also assume that the bimolecular surface reaction of #ce("CO^*") and #ce("O^*") is rate-limiting, which in turn implies that the reversible adsorption steps are quasi-equilibrated.
-
-We know that the rate of reaction can be given by $r = r_ce("CO2")$.
-From here, we will focus on the rate of #ce("CO2") production.
-Based on our prior discussion of bimolecular surface reactions (refer to #ref(<reactions-between-two-surface-species>)), we can write the rate of #ce("CO2") production as
-$ r_ce("CO2") = (k'_3 conc("CO^*") conc("O^*"))/conc("*")_0, $<eq:co_rate>
-where we have defined $k'_3 equiv k_3 z$ as a matter of simplicity.
-
-Since #conc("CO^*") and #conc("O^*") cannot be measured directly, we seek to replace these variables in #ref(<eq:co_rate>).
-Invoking the quasi-equilibrium condition, such that the rate of adsorption and desorption of the reactants are equal in magnitude, yields
-$
-r_1 &= 0 = k_1 p_("CO") conc("*") - k_(-1) conc("CO^*")\
-r_2 &= 0 = (k_2 z p_ce("O2") conc("*")^2)/(2 conc("*")_0) - (k_(-2) z conc("O^*")^2)/(2 conc("*")_0). 
-$
-Solving for the adsorbed species concentrations yields
-$
-conc("CO^*") = k_1/k_(-1) p_("CO") conc("*") = K_1 p_("CO") conc("*")\
-conc("O^*") = sqrt(k_2/k_(-2)  p_ce("O2") conc("*")^2) = conc("*") sqrt(K_2 p_ce("O2")). $<eq:co_ads_species>
-Now we write out the site balance:
-$ conc("*")_0= conc("*") + conc("CO^*") + conc("O^*"). $<eq:co_site_balance>
-Plugging #ref(<eq:co_ads_species>) into #ref(<eq:co_site_balance>) yields
-$
-conc("*")_0 &= conc("*")+ K_1 p_("CO") conc("*") + conc("*") sqrt(K_2 p_ce("O2"))\
-conc("*") &= conc("*")_0 / (1+ K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
-$<eq:co_star>
-Plugging #ref(<eq:co_star>) into #ref(<eq:co_ads_species>) results in
-$
-conc("CO^*") &= (K_1 p_("CO") conc("*")_0) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))\
-conc("O^*") &= (conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
-$<eq:co_final>
-Finally, substituting #ref(<eq:co_final>) into #ref(<eq:co_rate>) results in the desired rate expression based on experimental observables:
-$ r_ce("CO2") = (k'_3 K_1 p_("CO") conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))^2. $
-Once again, you may note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
-
-#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.]
-// #footnote[For an alternate opinion about the $conc("*")_0$ term in catalytic rate expressions, refer to D. Kiani, I.E. Wachs, "The Conundrum of Pair Sites in Langmuir–Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
-
-==== Limiting Cases
-
-As a sanity check, we can see that if $p_ce("CO")->infinity$ or $p_ce("O2")->infinity$, then $r_ce("CO2")->0$, which makes sense since both species need to be present on the surface simultaneously so they can react with one another.
-
-We can also consider what happens in other limiting cases.
-For instance, if #ce("CO") binds very strongly such that $K_1$ is sufficiently large, we may arrive at the simplified equation
-$ r_ce("CO2") = (k'_3 conc("*")_0 sqrt(K_2 p_ce("O2"))) / (K_1 p_("CO")) quad (K_1 p_ce("CO") >> 1 + sqrt(K_2 p_ce("O2"))), $<eq:rxn_CO>
-where the apparent order of CO is -1, and the apparent order of #ce("O2") is +1/2.
-The apparent order of -1 in CO makes sense because the surface is nearly covered by CO adsorbates, so increasing CO further will only reduce the overall rate.
-
-Conversely, if #ce("O2") binds very strongly such that $K_2$ is sufficiently large, we may arrive at the simplified equation
-$ r_ce("CO2") approx (k'_3 K_1 p_("CO") conc("*")_0) / sqrt(K_2 p_ce("O2")) quad (sqrt(K_2 p_ce("O2")) >> 1+K_1 p_ce("CO")), $
-which has CO with an apparent order of +1 but $ce("O2")$ with an apparent order of -1/2, indicating that #ce("O2") is now inhibiting the overall rate, as would be expected.
-
-In each of these limiting cases, it is important to remember that these are not the rate laws themselves but rather what may be observed experimentally.
-Since the mechanism is rarely known _a priori_, it is important to think critically about what the apparent reaction orders may or may not mean in reality.
-Of course, in the case of #ref(<eq:rxn_CO>), measuring 0-th order in $p_"CO"$ does not play a role in the kinetics at all.
-After all, without CO, the reaction does not proceed.
-Rather, it might mean that CO binds so strongly that it is nearly covering the surface.
-
 
 === Reaction Stoichiometric Numbers
 
@@ -1808,12 +1704,235 @@ where $r$ is the net rate of the overall reaction.
 This relationship is applicable for a reaction cycle (e.g. a catalytic reaction or radical-chain reaction) where the pseudo-steady state approximation is applied on the intermediates.
 ]
 
+=== LHHW Kinetics: The Pedagogical Case
 
-== Non-LHHW Kinetics
+When invoking Langmuirian adsorption behavior with the assumption that adsorbates are randomly distributed on the surface (known as the Hinshelwood assumption), the resulting kinetic models are known as Langmuir--Hinshelwood--Hougen--Watson (LHHW) models.
 
-=== Eley--Rideal Mechanism
+==== Rate Law Derivation
 
-The Eley--Rideal mechanism alluded to in #ref(<reaction-with-unbound-species>) is an example of non-LHHW kinetics since the reaction is taking place with a gas-phase species.
+Consider the simple reaction scheme given by
+$ ce("A + *") &eqArrow(k_"ads",opposite:k_"des") ce("A^*") \
+ce("A^*") &fwdArrow(k_2) ce("P + *").
+$
+for the net reaction $ce("A->P")$.
+The net reaction rate is given by $r = r_"P "$, and so we will focus on the rate of product production from here.
+The rate of product production is given by
+$ r_"P " = k_2 conc("A^*"). $<eq:lhhw_sample_rate>
+
+We ultimately want to write our rate without transient intermediates.
+If we assume that the adsorption of A is quasi-equilibrated, then
+$ k_"ads" p_"A " conc("*") = k_"des" conc("A^*"). $
+$ conc("A^*") = K_"ads" p_"A " conc("*"). $<eq:conc_a_star_lhhw>
+The quasi-equilibrium approximation is fairly reasonable to invoke here because the surface reaction is expected to be substantially slower than the adsorption or desorption steps.
+
+Additionally, we have the site balance of 
+$ conc("*")_0 = conc("*") + conc("A^*"), $
+which if we solve for #conc("*") and plug the resulting expression into #ref(<eq:conc_a_star_lhhw>) yields
+$ conc("A^*") = K_"ads" p_"A " (conc("*")_0-conc("A^*")) $
+$ conc("A^*") +  K_"ads" p_"A " conc("A^*") = K_"ads" p_"A " conc("*")_0 $
+$ conc("A^*") =  (K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
+Plugging this into our original rate expression from #ref(<eq:lhhw_sample_rate>) results in
+$ r_"P " = (k_2 K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $<eq:co_quasi>
+Note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
+
+#plot[#align(center+horizon)[https://marimo.app/l/25oabe]]
+
+
+==== Alternate Approach
+
+What if we were not convinced we could invoke the quasi-equilibrium approximation on the reversible adsorption step?
+Here, we will show that the pseudo-steady state approach yields a very similar result.
+
+We once again start with our rate of production:
+$ r_ce("P") = k_2 conc("A^*"). $
+However, instead of invoking an equilibrium condition, we apply the pseudo-steady state approximation on the transient intermediate #ce("A^*") as follows:
+$ r_ce("A^*") approx 0 = k_"ads" p_ce("A") conc("*") - k_"des" conc("A^*") - k_2 conc("A^*"). $<eq:pssh_example>
+We also have the same site balance of 
+$ conc("*")_0 = conc("*") + conc("A^*"). $
+Combining our site balance with #ref(<eq:pssh_example>) will ultimately yield
+$ conc("A^*") = (K_"ads" p_ce("A") conc("*")_0)/(1 + K_"ads" p_ce("A") + k_2/k_"des"), $
+such that
+$ r_ce("P") = (k_2 K_"ads" p_ce("A") conc("*")_0)/(1 + K_"ads" p_ce("A") + k_2/k_"des"). $
+We can see that the pseudo-steady state solution is identical to the quasi-equilibrium solution when $k_2\/k_"des" << 1 + K_"ads" p_ce("A")$.
+This is expected to be the case for the quasi-equilibrium approach since $k_"des"$ must be very high compared to $k_2$ for quasi-equilibrium to be invoked in the first place.
+
+==== Limiting Cases
+
+===== Strong Adsorption <strong-adsorption>
+
+Here, we will explore some limiting cases for $r_ce("P")$ using the quasi-equilibrium form from #ref(<eq:co_quasi>).
+If A adsorbs strongly to the surface (and/or we are in the high pressure limit of $p_ce("A")$), then we arrive at
+$ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_"A ">>1). $
+In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
+We know the apparent reaction order is 0 in A from the fact that there is no $p_"A "$ term in the simplified rate law.
+We can also see this from the formal definition given in #ref(<eq:apparent_order>):
+$ alpha_("A,app") = p_"A " ((diff ln(r))/(diff p_"A "))_(p_i,i!=j) = p_"A " (diff ln(k_2 conc("*")_0))/(diff p_"A ") = 0. $
+
+In this scenario, the apparent rate constant would simply be
+$ k_"app" = k_2. $
+By extension, the apparent activation energy is the activation energy associated with $k_2$, which we will denote $E_("a,2")$.
+This too can be derived from the formal definition given in #ref(<eq:apparent_e_a>):
+$ E_"app" = R T^2 (diff ln(k_"app"))/(diff T) $
+$ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A_2 - E_("a,2")/(R T)))/(diff T) = R T^2 (E_("a,2")/(R T^2)) = E_("a,2"). $
+
+===== Weak Adsorption
+
+In the opposite extreme, if A adsorbs very weakly to the surface (and/or we are in the low $p_ce("A")$ limit), then we arrive at
+$ r_"P " approx k_2 K_"ads" p_"A " conc("*")_0 quad (K_"ads" p_"A "<<1). $
+Here, the apparent reaction order of A is 1.
+Additionally, the apparent rate constant would now be
+$ k_"app" = k_2 K_"ads". $
+We can rewrite the apparent rate constant as
+$ k_"app" = A_2 exp(-E_("a,2")/(R T)) exp(-(Delta G_("ads")^std)/(R T)) $
+$ k_"app" = A_2 exp(-E_("a,2")/(R T)) exp(-(Delta H_("ads")^std)/(R T)) exp((Delta S_("ads")^std)/(R)) $
+$ k_"app" = A_2 exp((Delta S_("ads")^std)/(R)) exp(-(E_("a,2")+ Delta H_("ads")^std)/(R T)). $
+As such, we arrive at a functional form of $ k_"app" = A_"app" exp(-E_("a,app")/(R T)), $
+where
+$ A_"app" = A_2 exp((Delta S_("ads")^std)/(R)), quad quad E_("a,app") = E_("a,2") + Delta H_("ads")^std. $
+The same result can be found from the formal definition of the apparent activation energy like was done in #ref(<strong-adsorption>).
+These apparent kinetic parameters are particularly useful for interpreting kinetic data obtained from experiments, where the net reaction is the main observable phenomena.
+
+=== LHHW Kinetics: Carbon Monoxide Oxidation
+
+==== Rate Law Derivation
+
+We will consider the following reaction of #ce("CO") and #ce("O2") to produce #ce("CO2"), which takes place on Pd:
+$
+ce("CO + *") &eqArrow(k_1, opposite:k_(-1)) ce("CO^*"), quad &sigma_1 = 2\
+ce("O2 + 2 *") &eqArrow(k_2, opposite:k_(-2)) ce("2 O^*"), quad &sigma_2 = 1\
+ce("CO^* + O^*") &fwdArrow(k_3) ce("CO2 + 2 *") quad &sigma_3 = 2
+$
+with the net reaction $ce("CO + 1/2 O2 -> CO2")$.
+We will also assume that the bimolecular surface reaction of #ce("CO^*") and #ce("O^*") is rate-limiting, which in turn implies that the reversible adsorption steps are quasi-equilibrated.
+
+We know that the rate of reaction can be given by $r = r_ce("CO2")$.
+From here, we will focus on the rate of #ce("CO2") production.
+Based on our prior discussion of bimolecular surface reactions (refer to #ref(<reactions-between-two-surface-species>)), we can write the rate of #ce("CO2") production as
+$ r_ce("CO2") = (k'_3 conc("CO^*") conc("O^*"))/conc("*")_0, $<eq:co_rate>
+where we have defined $k'_3 equiv k_3 z$ as a matter of simplicity.
+
+Since #conc("CO^*") and #conc("O^*") cannot be measured directly, we seek to replace these variables in #ref(<eq:co_rate>).
+Invoking the quasi-equilibrium condition, such that the rate of adsorption and desorption of the reactants are equal in magnitude, yields
+$
+r_1 &= 0 = k_1 p_("CO") conc("*") - k_(-1) conc("CO^*")\
+r_2 &= 0 = (k_2 z p_ce("O2") conc("*")^2)/(2 conc("*")_0) - (k_(-2) z conc("O^*")^2)/(2 conc("*")_0). 
+$
+Solving for the adsorbed species concentrations yields
+$
+conc("CO^*") = k_1/k_(-1) p_("CO") conc("*") = K_1 p_("CO") conc("*")\
+conc("O^*") = sqrt(k_2/k_(-2)  p_ce("O2") conc("*")^2) = conc("*") sqrt(K_2 p_ce("O2")). $<eq:co_ads_species>
+Now we write out the site balance:
+$ conc("*")_0= conc("*") + conc("CO^*") + conc("O^*"). $<eq:co_site_balance>
+Plugging #ref(<eq:co_ads_species>) into #ref(<eq:co_site_balance>) yields
+$
+conc("*")_0 &= conc("*")+ K_1 p_("CO") conc("*") + conc("*") sqrt(K_2 p_ce("O2"))\
+conc("*") &= conc("*")_0 / (1+ K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
+$<eq:co_star>
+Plugging #ref(<eq:co_star>) into #ref(<eq:co_ads_species>) results in
+$
+conc("CO^*") &= (K_1 p_("CO") conc("*")_0) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))\
+conc("O^*") &= (conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2"))).
+$<eq:co_final>
+Finally, substituting #ref(<eq:co_final>) into #ref(<eq:co_rate>) results in the desired rate expression based on experimental observables:
+$ r_ce("CO2") = (k'_3 K_1 p_("CO") conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))^2. $
+Once again, you may note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
+
+#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.]
+// #footnote[For an alternate opinion about the $conc("*")_0$ term in catalytic rate expressions, refer to D. Kiani, I.E. Wachs, "The Conundrum of Pair Sites in Langmuir–Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
+
+==== Limiting Cases
+
+As a sanity check, we can see that if $p_ce("CO")->infinity$ or $p_ce("O2")->infinity$, then $r_ce("CO2")->0$, which makes sense since both species need to be present on the surface so they can react with one another.
+
+We can also consider what happens in other limiting cases.
+For instance, if #ce("CO") binds very strongly such that $K_1$ is sufficiently large, we may arrive at the simplified equation
+$ r_ce("CO2") = (k'_3 conc("*")_0 sqrt(K_2 p_ce("O2"))) / (K_1 p_("CO")) quad (K_1 p_ce("CO") >> 1 + sqrt(K_2 p_ce("O2"))), $<eq:rxn_CO>
+where the apparent order of CO is -1, and the apparent order of #ce("O2") is +1/2.
+The apparent order of -1 in CO makes sense because the surface is nearly covered by CO adsorbates, so increasing CO further will only reduce the overall rate.
+
+Conversely, if #ce("O2") binds very strongly such that $K_2$ is sufficiently large, we may arrive at the simplified equation
+$ r_ce("CO2") approx (k'_3 K_1 p_("CO") conc("*")_0) / sqrt(K_2 p_ce("O2")) quad (sqrt(K_2 p_ce("O2")) >> 1+K_1 p_ce("CO")), $
+which has CO with an apparent order of +1 but $ce("O2")$ with an apparent order of -1/2, indicating that #ce("O2") is now inhibiting the overall rate, as would be expected.
+
+In each of these limiting cases, it is important to remember that these are not the rate laws themselves but rather what may be observed experimentally.
+Since the mechanism is rarely known _a priori_, it is important to think critically about what the apparent reaction orders may or may not mean in reality.
+Of course, in the case of #ref(<eq:rxn_CO>), measuring 0-th order in $p_"CO"$ does not play a role in the kinetics at all.
+After all, without CO, the reaction does not proceed.
+Rather, it might mean that CO binds so strongly that it is nearly covering the surface.
+
+=== Most Abundant Reaction Intermediate
+
+==== Example 1
+
+We will introduce one common approximation in analyzing the kinetics of catalytic mechanisms.
+When one adsorbate on the surface is present in great excess, it is referred to as the most abundant reaction intermediate (MARI).
+Invoking the MARI approximation can greatly simplify mechanistic analyses.
+
+Consider the following proposed mechanism in the Haber--Bosch process:
+$ 
+ce("N2 + 2*") &fwdArrow(k_1) ce("2 N^*"), quad &sigma_1 = 1\
+ce("H2 + 2*") &eqArrow(K_2) ce("2H^*"), quad &sigma_2 = 3\
+ce("N^* + 3H^*") &eqArrow(K_3) ce("NH3 + 4^*"), quad &sigma_3 = 2
+$
+where the dissociative adsorption of #ce("N2") is the rate-limiting step, causing the other reactions to be in quasi-equilibrium.
+We will also assume that #ce("H^*") is the MARI on the basis of experiments.
+From the written expressions, it is clear that the third reaction is not elementary and is instead a sum of many individual surface reactions.
+As we will show below, this is perfectly okay if we can invoke the MARI approximation.
+
+We start by writing the rate of reaction based on the rate-limiting step:
+$ r = r_1 = (k_1 p_ce("N2") conc("*")^2)/conc("*")_0. $
+We wish to get rid of $conc("*")_0$ as usual, so we will write a site balance.
+Here, however, our site balance can be greatly simplified by invoking the MARI approximation:
+$ conc("*")_0 = conc("H^*") + conc("*"). $
+We have two species here that we wish to get rid of: $conc("H^*")$ and $conc("*")$.
+We proceed by writing the definition of $K_2$, which is given by
+$ K_2 = (conc("H^*")^2)/(conc("*")^2 p_ce("H2")). $
+Solving for $conc("H^*")$ yields
+$ conc("H^*") = conc("*") sqrt(K_2 p_ce("H2")), $
+which we can plug into our site balance to arrive at
+$ conc("*") = conc("*")_0/(1+sqrt(K_2 p_ce("H2"))). $
+Plugging the above expression into our rate expression results in 
+$ r = (k_1 p_ce("N2")conc("*")_0) /(1+sqrt(K_2 p_ce("H2")))^2. $
+We can see that the rate expression can be written without any transient intermediates and without knowing any particular details about the non-elementary (i.e. third) step in the proposed mechanism since $K_3$ never appears in our rate.
+In essence, the MARI approximation allows us to greatly reduce the size of our mechanism.
+
+==== Example 2
+
+Here, we will again consider the Haber--Bosch process with a slightly modified set of reaction equations:
+$ 
+ce("N2 + 2*") &fwdArrow(k_1) ce("2 N^*")quad &sigma_1 = 1\
+ce("N^* + 3/2 H2") &eqArrow(K_2) ce("NH3 + *")quad &sigma_2 = 2
+$
+where the dissociative adsorption of #ce("N2") is rate-limiting.
+We will also consider the case where #ce("N^*") is the MARI.
+Clearly, the second equation cannot possibly be an elementary step, but as we will once again demonstrate, this is perfectly acceptable if we invoke the MARI approximation.
+
+The rate of reaction can be expressed based on the rate-determining step as
+$ r = (k'_1 p_ce("N2") conc("*")^2)/conc("*")_0. $
+
+As usual, we want to get rid of #conc("*") from our rate expression.
+We will invoke the quasi-equilibrium on the second step.
+Even though we cannot write step 2 using an elementary rate expression, we can still express its equilibrium constant via
+$ K_2 = (conc("N^*") p_ce("H2")^(3\/2))/(p_ce("NH3") conc("*")). $<eq:K2_mari>
+
+We also have our site balance, which can be written in simplified form due to the MARI approximation:
+$ conc("*")_0 = conc("*") + conc("N^*"). $<eq:mari_site_balance>
+Note that we have excluded any other surface species even though there must be some amount of #ce("H^*") on the surface in order to make #ce("NH3").
+
+Solving for #conc("N^*") in #ref(<eq:K2_mari>) yields
+$ conc("N^*") = K_2 p_ce("NH3") p_ce("H2")^(-3\/2) conc("*"). $
+Replacing #conc("*") in the above expression by invoking the site balance yields
+$ conc("N^*") = K_2 p_ce("NH3") p_ce("H2")^(-3\/2) (conc("*")_0 - conc("N^*")) $
+$ conc("N^*") = (K_2 p_ce("NH3") p_ce("H2")^(-3\/2) conc("*")_0)/(1 + K_2 p_ce("NH3")p_ce("H2")^(-3\/2)). $
+Finally, we can plug the above expression into our rate expression and simplify.
+This will be a bit messy, but ultimately it will become the following:
+$ r = (k_1 conc("*")_0 p_ce("N2") - k_(-1) K_(2)^2 conc("*")_0 (p_ce("NH3")^2/p_ce("H2")^3))/(1 + K_2 (p_ce("NH3")/p_ce("H2")^(3\/2)))^2 $
+The main conclusion from this exercise is that we do not need any information about intermediate steps in the mechanism or the underlying details of the steps associated with $K_2$.
+When invoking the MARI, we were able to write the rate expression using an equilibrium expression and an elementary rate law.
+
+=== Non-LHHW Kinetics
+
+==== Eley--Rideal Mechanism
 
 Consider the proposed mechanism
 $
@@ -1821,13 +1940,12 @@ ce("H2") + ce("2 *") &eqArrow(k_1,opposite:k_(-1)) ce("2 H^*")\
 ce("2 H^*") + ce("C2H2") &fwdArrow(k_"H ") ce("C2H4") + ce("2 *")
 $
 with the net reaction #ce("C2H2 + H2 -> C2H4").
-We will assume that the hydrogenation reaction is rate-limiting #ce("H2"), such that the adsorption is quasi-equilibrated.
+We will assume that the hydrogenation reaction is rate-limiting, such that the #ce("H2") adsorption is quasi-equilibrated.
 
 Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism).
 The rate of product formation for this reaction is given by
 $ r_ce("C2H4") = (k'_"H " conc("H^*")^2 p_ce("C2H2"))/(conc("*")_0), $
 where $k'_"H " equiv k_"H " z \/2$.
-#footnote[The $z \/ 2conc("*")_0$ factor comes in for the same reason as the dissociative adsorption example in #ref(<dissociative-adsorption>).]
 To get rid of the intermediate in our rate expression, we can invoke the quasi-equilibrium assumption on the first step to arrive at
 $
 (z k_1 p_ce("H2") conc("*")^2)/(2 conc("*")_0) = (z k_(-1) conc("H^*")^2)/(2 conc("*")_0)\
@@ -1845,7 +1963,7 @@ r_ce("C2H4") &= (k'_"H " K_1 conc("*")_0 p_ce("H2") p_ce("C2H2"))/(1 + sqrt(K_1 
 $
 This is essentially a simplified form of the analogous LHHW model.
 
-=== Mars--van Krevelen Mechanism
+==== Mars--van Krevelen Mechanism
 
 In some cases, the catalytic adsorption sites can be part of the catalytic cycle itself, such as the formation of a high-energy defect site or vacancy in the lattice that reversible is formed and consumed during the course of the reaction.
 This is known as a Mars--van Krevlen cycle.
@@ -1853,14 +1971,14 @@ There are several authoritative texts that can be read to learn more about the d
 We refrain from doing so here simply as a matter of brevity and, in part, because it has been shown that the original derivation has numerous logical inconsistencies that are difficult to justify.
 #footnote[M.A. Vannice, "An analysis of the Mars–van Krevelen rate expression", _Catal. Today_, 123, 18--22 (2007).]
 
-=== Limitations of LHHW
+==== Limitations of LHHW
 
 Aside from variations on the typical surface reactions invoked in LHHW models, there are many inherent assumptions of LHHW kinetics that may be violated in reality.
 LHHW kinetic models inherit all the assumptions associated with the Langmuir model of adsorption, including energetically uniform adsorption sites and a lack of adsorbate--adsorbate interactions.
 If this approximation breaks down, additional complexity must be introduced.
 Additionally, through the Hinshelwood assumption, the adsorbates are assumed to be randomly distributed on the surface.
 
-A clear demonstration of a failure mode with the LHHW model is related to a phenomena described "jamming."
+A clear demonstration of a failure mode with the LHHW model is related to a phenomenon described "jamming."
 Consider the dissociative chemisorption reaction
 $ ce("H2 + 2 *") fwdArrow(k) ce("2 H^*"). $
 We know that the turnover frequency for this process can be given by
@@ -1869,8 +1987,7 @@ If we treat adsorption as occurring on a 2D lattice, it is possible to have a "j
 Here, there are still vacant sites available (i.e. $theta_*>0$).
 However, none of these vacant sites can lead to a further reaction because there is no space for two H atoms to adsorb at adjacent sites.
 In other words, $r$ should be zero in the jammed state, but this is inconsistent with #ref(<eq:jam_rate>) for $theta_* > 0$.
-In other words, $theta_ce("*")>0$ but $theta_ce("**")=0$.
-Clearly, the Langmuir--Hinshelwood formalism cannot reproduce the jammed state.
+Clearly, the Langmuir--Hinshelwood formalism cannot reproduce the jammed state where $theta_ce("*")>0$ but $theta_ce("**")=0$.
 
 #figure(
   image("figures/jammed.jpg", width: 20%),
@@ -1883,6 +2000,526 @@ Rather, it means that the interpretability may be limited, and there may be more
 
 We refer the interested reader to external sources for further discussions about potential improvements to the LHHW formalism, particularly as it relates to dealing with site ensembles.
 #footnote[N.K. Razdan, A. Bhan, "Kinetic description of site ensembles on catalytic surfaces", _Proc. Natl. Acad. Sci. U.S.A._, 118, e2019055118 (2021). Also refer to N.K. Razdan, A. Bhan, "Catalytic site ensembles: A context to reexamine the Langmuir--Hinshelwood kinetic description", _J. Catal._, 404, 726--744 (2021). ]
+
+
+= Chemical Reactor Archetypes
+
+Previously, we have discussed the kinetics of chemical reactions without discussing the details of the reactor used to run the reactions.
+Here, we provide a brief overview of different reactor technologies operating isothermally.
+Later in the course, we will revisit the reactor design equations to account for non-isothermal effects. 
+
+== The Mass Balance <conservation-of-mass>
+
+In order to understand the behavior of chemical reactors, we must start with the key governing principle behind it all: the conservation of mass.
+Consider a chemical reaction taking place inside a reactor, and focus on a unit volume within the reactor itself.
+We can ask ourselves the question: what is the rate of change of species $A_j$ within our control volume?
+Species $A_j$ will enter the control volume, exit the control volume, and (potentially) be generated or consumed due to a chemical reaction.
+Written in a mathematical form, this can be described as follows:
+$ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
+where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ (i.e. from the chemical reaction).
+While somewhat abstract, this equation is simply a restatement of the conservation of mass
+
+#self[Draw squiggle from Rawlings.]
+
+The generation term, $G_j$, is of particular importance given that is the direct consequence of any  chemical reactions taking place in the system.
+By definition, its value is positive if A is serving as a net product in the chemical reactions taking place, while its value is negative if A is serving as a net reactant being consumed.
+Typically, one measures the change in concentration of a species over time, denoted $r_j$.
+We can express $G_j$ more concretely as follows:
+$ G_j = integral r_j dif V $
+where $r_j$ is the rate of production of species $A_j$, such that it is positive if more $A_j$ is being generated over the course of the reaction and negative if it is being consumed.
+
+== Batch Reactors <batch-reactors>
+
+A batch reactor is a relatively simple reactor archetype that has no input or output when the chemical reaction is occurring.
+While simple, the batch reactor is the most common reactor archetype when studying the reaction kinetics of liquid-phase reactions.
+
+=== Concentration Basis
+
+Without any inputs or outputs, the batch reactor has $dot(n)_(j,0)=dot(n)_(j,1)=0$. As such, the mole balance is 
+$ (dif n_j) / (dif t) = integral r_j dif V. $
+If the reaction mixture is perfectly mixed (i.e. spatially uniform) so that $r_j$ is independent of position (a common assumption for the batch reactor), then we can state
+$ (dif n_j) / (dif t) = r_j V. $
+Solving for the rate of reaction of species $A_j$, we see that
+$ r_j = 1/V (dif n_j)/(dif t). $<eq:batch_rate>
+If we assume that the batch reactor operates with a constant volume for the reaction mixture, as is oftentimes the case, we can write the rate directly in terms of concentration:
+$ r_j = (dif [A_j])/(dif t) $ 
+
+=== Conversion Basis
+
+We may also wish to write the rate equation in terms of conversion.
+Recognizing that $X_j = 1 - n_j\/n_(j,0)$ and therefore $n_j= n_(j,0)(1-X_j)$, we can plug this into #ref(<eq:batch_rate>) to get
+$ r_j = -n_(j,0)/V (dif X_j) / (dif t). $
+In general, one can substitute in the rate law for $r_j$ and integrate in order to find the time to achieve a pre-specified concentration or conversion.
+The analytical solution of this form is typically known as a design equation.
+
+== Plug-Flow Reactors <plug-flow-reactors>
+
+A plug-flow reactor (PFR) is a tubular reactor that that has a continuous, flowing stream containing the reaction mixture.
+The PFR is particularly common when measuring the kinetics of gas-phase reactions.
+Generally, solid-catalyzed vapor-phase reactions --- as are common in the field of heterogeneous catalysis --- are carried out with what is known as a packed-bed reactor (PBR), which in an idealized case can be modeled as a PFR.
+
+=== Concentration Basis
+
+For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species A in a differential segment of the reactor volume, $dif V$.
+
+Assuming steady-state conditions, the differential balance can be written as 
+$ 0 = dot(n)_(j) - (dot(n)_(j) + dif dot(n)_j) + r_j dif V, $
+which is equivalent to
+$ r_j = (dif dot(n)_j) / (dif V). $<eq:pbr>
+
+Under the assumption of a constant volumetric flow rate, we can define a property known as the residence time, $tau$, as
+$ tau equiv V/dot(v) = (A_"c "z)/dot(v) = z/u, $<eq:residence_time>
+where $dot(v)$ is the volumetric flow rate (i.e. $"m "^3$/s), $A_"c "$ is the cross-sectional area of the reactor tube (i.e. $"m"^2$), $z$ is the length of the reactor (i.e. m), and $u$ is the linear velocity of the fluid (i.e. m/s).
+The value of $tau$ has units of time and reflects the time a given molecule in the fluid spends inside the reactor and is the natural analogue to the clock time $t$ used in the batch reactor derivation.
+We can plug the definition of $tau$ into #ref(<eq:pbr>) to arrive at
+$ r_j = (dif [A_j] ) / (dif tau) = u (dif [A_j] ) / (dif z). $<eq:pfr_mass_balance>
+As is likely quite apparent, the design equation for a PFR is identical to that of a batch reactor where we have swapped out $t$ for $tau$.
+
+=== Conversion Basis
+
+Recognizing that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$, we can plug this into #ref(<eq:pbr>) expression to get
+$ r_j = - dot(n)_(j,0) (dif X_j) / (dif V). $<eq:pfr_r_a>
+
+
+If the reaction is carried out with a heterogeneous catalyst (as is the case with a packed bed reactor), then the catalyst mass $W$ may be used in place of volume to normalize the rate.
+In this case, we have
+$ r_j = - dot(n)_(j,0) (dif X_j) / (dif W). $
+
+
+== Continuous-Stirred Tank Reactors <continuous-stirred-tank-reactors>
+
+The continuous-stirred tank reactor (CSTR) has an inlet and outlet flow of chemicals.
+CSTRs are typically operated at steady state (such that the accumulation term is zero) and are assumed to be perfectly mixed.
+
+=== Concentration Basis
+
+The mole balance for the CSTR can be written as 
+$ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $<eq:cstr_unsteady>
+which becomes the following after invoking steady-state conditions:
+$ 0 = dot(n)_(j,0) - dot(n)_(j) + r_j V. $
+Solving for the reaction rate yields
+$ r_j = (dot(n)_(j,0) - dot(n)_(j)) / V. $<eq:cstr>
+
+With the above expression, we aim to write $r_j$ in terms of species concentrations.
+To do so, note that for a given flow rate with a spatially uniform concentration across the reactor volume, we have
+$ dot(n)_j = [A_j] dot(v), $<eq:volumetric_flow_rate>
+where $dot(v)$ is the volumetric flow rate.
+Plugging #ref(<eq:volumetric_flow_rate>) into #ref(<eq:cstr>) results in
+$ r_j = (([A_j] dot(v)) - ([A_j] dot(v))_0)/V. $
+At steady state, the volumetric flow rates in and out of the reactor are identical, such that
+$ r_j = (dot(v)([A_j] - [A_j]_0))/V. $
+Like with the PFR, we need to think about the time that a given packet of fluid is within the reactor, which we will again refer to as $tau$ as defined by $tau equiv V\/dot(v)$.
+In the context of a CSTR, we refer to $tau$ as the space time (or average residence time) since a distribution of residence times are possible.
+With our definition of $tau$, we can write the rate expression as
+$ r_j =  ([A_j] - [A_j]_0) / tau. $<eq:cstr_mass_balance>
+Unlike the batch reactor and PFR, the CSTR design equation contains no derivatives and is merely a simple algebraic equation.
+
+=== Conversion Basis
+
+If we wish to write the CSTR design equation in terms of conversion, we can once again note that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$.
+Plugging this into #ref(<eq:cstr>), we arrive at
+$ r_j = - (dot(n)_(j,0) X_j ) / V. $<eq:cstr_r_a>
+
+
+== Comparing Flow Reactors
+
+=== Volume Considerations
+
+We can also make a direct comparison between CSTRs and PFRs.
+The conversion-based design equation for the PFR given by #ref(<eq:pfr_r_a>) is extremely similar to that of the CSTR given by #ref(<eq:cstr_r_a>):
+$ 
+r_j = -dot(n)_(j,0) (dif X_j)/(dif V) quad ("PFR") quad quad r_j = -dot(n)_(j,0) (X_j)/(V) quad ("CSTR")\
+V = -dot(n)_(j,0) integral_(0)^X_j (dif X'_j)/(r_j) quad ("PFR") quad quad V = -dot(n)_(j,0) (X_j)/(r_j) quad ("CSTR").
+$
+Here, we have written the expressions in terms of the necessary reactor volume to achieve a given conversion, which (when plotted) is known as a Levenspiel plot.
+From this comparison, it becomes immediately clear that an infinite set of CSTRs in series would behave identically to a PFR.
+
+#self[Make a plot like https://personalpages.manchester.ac.uk/staff/tom.rodgers/documents/CRE_Notes.pdf.]
+
+#self[Make a plot like in  Fig 3-9 in Lanny]
+
+=== Residence Time Considerations
+
+Similarly, we can compare the PFR and CSTR based on the residence time to achieve a specific outlet concentration:
+$ r_j = (dif [A_j] ) / (dif tau) quad ("PFR"), quad quad r_j =  ([A_j]_1 - [A_j]_0) / tau quad ("CSTR") $
+$ tau = integral_([A_j]_0)^([A_j]_1) 1 / (r_j) dif [A_j]' quad ("PFR"), quad quad tau = ([A_j]_1 - [A_j]_0) / r_j quad ("CSTR") $
+Therefore, we can graphically compare the required $tau$ by making a plot of $1\/r_j$ vs. $[A_j]_1 - [A_j]_0$, as shown in...
+
+#self[Pg 100 from Lanny. Note the product vs inlet comment from the CSTR. In the CSTR the rectangle is drawn with a height equal to l/r evaluated at the product conversion, while in the PFTR the height varies from inlet to product conversion.]
+
+
+= Nonisothermal Considerations
+
+It might come as no surprise that many reactions are not operated isothermally.
+After all, most reactions involve an appreciable heat of reaction, and it may not always be possible or desirable to operate them with a constant heat exchange rate to maintain a given temperature.
+
+This fact becomes critical to account for when realizing that the rate of reaction varies as a function of temperature.
+For instance, consider the constant-volume batch reactor design equation of 
+$ r_(j)(T) = (dif [A_j])/(dif t) quad  ("with" (dif T)/(dif t) = 0), $
+where we are denoting $r_(j)(T)$ to make it clear that the rate is a function of temperature (e.g. via the Arrhenius equation).
+Normally, we would derive an expression for $r_j$ and integrate to identify how the species concentration changes like in #ref(<integrated-rate-expressions>).
+Implicitly, this procedure was done under the assumption that we were operating at a given value of $T$.
+However, in a non-isothermal reactor, the value of $T$ is not a constant value and will change with time.
+Therefore, under non-isothermal conditions we have $ r_(j) (T) = (dif [A_j])/(dif t)  quad  ("with" (dif T)/(dif t) != 0). $
+Ultimately, this leads us to a coupled system of differential equations (i.e. the mass and energy balances) that must be solved simultaneously in order to understand how the reaction proceeds with time.
+
+== General Energy Balance
+
+We will begin with the general energy balance
+$ (dif E)/(dif t) = accent(m,dot)_0 accent(E,hat)_0 - accent(m,dot)_1 accent(E,hat)_1 + accent(Q,dot) + accent(W,dot), $
+where $E$ represents the total energy, $accent(m,dot)$ is a mass flow rate, $accent(E,hat)$ is an energy per unit mass, $accent(Q,dot)$ is the rate of heat added to the system, and $accent(W,dot)$ is the rate of work done on the system.
+The work term is defined as
+$ accent(W,dot) = accent(W,dot)_"f " + accent(W,dot)_"s " + accent(W,dot)_"b ", $
+where the individual terms are for work done by flow streams moving through the reactor, shaft work being done by stirrers, compressors, and other equipment, and work done when moving the system boundary (if moved), respectively.
+
+We define $accent(W,dot)_"f "$ as 
+$ accent(W,dot)_"f " = - P Delta dot(v) = dot(v)_0 P_0 -dot(v) P, $
+where $dot(v)$ is the volumetric flow rate and $P$ is the pressure of the stream.
+We define $accent(W,dot)_"b "$ in differential form as
+$ accent(W,dot)_"b " = -P (dif V)/(dif t). $
+
+With this, we will rewrite $accent(W,dot)$ as 
+$ accent(W,dot) = dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t), $
+where we will leave the shaft work as an abstract variable for now since it depends on what equipment is being used.
+
+The total energy of the system is the sum of all internal, potential, and kinetic energies:
+$ E = U + "KE" + "PE". $
+We can rewrite our derivative as
+$ (dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(U,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(U,hat) + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot) + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t). $
+We will now take advantage of the definition of enthalpy, $H = U + P V$, to say that
+$
+accent(H,hat) =  accent(U,hat) + (P V)/m = accent(U,hat) + P/rho.
+$
+Now we can state
+$
+(dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 - P_0/rho_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) - P/rho + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t)
+$
+Since dimensional analysis will readily indicate that $accent(m,dot) P \/ rho=dot(v) P$, we can simplify our expression a bit to arrive at
+$
+(dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + accent(W,dot)_"s " - P (dif V)/(dif t)
+$<eq:general_energy_balance>
+We will leave our general expression at this for now.
+
+== Batch Reactors
+// include drawing
+
+=== General Approach <batch-general>
+
+The batch reactor has no flow streams, so our energy balance collapses down to
+$ (dif (U + "KE" + "PE"))/(dif t) = accent(Q,dot) + accent(W,dot)_"s " - P (dif V)/(dif t). $
+
+From here, we will make some assumptions.
+The first assumption is that the shaft work is negligible (i.e. $accent(W,dot)_"s "=0$), which is generally true so long as the stirrers and other equipment are not drawing significant power.
+The second approximation we will make is that the kinetic energy of the fluid does not appreciably change (i.e. $dif "KE"\/dif t=0$), which is particularly reasonable for a batch reactor but even for flow reactors since the flows themselves are not drastically changing speeds.
+The final approximation we will make is that the change in potential energy is negligible (i.e. $dif "PE"\/dif t=0$), which is reasonable for a batch reactor but may not be reasonable for reactors in the presence of external fields (e.g. an electrochemical system).
+
+With this, we have
+$ (dif U)/(dif t) = accent(Q,dot) - P (dif V)/(dif t). $
+
+We now will use enthalpy for the rest of our derivation, noting that the differential form is given by
+$
+dif H &= dif U + P dif V + V dif P.
+$<eq:enthalpy_definition>
+Substituting in for $dif U$ results in
+$
+(dif H - P dif V - V dif P)/(dif t) &= accent(Q,dot) - P (dif V)/(dif t)\
+(dif H)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot).
+$<eq:dH_batch>
+For single-phase systems, we can write the total differential of the enthalpy as 
+$ dif H = ((diff H)/(diff T))_(P,n_j) dif T + ((diff H)/(diff P))_(T,n_j) dif P + sum_j ((diff H)/(diff n_j))_(T,p,n_(k!=j)) dif n_j. $
+The left-most derivative is the definition of the constant-pressure heat capacity:
+$ C_"P " equiv ((diff H)/(diff T))_(P,n_j). $
+
+Now for the second term.
+We will take advantage of a few thermodynamic relationships here without re-deriving them from scratch.
+Namely,
+$ ((diff H)/(diff P))_(T,n_j)  = V - T ((diff V)/(diff T))_(P,n_j) = V -  T alpha V = V(1-alpha T), $
+where $alpha$ is the coefficient of thermal expansion defined as
+$ alpha equiv 1/V ((diff V)/(diff T))_(P,n_j). $
+
+Finally, the last term to deal with is quite simple.
+It is simply a restatement of the sum of partial molar enthalpies,
+#footnote[Note that a partial molar property is not the same as a molar property. The partial molar enthalpy describes the enthalpy change as a function of the moles of a specific species, whereas the molar enthalpy is an averaged change over all species in the system. This also implies that $sum_j n_j macron(H)_j = H$.]
+$accent(H,macron)_j$, where
+$ accent(H,macron)_j equiv ((diff H)/(diff n_j))_(T,p,n_(k!=j)). $
+
+Now to put it all together:
+$ dif H =  m hat(C)_"P " dif T +  V (1-alpha T) dif P+ sum_j accent(H,macron)_j dif n_j. $<eq:dif_h>
+Here, we have chosen to use the specific heat capacity, $accent(C,hat)_"P "$, in place of an extensive heat capacity since the former is a more natural property to measure.
+Assuming the density of the fluid is uniform, the mass can be determined quite easily from $m = rho V$ as well.
+
+Plugging the above expression into #ref(<eq:dH_batch>) results in
+$
+(m hat(C)_"P " dif T +  V (1-alpha T) dif P+ sum_j accent(H,macron)_j dif n_j)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot)\
+m hat(C)_"P " (dif T)/(dif t) + V (1-alpha T) (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot).\
+m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - sum_j accent(H,macron)_j (dif n_j)/(dif t) + accent(Q,dot).
+$
+It may seem like this is still a mess (and to some degree, it is), but we have made a lot of progress.
+Every algebraic term in this expression is something that can be experimentally measured or computed, although the trickiest term here is probably the summation term.
+We will take care of that now.
+
+We know from the mass balance on the batch reactor (#ref(<eq:batch_rate>)) that
+$ (dif n_j)/(dif t) = r_j V. $<eq:batch_r_j>
+Here, $r_j$ is on a per-species basis.
+For reasons that will become clearer shortly, we can use #ref(<eq:sum_stoichs_rate>) to restate the above expression as
+$ (dif n_j)/(dif t) = V sum_i nu_(i,j) r_i. $ <eq:dn_j_batch>
+Plugging this expression into our energy balance yields
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_j accent(H,macron)_j sum_i nu_(i,j) r_i + accent(Q,dot). $
+We can re-group this a bit to help us out in visualizing a substitution that is about to come:
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_i ( sum_j nu_(i,j) accent(H,macron)_j) r_i + accent(Q,dot). $
+
+If we assume that the partial molar enthalpies are the same as pure component enthalpies, then we can take advantage of the following relationship exists for a given reaction $i$ and species $j$:
+$ sum_j nu_(i,j) accent(H,macron)_j=Delta H_("rxn",i), $<eq:partial_molar_enthalpy>
+such that
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $<eq:energy_balance_batch_general>
+Should we wish to consider a net reaction rather than individual elementary reactions, the above expression can also be rewritten without the summation as
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - Delta H_("rxn") r V + accent(Q,dot). $<eq:batch_nonisothermal>
+
+There we have it --- a compact expression for the energy balance in a single-phase batch reactor, which can be coupled with the mass balance to better understand reaction progress.
+
+=== Simplifying Cases
+
+From here, there are many simplifications that can be made depending on the system under investigation.
+We will not discuss these derivations at length in class for the sake of time and since the mathematical gymnastics is essentially the same, but the full details are reproduced below for full clarity.
+
+==== Summary
+
+$ m hat(C)_"P " (dif T)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot) quad ("constant" P "or incompressible")
+$
+$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + alpha/kappa T  Delta V_("rxn",i))  r_i   + accent(Q,dot) quad ("constant" V) $
+$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + R T sum_j nu_(i,j))  r_i   + accent(Q,dot) quad ("constant " V, "ideal gas") $
+
+==== Constant Pressure or Incompressible Fluid
+
+We can now consider some optional simplifications that may or may not apply to a given batch reactor of interest.
+If the reactor operates under constant pressure, then we can say $dif P\/ dif t=0$.
+If the reactor fluid is incompressible, then $alpha=0$.
+In both cases, we have
+$ m hat(C)_"P " (dif T)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot).
+$
+This is a typical energy balance when dealing with liquid-phase reactions in a batch reactor.
+
+==== Constant Volume
+
+The constant pressure assumption is likely reasonable for most liquids but is going to be questionable for most gas-phase reactions.
+Here, we will derive an expression for a constant volume reactor that may be a bit more suitable for gases.
+To start, we will return to our energy balance in #ref(<eq:energy_balance_batch_general>) from before we made any assumptions about constant pressure:
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $
+Then we will write out the total derivative for pressure in terms of $T$, $V$, and $n_j$ as
+$ dif P = ((diff P)/(diff T))_(V,n_j) dif T + ((diff P)/(diff V))_(T,n_j) dif V + sum_j ((diff P)/(diff n_j))_(T,V,n_(k!=j)) dif n_j. $
+For constant pressure, we have $dif V =0$, such that
+$ dif P = ((diff P)/(diff T))_(V,n_j) dif T + sum_j ((diff P)/(diff n_j))_(T,V,n_(k!=j)) dif n_j. $
+Plugging this into our energy balance yields
+$
+m hat(C)_"P " (dif T)/(dif t) - alpha T V (((diff P)/(diff T))_(V,n_j) dif T + sum_j ((diff P)/(diff n_j))_(T,V,n_(k!=j)) dif n_j)/(dif t) &= -  V sum_i Delta H_("rxn",i) r_i + accent(Q,dot)\
+(dif T)/(dif t) (m hat(C)_"P "  - alpha T V ((diff P)/(diff T))_(V,n_j) ) - alpha T V sum_j  ((diff P)/(diff n_j))_(T,V,n_(k!=j)) (dif n_j)/(dif t)   &= -  V sum_i Delta H_("rxn",i) r_i + accent(Q,dot).
+$
+From here, we will take advantage of a known thermodynamic relationship:
+$ m hat(C)_"P " = m hat(C)_"V " + alpha T V ((diff P)/(diff T))_(V,n_j). $
+Plugging this into our expression, we have
+$ m hat(C)_"V " (dif T)/(dif t) - alpha T V sum_j  ((diff P)/(diff n_j))_(T,V,n_(k!=j)) (dif n_j)/(dif t)   &= - V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
+
+This is much simpler, but there is still more to be done here.
+We will take advantage of another thermodynamic relationship
+$ ((diff P)/(diff n_j))_(T,V,n_(k != j)) = accent(V,macron)_j / (V kappa), $
+where $accent(V,macron)_j$ is the partial molar volume of species $j$ and $kappa$ is the isothermal compressibility defined as
+$ kappa equiv -1/V ((diff V)/(diff P)). $
+Plugging this in, we get
+$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T  sum_j accent(V,macron)_j  (dif n_j)/(dif t)   &= - V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
+
+Plugging in our expression for $dif n_j\/dif t$ from the mass balance in #ref(<eq:batch_r_j>) further simplifies things to
+$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T V sum_j accent(V,macron)_j sum_i nu_(i,j) r_i  = -  V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot), $
+which we again re-group as
+$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T V sum_i (sum_j accent(V,macron)_j  nu_(i,j)) r_i  = -  V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
+
+Like we did for the partial molar enthalpy in #ref(<eq:partial_molar_enthalpy>), we will state
+$ sum_j nu_(i,j) accent(V,macron)_j  = Delta V_("rxn",i), $<eq:partial_volume_balance>
+where $Delta V_("rxn",i)$ is the change in volume over the course of reaction $i$.
+Therefore,
+$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T V sum_i Delta V_("rxn",i) r_i  = -  V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $
+Combining the sums gets us our general but slightly more manageable expression for the energy balance of a constant-volume batch reactor,
+$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + alpha/kappa T  Delta V_("rxn",i))  r_i   + accent(Q,dot). $
+
+==== Ideal Gas at Constant Volume
+
+If our reacting mixture is an ideal gas mixture, we can make some further simplifications by noting that
+$ kappa equiv - 1/V ((diff V)/(diff P))_(T,n_j) = -1/V (diff((n R T)/P)/(diff P))_(T,n_j) = 1/V (n R T)/P^2 = 1/V (P V)/P^2 =1/P  $
+$ alpha equiv (1/V) ((diff V)/(diff T))_(P,n_j) = 1/V (diff((n R T)/P)/(diff T))_(P,n_j) = 1/V (n R)/P = 1/V (P V)/(P T) = 1/T. $
+Plugging these expression in yields
+$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) +  P  Delta V_("rxn",i))  r_i   + accent(Q,dot). $
+Finally, we can note that 
+$ Delta V_("rxn",i) = (Delta n_("rxn",i) R T)/P, $
+such that
+$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + R T sum_j nu_(i,j))  r_i   + accent(Q,dot), $<eq:batch_energy_balance_ideal>
+where we took advantage of the fact that $Delta n_("rxn",i) = sum_j nu_(i,j)$.
+
+=== Example Application of the Energy Balance <example-batch-energy>
+
+==== Defining and Solving a System of ODEs
+
+Since it may appear mostly as an abstract concept up until now, it is worth taking a step back to think about how we might apply the energy balance in practice.
+
+Consider the gas-phase, elementary reaction of
+$ ce("A") fwdArrow(k) ce("2B") $
+that takes place in a well-mixed, adiabatic batch reactor at constant volume without the constraint of isothermal operation.
+For the sake of simplicity, we will consider the gases to behave ideally.
+Naturally, we might wish to understand how the temperature of the reactor changes as a function of time.
+
+To answer this question, we start by writing the typical mass balance for species A as
+$ r_ce("A") = (dif conc("A"))/(dif t). $
+Since the reaction is elementary, we also know the rate expression can be given as:
+$ r_ce("A") = -k conc("A"), $
+such that
+$ (dif conc("A"))/(dif t) = -k conc("A"). $
+Thus far, this is essentially the same procedure we have done many times before, such as in #ref(<integrated-rate-expressions>).
+However, we cannot proceed with the integration yet since $k(T)$ and $T(t)$ for non-isothermal operation.
+
+We now move onto the simplified energy balance from #ref(<eq:batch_energy_balance_ideal>) to state
+$ rho hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) r, $
+where we note that $sum_j nu_j = 1$ for the given reaction, $dot(Q)=0$ for an adiabatic process.
+We know that $ r = - r_"A " = k conc("A"), $
+such that
+$ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) k conc("A") V. $
+This leaves us with a system of differential equations that must be solved simultaneously:
+$ 
+(dif conc("A"))/(dif t) = -k conc("A"), quad (dif T)/(dif t)  = ((-Delta H_("rxn") + R T) k conc("A") V)/(m hat(C)_"V "),
+$<eq:batch_simultaneous>
+To make matters even clearer, we can substitute in the Arrhenius equation for $k$ to state
+$ 
+(dif conc("A"))/(dif t) = -A' exp(-E_"a "/(R T)) conc("A"), quad (dif T)/(dif t)  = ((-Delta H_("rxn") + R T) A' exp(-E_"a "/(R T)) conc("A") V)/(m hat(C)_"V "),
+$
+where $A'$ is the pre-exponential factor (to distinguish it from species A).
+
+From this set of equations, we can see that both expressions depend on #conc("A") and $T$, both of which evolve with $t$.
+For the case where $Delta H_"rxn"<0$, we see that $dif T\/dif t>0$, such that the temperature will increase continually until all of species A is consumed.
+Clearly, there needs to be some amount of temperature control in order for the reactor operation to be safe and industrially viable.
+
+Generally, these systems of ordinary differential equations (ODEs) can only be solved numerically.
+The details of numerical methods are beyond the scope of this course, but it is still useful to have a high-level understanding of what is involved in setting up such equations.
+#footnote[Scenarios like this, where you understand the scientific context but may need assistance on how to begin carrying out the computation, can be great use cases for large language models. Pasting an image of #ref(<eq:batch_simultaneous>) into ChatGPT 4o with the prompt "Write me a Python script that will solve this system of ODEs. Note that k(T)." yields an example script that is nearly perfect (in this case, the Arrhenius equation was simply missing the factor of $R$ in the denominator of the exponential).
+]
+
+#plot[https://marimo.app/l/gygake]
+
+==== Temperature-Dependence for the Enthalpy
+
+For the sake of simplicity, it is sometimes assumed that the temperature dependence of $Delta H_"rxn"$ is weak over the relatively limited range of operating temperatures.
+To relax this somewhat questionable assumption, one can typically use an empirical relationship known as the Shomate equation, which takes the following form:
+$ C_"P " = A + B T + C T^2 + D T^3 + E/T^2, $
+where each parameter is determined based on statistical regression to experimental data.
+If the different components in a fluid behave ideally, the fluid's heat capacity is simply the sum of its individual component heat capacities.
+This is useful to know, as pure component heat capacities are tabulated in many places, such as the _NIST Chemistry WebBook_. 
+
+From this, we can express the temperature-dependence for enthalpy as
+$ H(T_2) - H(T_1) = integral_(T_1)^(T_2) C_"P " dif T $
+$ H(T_2) - H(T_1) = A Delta T + (B (Delta T)^2)/2 + (C (Delta T)^3)/3 + (D (Delta T)^4)/4 - E/(Delta T), $
+which comes from the definition of the constant-pressure heat capacity, $C_"P "$.
+Since $Delta H_"rxn"$ is a state function, we can equivalently use $Delta H_"rxn"$ in the above expression in place of $H$.
+The value for $C_"V "$ in the energy balance can also depend on temperature, albeit much less so than $Delta H_"rxn"$.
+
+== Plug Flow Reactors
+
+=== Energy Balance
+
+For the sake of brevity, we will forego a detailed derivation of the PFR energy, especially since it is very similar to that of the batch reactor (as was observed for the mass balance).
+#footnote[For a thorough derivation of reactor energy balances, refer to Chapter 6 of _Chemical Reactor Analysis and Design Fundamentals_ by J.B. Rawlings and J.G. Ekerdt.]
+Instead, in analogy with the single-phase batch reactor energy balance given by #ref(<eq:batch_nonisothermal>), we will simply state that single-phase PFR energy balance is
+$ rho hat(C)_"P " (dif T)/(dif tau) + (1-alpha T) (dif P)/(dif tau) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V. $
+Assuming the cross-sectional area, $A_"c "$, of the PFR is constant, then we can equivalently write the derivatives in terms of $z$ instead of $V$ via a simple change of variables (i.e. using the relationship of $tau = z \/u $ from #ref(<eq:residence_time>)):
+$ rho u hat(C)_"P " (dif T)/(dif z) + rho u (1-alpha T) (dif P)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V, $
+where $u$ is the linear velocity of the fluid.
+
+If the pressure drop along the reactor is negligible or the fluid is an ideal gas mixture (i.e. $alpha T =1$), then $dif P\/dif tau = dif P\/dif z = 0$, simplifying the energy balance further:
+$ rho u hat(C)_"P " (dif T)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V quad ("negligible pressure drop or ideal gas"). $<eq:pfr_nonisothermal_ideal>
+Alternatively, if the fluid is incompressible (i.e. $alpha=0$) as is commonly assumed for liquid-phase reactions, then
+$ rho u hat(C)_"P " (dif T)/(dif z) + u (dif P)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V quad ("incompressible"). $
+
+=== Hot Spots and Thermal Runaway
+
+We will now revisit the example carried out with the batch reactor in #ref(<example-batch-energy>) with a few modifications.
+Consider again the gas-phase, elementary reaction of 
+$ ce("A") fwdArrow(k) ce("2B") $
+where A and B behave ideally.
+We now decide to consider a PFR with constant cross-sectional area (rather than a batch reactor with constant volume).
+Once again, we will not make any assumptions about isothermal operation.
+As was shown in the batch reactor example, the temperature will continually rise if $Delta H_"rxn"<0$ and $dot(Q) = 0$, so we will make one other modification: we will surround the PFR with a heat transfer fluid that allows for the possibility of heat transfer between the reacting fluid and its surroundings (i.e. $dot(Q) != 0$).
+As a reminder, the goal will be to write a coupled set of mass and energy balances for the PFR.
+
+Qualitatively similar to the batch reactor example, from the PFR mass balance given by #ref(<eq:pfr_mass_balance>) and the simplified energy balance given by #ref(<eq:pfr_nonisothermal_ideal>), we can state
+$ (dif conc("A"))/(dif tau) = -k conc("A"), quad rho hat(C)_"P " (dif T)/(dif tau) = -Delta H_"rxn" k conc("A") + dot(Q)/V. $
+The $dot(Q)$ term is what can prevent a continual increase in temperature over the reactor length for an exothermic reaction, provided $dot(Q)<0$.
+The highest temperature position along the reactor length is termed the hot spot.
+
+If $Delta H_"rxn"$ is highly exothermic, the hot spot can spike to extremely high temperatures very quickly if one is not careful.
+The exothermic reaction causes an increase in temperature, which itself increases the rate of reaction.
+If the rate of heat loss to the surroundings via $dot(Q)$ is not sufficiently large, then the reaction will go to completion extremely quickly, raising the temperature to dangerously high values.
+Clearly, robust temperature control is a necessity when dealing with non-isothermal reactors.
+This not a niche point --- such considerations are just as relevant for even the simplest of reactors like a reaction flask in the lab!
+
+#plot[https://marimo.app/l/v1cm6a]
+
+== Continuous-Stirred Tank Reactors
+
+=== Energy Balance
+
+To derive the expression for the CSTR energy balance, we start again from the general energy balance given by #ref(<eq:general_energy_balance>), neglecting the kinetic and potential energy terms as well as the shaft work:
+$ (dif U)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot) - P (dif V)/(dif t). $
+Using the definition of enthalpy (#ref(<eq:enthalpy_definition>)), we can restate the above expression as
+$ (dif H)/(dif t) - V (dif P)/(dif t) - P (dif V)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot) - P (dif V)/(dif t), $
+which simplifies to
+$ (dif H)/(dif t) - V (dif P)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $
+
+Like the batch reactor example, we can consider a single-phase system where the enthalpy changes due to temperature, pressure, and the moles of species $j$.
+Plugging #ref(<eq:dif_h>) into the above expression yields
+$ (m hat(C)_"P " dif T + V(1- alpha T) dif P + sum_j accent(H,macron)_j dif n_j)/(dif t)  - P (dif V)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot), $
+which simplifies to
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $ <eq:cstr_energy_unsteady>
+
+We know from the mass balance on the CSTR (#ref(<eq:cstr_unsteady>)) that 
+$ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $
+or equivalently via #ref(<eq:sum_stoichs_rate>):
+$ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + V sum_i nu_(i,j) r_i. $
+Plugging the CSTR mass balance into #ref(<eq:cstr_energy_unsteady>) and following the same approach taken in the batch reactor derivation from #ref(<batch-general>) results in 
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T (dif P)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) (accent(H,macron)_(j,0) - accent(H,macron)_(j)) + accent(Q,dot). $
+
+From here, we can start applying our typical approximations.
+For instance, we can invoke steady-state conditions to arrive at
+$ 0 = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) (accent(H,macron)_(j,0) - accent(H,macron)_(j)) + accent(Q,dot). $
+To make matters a bit simpler, we can represent the partial molar enthalpies in terms of partial molar heat capacities via
+#footnote[Naturally, this requires that the heat capacity does not change between the inlet and outlet.]
+$ macron(H)_(j) - macron(H)_(j,0) = macron(C)_("P ",j) (T-T_0), $
+such that
+$ 0 = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) macron(C)_("P ",j) (T_0 - T) + accent(Q,dot). $
+Leveraging the definition of a partial molar property, we can state
+$ sum_j dot(n)_(j,0) macron(C)_("P ",j) = dot(n)_0 c_("P ") = dot(m)_0 hat(C)_"P ", $
+such that we can rewrite the energy balance as
+$ 0 = - V sum_i Delta H_("rxn",i) r_i + dot(m)_(0) hat(C)_("P ") (T_0 - T) + accent(Q,dot). $
+If we wish to express the above energy balance in terms of $tau$, we can divide through by $V$ and use $dot(v)_0 = dot(m)_0 rho $ to arrive at
+$ 0 = - sum_i Delta H_("rxn",i) r_i + (rho hat(C)_("P ") (T_0 - T))/tau + accent(Q,dot)/V. $
+
+<eq:cstr_steady_energy>
+
+=== Multiple Steady States
+
+While #ref(<eq:cstr_steady_energy>) look slightly simpler than the batch and PFR energy balances since it is a series of algebraic expressions rather than differential equations, there is still quite interesting behavior that can emerge.
+Namely, unlike other reactor archetypes, CSTRs are known to exhibit multiple physically plausible steady state solutions.
+
+Consider a CSTR operated adiabatically and at steady-state conditions with the following single-phase, exothermic reaction:
+$ ce("A") fwdArrow(k) ce("B"). $
+
+The energy balance can be concisely written using #ref(<eq:cstr_steady_energy>) to state
+$  0 = - Delta H_("rxn") r V  + (rho hat(C)_("P ") (T_0 - T))/tau. $
+Similarly, we know from #ref(<eq:cstr_mass_balance>) that the mass balance for the CSTR can be written as
+$ r_ce("A") = (conc("A") - conc("A")_0)/tau $
+for a constant volumetric flow rate.
+Substituting in our elementary rate law of $r = - r_ce("A") =  k conc("A")$, we arrive at the following system of equations:
+$ 0 = - Delta H_("rxn") k conc("A")  + (rho  hat(C)_("P ") (T_0 - T))/tau, quad 0 = (1+ k tau) conc("A") - conc("A")_0. $
+
+This system of non-linear equations is a bit deceptive.
+Depending on the initial guess one uses and the reaction conditions themselves, different solutions can potentially be found, each of which may be physically sound and equally valid.
+In these scenarios, the CSTR exhibits multiple steady states, and small perturbations to the reaction conditions can trigger drastic changes in the reaction, resulting in an unstable reactor.
+
+#plot[https://marimo.app/l/ebu1s6]
 
 = Transition State Theory <transition-state-theory>
 
@@ -1902,7 +2539,7 @@ In transition state theory, we assume that there is some transient complex (the 
 This means we can rewrite our reaction as
 #footnote[Here, we are tacitly assuming that there is no recrossing, such that we are considering a single isolated event such that P cannot convert back to the reagents. Naturally, it is possible in practice for a product to return to the transition state if enough energy is supplied, but we consider this as a separate event altogether. In practice, recrossing events will decrease $k$ from transition state theory, and this is corrected in a _post hoc_ manner via the transmission coefficient $kappa$ discussed shortly.]
 $
-ce("A + B") eqArrow(K_"C "^ddagger) ce("AB")^ddagger -> ce("P").
+ce("A + B") eqArrow(K_"C "^ddagger) ce("AB")^ddagger --> ce("P").
 $<eq:tst_rxn>
 The net rate of reaction can be represented as
 $ r = nu^ddagger conc("AB")^ddagger, $<eq:nu_dagger>
@@ -2740,519 +3377,6 @@ The degree of rate control for the rate-determining state (i.e. the transition s
 From this analysis, we can gain insights into how to improve the reaction via catalyst design.
 In general, we wish to stabilize transition states with large, positive degrees of rate control since it is these species that have the most outsized impact on the rate.
 However, we need to do so without significantly stabilizing intermediates with large, negative degrees of rate control since this would counteract the improvements to the rate. 
-
-= Chemical Reactor Archetypes
-
-== The Mass Balance <conservation-of-mass>
-
-In order to understand the behavior of chemical reactors, we must start with the key governing principle behind it all: the conservation of mass.
-Consider a chemical reaction taking place inside a reactor, and focus on a unit volume within the reactor itself.
-We can ask ourselves the question: what is the rate of change of species $A_j$ within our control volume?
-Species $A_j$ will enter the control volume, exit the control volume, and (potentially) be generated or consumed due to a chemical reaction.
-Written in a mathematical form, this can be described as follows:
-$ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
-where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ (i.e. from the chemical reaction).
-While somewhat abstract, this equation is simply a restatement of the conservation of mass
-
-The generation term, $G_j$, is of particular importance given that is the direct consequence of any  chemical reactions taking place in the system.
-By definition, its value is positive if A is serving as a net product in the chemical reactions taking place, while its value is negative if A is serving as a net reactant being consumed.
-Typically, one measures the change in concentration of a species over time, denoted $r_j$.
-We can express $G_j$ more concretely as follows:
-$ G_j = integral r_j dif V $
-where $r_j$ is the rate of production of species $A_j$, such that it is positive if more $A_j$ is being generated over the course of the reaction and negative if it is being consumed.
-
-== Batch Reactors <batch-reactors>
-
-A batch reactor is a relatively simple reactor archetype that has no input or output when the chemical reaction is occurring.
-While simple, the batch reactor is the most common reactor archetype when studying the reaction kinetics of liquid-phase reactions.
-
-=== Concentration Basis
-
-Without any inputs or outputs, the batch reactor has $dot(n)_(j,0)=dot(n)_(j,1)=0$. As such, the mole balance is 
-$ (dif n_j) / (dif t) = integral r_j dif V. $
-If the reaction mixture is perfectly mixed (i.e. spatially uniform) so that $r_j$ is independent of position (a common assumption for the batch reactor), then we can state
-$ (dif n_j) / (dif t) = r_j V. $
-Solving for the rate of reaction of species $A_j$, we see that
-$ r_j = 1/V (dif n_j)/(dif t). $<eq:batch_rate>
-If we assume that the batch reactor operates with a constant volume for the reaction mixture, as is oftentimes the case, we can write the rate directly in terms of concentration:
-$ r_j = (dif [A_j])/(dif t) $ 
-
-=== Conversion Basis
-
-We may also wish to write the rate equation in terms of conversion.
-Recognizing that $X_j = 1 - n_j\/n_(j,0)$ and therefore $n_j= n_(j,0)(1-X_j)$, we can plug this into #ref(<eq:batch_rate>) to get
-$ r_j = -n_(j,0)/V (dif X_j) / (dif t). $
-In general, one can substitute in the rate law for $r_j$ and integrate in order to find the time to achieve a pre-specified concentration or conversion.
-The analytical solution of this form is typically known as a design equation.
-
-== Plug-Flow Reactors <plug-flow-reactors>
-
-A plug-flow reactor (PFR) is a tubular reactor that that has a continuous, flowing stream containing the reaction mixture.
-The PFR is particularly common when measuring the kinetics of gas-phase reactions.
-Generally, solid-catalyzed vapor-phase reactions --- as are common in the field of heterogeneous catalysis --- are carried out with what is known as a packed-bed reactor (PBR), which in an idealized case can be modeled as a PFR.
-
-=== Concentration Basis
-
-For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species A in a differential segment of the reactor volume, $dif V$.
-
-Assuming steady-state conditions, the differential balance can be written as 
-$ 0 = dot(n)_(j) - (dot(n)_(j) + dif dot(n)_j) + r_j dif V, $
-which is equivalent to
-$ r_j = (dif dot(n)_j) / (dif V). $<eq:pbr>
-
-Under the assumption of a constant volumetric flow rate, we can define a property known as the residence time, $tau$, as
-$ tau equiv V/dot(v) = (A_"c "z)/dot(v) = z/u, $<eq:residence_time>
-where $dot(v)$ is the volumetric flow rate (i.e. $"m "^3$/s), $A_"c "$ is the cross-sectional area of the reactor tube (i.e. $"m"^2$), $z$ is the length of the reactor (i.e. m), and $u$ is the linear velocity of the fluid (i.e. m/s).
-The value of $tau$ has units of time and reflects the time a given molecule in the fluid spends inside the reactor and is the natural analogue to the clock time $t$ used in the batch reactor derivation.
-We can plug the definition of $tau$ into #ref(<eq:pbr>) to arrive at
-$ r_j = (dif [A_j] ) / (dif tau) = u (dif [A_j] ) / (dif z). $<eq:pfr_mass_balance>
-As is likely quite apparent, the design equation for a PFR is identical to that of a batch reactor where we have swapped out $t$ for $tau$.
-
-=== Conversion Basis
-
-Recognizing that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$, we can plug this into #ref(<eq:pbr>) expression to get
-$ r_j = - dot(n)_(j,0) (dif X_j) / (dif V). $<eq:pfr_r_a>
-
-
-If the reaction is carried out with a heterogeneous catalyst (as is the case with a packed bed reactor), then the catalyst mass $W$ may be used in place of volume to normalize the rate.
-In this case, we have
-$ r_j = - dot(n)_(j,0) (dif X_j) / (dif W). $
-
-
-== Continuous-Stirred Tank Reactors <continuous-stirred-tank-reactors>
-
-The continuous-stirred tank reactor (CSTR) has an inlet and outlet flow of chemicals.
-CSTRs are typically operated at steady state (such that the accumulation term is zero) and are assumed to be perfectly mixed.
-
-=== Concentration Basis
-
-The mole balance for the CSTR can be written as 
-$ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $<eq:cstr_unsteady>
-which becomes the following after invoking steady-state conditions:
-$ 0 = dot(n)_(j,0) - dot(n)_(j) + r_j V. $
-Solving for the reaction rate yields
-$ r_j = (dot(n)_(j,0) - dot(n)_(j)) / V. $<eq:cstr>
-
-With the above expression, we aim to write $r_j$ in terms of species concentrations.
-To do so, note that for a given flow rate with a spatially uniform concentration across the reactor volume, we have
-$ dot(n)_j = [A_j] dot(v), $<eq:volumetric_flow_rate>
-where $dot(v)$ is the volumetric flow rate.
-Plugging #ref(<eq:volumetric_flow_rate>) into #ref(<eq:cstr>) results in
-$ r_j = (([A_j] dot(v)) - ([A_j] dot(v))_0)/V. $
-At steady state, the volumetric flow rates in and out of the reactor are identical, such that
-$ r_j = (dot(v)([A_j] - [A_j]_0))/V. $
-Like with the PFR, we need to think about the time that a given packet of fluid is within the reactor, which we will again refer to as $tau$ as defined by $tau equiv V\/dot(v)$.
-In the context of a CSTR, we refer to $tau$ as the space time (or average residence time) since a distribution of residence times are possible.
-With our definition of $tau$, we can write the rate expression as
-$ r_j =  ([A_j] - [A_j]_0) / tau. $<eq:cstr_mass_balance>
-Unlike the batch reactor and PFR, the CSTR design equation contains no derivatives and is merely a simple algebraic equation.
-
-=== Conversion Basis
-
-If we wish to write the CSTR design equation in terms of conversion, we can once again note that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$.
-Plugging this into #ref(<eq:cstr>), we arrive at
-$ r_j = - (dot(n)_(j,0) X_j ) / V. $<eq:cstr_r_a>
-
-
-== Comparing Flow Reactors
-
-=== Volume Considerations
-
-We can also make a direct comparison between CSTRs and PFRs.
-The conversion-based design equation for the PFR given by #ref(<eq:pfr_r_a>) is extremely similar to that of the CSTR given by #ref(<eq:cstr_r_a>):
-$ 
-r_j = -dot(n)_(j,0) (dif X_j)/(dif V) quad ("PFR") quad quad r_j = -dot(n)_(j,0) (X_j)/(V) quad ("CSTR")\
-V = -dot(n)_(j,0) integral_(0)^X_j (dif X'_j)/(r_j) quad ("PFR") quad quad V = -dot(n)_(j,0) (X_j)/(r_j) quad ("CSTR").
-$
-Here, we have written the expressions in terms of the necessary reactor volume to achieve a given conversion, which (when plotted) is known as a Levenspiel plot.
-From this comparison, it becomes immediately clear that an infinite set of CSTRs in series would behave identically to a PFR.
-
-#self[Make a plot like https://personalpages.manchester.ac.uk/staff/tom.rodgers/documents/CRE_Notes.pdf.]
-
-#self[Make a plot like in  Fig 3-9 in Lanny]
-
-=== Residence Time Considerations
-
-Similarly, we can compare the PFR and CSTR based on the residence time to achieve a specific outlet concentration:
-$ r_j = (dif [A_j] ) / (dif tau) quad ("PFR"), quad quad r_j =  ([A_j]_1 - [A_j]_0) / tau quad ("CSTR") $
-$ tau = integral_([A_j]_0)^([A_j]_1) 1 / (r_j) dif [A_j]' quad ("PFR"), quad quad tau = ([A_j]_1 - [A_j]_0) / r_j quad ("CSTR") $
-Therefore, we can graphically compare the required $tau$ by making a plot of $1\/r_j$ vs. $[A_j]_1 - [A_j]_0$, as shown in...
-
-#self[Pg 100 from Lanny. Note the product vs inlet comment from the CSTR. In the CSTR the rectangle is drawn with a height equal to l/r evaluated at the product conversion, while in the PFTR the height varies from inlet to product conversion.]
-
-
-= Nonisothermal Considerations
-
-It might come as no surprise that many reactions are not operated isothermally.
-After all, most reactions involve an appreciable heat of reaction, and it may not always be possible or desirable to operate them with a constant heat exchange rate to maintain a given temperature.
-
-This fact becomes critical to account for when realizing that the rate of reaction varies as a function of temperature.
-For instance, consider the constant-volume batch reactor design equation of 
-$ r_(j)(T) = (dif [A_j])/(dif t) quad  ("with" (dif T)/(dif t) = 0), $
-where we are denoting $r_(j)(T)$ to make it clear that the rate is a function of temperature (e.g. via the Arrhenius equation).
-Normally, we would derive an expression for $r_j$ and integrate to identify how the species concentration changes like in #ref(<integrated-rate-expressions>).
-Implicitly, this procedure was done under the assumption that we were operating at a given value of $T$.
-However, in a non-isothermal reactor, the value of $T$ is not a constant value and will change with time.
-Therefore, under non-isothermal conditions we have $ r_(j) (T) = (dif [A_j])/(dif t)  quad  ("with" (dif T)/(dif t) != 0). $
-Ultimately, this leads us to a coupled system of differential equations (i.e. the mass and energy balances) that must be solved simultaneously in order to understand how the reaction proceeds with time.
-
-== General Energy Balance
-
-We will begin with the general energy balance
-$ (dif E)/(dif t) = accent(m,dot)_0 accent(E,hat)_0 - accent(m,dot)_1 accent(E,hat)_1 + accent(Q,dot) + accent(W,dot), $
-where $E$ represents the total energy, $accent(m,dot)$ is a mass flow rate, $accent(E,hat)$ is an energy per unit mass, $accent(Q,dot)$ is the rate of heat added to the system, and $accent(W,dot)$ is the rate of work done on the system.
-The work term is defined as
-$ accent(W,dot) = accent(W,dot)_"f " + accent(W,dot)_"s " + accent(W,dot)_"b ", $
-where the individual terms are for work done by flow streams moving through the reactor, shaft work being done by stirrers, compressors, and other equipment, and work done when moving the system boundary (if moved), respectively.
-
-We define $accent(W,dot)_"f "$ as 
-$ accent(W,dot)_"f " = - P Delta dot(v) = dot(v)_0 P_0 -dot(v) P, $
-where $dot(v)$ is the volumetric flow rate and $P$ is the pressure of the stream.
-We define $accent(W,dot)_"b "$ in differential form as
-$ accent(W,dot)_"b " = -P (dif V)/(dif t). $
-
-With this, we will rewrite $accent(W,dot)$ as 
-$ accent(W,dot) = dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t), $
-where we will leave the shaft work as an abstract variable for now since it depends on what equipment is being used.
-
-The total energy of the system is the sum of all internal, potential, and kinetic energies:
-$ E = U + "KE" + "PE". $
-We can rewrite our derivative as
-$ (dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(U,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(U,hat) + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot) + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t). $
-We will now take advantage of the definition of enthalpy, $H = U + P V$, to say that
-$
-accent(H,hat) =  accent(U,hat) + (P V)/m = accent(U,hat) + P/rho.
-$
-Now we can state
-$
-(dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 - P_0/rho_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) - P/rho + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t)
-$
-Since dimensional analysis will readily indicate that $accent(m,dot) P \/ rho=dot(v) P$, we can simplify our expression a bit to arrive at
-$
-(dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + accent(W,dot)_"s " - P (dif V)/(dif t)
-$<eq:general_energy_balance>
-We will leave our general expression at this for now.
-
-== Batch Reactors
-// include drawing
-
-=== General Approach <batch-general>
-
-The batch reactor has no flow streams, so our energy balance collapses down to
-$ (dif (U + "KE" + "PE"))/(dif t) = accent(Q,dot) + accent(W,dot)_"s " - P (dif V)/(dif t). $
-
-From here, we will make some assumptions.
-The first assumption is that the shaft work is negligible (i.e. $accent(W,dot)_"s "=0$), which is generally true so long as the stirrers and other equipment are not drawing significant power.
-The second approximation we will make is that the kinetic energy of the fluid does not appreciably change (i.e. $dif "KE"\/dif t=0$), which is particularly reasonable for a batch reactor but even for flow reactors since the flows themselves are not drastically changing speeds.
-The final approximation we will make is that the change in potential energy is negligible (i.e. $dif "PE"\/dif t=0$), which is reasonable for a batch reactor but may not be reasonable for reactors in the presence of external fields (e.g. an electrochemical system).
-
-With this, we have
-$ (dif U)/(dif t) = accent(Q,dot) - P (dif V)/(dif t). $
-
-We now will use enthalpy for the rest of our derivation, noting that the differential form is given by
-$
-dif H &= dif U + P dif V + V dif P.
-$<eq:enthalpy_definition>
-Substituting in for $dif U$ results in
-$
-(dif H - P dif V - V dif P)/(dif t) &= accent(Q,dot) - P (dif V)/(dif t)\
-(dif H)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot).
-$<eq:dH_batch>
-For single-phase systems, we can write the total differential of the enthalpy as 
-$ dif H = ((diff H)/(diff T))_(P,n_j) dif T + ((diff H)/(diff P))_(T,n_j) dif P + sum_j ((diff H)/(diff n_j))_(T,p,n_(k!=j)) dif n_j. $
-The left-most derivative is the definition of the constant-pressure heat capacity:
-$ C_"P " equiv ((diff H)/(diff T))_(P,n_j). $
-
-Now for the second term.
-We will take advantage of a few thermodynamic relationships here without re-deriving them from scratch.
-Namely,
-$ ((diff H)/(diff P))_(T,n_j)  = V - T ((diff V)/(diff T))_(P,n_j) = V -  T alpha V = V(1-alpha T), $
-where $alpha$ is the coefficient of thermal expansion defined as
-$ alpha equiv 1/V ((diff V)/(diff T))_(P,n_j). $
-
-Finally, the last term to deal with is quite simple.
-It is simply a restatement of the sum of partial molar enthalpies,
-#footnote[Note that a partial molar property is not the same as a molar property. The partial molar enthalpy describes the enthalpy change as a function of the moles of a specific species, whereas the molar enthalpy is an averaged change over all species in the system. This also implies that $sum_j n_j macron(H)_j = H$.]
-$accent(H,macron)_j$, where
-$ accent(H,macron)_j equiv ((diff H)/(diff n_j))_(T,p,n_(k!=j)). $
-
-Now to put it all together:
-$ dif H =  m hat(C)_"P " dif T +  V (1-alpha T) dif P+ sum_j accent(H,macron)_j dif n_j. $<eq:dif_h>
-Here, we have chosen to use the specific heat capacity, $accent(C,hat)_"P "$, in place of an extensive heat capacity since the former is a more natural property to measure.
-Assuming the density of the fluid is uniform, the mass can be determined quite easily from $m = rho V$ as well.
-
-Plugging the above expression into #ref(<eq:dH_batch>) results in
-$
-(m hat(C)_"P " dif T +  V (1-alpha T) dif P+ sum_j accent(H,macron)_j dif n_j)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot)\
-m hat(C)_"P " (dif T)/(dif t) + V (1-alpha T) (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot).\
-m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - sum_j accent(H,macron)_j (dif n_j)/(dif t) + accent(Q,dot).
-$
-It may seem like this is still a mess (and to some degree, it is), but we have made a lot of progress.
-Every algebraic term in this expression is something that can be experimentally measured or computed, although the trickiest term here is probably the summation term.
-We will take care of that now.
-
-We know from the mass balance on the batch reactor (#ref(<eq:batch_rate>)) that
-$ (dif n_j)/(dif t) = r_j V. $<eq:batch_r_j>
-Here, $r_j$ is on a per-species basis.
-For reasons that will become clearer shortly, we can use #ref(<eq:sum_stoichs_rate>) to restate the above expression as
-$ (dif n_j)/(dif t) = V sum_i nu_(i,j) r_i. $ <eq:dn_j_batch>
-Plugging this expression into our energy balance yields
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_j accent(H,macron)_j sum_i nu_(i,j) r_i + accent(Q,dot). $
-We can re-group this a bit to help us out in visualizing a substitution that is about to come:
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_i ( sum_j nu_(i,j) accent(H,macron)_j) r_i + accent(Q,dot). $
-
-If we assume that the partial molar enthalpies are the same as pure component enthalpies, then we can take advantage of the following relationship exists for a given reaction $i$ and species $j$:
-$ sum_j nu_(i,j) accent(H,macron)_j=Delta H_("rxn",i), $<eq:partial_molar_enthalpy>
-such that
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $<eq:energy_balance_batch_general>
-Should we wish to consider a net reaction rather than individual elementary reactions, the above expression can also be rewritten without the summation as
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - Delta H_("rxn") r V + accent(Q,dot). $<eq:batch_nonisothermal>
-
-There we have it --- a compact expression for the energy balance in a single-phase batch reactor, which can be coupled with the mass balance to better understand reaction progress.
-
-=== Simplifying Cases
-
-From here, there are many simplifications that can be made depending on the system under investigation.
-We will not discuss these derivations at length in class for the sake of time and since the mathematical gymnastics is essentially the same, but the full details are reproduced below for full clarity.
-
-==== Summary
-
-$ m hat(C)_"P " (dif T)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot) quad ("constant" P "or incompressible")
-$
-$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + alpha/kappa T  Delta V_("rxn",i))  r_i   + accent(Q,dot) quad ("constant" V) $
-$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + R T sum_j nu_(i,j))  r_i   + accent(Q,dot) quad ("constant " V, "ideal gas") $
-
-==== Constant Pressure or Incompressible Fluid
-
-We can now consider some optional simplifications that may or may not apply to a given batch reactor of interest.
-If the reactor operates under constant pressure, then we can say $dif P\/ dif t=0$.
-If the reactor fluid is incompressible, then $alpha=0$.
-In both cases, we have
-$ m hat(C)_"P " (dif T)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot).
-$
-This is a typical energy balance when dealing with liquid-phase reactions in a batch reactor.
-
-==== Constant Volume
-
-The constant pressure assumption is likely reasonable for most liquids but is going to be questionable for most gas-phase reactions.
-Here, we will derive an expression for a constant volume reactor that may be a bit more suitable for gases.
-To start, we will return to our energy balance in #ref(<eq:energy_balance_batch_general>) from before we made any assumptions about constant pressure:
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $
-Then we will write out the total derivative for pressure in terms of $T$, $V$, and $n_j$ as
-$ dif P = ((diff P)/(diff T))_(V,n_j) dif T + ((diff P)/(diff V))_(T,n_j) dif V + sum_j ((diff P)/(diff n_j))_(T,V,n_(k!=j)) dif n_j. $
-For constant pressure, we have $dif V =0$, such that
-$ dif P = ((diff P)/(diff T))_(V,n_j) dif T + sum_j ((diff P)/(diff n_j))_(T,V,n_(k!=j)) dif n_j. $
-Plugging this into our energy balance yields
-$
-m hat(C)_"P " (dif T)/(dif t) - alpha T V (((diff P)/(diff T))_(V,n_j) dif T + sum_j ((diff P)/(diff n_j))_(T,V,n_(k!=j)) dif n_j)/(dif t) &= -  V sum_i Delta H_("rxn",i) r_i + accent(Q,dot)\
-(dif T)/(dif t) (m hat(C)_"P "  - alpha T V ((diff P)/(diff T))_(V,n_j) ) - alpha T V sum_j  ((diff P)/(diff n_j))_(T,V,n_(k!=j)) (dif n_j)/(dif t)   &= -  V sum_i Delta H_("rxn",i) r_i + accent(Q,dot).
-$
-From here, we will take advantage of a known thermodynamic relationship:
-$ m hat(C)_"P " = m hat(C)_"V " + alpha T V ((diff P)/(diff T))_(V,n_j). $
-Plugging this into our expression, we have
-$ m hat(C)_"V " (dif T)/(dif t) - alpha T V sum_j  ((diff P)/(diff n_j))_(T,V,n_(k!=j)) (dif n_j)/(dif t)   &= - V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
-
-This is much simpler, but there is still more to be done here.
-We will take advantage of another thermodynamic relationship
-$ ((diff P)/(diff n_j))_(T,V,n_(k != j)) = accent(V,macron)_j / (V kappa), $
-where $accent(V,macron)_j$ is the partial molar volume of species $j$ and $kappa$ is the isothermal compressibility defined as
-$ kappa equiv -1/V ((diff V)/(diff P)). $
-Plugging this in, we get
-$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T  sum_j accent(V,macron)_j  (dif n_j)/(dif t)   &= - V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
-
-Plugging in our expression for $dif n_j\/dif t$ from the mass balance in #ref(<eq:batch_r_j>) further simplifies things to
-$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T V sum_j accent(V,macron)_j sum_i nu_(i,j) r_i  = -  V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot), $
-which we again re-group as
-$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T V sum_i (sum_j accent(V,macron)_j  nu_(i,j)) r_i  = -  V sum_i Delta H_("rxn",i) Delta r_i + accent(Q,dot). $
-
-Like we did for the partial molar enthalpy in #ref(<eq:partial_molar_enthalpy>), we will state
-$ sum_j nu_(i,j) accent(V,macron)_j  = Delta V_("rxn",i), $<eq:partial_volume_balance>
-where $Delta V_("rxn",i)$ is the change in volume over the course of reaction $i$.
-Therefore,
-$ m hat(C)_"V " (dif T)/(dif t) - alpha/kappa T V sum_i Delta V_("rxn",i) r_i  = -  V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $
-Combining the sums gets us our general but slightly more manageable expression for the energy balance of a constant-volume batch reactor,
-$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + alpha/kappa T  Delta V_("rxn",i))  r_i   + accent(Q,dot). $
-
-==== Ideal Gas at Constant Volume
-
-If our reacting mixture is an ideal gas mixture, we can make some further simplifications by noting that
-$ kappa equiv - 1/V ((diff V)/(diff P))_(T,n_j) = -1/V (diff((n R T)/P)/(diff P))_(T,n_j) = 1/V (n R T)/P^2 = 1/V (P V)/P^2 =1/P  $
-$ alpha equiv (1/V) ((diff V)/(diff T))_(P,n_j) = 1/V (diff((n R T)/P)/(diff T))_(P,n_j) = 1/V (n R)/P = 1/V (P V)/(P T) = 1/T. $
-Plugging these expression in yields
-$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) +  P  Delta V_("rxn",i))  r_i   + accent(Q,dot). $
-Finally, we can note that 
-$ Delta V_("rxn",i) = (Delta n_("rxn",i) R T)/P, $
-such that
-$ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + R T sum_j nu_(i,j))  r_i   + accent(Q,dot), $<eq:batch_energy_balance_ideal>
-where we took advantage of the fact that $Delta n_("rxn",i) = sum_j nu_(i,j)$.
-
-=== Example Application of the Energy Balance <example-batch-energy>
-
-==== Defining and Solving a System of ODEs
-
-Since it may appear mostly as an abstract concept up until now, it is worth taking a step back to think about how we might apply the energy balance in practice.
-
-Consider the gas-phase, elementary reaction of
-$ ce("A") fwdArrow(k) ce("2B") $
-that takes place in a well-mixed, adiabatic batch reactor at constant volume without the constraint of isothermal operation.
-For the sake of simplicity, we will consider the gases to behave ideally.
-Naturally, we might wish to understand how the temperature of the reactor changes as a function of time.
-
-To answer this question, we start by writing the typical mass balance for species A as
-$ r_ce("A") = (dif conc("A"))/(dif t). $
-Since the reaction is elementary, we also know the rate expression can be given as:
-$ r_ce("A") = -k conc("A"), $
-such that
-$ (dif conc("A"))/(dif t) = -k conc("A"). $
-Thus far, this is essentially the same procedure we have done many times before, such as in #ref(<integrated-rate-expressions>).
-However, we cannot proceed with the integration yet since $k(T)$ and $T(t)$ for non-isothermal operation.
-
-We now move onto the simplified energy balance from #ref(<eq:batch_energy_balance_ideal>) to state
-$ rho hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) r, $
-where we note that $sum_j nu_j = 1$ for the given reaction, $dot(Q)=0$ for an adiabatic process.
-We know that $ r = - r_"A " = k conc("A"), $
-such that
-$ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) k conc("A") V. $
-This leaves us with a system of differential equations that must be solved simultaneously:
-$ 
-(dif conc("A"))/(dif t) = -k conc("A"), quad (dif T)/(dif t)  = ((-Delta H_("rxn") + R T) k conc("A") V)/(m hat(C)_"V "),
-$<eq:batch_simultaneous>
-To make matters even clearer, we can substitute in the Arrhenius equation for $k$ to state
-$ 
-(dif conc("A"))/(dif t) = -A' exp(-E_"a "/(R T)) conc("A"), quad (dif T)/(dif t)  = ((-Delta H_("rxn") + R T) A' exp(-E_"a "/(R T)) conc("A") V)/(m hat(C)_"V "),
-$
-where $A'$ is the pre-exponential factor (to distinguish it from species A).
-
-From this set of equations, we can see that both expressions depend on #conc("A") and $T$, both of which evolve with $t$.
-For the case where $Delta H_"rxn"<0$, we see that $dif T\/dif t>0$, such that the temperature will increase continually until all of species A is consumed.
-Clearly, there needs to be some amount of temperature control in order for the reactor operation to be safe and industrially viable.
-
-Generally, these systems of ordinary differential equations (ODEs) can only be solved numerically.
-The details of numerical methods are beyond the scope of this course, but it is still useful to have a high-level understanding of what is involved in setting up such equations.
-#footnote[Scenarios like this, where you understand the scientific context but may need assistance on how to begin carrying out the computation, can be great use cases for large language models. Pasting an image of #ref(<eq:batch_simultaneous>) into ChatGPT 4o with the prompt "Write me a Python script that will solve this system of ODEs. Note that k(T)." yields an example script that is nearly perfect (in this case, the Arrhenius equation was simply missing the factor of $R$ in the denominator of the exponential).
-]
-
-#plot[https://marimo.app/l/gygake]
-
-==== Temperature-Dependence for the Enthalpy
-
-For the sake of simplicity, it is sometimes assumed that the temperature dependence of $Delta H_"rxn"$ is weak over the relatively limited range of operating temperatures.
-To relax this somewhat questionable assumption, one can typically use an empirical relationship known as the Shomate equation, which takes the following form:
-$ C_"P " = A + B T + C T^2 + D T^3 + E/T^2, $
-where each parameter is determined based on statistical regression to experimental data.
-If the different components in a fluid behave ideally, the fluid's heat capacity is simply the sum of its individual component heat capacities.
-This is useful to know, as pure component heat capacities are tabulated in many places, such as the _NIST Chemistry WebBook_. 
-
-From this, we can express the temperature-dependence for enthalpy as
-$ H(T_2) - H(T_1) = integral_(T_1)^(T_2) C_"P " dif T $
-$ H(T_2) - H(T_1) = A Delta T + (B (Delta T)^2)/2 + (C (Delta T)^3)/3 + (D (Delta T)^4)/4 - E/(Delta T), $
-which comes from the definition of the constant-pressure heat capacity, $C_"P "$.
-Since $Delta H_"rxn"$ is a state function, we can equivalently use $Delta H_"rxn"$ in the above expression in place of $H$.
-The value for $C_"V "$ in the energy balance can also depend on temperature, albeit much less so than $Delta H_"rxn"$.
-
-== Plug Flow Reactors
-
-=== Energy Balance
-
-For the sake of brevity, we will forego a detailed derivation of the PFR energy, especially since it is very similar to that of the batch reactor (as was observed for the mass balance).
-#footnote[For a thorough derivation of reactor energy balances, refer to Chapter 6 of _Chemical Reactor Analysis and Design Fundamentals_ by J.B. Rawlings and J.G. Ekerdt.]
-Instead, in analogy with the single-phase batch reactor energy balance given by #ref(<eq:batch_nonisothermal>), we will simply state that single-phase PFR energy balance is
-$ rho hat(C)_"P " (dif T)/(dif tau) + (1-alpha T) (dif P)/(dif tau) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V. $
-Assuming the cross-sectional area, $A_"c "$, of the PFR is constant, then we can equivalently write the derivatives in terms of $z$ instead of $V$ via a simple change of variables (i.e. using the relationship of $tau = z \/u $ from #ref(<eq:residence_time>)):
-$ rho u hat(C)_"P " (dif T)/(dif z) + rho u (1-alpha T) (dif P)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V, $
-where $u$ is the linear velocity of the fluid.
-
-If the pressure drop along the reactor is negligible or the fluid is an ideal gas mixture (i.e. $alpha T =1$), then $dif P\/dif tau = dif P\/dif z = 0$, simplifying the energy balance further:
-$ rho u hat(C)_"P " (dif T)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V quad ("negligible pressure drop or ideal gas"). $<eq:pfr_nonisothermal_ideal>
-Alternatively, if the fluid is incompressible (i.e. $alpha=0$) as is commonly assumed for liquid-phase reactions, then
-$ rho u hat(C)_"P " (dif T)/(dif z) + u (dif P)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V quad ("incompressible"). $
-
-=== Hot Spots and Thermal Runaway
-
-We will now revisit the example carried out with the batch reactor in #ref(<example-batch-energy>) with a few modifications.
-Consider again the gas-phase, elementary reaction of 
-$ ce("A") fwdArrow(k) ce("2B") $
-where A and B behave ideally.
-We now decide to consider a PFR with constant cross-sectional area (rather than a batch reactor with constant volume).
-Once again, we will not make any assumptions about isothermal operation.
-As was shown in the batch reactor example, the temperature will continually rise if $Delta H_"rxn"<0$ and $dot(Q) = 0$, so we will make one other modification: we will surround the PFR with a heat transfer fluid that allows for the possibility of heat transfer between the reacting fluid and its surroundings (i.e. $dot(Q) != 0$).
-As a reminder, the goal will be to write a coupled set of mass and energy balances for the PFR.
-
-Qualitatively similar to the batch reactor example, from the PFR mass balance given by #ref(<eq:pfr_mass_balance>) and the simplified energy balance given by #ref(<eq:pfr_nonisothermal_ideal>), we can state
-$ (dif conc("A"))/(dif tau) = -k conc("A"), quad rho hat(C)_"P " (dif T)/(dif tau) = -Delta H_"rxn" k conc("A") + dot(Q)/V. $
-The $dot(Q)$ term is what can prevent a continual increase in temperature over the reactor length for an exothermic reaction, provided $dot(Q)<0$.
-The highest temperature position along the reactor length is termed the hot spot.
-
-If $Delta H_"rxn"$ is highly exothermic, the hot spot can spike to extremely high temperatures very quickly if one is not careful.
-The exothermic reaction causes an increase in temperature, which itself increases the rate of reaction.
-If the rate of heat loss to the surroundings via $dot(Q)$ is not sufficiently large, then the reaction will go to completion extremely quickly, raising the temperature to dangerously high values.
-Clearly, robust temperature control is a necessity when dealing with non-isothermal reactors.
-This not a niche point --- such considerations are just as relevant for even the simplest of reactors like a reaction flask in the lab!
-
-#plot[https://marimo.app/l/v1cm6a]
-
-== Continuous-Stirred Tank Reactors
-
-=== Energy Balance
-
-To derive the expression for the CSTR energy balance, we start again from the general energy balance given by #ref(<eq:general_energy_balance>), neglecting the kinetic and potential energy terms as well as the shaft work:
-$ (dif U)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot) - P (dif V)/(dif t). $
-Using the definition of enthalpy (#ref(<eq:enthalpy_definition>)), we can restate the above expression as
-$ (dif H)/(dif t) - V (dif P)/(dif t) - P (dif V)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot) - P (dif V)/(dif t), $
-which simplifies to
-$ (dif H)/(dif t) - V (dif P)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $
-
-Like the batch reactor example, we can consider a single-phase system where the enthalpy changes due to temperature, pressure, and the moles of species $j$.
-Plugging #ref(<eq:dif_h>) into the above expression yields
-$ (m hat(C)_"P " dif T + V(1- alpha T) dif P + sum_j accent(H,macron)_j dif n_j)/(dif t)  - P (dif V)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot), $
-which simplifies to
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $ <eq:cstr_energy_unsteady>
-
-We know from the mass balance on the CSTR (#ref(<eq:cstr_unsteady>)) that 
-$ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $
-or equivalently via #ref(<eq:sum_stoichs_rate>):
-$ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + V sum_i nu_(i,j) r_i. $
-Plugging the CSTR mass balance into #ref(<eq:cstr_energy_unsteady>) and following the same approach taken in the batch reactor derivation from #ref(<batch-general>) results in 
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T (dif P)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) (accent(H,macron)_(j,0) - accent(H,macron)_(j)) + accent(Q,dot). $
-
-From here, we can start applying our typical approximations.
-For instance, we can invoke steady-state conditions to arrive at
-$ 0 = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) (accent(H,macron)_(j,0) - accent(H,macron)_(j)) + accent(Q,dot). $
-To make matters a bit simpler, we can represent the partial molar enthalpies in terms of partial molar heat capacities via
-#footnote[Naturally, this requires that the heat capacity does not change between the inlet and outlet.]
-$ macron(H)_(j) - macron(H)_(j,0) = macron(C)_("P ",j) (T-T_0), $
-such that
-$ 0 = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) macron(C)_("P ",j) (T_0 - T) + accent(Q,dot). $
-Leveraging the definition of a partial molar property, we can state
-$ sum_j dot(n)_(j,0) macron(C)_("P ",j) = dot(n)_0 c_("P ") = dot(m)_0 hat(C)_"P ", $
-such that we can rewrite the energy balance as
-$ 0 = - V sum_i Delta H_("rxn",i) r_i + dot(m)_(0) hat(C)_("P ") (T_0 - T) + accent(Q,dot). $
-If we wish to express the above energy balance in terms of $tau$, we can divide through by $V$ and use $dot(v)_0 = dot(m)_0 rho $ to arrive at
-$ 0 = - sum_i Delta H_("rxn",i) r_i + (rho hat(C)_("P ") (T_0 - T))/tau + accent(Q,dot)/V. $
-
-<eq:cstr_steady_energy>
-
-=== Multiple Steady States
-
-While #ref(<eq:cstr_steady_energy>) look slightly simpler than the batch and PFR energy balances since it is a series of algebraic expressions rather than differential equations, there is still quite interesting behavior that can emerge.
-Namely, unlike other reactor archetypes, CSTRs are known to exhibit multiple physically plausible steady state solutions.
-
-Consider a CSTR operated adiabatically and at steady-state conditions with the following single-phase, exothermic reaction:
-$ ce("A") fwdArrow(k) ce("B"). $
-
-The energy balance can be concisely written using #ref(<eq:cstr_steady_energy>) to state
-$  0 = - Delta H_("rxn") r V  + (rho hat(C)_("P ") (T_0 - T))/tau. $
-Similarly, we know from #ref(<eq:cstr_mass_balance>) that the mass balance for the CSTR can be written as
-$ r_ce("A") = (conc("A") - conc("A")_0)/tau $
-for a constant volumetric flow rate.
-Substituting in our elementary rate law of $r = - r_ce("A") =  k conc("A")$, we arrive at the following system of equations:
-$ 0 = - Delta H_("rxn") k conc("A")  + (rho  hat(C)_("P ") (T_0 - T))/tau, quad 0 = (1+ k tau) conc("A") - conc("A")_0. $
-
-This system of non-linear equations is a bit deceptive.
-Depending on the initial guess one uses and the reaction conditions themselves, different solutions can potentially be found, each of which may be physically sound and equally valid.
-In these scenarios, the CSTR exhibits multiple steady states, and small perturbations to the reaction conditions can trigger drastic changes in the reaction, resulting in an unstable reactor.
-
-#plot[https://marimo.app/l/ebu1s6]
 
 = Approaches and Tools for Reaction and Reactor Modeling
 
