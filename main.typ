@@ -1661,51 +1661,9 @@ We also do not need to account for lattice statistics since there are no surface
 
 == Catalytic Reaction Mechanisms
 
-With our newfound knowledge of the individual steps that take place in a catalytic reaction, we can combine them to produce a kinetic model.
-
-=== Reaction Stoichiometric Numbers
-
-Typically, we propose a mechanism composed of elementary steps, representing the atomistic details of the catalytic reaction as best as we can imagine.
-In this context, it is useful to introduce the concept of the reaction stoichiometric coefficient $sigma_i$.
-Simply put, $sigma_i$ is the number of times that the $i$-th reaction needs to occur to yield the net reaction stoichiometry. 
-
-Consider the following proposed reaction scheme for the hydrogenation of ethylene:
-$
-ce("H2 + 2* &<--> 2 H^*") quad &(sigma_1 = 1)\
-ce("C2H4 + * &<--> C2H4^*") quad &(sigma_2 = 1)\
-ce("C2H4^* + * &<--> C2H5^* + *") quad &(sigma_3 = 1)\
-ce("C2H5^* + H^* &<--> C2H6 + 2*") quad &(sigma_4 = 1)\
-ce("C2H4^* + * &<--> CHCH2^* + H^*") quad &(sigma_5 = 0)\
-ce("CHCH2^*  &<--> CCH3^*") quad &(sigma_6 = 0)
-$
-for the net reaction #ce("H2 + C2H4 <--> C2H6").
-The reaction stoichiometric numbers, $sigma_i$, describe the number of times that reaction step contributes to properly balance the net reaction.
-Some steps can have $sigma_i=0$ but still be important for the overall catalytic mechanism.
-For instance, even though reaction step 5 does not factor into the net reaction equation, it can still influence the kinetics by decreasing the population of #ce("C2H4^*") species and is potentially worth accounting for in a kinetic model.
-
-If we assume that we have surpassed the induction period beyond which the pseudo-steady state hypothesis can be invoked on adsorbed intermediates, we can write
-$
-r_ce("H^*") &approx 0 = 2 r_1 - r_3 -r_4 + r_5\
-r_ce("C2H4^*") &approx 0 = r_2 - r_3 - r_5\
-r_ce("C2H5^*") &approx 0 = r_3 - r_4\
-r_ce("CHCH2^*") &approx 0 = r_5 - r_6\
-r_ce("CCH3^*") &approx 0 = r_6,
-$
-where we are defining $r_i$ to be the net rate for the $i$-th reaction step given by $r_i equiv r_(i)^+ - r_(i)^-$.
-
-From this system of equations, we can conveniently write
-$
-r_1=r_2=r_3=r_4, quad r_5=0, quad  r_6 = 0.
-$
-This leads us to the following relationship:
-$ r_i = sigma_i r, $<eq:rate_stoichs>
-where $r$ is the net rate of the overall reaction.
-#caution[Note the assumptions that came with #ref(<eq:rate_stoichs>).
-This relationship is applicable for a reaction cycle (e.g. a catalytic reaction or radical-chain reaction) where the pseudo-steady state approximation is applied on the intermediates.
-]
-
 === LHHW Kinetics: The Pedagogical Case
 
+With our newfound knowledge of the individual steps that take place in a catalytic reaction, we can combine them to produce a kinetic model.
 When invoking Langmuirian adsorption behavior with the assumption that adsorbates are randomly distributed on the surface (known as the Hinshelwood assumption), the resulting kinetic models are known as Langmuir--Hinshelwood--Hougen--Watson (LHHW) models.
 
 ==== Rate Law Derivation
@@ -1760,7 +1718,8 @@ This is expected to be the case for the quasi-equilibrium approach since $k_"des
 
 ===== Strong Adsorption <strong-adsorption>
 
-Here, we will explore some limiting cases for $r_ce("P")$ using the quasi-equilibrium form from #ref(<eq:co_quasi>).
+Here, we will explore some limiting cases for $r_ce("P")$ using the quasi-equilibrium form from #ref(<eq:co_quasi>):
+$ r_"P " = (k_2 K_"ads" p_"A " conc("*")_0)/(1+K_"ads" p_"A "). $
 If A adsorbs strongly to the surface (and/or we are in the high pressure limit of $p_ce("A")$), then we arrive at
 $ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_"A ">>1). $
 In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
@@ -1792,6 +1751,48 @@ $ A_"app" = A_2 exp((Delta S_("ads")^std)/(R)), quad quad E_("a,app") = E_("a,2"
 The same result can be found from the formal definition of the apparent activation energy like was done in #ref(<strong-adsorption>).
 These apparent kinetic parameters are particularly useful for interpreting kinetic data obtained from experiments, where the net reaction is the main observable phenomena.
 
+=== Reaction Stoichiometric Numbers
+
+Before continuing on to more complex catalytic mechanisms, it is worth introducing a piece of terminology.
+Typically, we propose a mechanism composed of many elementary steps that represent the atomistic details of the catalytic reaction as best as we can imagine.
+In this context, the concept of the reaction stoichiometric coefficient $sigma_i$ becomes important.
+Simply put, $sigma_i$ is the number of times that the $i$-th reaction needs to occur to yield the net reaction stoichiometry. 
+
+Consider the following proposed reaction scheme for the hydrogenation of ethylene:
+$
+ce("H2 + 2* &<--> 2 H^*") quad &(sigma_1 = 1)\
+ce("C2H4 + * &<--> C2H4^*") quad &(sigma_2 = 1)\
+ce("C2H4^* + * &<--> C2H5^* + *") quad &(sigma_3 = 1)\
+ce("C2H5^* + H^* &<--> C2H6 + 2*") quad &(sigma_4 = 1)\
+ce("C2H4^* + * &<--> CHCH2^* + H^*") quad &(sigma_5 = 0)\
+ce("CHCH2^*  &<--> CCH3^*") quad &(sigma_6 = 0)
+$
+for the net reaction #ce("H2 + C2H4 <--> C2H6").
+The reaction stoichiometric numbers, $sigma_i$, describe the number of times that reaction step contributes to properly balance the net reaction.
+Some steps can have $sigma_i=0$ but still be important for the overall catalytic mechanism.
+For instance, even though reaction step 5 does not factor into the net reaction equation, it can still influence the kinetics by decreasing the population of #ce("C2H4^*") species and is potentially worth accounting for in a kinetic model.
+
+If we assume that we have surpassed the induction period beyond which the pseudo-steady state hypothesis can be invoked on adsorbed intermediates, we can write
+$
+r_ce("H^*") &approx 0 = 2 r_1 - r_3 -r_4 + r_5\
+r_ce("C2H4^*") &approx 0 = r_2 - r_3 - r_5\
+r_ce("C2H5^*") &approx 0 = r_3 - r_4\
+r_ce("CHCH2^*") &approx 0 = r_5 - r_6\
+r_ce("CCH3^*") &approx 0 = r_6,
+$
+where we are defining $r_i$ to be the net rate for the $i$-th reaction step given by $r_i equiv r_(i)^+ - r_(i)^-$.
+
+From this system of equations, we can conveniently write
+$
+r_1=r_2=r_3=r_4, quad r_5=0, quad  r_6 = 0.
+$
+This leads us to the following relationship:
+$ r_i = sigma_i r, $<eq:rate_stoichs>
+where $r$ is the net rate of the overall reaction.
+#caution[Note the assumptions that came with #ref(<eq:rate_stoichs>).
+This relationship is applicable for a reaction cycle (e.g. a catalytic reaction or radical-chain reaction) where the pseudo-steady state approximation is applied on the intermediates.
+]
+
 === LHHW Kinetics: Carbon Monoxide Oxidation
 
 ==== Rate Law Derivation
@@ -1800,7 +1801,7 @@ We will consider the following reaction of #ce("CO") and #ce("O2") to produce #c
 $
 ce("CO + *") &eqArrow(k_1, opposite:k_(-1)) ce("CO^*"), quad &sigma_1 = 2\
 ce("O2 + 2 *") &eqArrow(k_2, opposite:k_(-2)) ce("2 O^*"), quad &sigma_2 = 1\
-ce("CO^* + O^*") &fwdArrow(k_3) ce("CO2 + 2 *") quad &sigma_3 = 2
+ce("CO^* + O^*") &fwdArrow(k_3) ce("CO2 + 2 *"), quad &sigma_3 = 2
 $
 with the net reaction $ce("CO + 1/2 O2 -> CO2")$.
 We will also assume that the bimolecular surface reaction of #ce("CO^*") and #ce("O^*") is rate-limiting, which in turn implies that the reversible adsorption steps are quasi-equilibrated.
