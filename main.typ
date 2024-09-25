@@ -547,7 +547,7 @@ Industrially, iron-based catalysts are often used for this process, and the oper
 As for the pressures, they are kept relatively high at 100--200 bar to shift the equilibrium toward the production of ammonia.
 The discovery of a heterogeneous catalyst that can more efficiently synthesize ammonia at near-ambient temperatures and pressures is one of the holy grails of reaction engineering. 
 
-=== Demonstrating that $K$ is a State Function
+=== Demonstrating that $K$ is a State Function <k_state_function>
 
 In the previous example, you may have noticed that $ce("N2 + 3 H2 <--> 2 NH3")$ is likely not an elementary reaction since it is virtually impossible for four species to react simultaneously. Here, we will demonstrate that the definition of $K_"a "$ holds true regardless of whether the reaction is elementary or non-elementary.
 
@@ -575,7 +575,7 @@ this implies that $ K = K_1 K_2 K_3$.
 Indeed, we see this to be the case:
 $ K = a_ce("D")/a_ce("A") $
 and $ K_1 K_2 K_3 = a_ce("B")/a_ce("A") a_ce("C")/a_ce("B") a_ce("D")/a_ce("C") = a_ce("D")/a_ce("A"). $
-Therefore, the definition of $K = product_j a_(j)^(nu_j)$ holds true regardless of whether the equilibrium expression is elementary.
+Extrapolating from this analysis, it can be readily shown that the definition of $K = product_j a_(j)^(nu_j)$ holds true regardless of whether the equilibrium reaction is elementary.
 
 
 === The van~'t Hoff Equation
@@ -1914,7 +1914,8 @@ $ r = (k'_1 p_ce("N2") conc("*")^2)/conc("*")_0. $
 As usual, we want to get rid of #conc("*") from our rate expression.
 We will invoke the quasi-equilibrium on the second step.
 Even though we cannot write step 2 using an elementary rate expression, we can still express its equilibrium constant via
-$ K_2 = (conc("N^*") p_ce("H2")^(3\/2))/(p_ce("NH3") conc("*")). $<eq:K2_mari>
+$ K_2 = (conc("N^*") p_ce("H2")^(3\/2))/(p_ce("NH3") conc("*")) $<eq:K2_mari>
+as demonstrated in #ref(<k_state_function>).
 
 We also have our site balance, which can be written in simplified form due to the MARI approximation:
 $ conc("*")_0 = conc("*") + conc("N^*"). $<eq:mari_site_balance>
