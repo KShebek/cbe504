@@ -2019,12 +2019,12 @@ We can ask ourselves the question: what is the rate of change of species $A_j$ w
 Species $A_j$ will enter the control volume, exit the control volume, and (potentially) be generated or consumed due to a chemical reaction.
 Written in a mathematical form, this can be described as follows:
 $ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
-where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ (i.e. from the chemical reaction).
+where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ from chemical reactions.
 While somewhat abstract, this equation is simply a restatement of the conservation of mass based on #ref(<fig:reactor_volume>).
 
 #figure(
   image("figures/reactor_volume.svg", width:33%),
-  caption:[Schematic of a reactor volume, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of reaction producing $j$ given by $G_j$.]
+  caption:[Schematic of a reactor volume element, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of producing $j$ from chemical reactions given by $G_j$.]
 )<fig:reactor_volume>
 
 The generation term, $G_j$, is of particular importance given that it is the direct consequence of any chemical reactions taking place in the system.
@@ -2033,6 +2033,7 @@ Typically, one measures the change in concentration of a species over time, whic
 We can express $G_j$ more concretely as follows:
 $ G_j = integral r_j dif V $
 where $r_j$ is the rate of production of species $A_j$, such that it is positive if more $A_j$ is being generated over the course of the reaction and negative if it is being consumed.
+If the reaction mixture is uniform over the volume, them $G_j = r_j V$ is a suitable approximation to make.
 
 == Batch Reactors <batch-reactors>
 
@@ -2049,7 +2050,7 @@ While simple, the batch reactor is the most common reactor archetype when studyi
 
 Without any inputs or outputs, the batch reactor has $dot(n)_(j,0)=dot(n)_(j,1)=0$. As such, the mole balance is 
 $ (dif n_j) / (dif t) = integral r_j dif V. $
-If the reaction mixture is perfectly mixed (i.e. spatially uniform) so that $r_j$ is independent of position (a common assumption for the batch reactor), then we can state
+If the reaction mixture is perfectly mixed (i.e. spatially uniform) so that $r_j$ is independent of the volume element under consideration (a common assumption for the batch reactor), then we can consider $V$ to be the entire reactor volume and state that
 $ (dif n_j) / (dif t) = r_j V. $
 Solving for the rate of reaction of species $A_j$, we see that
 $ r_j = 1/V (dif n_j)/(dif t). $<eq:batch_rate>
@@ -2078,11 +2079,11 @@ Generally, solid-catalyzed vapor-phase reactions --- as are common in the field 
 
 === Concentration Basis
 
-For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species $A_j$ in a differential segment of the reactor volume, $dif V$.
-
-Assuming steady-state conditions, the differential balance can be written as 
-$ 0 = dot(n)_(j) - (dot(n)_(j) + dif dot(n)_j) + r_j dif V, $
-which is equivalent to
+For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species $A_j$ through a differential segment of the reactor volume, $delta V$.
+Assuming steady-state conditions (i.e. excluding start-up and shut-down periods), the differential mole balance can be written as 
+$ 0 = dot(n)_(j)|_V - dot(n)_(j)|_(V+delta V) + r_j delta V $
+$ r_j = (dot(n)_(j)|_(V+delta V) - dot(n)_(j)|_(V))/(delta V). $
+Taking the limit as $delta V->0$ (i.e. invoking the definition of the derivative) yields
 $ r_j = (dif dot(n)_j) / (dif V). $<eq:pbr>
 
 Under the assumption of a constant volumetric flow rate, we can define a property known as the residence time, $tau$, as
