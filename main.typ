@@ -2020,21 +2020,30 @@ Species $A_j$ will enter the control volume, exit the control volume, and (poten
 Written in a mathematical form, this can be described as follows:
 $ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
 where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ (i.e. from the chemical reaction).
-While somewhat abstract, this equation is simply a restatement of the conservation of mass
+While somewhat abstract, this equation is simply a restatement of the conservation of mass based on #ref(<fig:reactor_volume>).
 
-#self[Draw squiggle from Rawlings.]
+#figure(
+  image("figures/reactor_volume.svg", width:33%),
+  caption:[Schematic of a reactor volume, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of reaction producing $j$ given by $G_j$.]
+)<fig:reactor_volume>
 
-The generation term, $G_j$, is of particular importance given that is the direct consequence of any  chemical reactions taking place in the system.
+The generation term, $G_j$, is of particular importance given that it is the direct consequence of any chemical reactions taking place in the system.
 By definition, its value is positive if A is serving as a net product in the chemical reactions taking place, while its value is negative if A is serving as a net reactant being consumed.
-Typically, one measures the change in concentration of a species over time, denoted $r_j$.
+Typically, one measures the change in concentration of a species over time, which we have been denoting as $r_j$.
 We can express $G_j$ more concretely as follows:
 $ G_j = integral r_j dif V $
 where $r_j$ is the rate of production of species $A_j$, such that it is positive if more $A_j$ is being generated over the course of the reaction and negative if it is being consumed.
 
 == Batch Reactors <batch-reactors>
 
-A batch reactor is a relatively simple reactor archetype that has no input or output when the chemical reaction is occurring.
+A batch reactor is a relatively simple reactor archetype that has no input or output when the chemical reaction is occurring, as shown in #ref(<fig:batch>).
 While simple, the batch reactor is the most common reactor archetype when studying the reaction kinetics of liquid-phase reactions.
+
+#figure(
+  image("figures/batch.svg", width:15%),
+  caption:[Schematic of a constant-volume batch reactor.]
+)<fig:batch>
+
 
 === Concentration Basis
 
@@ -2045,11 +2054,12 @@ $ (dif n_j) / (dif t) = r_j V. $
 Solving for the rate of reaction of species $A_j$, we see that
 $ r_j = 1/V (dif n_j)/(dif t). $<eq:batch_rate>
 If we assume that the batch reactor operates with a constant volume for the reaction mixture, as is oftentimes the case, we can write the rate directly in terms of concentration:
-$ r_j = (dif [A_j])/(dif t) $ 
+$ r_j = (dif [A_j])/(dif t). $ 
+We have arrived at the rate expression we have used countless times throughout this course.
 
 === Conversion Basis
 
-We may also wish to write the rate equation in terms of conversion.
+We may also wish to write the rate equation in terms of a fractional conversion.
 Recognizing that $X_j = 1 - n_j\/n_(j,0)$ and therefore $n_j= n_(j,0)(1-X_j)$, we can plug this into #ref(<eq:batch_rate>) to get
 $ r_j = -n_(j,0)/V (dif X_j) / (dif t). $
 In general, one can substitute in the rate law for $r_j$ and integrate in order to find the time to achieve a pre-specified concentration or conversion.
@@ -2057,13 +2067,18 @@ The analytical solution of this form is typically known as a design equation.
 
 == Plug-Flow Reactors <plug-flow-reactors>
 
-A plug-flow reactor (PFR) is a tubular reactor that that has a continuous, flowing stream containing the reaction mixture.
+A plug-flow reactor (PFR) is a tubular reactor that that has a continuous, flowing stream containing the reaction mixture, as shown in #ref(<fig:pfr>).
 The PFR is particularly common when measuring the kinetics of gas-phase reactions.
 Generally, solid-catalyzed vapor-phase reactions --- as are common in the field of heterogeneous catalysis --- are carried out with what is known as a packed-bed reactor (PBR), which in an idealized case can be modeled as a PFR.
 
+#figure(
+  image("figures/pfr.svg", width:30%),
+  caption:[Schematic of a plug-flow reactor.]
+)<fig:pfr>
+
 === Concentration Basis
 
-For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species A in a differential segment of the reactor volume, $dif V$.
+For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species $A_j$ in a differential segment of the reactor volume, $dif V$.
 
 Assuming steady-state conditions, the differential balance can be written as 
 $ 0 = dot(n)_(j) - (dot(n)_(j) + dif dot(n)_j) + r_j dif V, $
@@ -2091,8 +2106,13 @@ $ r_j = - dot(n)_(j,0) (dif X_j) / (dif W). $
 
 == Continuous-Stirred Tank Reactors <continuous-stirred-tank-reactors>
 
-The continuous-stirred tank reactor (CSTR) has an inlet and outlet flow of chemicals.
-CSTRs are typically operated at steady state (such that the accumulation term is zero) and are assumed to be perfectly mixed.
+The continuous-stirred tank reactor (CSTR) has an inlet and outlet flow of chemicals, as shown in #ref(<fig:cstr>).
+CSTRs are typically assumed to be operated near steady state (such that the accumulation term is zero) and are assumed to be perfectly mixed.
+
+#figure(
+  image("figures/cstr.svg", width:25%),
+  caption:[Schematic of a continuous-stirred tank reactor.]
+)<fig:cstr>
 
 === Concentration Basis
 
@@ -2101,7 +2121,7 @@ $ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $<eq:cstr_unsteady>
 which becomes the following after invoking steady-state conditions:
 $ 0 = dot(n)_(j,0) - dot(n)_(j) + r_j V. $
 Solving for the reaction rate yields
-$ r_j = (dot(n)_(j,0) - dot(n)_(j)) / V. $<eq:cstr>
+$ r_j = (dot(n)_(j) - dot(n)_(j,0)) / V. $<eq:cstr>
 
 With the above expression, we aim to write $r_j$ in terms of species concentrations.
 To do so, note that for a given flow rate with a spatially uniform concentration across the reactor volume, we have
@@ -2132,21 +2152,40 @@ We can also make a direct comparison between CSTRs and PFRs.
 The conversion-based design equation for the PFR given by #ref(<eq:pfr_r_a>) is extremely similar to that of the CSTR given by #ref(<eq:cstr_r_a>):
 $ 
 r_j = -dot(n)_(j,0) (dif X_j)/(dif V) quad ("PFR") quad quad r_j = -dot(n)_(j,0) (X_j)/(V) quad ("CSTR")\
-V = -dot(n)_(j,0) integral_(0)^X_j (dif X'_j)/(r_j) quad ("PFR") quad quad V = -dot(n)_(j,0) (X_j)/(r_j) quad ("CSTR").
+V = integral_(0)^X_j -(dot(n)_(j,0))/(r_j) dif X'_j quad ("PFR") quad quad V = -dot(n)_(j,0)/(r_j) dot.op X_j quad ("CSTR").
 $
 Here, we have written the expressions in terms of the necessary reactor volume to achieve a given conversion, which (when plotted) is known as a Levenspiel plot.
-From this comparison, it becomes immediately clear that an infinite set of CSTRs in series would behave identically to a PFR.
+For the PFR, the volume is simply the area under the curve in a Levenspiel plot of $-dot(n)_(j,0)\/r_j$ vs $X_j$.
+In contrast, for the CSTR, the volume is the area of a rectangle with height $-dot(n)_(j,0)\/r_j$ and width $X_j$ in a Levenspiel plot.
+This is demonstrated in X.
+It is also apparent from X that, for a given conversion, a CSTR has a larger required volume than the corresponding PFR.
 
-#self[Make a plot like https://personalpages.manchester.ac.uk/staff/tom.rodgers/documents/CRE_Notes.pdf.]
+#figure(
+    grid(
+        columns: (auto, auto),
+        rows:    (auto, auto),
+        column-gutter: -8em,
+        [ #image("figures/levenspiel_pfr.png",   width: 50%) ],
+        [ #image("figures/levenspiel_cstr.png", width: 50%) ],
+    ),
+    caption: [Levenspiel plots for a PFR (left) and CSTR (right) showing a graphical method to determine the required reactor volume for a given conversion (shaded region).]
+)<fig:levenspiel>
 
-#self[Make a plot like in  Fig 3-9 in Lanny]
+When considering several CSTRs in series, the total required volume can be reduced, as shown in #ref(<fig:cstr_series>).
+From this comparison, it also becomes immediately clear that an infinite set of CSTRs in series would behave identically to a PFR.
+
+
+#figure(
+  image("figures/levenspiel_cstr_series.png", width:30%),
+  caption:[Levenspiel plot for a series of continuous-stirred tank reactors.]
+)<fig:cstr_series>
 
 === Residence Time Considerations
 
 Similarly, we can compare the PFR and CSTR based on the residence time to achieve a specific outlet concentration:
-$ r_j = (dif [A_j] ) / (dif tau) quad ("PFR"), quad quad r_j =  ([A_j]_1 - [A_j]_0) / tau quad ("CSTR") $
-$ tau = integral_([A_j]_0)^([A_j]_1) 1 / (r_j) dif [A_j]' quad ("PFR"), quad quad tau = ([A_j]_1 - [A_j]_0) / r_j quad ("CSTR") $
-Therefore, we can graphically compare the required $tau$ by making a plot of $1\/r_j$ vs. $[A_j]_1 - [A_j]_0$, as shown in...
+$ r_j = (dif [A_j] ) / (dif tau) quad ("PFR"), quad quad r_j =  ([A_j] - [A_j]_0) / tau quad ("CSTR") $
+$ tau = integral_([A_j]_0)^([A_j]) (1) / (r_j) dif [A_j]' quad ("PFR"), quad quad tau = 1/r_j dot.op ([A_j] - [A_j]_0) quad ("CSTR") $
+Therefore, we can graphically compare the required $tau$ by making a plot of $1\/r_j$ vs. $[A_j] - [A_j]_0$ in analogy with the Levenspiel plots in #ref(<fig:levenspiel>).
 
 #self[Pg 100 from Lanny. Note the product vs inlet comment from the CSTR. In the CSTR the rectangle is drawn with a height equal to l/r evaluated at the product conversion, while in the PFTR the height varies from inlet to product conversion.]
 
