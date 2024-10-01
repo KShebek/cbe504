@@ -436,7 +436,7 @@ As we will show when covering transition state theory, there is theoretical just
 The use of the modified Arrhenius equation in #ref(<eq:arrhenius_mod>) does limit the physical interpretability of the activation energy and pre-refactor terms in this way.
 Regardless, the effect of $T^n$ is generally relatively small and is difficult to observe experimentally without highly precise measurements.
 
-== Thermodynamic Equilibrium
+== Thermodynamic Equilibrium<thermo-eq>
 
 While this is a course on the kinetics of chemical reactions, we must also acknowledge the importance of thermodynamics, which dictates the equilibrium conditions of a reacting system.
 
@@ -1295,9 +1295,11 @@ In other words, we will consider the situation where the rates of the adsorption
 $
 K_"ads" equiv k_"ads" / k_"des" &= conc("A^*") / (p_"A " conc("*")).
 $<eq:molecular_ads_eq_constant>
+We can see that the above expression is the same as the thermodynamic definition of the equilibrium constant we described in #ref(<equilibrium-constants>).
 
-It is difficult to directly interpret #ref(<eq:molecular_ads_eq_constant>) given the fact that #conc("*") is difficult to measure.
-Instead, the property that is generally measured is $#conc("*")_0$, which is the number density of all adsorption sites both vacant and occupied.
+It is difficult to directly interpret #ref(<eq:molecular_ads_eq_constant>) given the fact that #conc("*") remains in the expression.
+Instead, we would prefer to rely on $conc("*")_0$, which is the number density of all adsorption sites (both vacant and occupied) rather than just the vacant sites.
+We prefer $conc("*")_0$ because it is, at least in principle, a constant value for a given material, whereas $conc("*")$ will fluctuate over the course of the reaction and is not easily measurable.
 We can write a site balance that states the number of sites does not change:
 $ conc("*")_0 equiv conc("*") + sum_j [A_j^"*"], $
 where the summation accounts for all possible adsorbate species at the surface sites.
@@ -1311,6 +1313,11 @@ conc("*")_0 &= conc("A^*") (1/(K_"ads" p_"A ") + 1).
 $
 Typically, a parameter $theta_j$ is defined that describes the fractional surface coverage of species $j$, such that
 $ theta_"A " equiv conc("A^*") / conc("*")_0 = 1 / (1 / (K_"ads" p_ce("A")) + 1) = (K_"ads" p_"A ") / (1 + K_"ads" p_"A "). $<eq:langmuir>
+
+
+#caution[
+  Be careful with units. If $K_"ads"$ were to be given in units of $"cm"^(3)$/mol, then you would need to replace $p_ce("A")$ with $conc("A")$ for everything to be self-consistent. This can be done by invoking an equation of state (e.g. the ideal gas law, if applicable).
+]
 
 #ref(<eq:langmuir>) is referred to as a Langmuir adsorption isotherm, which describes the equilibrium adsorption behavior and is depicted in #ref(<fig:langmuir>).
 For $p_ce("A")K_"ads"<<1$ (i.e. at low partial pressure of #ce("A")), $theta_ce("A")-> K_"ads" p_ce("A")$.
@@ -1373,12 +1380,7 @@ $
 
 For the sake of simplicity, we will invoke the same assumptions for the Langmuir adsorption isotherm as in #ref(<molecular-adsorption>) with the additional caveat that each site must only hold one molecule of A or B but not both simultaneously.
 
-Under equilibrium conditions, we can equate the rates of adsorption and desorption:
-$
-k_"ads,A" p_"A " conc("*") &= k_"des" conc("A^*")\
-k_"ads,B" p_"B " conc("*") &= k_"des" conc("B^*"),
-$
-such that
+Under equilibrium conditions, we can state
 $ K_"ads,A " = conc("A^*") / (p_("A ") conc("*")) $<eq:competitive_ads_Ka>
 $ K_"ads,B" = conc("B^*") / (p_("B ") conc("*")). $<eq:competitive_ads_Kb>
 The site balance can be rewritten as
@@ -1469,7 +1471,9 @@ $
 In other words, there is an additional factor of $z\/2 conc("*")_0$ that needs to be included than if one were to write the elementary rate law solely based on #ref(<eq:rxn_a2>).
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
-#caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$.]
+Reassuringly, our expression for $K_"ads"$ is the same expression we would expected based on the thermodynamic definition of the equilibrium constant.
+
+#caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$ regardless of whether we accounted for site-pair statistics or not.]
 The site balance is given by
 $ conc("*")_0 = conc("*") + conc("A^*"). $<eq:dissociative_site_balance>
 Since we want to have an expression for $theta_ce("A")$ that is independent of #conc("*"), we can solve for #conc("*") in #ref(<eq:dissociative_K_a>) and plug it into #ref(<eq:dissociative_site_balance>) to get
@@ -1489,9 +1493,10 @@ We can see that when $sqrt(K_"ads" p_ce("A")) <<1$ (i.e. in the limit of low par
 
 We can also revisit our rate expressions to write them in terms of surface coverages of observable species:
 $
-r_"ads" &= (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0) = z/2 k_"ads" p_ce("A2") conc("*")_0 theta_*^2 = z/2 k_"ads" p_ce("A2") conc("*")_0 (1-theta_ce("A"))^2\
-r_"des" &= (z k_"des" conc("A^*")^2)/(2 conc("*")_0) = z/2 k_"des" conc("*")_0 theta_ce("A")^2 .
+r_"ads" &= (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0) = z/2 k_"ads" p_ce("A2") conc("*")_0 theta_*^2 = z/2 k_"ads" p_ce("A2") conc("*")_0 (1-theta_ce("A"))^2= k'_"ads" p_ce("A2") conc("*")_0 (1-theta_ce("A"))^2\
+r_"des" &= (z k_"des" conc("A^*")^2)/(2 conc("*")_0) = z/2 k_"des" conc("*")_0 theta_ce("A")^2=k'_"des" conc("*")_0 theta_ce("A")^2,
 $
+where $k'$ indicates a rate constant that includes the $z\/2$ numerical factor.
 If the adsorption and desorption processes are equilibrated, we can use #ref(<eq:competitive_theta>) to determine the value of $theta_ce("A")$.
 
 === Non-Langmuir Isotherms
@@ -1633,7 +1638,7 @@ $
 r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0,
 $<eq:sr_dual>
 where $z$ is the coordination number of the adsorption site.
-#caution[We use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two identical species, we would need to retain the 1/2 factor.]
+#caution[We use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two indistinguishable species, we would need to retain the 1/2 factor.]
 From here on out, we will lump the $z$ (or $z\/2$) factor, where applicable, into the rate constant for the sake of simplicity:
 $
 r_"SR" &= (k'_2 conc("A^*") conc("B^*"))/conc("*")_0  - (k'_(-2) conc("C^*") conc("D^*"))/conc("*")_0.
@@ -1679,8 +1684,8 @@ The rate of product production is given by
 $ r_"P " = k_2 conc("A^*"). $<eq:lhhw_sample_rate>
 
 We ultimately want to write our rate without transient intermediates.
-If we assume that the adsorption of A is quasi-equilibrated, then
-$ k_"ads" p_"A " conc("*") = k_"des" conc("A^*"). $
+If we assume that the adsorption of A is quasi-equilibrated, then we have
+$ K_"ads"  = conc("A^*") /(p_"A " conc("*")) $
 $ conc("A^*") = K_"ads" p_"A " conc("*"). $<eq:conc_a_star_lhhw>
 The quasi-equilibrium approximation is fairly reasonable to invoke here because the surface reaction is expected to be substantially slower than the adsorption or desorption steps.
 
@@ -1816,15 +1821,15 @@ $ r_ce("CO2") = (k'_3 conc("CO^*") conc("O^*"))/conc("*")_0, $<eq:co_rate>
 where we have defined $k'_3 equiv k_3 z$ as a matter of simplicity.
 
 Since #conc("CO^*") and #conc("O^*") cannot be measured directly, we seek to replace these variables in #ref(<eq:co_rate>).
-Invoking the quasi-equilibrium condition, such that the rate of adsorption and desorption of the reactants are equal in magnitude, yields
+Invoking the quasi-equilibrium condition yields
 $
-r_1 &= 0 = k_1 p_("CO") conc("*") - k_(-1) conc("CO^*")\
-r_2 &= 0 = (k_2 z p_ce("O2") conc("*")^2)/(2 conc("*")_0) - (k_(-2) z conc("O^*")^2)/(2 conc("*")_0). 
+K_1 &= (conc("CO^*"))/(p_ce("CO") conc("*"))\
+K_2 &= (conc("O^*")^2)/(p_ce("O2") conc("*")^2).
 $
 Solving for the adsorbed species concentrations yields
 $
-conc("CO^*") = k_1/k_(-1) p_("CO") conc("*") = K_1 p_("CO") conc("*")\
-conc("O^*") = sqrt(k_2/k_(-2)  p_ce("O2") conc("*")^2) = conc("*") sqrt(K_2 p_ce("O2")). $<eq:co_ads_species>
+conc("CO^*") = K_1 p_("CO") conc("*")\
+conc("O^*") = conc("*") sqrt(K_2 p_ce("O2")). $<eq:co_ads_species>
 Now we write out the site balance:
 $ conc("*")_0= conc("*") + conc("CO^*") + conc("O^*"). $<eq:co_site_balance>
 Plugging #ref(<eq:co_ads_species>) into #ref(<eq:co_site_balance>) yields
@@ -1881,12 +1886,12 @@ As we will show below, this is perfectly okay if we can invoke the MARI approxim
 
 We start by writing the rate of reaction based on the rate-limiting step:
 $ r = r_1 = (k'_1 p_ce("N2") conc("*")^2)/conc("*")_0, $
-We wish to get rid of $conc("*")_0$ as usual, so we will write a site balance.
+We wish to get rid of #conc("*") as usual, so we will write a site balance.
 Here, however, our site balance can be greatly simplified by invoking the MARI approximation:
 $ conc("*")_0 = conc("H^*") + conc("*"). $
 We have two species here that we wish to get rid of: $conc("H^*")$ and $conc("*")$.
 We proceed by invoking quasi-equilibrium on step 2 to arrive at
-$ K_2 = (conc("H^*")^2)/(conc("*")^2 p_ce("H2")). $
+$ K_2 = (conc("H^*")^2)/(p_ce("H2") conc("*")^2). $
 Solving for $conc("H^*")$ yields
 $ conc("H^*") = conc("*") sqrt(K_2 p_ce("H2")), $
 where we naturally only take the positive root solution.
@@ -1947,14 +1952,13 @@ with the net reaction #ce("C2H2 + H2 -> C2H4").
 #footnote[The second step is an example of a termolecular reaction that is actually quite likely to occur. Since the adsorbates are anchored onto the surface, it is quite natural for #ce("C2H2") to be hydrogenated in this way if it is well-aligned with the two hydrogen adsorbates.]
 We will assume that the hydrogenation reaction is rate-limiting, such that the #ce("H2") adsorption is quasi-equilibrated.
 
-Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism).
+Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism), which is very slightly different than the typical LHHW kinetics since the reaction is not taking place solely on the surface.
 The rate of product formation, which is identical to the rate of reaction, is given by
 $ r = (k'_"H " conc("H^*")^2 p_ce("C2H2"))/(conc("*")_0), $
-where $k'_"H " equiv k_"H " z \/2$.
 To get rid of the intermediate in our rate expression, we can invoke the quasi-equilibrium assumption on the first step to arrive at
 $
-(z k_1 p_ce("H2") conc("*")^2)/(2 conc("*")_0) = (z k_(-1) conc("H^*")^2)/(2 conc("*")_0)\
-conc("H^*") = sqrt(K_1 p_ce("H2") conc("*")^2) = conc("*") sqrt(K_1 p_ce("H2")).
+K_1 = conc("H^*")^2/(p_ce("H2") conc("*")^2)\
+conc("H^*") = conc("*") sqrt(K_1 p_ce("H2")).
 $
 Plugging this into our expression for $r$ yields
 $ r = (k'_"H " K_1 conc("*")^2 p_ce("H2")  p_ce("C2H2"))/conc("*")_0.  $
@@ -2003,7 +2007,6 @@ Of course, this does not necessarily mean a LHHW model cannot yield a sufficient
 Rather, it means that the interpretability may be limited.
 We refer the interested reader to external sources for further discussions about potential improvements to the LHHW formalism, particularly as it relates to dealing with site ensembles.
 #footnote[N.K. Razdan, A. Bhan, "Kinetic description of site ensembles on catalytic surfaces", _Proc. Natl. Acad. Sci. U.S.A._, 118, e2019055118 (2021). Also refer to N.K. Razdan, A. Bhan, "Catalytic site ensembles: A context to reexamine the Langmuir--Hinshelwood kinetic description", _J. Catal._, 404, 726--744 (2021). ]
-
 
 = Chemical Reactor Archetypes
 
