@@ -2014,21 +2014,27 @@ Previously, we have discussed the kinetics of chemical reactions without discuss
 Here, we provide a brief overview of different reactor technologies operating isothermally.
 Later in the course, we will revisit the reactor design equations to account for non-isothermal effects. 
 
+#self[Reminder no office hours on Friday. By appointment. Monday review. Any questions about format of midterm?]
+
 == The Mass Balance <conservation-of-mass>
 
 In order to understand the behavior of chemical reactors, we must start with the key governing principle behind it all: the conservation of mass.
 Consider a chemical reaction taking place inside a reactor, and focus on a unit volume within the reactor itself.
 We can ask ourselves the question: what is the rate of change of species $A_j$ within our control volume?
 Species $A_j$ will enter the control volume, exit the control volume, and (potentially) be generated or consumed due to a chemical reaction.
-Written in a mathematical form, this can be described as follows:
-$ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
-where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ from chemical reactions.
-While somewhat abstract, this equation is simply a restatement of the conservation of mass based on #ref(<fig:reactor_volume>).
+This is depicted in #ref(<fig:reactor_volume>).
 
 #figure(
   image("figures/reactor_volume.svg", width:33%),
-  caption:[Schematic of a reactor volume element, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of producing $j$ from chemical reactions given by $G_j$.]
+  caption:[Schematic of a reactor volume, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of producing $j$ from chemical reactions given by $G_j$.]
 )<fig:reactor_volume>
+
+
+Written out, this can be described as follows:
+$ ["accumulation of "j] = ["rate of flow of " j "in"] - ["rate of flow of " j "out"]\ + ["rate of generation of " j] $
+or mathematically as
+$ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
+where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ from chemical reactions.
 
 The generation term, $G_j$, is of particular importance given that it is the direct consequence of any chemical reactions taking place in the system.
 By definition, its value is positive if A is serving as a net product in the chemical reactions taking place, while its value is negative if A is serving as a net reactant being consumed.
@@ -2057,17 +2063,28 @@ If the reaction mixture is perfectly mixed (i.e. spatially uniform) so that $r_j
 $ (dif n_j) / (dif t) = r_j V. $
 Solving for the rate of reaction of species $A_j$, we see that
 $ r_j = 1/V (dif n_j)/(dif t). $<eq:batch_rate>
+
 If we assume that the batch reactor operates with a constant volume for the reaction mixture, as is oftentimes the case, we can write the rate directly in terms of concentration:
 $ r_j = (dif [A_j])/(dif t). $ 
 We have arrived at the rate expression we have used countless times throughout this course.
+#self[Draw A vs. t plot]
+
 
 === Conversion Basis
 
 We may also wish to write the rate equation in terms of a fractional conversion.
 Recognizing that $X_j = 1 - n_j\/n_(j,0)$ and therefore $n_j= n_(j,0)(1-X_j)$, we can plug this into #ref(<eq:batch_rate>) to get
+$ r_j = n_(j,0)/V (dif (1-X_j))/(dif t) $
 $ r_j = -n_(j,0)/V (dif X_j) / (dif t). $
-In general, one can substitute in the rate law for $r_j$ and integrate in order to find the time to achieve a pre-specified concentration or conversion.
-The analytical solution of this form is typically known as a design equation.
+
+#self[Make a plot of X_A vs. t]
+In general, one can substitute in the rate law for $r_j$ and integrate in order to find the time to achieve a pre-specified concentration or conversion:
+$ integral_(0)^(t) dif t' = -n_(j,0) integral_(0)^(X_j) 1/(r_j V) dif X'_j. $
+$ t = -n_(j,0) integral_(0)^(X_j) 1/(r_j V) dif X'_j. $
+The analytical solution of this form is typically known as a design equation since it guides the design of how we wish to construct and operate our reactor.
+
+
+
 
 == Plug-Flow Reactors <plug-flow-reactors>
 
@@ -2082,7 +2099,7 @@ Generally, solid-catalyzed vapor-phase reactions --- as are common in the field 
 
 === Concentration Basis
 
-For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species $A_j$ through a differential segment of the reactor volume, $delta V$.
+For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species $A_j$ through a differential slice of the reactor volume, $dif V$.
 Assuming steady-state conditions (i.e. excluding start-up and shut-down periods), the differential mole balance can be written as 
 $ 0 = dot(n)_(j)|_V - dot(n)_(j)|_(V+delta V) + r_j delta V $
 $ r_j = (dot(n)_(j)|_(V+delta V) - dot(n)_(j)|_(V))/(delta V). $
@@ -2092,21 +2109,24 @@ $ r_j = (dif dot(n)_j) / (dif V). $<eq:pbr>
 Under the assumption of a constant volumetric flow rate, we can define a property known as the residence time, $tau$, as
 $ tau equiv V/dot(v) = (A_"c "z)/dot(v) = z/u, $<eq:residence_time>
 where $dot(v)$ is the volumetric flow rate (i.e. $"m "^3$/s), $A_"c "$ is the cross-sectional area of the reactor tube (i.e. $"m"^2$), $z$ is the length of the reactor (i.e. m), and $u$ is the linear velocity of the fluid (i.e. m/s).
-The value of $tau$ has units of time and reflects the time a given molecule in the fluid spends inside the reactor and is the natural analogue to the clock time $t$ used in the batch reactor derivation.
+The value of $tau$ has units of time and reflects the time a given packet of fluid spends inside the reactor.
+The residence time is the natural analogue to the clock time $t$ used in the batch reactor derivation.
 We can plug the definition of $tau$ into #ref(<eq:pbr>) to arrive at
 $ r_j = (dif [A_j] ) / (dif tau) = u (dif [A_j] ) / (dif z). $<eq:pfr_mass_balance>
 As is likely quite apparent, the design equation for a PFR is identical to that of a batch reactor where we have swapped out $t$ for $tau$.
+For instance, if we revisit the derivation of the concentration profile for an irreversible, first-order reaction described in #ref(<irreversible-first-order-reaction>), we would now have $conc("A") = conc("A")_0 e^(-k tau)$ instead of $conc("A") = conc("A")_0 e^(-k t)$.
 
+#self[
+  Draw the $A_c$ and $z$ to emphasize $z$ is the length of the reactor.
+]
 === Conversion Basis
 
 Recognizing that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$, we can plug this into #ref(<eq:pbr>) expression to get
 $ r_j = - dot(n)_(j,0) (dif X_j) / (dif V). $<eq:pfr_r_a>
 
-
 If the reaction is carried out with a heterogeneous catalyst (as is the case with a packed bed reactor), then the catalyst mass $W$ may be used in place of volume to normalize the rate.
 In this case, we have
 $ r_j = - dot(n)_(j,0) (dif X_j) / (dif W). $
-
 
 == Continuous-Stirred Tank Reactors <continuous-stirred-tank-reactors>
 
@@ -2122,7 +2142,8 @@ CSTRs are typically assumed to be operated near steady state (such that the accu
 
 The mole balance for the CSTR can be written as 
 $ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $<eq:cstr_unsteady>
-which becomes the following after invoking steady-state conditions:
+where $dot(n)_(j,0)$ and $dot(n)_j$ are the inlet and outlet molar flow rates of the $j$-th species, respectively.
+The above expression becomes the following after invoking steady-state conditions:
 $ 0 = dot(n)_(j,0) - dot(n)_(j) + r_j V. $
 Solving for the reaction rate yields
 $ r_j = (dot(n)_(j) - dot(n)_(j,0)) / V. $<eq:cstr>
@@ -2135,11 +2156,32 @@ Plugging #ref(<eq:volumetric_flow_rate>) into #ref(<eq:cstr>) results in
 $ r_j = (([A_j] dot(v)) - ([A_j] dot(v))_0)/V. $
 At steady state, the volumetric flow rates in and out of the reactor are identical, such that
 $ r_j = (dot(v)([A_j] - [A_j]_0))/V. $
-Like with the PFR, we need to think about the time that a given packet of fluid is within the reactor, which we will again refer to as $tau$ as defined by $tau equiv V\/dot(v)$.
+Like with the PFR, we often wish to think about the time that a given packet of fluid is within the reactor, which we will again refer to as $tau$ as defined by $tau equiv V\/dot(v)$.
 In the context of a CSTR, we refer to $tau$ as the space time (or average residence time) since a distribution of residence times are possible.
 With our definition of $tau$, we can write the rate expression as
 $ r_j =  ([A_j] - [A_j]_0) / tau. $<eq:cstr_mass_balance>
 Unlike the batch reactor and PFR, the CSTR design equation contains no derivatives and is merely a simple algebraic equation.
+
+==== Example
+
+Consider the first-order, elementary reaction given by
+$ ce("A->B"). $
+The fractional conversion of A is given by
+$ X_ce("A") = 1- conc("A")/conc("A")_0 $
+$ conc("A") = conc("A")_0 (1-X_ce("A")). $<eq:a_conversion>
+Plugging this into #ref(<eq:cstr_mass_balance>) yields
+$ r_ce("A") = (conc("A")_0 (1-X_ce("A"))-conc("A")_0)/tau $
+$ r_ce("A") = -(conc("A")_0 X_ce("A"))/tau. $
+We know that the rate law can be written as
+$ r_ce("A") = -k conc("A"). $
+Plugging in the rate expression results in
+$ -k conc("A") = -(conc("A")_0 X_ce("A"))/tau $
+$ X_ce("A") = (k tau conc("A"))/conc("A")_0. $
+Plugging in #ref(<eq:a_conversion>) again yields
+$ X_ce("A") = (k tau conc("A")_0(1-X_ce("A")))/conc("A")_0 $
+$ X_ce("A") = k tau - k tau X_ce("A") $
+$ X_ce("A") = (k tau)/(1+k tau). $
+For large values of $k tau$, the concentration of #ce("A") will become small as expected.
 
 === Conversion Basis
 
@@ -2159,10 +2201,11 @@ r_j = -dot(n)_(j,0) (dif X_j)/(dif V) quad ("PFR") quad quad r_j = -dot(n)_(j,0)
 V = integral_(0)^X_j -(dot(n)_(j,0))/(r_j) dif X'_j quad ("PFR") quad quad V = -dot(n)_(j,0)/(r_j) dot.op X_j quad ("CSTR").
 $
 Here, we have written the expressions in terms of the necessary reactor volume to achieve a given conversion, which (when plotted) is known as a Levenspiel plot.
+
 For the PFR, the volume is simply the area under the curve in a Levenspiel plot of $-dot(n)_(j,0)\/r_j$ vs $X_j$.
 In contrast, for the CSTR, the volume is the area of a rectangle with height $-dot(n)_(j,0)\/r_j$ and width $X_j$ in a Levenspiel plot.
-This is demonstrated in X.
-It is also apparent from X that, for a given conversion, a CSTR has a larger required volume than the corresponding PFR.
+This is demonstrated in #ref(<fig:levenspiel>).
+It is also apparent from #ref(<fig:levenspiel>) that, for a given conversion, a CSTR has a larger required volume than the corresponding PFR.
 
 #figure(
     grid(
@@ -2190,8 +2233,6 @@ Similarly, we can compare the PFR and CSTR based on the residence time to achiev
 $ r_j = (dif [A_j] ) / (dif tau) quad ("PFR"), quad quad r_j =  ([A_j] - [A_j]_0) / tau quad ("CSTR") $
 $ tau = integral_([A_j]_0)^([A_j]) (1) / (r_j) dif [A_j]' quad ("PFR"), quad quad tau = 1/r_j dot.op ([A_j] - [A_j]_0) quad ("CSTR") $
 Therefore, we can graphically compare the required $tau$ by making a plot of $1\/r_j$ vs. $[A_j] - [A_j]_0$ in analogy with the Levenspiel plots in #ref(<fig:levenspiel>).
-
-#self[Pg 100 from Lanny. Note the product vs inlet comment from the CSTR. In the CSTR the rectangle is drawn with a height equal to l/r evaluated at the product conversion, while in the PFTR the height varies from inlet to product conversion.]
 
 
 = Nonisothermal Considerations
