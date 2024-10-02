@@ -1451,7 +1451,7 @@ where $z$ is the coordination number of the site, and a $1\/2$ factor is introdu
 
 #figure(
   image("figures/lattice.svg", width: 25%),
-  caption: [Schematic of adsorption on a square lattice with vacant sites and adsorbed A species. This cartoon example of a surface would have $z=4$ for each site.]
+  caption: [Schematic of adsorption on a square lattice with vacant sites and adsorbed A species. This cartoon example of a surface would have $z=4$ for each site, assuming the surface repeats infinitely in $x$ and $y$.]
 )
 
 The way we can justify the above expressions is as follows.
@@ -1462,7 +1462,7 @@ Once we have picked a vacant site, we want to see if we can pick another one tha
 For this, the probability of finding a vacant site is again $conc("*")\/conc("*")_0$, but this time we are not considering all possible sites ($conc("*")_0$); rather, we are considering only the sites adjacent to the first pick (i.e. the number of coordinating sites), such that we have $z dot.op (conc("*")\/conc("*")_0)$.
 For the likelihood of both events to occurring, we multiply the two independent event likelihoods together to arrive at
 $conc("**") =z dot.op (conc("*")^2\/conc("*")_0)$.
-The final factor of $1\/2$ comes in to prevent double-counting when dealing with statistically identical pairs of sites or species on the surface.
+The final factor of $1\/2$ comes in to prevent double-counting when dealing with indistinguishable pairs of sites or species on the surface.
 
 The equations for the rate of adsorption and desorption can now be written as $
 r_"ads" &= k_"ads" p_ce("A2") conc("**") = (z k_"ads" p_ce("A2") conc("*")^2)/(2 conc("*")_0)\
@@ -1471,7 +1471,7 @@ $
 In other words, there is an additional factor of $z\/2 conc("*")_0$ that needs to be included than if one were to write the elementary rate law solely based on #ref(<eq:rxn_a2>).
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
-Reassuringly, our expression for $K_"ads"$ is the same expression we would expected based on the thermodynamic definition of the equilibrium constant.
+Reassuringly, our expression for $K_"ads"$ is the same expression we would expect based on the thermodynamic definition of the equilibrium constant.
 
 #caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$ regardless of whether we accounted for site-pair statistics or not.]
 The site balance is given by
