@@ -1,5 +1,9 @@
+// Notes for next time
+// 1. Add an entire lesson on equilibrium. To prepare for Problem1 Pset 3 from Justin and provide context.
+// 2. Spend a little bit more time on BEPs. How to read handbook values. Relevance of temperature and pressure in handbook and how to adjust.
+// 3. Do reactor archetypes after the midterm
 #import "@preview/xarrow:0.3.1": xarrow
-#import "@preview/gentle-clues:1.0.0": tip, clue, tip
+#import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
 #import "@preview/ilm:1.2.1": ilm
 
@@ -53,8 +57,6 @@
 #let ddagger = sym.dagger.double
 #let delplot(rank) = $""^rank"P "_"A "$
 
-// #set math.equation(numbering: "(1)")
-
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
   author: "Andrew S. Rosen",
@@ -64,7 +66,7 @@
 
 Licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 License (the "License"). You may not use this file except in compliance with the License. You may obtain a copy of the License at https://creativecommons.org/licenses/by-nc-sa/4.0.
 
-A.S.R acknowledges Prof. Aditya Bhan, Prof. Linda Broadbelt, and Prof. Justin Notestein for inspiration on various topics covered within this course.
+A.S.R acknowledges Prof. Aditya Bhan, Prof. Linda Broadbelt, Prof. Justin Notestein, and Prof. Neil Razdan for inspiration on various topics covered within this course.
 Most importantly, A.S.R. is grateful for the thoughtful questions, comments, and corrections provided by his students who have helped shaped this text during their journey.
 
 This document was typeset using Typst (https://typst.app).]
@@ -502,6 +504,8 @@ $ K_"a " = product_(j) a_(j)^(nu_j). $
 As such, we have
 $ Delta G^std = -R T ln(K_"a "), $
 where the equilibrium constant must formally be based on activities.
+Note that $K_"a "$ is specifically for the temperature that corresponds to $Delta G^std$, which may differ from the temperature of the reaction under investigation.
+We will address the temperature-dependence of $K_"a "$ when we introduce the van~'t Hoff equation shortly.
 
 For the sake of convenience later on, we can also now interrelate $K_"C "$ and $K_"a "$ as follows:
 $ K_"a " =  product_j (gamma_j [A_j]/C^std)^(nu_j) = K_"C "/(C^std)^delta product_j gamma_(j)^(nu_j), $<eq:k_a_k_c_relationship>
@@ -581,19 +585,28 @@ Extrapolating from this analysis, it can be readily shown that the definition of
 
 === The van~'t Hoff Equation
 
-With our understanding of the role of thermodynamics, we can understand how Arrhenius came about his famous equation through making an analogy to prior work by van~'t Hoff.
-Let us assume we have a reaction an elementary isomerization reaction of $ce("P <=> Q")$ in equilibrium.
+==== Temperature Dependence of $K$
+
+Here, we seek to describe the temperature dependence of $K$.
 We start with the definition of Gibbs free energy given by
 $ Delta G^std = Delta H^std - T Delta S^std, $
 where $Delta G^std$, $Delta H^std$, and $Delta S^std$ are the standard-state Gibbs free energy, enthalpy, and entropy changes of reaction, respectively.
 
 As previously emphasized, the equilibrium constant-based definition of Gibbs free energy is
-$ Delta G^std = -R T ln(K_"a "), $
+$ Delta G^std = -R T ln(K_"a "). $
 Combining the two expressions, we have
-$ ln(K_"a ") = -(Delta H^std)/ (R T) + (Delta S^std)/R. $
-If we differentiate with respect to $T$ and make a fairly notable assumption that $Delta H^std$ and $Delta S^std$ are independent of temperature (an approximation that is typically reasonable when considering small differences in $T$), we arrive at
+$ ln(K_"a ") = -(Delta H^std)/ (R T) + (Delta S^std)/R. $<eq:vant_hoff_single>
+If we can assume that $Delta H^std$ and $Delta S^std$ are both independent of temperature (an approximation that is typically reasonable when considering relatively small differences in $T$), one can state 
+$ ln(K_("a,2")/K_("a,1")) = -(Delta H^std)/ (R) (1/T_2 - 1/T_1) $
+by subtracting #ref(<eq:vant_hoff_single>) at two distinct temperatures.
+The above relationship is particularly useful in a converting equilibrium constant obtained from tabulated thermochemical data (typically at 273 K or 298.15 K) and determining the corresponding equilibrium constant at the temperature of interest.
+
+==== Connecting van~'t Hoff and Arrhenius
+
+With our understanding of the role of thermodynamics, we can understand how Arrhenius came about his famous equation through making an analogy to prior work by van~'t Hoff.
+If we differentiate #ref(<eq:vant_hoff_single>) with respect to $T$ and make the same assumption that $Delta H^std$ and $Delta S^std$ are again independent of temperature, we arrive at
 $ (dif ln(K_"a "))/(dif T) = (Delta H^std)/(R T^2), $<eq:vant_hoff>
-which is the famous van~'t Hoff equation.
+which is the formal definition of the van~'t Hoff equation.
 
 If we rewrite #ref(<eq:vant_hoff>) using $K_"a " = k^+\/k^-$,
 we can state
@@ -601,7 +614,7 @@ $ (dif ln(k^(+) \/ k^(-))) / (dif T) = (Delta H^std) / (R T^2) $
 and thereby
 $ (dif ln(k^(+))) / (dif T) - (dif ln(k^(-))) / (dif T) = (Delta H^std) / (R T^2). $
 By invoking $Delta H^std = E_"a,f" - E_"a,r"$,
-where $E_"a,f"$ and $E_"a,r"$ are activation energies for the forward and reverse reactions, respectively, Arrhenius concluded that, largely by analogy, the following is likely to be true:
+where $E_"a,f"$ and $E_"a,r"$ are activation energies for the forward and reverse reactions of a reversible elementary step, respectively, Arrhenius concluded that, largely by analogy, the following is likely to be true:
 $
 (dif ln(k^(+))) / (dif T) = E_"a,f" / (R T^2),quad
 (dif ln(k^(-))) / (dif T) = E_"a,r" / (R T^2)
@@ -626,12 +639,7 @@ Strictly speaking, $k$, $alpha$, and $beta$ that are determined from experiments
 
 === Apparent Activation Energy
 
-The intrinsic activation energy differs from the apparent activation energy in that the latter may represent the kinetics of many constituent reactions, as depicted in #ref(<fig:apparent_activation>).
-#figure(
-image("figures/apparent_activation.png", width: 50%),
-  caption: [Potential energy diagram highlighting how the apparent activation energy, $E_"app"$, accounts for the kinetics of multiple underlying processes that collectively make up a non-elementary reaction.]
-)<fig:apparent_activation>
-
+The intrinsic activation energy differs from the apparent activation energy in that the latter may represent the kinetics of many constituent reactions.
 The linearized form of the Arrhenius equation is so widely used that the definition of the apparent activation energy is generally derived from this functional form by taking the partial derivative with respect to temperature:
 $ ln(k_"app") &= - E_"app"/R (1/T) + ln(A_"app") $
 $ (diff ln(k_"app"))/(diff T) &= -E_"app"/R (diff (1/T))/(diff T) $<eq:apparent_e_a_pre>
@@ -653,9 +661,9 @@ $ r = k_"app" conc("A")^(alpha) conc("B")^beta, $
 which can be rewritten as
 $ ln(r) = ln(k_"app") + alpha ln(conc("A")) + beta ln(conc("B")). $
 
-We can determine $alpha$ by holding $ln(conc("B"))$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("A"))$.
+Provided we are not simultaneously modifying $k_"app"$, we can determine $alpha$ by holding $conc("B")$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("A"))$.
 #footnote[This assumes that $beta$ does not change with #conc("A"), which is a fairly reasonable assumption unless changes in #conc("A") alter the mechanism.]
-Similarly, we can determine $beta$ by holding $ln(conc("A"))$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("B"))$.
+Similarly, we can determine $beta$ by holding $conc("A")$ fixed and finding the slope in a plot of $ln(r)$ vs. $ln(conc("B"))$.
 In differential form, this can be expressed as follows:
 $ alpha_(j,"app") equiv  [A_j] ((diff ln(r))/(diff [A_j]))_([A_i], i!=j). $<eq:apparent_order>
 Given enough rate and concentration data, one can also carry out a multiple linear regression analysis to determine the apparent reaction orders if preferred.
@@ -714,8 +722,8 @@ For simplicity, we will start by considering an irreversible, elementary reactio
 $ n ce("A") fwdArrow(k) m ce("B") $
 where $n$ is an arbitrary stoichiometric number.
 The rate of change in $conc("A")$ can be given by
-$ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $
-#caution[Most sources write this as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
+$ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $<eq:nth_order>
+#caution[Most sources write #ref(<eq:nth_order>) as $r_"A " = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_"A "$ must be $-n k conc("A")^n$ in order for $r = -r_"A "\/n$.]
 
 Separating the variables and integrating this expression yields
 $ integral_(conc("A")_0)^conc("A") 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
@@ -1472,6 +1480,8 @@ In other words, there is an additional factor of $z\/2 conc("*")_0$ that needs t
 Setting both expressions equal to one another to invoke equilibrium conditions yields
 $ K_"ads" = conc("A^*")^2 / (p_ce("A2") conc("*")^2). $<eq:dissociative_K_a>
 Reassuringly, our expression for $K_"ads"$ is the same expression we would expect based on the thermodynamic definition of the equilibrium constant.
+#footnote[For dissociative adsorption of the form #ce("AB + 2* <--> A^* + B^*"), it may appear that the kinetic-based definition of $K$ given by $r^+ = r^-$ would not be equal to the thermodynamic definition of $K = conc("A^*") conc("B^*")\/ p_ce("AB") conc("*")^2$ because the elementary reaction in the forward direction involves two seemingly indistinguishable surface sites ($z\/2$), whereas the reverse has two distinguishable adsorbates ($z$), resulting in a stray factor of 2 in the numerator. While beyond the scope of this course, the forward rate expression should actually have a factor of $z$ instead of $z\/2$ for reasons outlined in the Supporting Information of N.K. Razdan, A. Bhan, "Kinetic description of site ensembles on catalytic surfaces", _Proc. Natl. Acad. Sci. U.S.A._, 118, e2019055118 (2021).]
+From here onward, we will simply invoke the thermodynamic definition of the equilibrium constant when the quasi-equilibrium approximation is invoked.
 
 #caution[If we had not accounted for the statistical siting, we would instead have $r_"ads"=k_"ads" p_ce("A2") conc("*")^2$ and $r_"des"=k_"des" conc("A^*")^2$, which will overestimate the rates of adsorption and desorption and change the units on our rate constant. That said, there would be no change in our expression for $K_"ads"$ regardless of whether we accounted for site-pair statistics or not.]
 The site balance is given by
@@ -1538,60 +1548,60 @@ Nonetheless, these models can capture adsorption on surface complexities better 
 Both the Freundlich and Tóth isotherms were proposed as ways to deal with surface heterogeneity.
 The Temkin isotherm was proposed as a way to indirectly deal with adsorbate--adsorbate interactions.
 
-==== BET Theory for Multilayer Adsorption
+// ==== BET Theory for Multilayer Adsorption
 
-_This is an "advanced topic" not discussed in class and provided solely for the interested reader._
+// _This is an "advanced topic" not discussed in class and provided solely for the interested reader._
 
-The models we have discussed so far assume that there is only a monolayer of adsorbates along the surface.
-However, multiple layers of adsorbates that are stabilized by van der Waals interactions are oftentimes possible, particularly at low temperatures and high gas pressures.
-To address this limitation, we will introduce Brunauer--Emmett--Teller (BET) theory.
-In BET theory, we make the following assumptions:
+// The models we have discussed so far assume that there is only a monolayer of adsorbates along the surface.
+// However, multiple layers of adsorbates that are stabilized by van der Waals interactions are oftentimes possible, particularly at low temperatures and high gas pressures.
+// To address this limitation, we will introduce Brunauer--Emmett--Teller (BET) theory.
+// In BET theory, we make the following assumptions:
 
-1. Adsorption occurs on well-defined sites with one molecule adsorbing per surface site.
-2. The molecule adsorbed at layer $i$ can itself act as an adsorption site for a gas molecule to form at layer $i+1$. There are no interactions between the gas molecules in a given layer.
-3. The uppermost layer of adsorbates is in equilibrium with the gas phase.
-4. The heat of adsorption for the first layer is the strongest and constant. The heat of adsorption for the remaining layers can be approximated as the heat of liquefaction.
-5. At the saturation pressure, the number of layers approaches infinity, such that it becomes analogous to the surface being surrounded by a fluid phase.
+// 1. Adsorption occurs on well-defined sites with one molecule adsorbing per surface site.
+// 2. The molecule adsorbed at layer $i$ can itself act as an adsorption site for a gas molecule to form at layer $i+1$. There are no interactions between the gas molecules in a given layer.
+// 3. The uppermost layer of adsorbates is in equilibrium with the gas phase.
+// 4. The heat of adsorption for the first layer is the strongest and constant. The heat of adsorption for the remaining layers can be approximated as the heat of liquefaction.
+// 5. At the saturation pressure, the number of layers approaches infinity, such that it becomes analogous to the surface being surrounded by a fluid phase.
 
-With these assumptions in place, we consider the adsorption of species A onto the surface of a material.
-The adsorption of species A onto the bare surface $#ce("*")_0$ yields a new site $#ce("*")_1$:
-$ ce("A") + ce("*")_0 eqArrow(k_1,opposite:k_(-1)) ce("*")_1. $
-Generalizing this process to multiple layers, we have
-$ ce("A") + ce("*")_(i-1) eqArrow(k_i,opposite:k_(-i)) ce("*")_i, $
-where $k_i$ refers to the rate constant for formation of layer $i$ (i.e. adsorption onto layer $i-1$), and $k_(-i)$ refers to desorption from layer $i$.
-With this numbering scheme, a perfect monolayer would mean that all adsorbates exist on layer $i=1$, for instance.
+// With these assumptions in place, we consider the adsorption of species A onto the surface of a material.
+// The adsorption of species A onto the bare surface $#ce("*")_0$ yields a new site $#ce("*")_1$:
+// $ ce("A") + ce("*")_0 eqArrow(k_1,opposite:k_(-1)) ce("*")_1. $
+// Generalizing this process to multiple layers, we have
+// $ ce("A") + ce("*")_(i-1) eqArrow(k_i,opposite:k_(-i)) ce("*")_i, $
+// where $k_i$ refers to the rate constant for formation of layer $i$ (i.e. adsorption onto layer $i-1$), and $k_(-i)$ refers to desorption from layer $i$.
+// With this numbering scheme, a perfect monolayer would mean that all adsorbates exist on layer $i=1$, for instance.
 
-We will refrain from providing a detailed derivation of the BET isotherm here, as it is mainly useful for determining the surface area of a material rather than kinetic data.
-Simply providing the big reveal, the BET isotherm for multi-layer physisorption can be shown to be
-$ theta = (c x)/((1-x) (1+ x(c-1))),quad "where" c equiv K_1/K_ell "and" x equiv P/P_0, $<eq:bet>
-where $K_ell$ is the equilibrium constant for adsorption and desorption off of a liquid surface of the molecular species, $P$ is the pressure of the adsorbate, and $P_0$ is its vapor pressure.
-Generally, $c$ is simply referred to as the BET $c$ constant.
-The BET isotherm is most accurate when $P\/P_0$ is between roughly 0.05 and 0.3.
-At low pressures, the heterogeneous nature of the surface sites can play a notable role.
-At high pressures, nanoscale and microscale irregularities in the surface itself can impact the results.
+// We will refrain from providing a detailed derivation of the BET isotherm here, as it is mainly useful for determining the surface area of a material rather than kinetic data.
+// Simply providing the big reveal, the BET isotherm for multi-layer physisorption can be shown to be
+// $ theta = (c x)/((1-x) (1+ x(c-1))),quad "where" c equiv K_1/K_ell "and" x equiv P/P_0, $<eq:bet>
+// where $K_ell$ is the equilibrium constant for adsorption and desorption off of a liquid surface of the molecular species, $P$ is the pressure of the adsorbate, and $P_0$ is its vapor pressure.
+// Generally, $c$ is simply referred to as the BET $c$ constant.
+// The BET isotherm is most accurate when $P\/P_0$ is between roughly 0.05 and 0.3.
+// At low pressures, the heterogeneous nature of the surface sites can play a notable role.
+// At high pressures, nanoscale and microscale irregularities in the surface itself can impact the results.
 
-It is always worth testing out limiting behavior.
-In the case of low pressures, it is unlikely for there to be multilayer adsorption, so we should expect the BET isotherm to be analogous to the Langmuir isotherm in this limit.
-Indeed, plugging $x<<1$ we get
-$ theta approx (c x)/(1 + c x), $
-which is the same functional form as the Langmuir isotherm of
-$ theta = (K_"ads" P)/(1+ K_"ads" P) $
-and is fully equivalent if $c = K_"ads" P_0$.
+// It is always worth testing out limiting behavior.
+// In the case of low pressures, it is unlikely for there to be multilayer adsorption, so we should expect the BET isotherm to be analogous to the Langmuir isotherm in this limit.
+// Indeed, plugging $x<<1$ we get
+// $ theta approx (c x)/(1 + c x), $
+// which is the same functional form as the Langmuir isotherm of
+// $ theta = (K_"ads" P)/(1+ K_"ads" P) $
+// and is fully equivalent if $c = K_"ads" P_0$.
 
-As previously alluded to, the BET isotherm is typically used for surface area measurements.
-This is done by noting that
-$ theta = v/v_"m ", $
-where $v$ is the volume of the gas adsorbed to the surface and $v_"m "$ is the volume of gas that would be adsorbed if there were precisely a full monolayer of coverage.
-This allows us to rewrite #ref(<eq:bet>) slightly as
-$ v = (v_"m " c x)/((1-x) (1+ x(c-1))). $
-Generally, one will pick a sample to study and carry out an isotherm measurement with a given adsorbate molecule, which is most typically #ce("N2").
-The value for $x$ is the independent variable controlled by the experimentalist by changing the pressure of gas introduced to the system.
-In modifying $x$, the volume of adsorbed gas $v$ is measured, from which both $v_"m "$ and $c$ can be obtained as fitting parameters for the particular temperature and adsorbate--adsorbent system.
+// As previously alluded to, the BET isotherm is typically used for surface area measurements.
+// This is done by noting that
+// $ theta = v/v_"m ", $
+// where $v$ is the volume of the gas adsorbed to the surface and $v_"m "$ is the volume of gas that would be adsorbed if there were precisely a full monolayer of coverage.
+// This allows us to rewrite #ref(<eq:bet>) slightly as
+// $ v = (v_"m " c x)/((1-x) (1+ x(c-1))). $
+// Generally, one will pick a sample to study and carry out an isotherm measurement with a given adsorbate molecule, which is most typically #ce("N2").
+// The value for $x$ is the independent variable controlled by the experimentalist by changing the pressure of gas introduced to the system.
+// In modifying $x$, the volume of adsorbed gas $v$ is measured, from which both $v_"m "$ and $c$ can be obtained as fitting parameters for the particular temperature and adsorbate--adsorbent system.
 
-With the value for $v_"m "$ obtained from experiments, the specific surface area of the material (typically reported in $"m "^2\/"g "$), $S_"BET"$, can be computed as
-$ S_"BET" = (v_"m " N_"A " alpha)/V  dot 1/m_"adsorbent" , $
-where $N_"A "$ is Avogadro's number, $alpha$ is the adsorption cross section of the adsorbate (i.e. the area that a single adsorbate would cover when adsorbed), $V$ is the molar volume of gas at the same conditions as $v_"m "$ was obtained, and $m_"adsorbent"$ is the mass of the adsorbent.
-Typically, $alpha$ and $V$ are tabulated quantities, and $m_"adsorbent"$ is readily measurable.
+// With the value for $v_"m "$ obtained from experiments, the specific surface area of the material (typically reported in $"m "^2\/"g "$), $S_"BET"$, can be computed as
+// $ S_"BET" = (v_"m " N_"A " alpha)/V  dot 1/m_"adsorbent" , $
+// where $N_"A "$ is Avogadro's number, $alpha$ is the adsorption cross section of the adsorbate (i.e. the area that a single adsorbate would cover when adsorbed), $V$ is the molar volume of gas at the same conditions as $v_"m "$ was obtained, and $m_"adsorbent"$ is the mass of the adsorbent.
+// Typically, $alpha$ and $V$ are tabulated quantities, and $m_"adsorbent"$ is readily measurable.
 
 == Surface Reaction Rate Laws <heterogeneous-catalysis-reaction-mechanisms>
 
@@ -1679,6 +1689,7 @@ $ ce("A + *") &eqArrow(k_"ads",opposite:k_"des") ce("A^*") \
 ce("A^*") &fwdArrow(k_2) ce("P + *").
 $
 for the net reaction $ce("A->P")$.
+#footnote[It is typically the case that the reaction and desorption steps are separate elementary processes. However, we are considering them as one elementary process here for the sake of demonstration.]
 The net reaction rate is given by $r = r_"P "$, and so we will focus on the rate of product production from here.
 The rate of product production is given by
 $ r_"P " = k_2 conc("A^*"). $<eq:lhhw_sample_rate>
@@ -1734,7 +1745,7 @@ We can also see this from the formal definition given in #ref(<eq:apparent_order
 $ alpha_("A,app") = p_"A " ((diff ln(r))/(diff p_"A "))_(p_i,i!=j) = p_"A " (diff ln(k_2 conc("*")_0))/(diff p_"A ") = 0. $
 
 In this scenario, the apparent rate constant would simply be
-#footnote[Since $conc("*")_0$ is typically constant, you could lump this term into $k_"app"$. However, since we typically treat $k$ as being independent of concentrations, it is left out here. Ultimately, this decision is largely arbitrary.]
+#footnote[Since $conc("*")_0$ is typically constant, you could in principle lump this term into $k_"app"$. However, since we typically treat $k$ as being independent of concentrations, it is left out here.]
 $ k_"app" = k_2. $
 By extension, the apparent activation energy is the activation energy associated with $k_2$, which we will denote $E_("a,2")$.
 This too can be derived from the formal definition given in #ref(<eq:apparent_e_a>):
@@ -2000,7 +2011,7 @@ Clearly, the Langmuir--Hinshelwood formalism cannot reproduce the jammed state w
 
 #figure(
   image("figures/jammed.jpg", width: 20%),
-  caption: [Depiction of a jammed lattice.]
+  caption: [Depiction of a jammed lattice, where the vacant squares are free surface sites.]
 )<fig:jammed>
 
 Of course, this does not necessarily mean a LHHW model cannot yield a sufficiently good fit to experimentally obtained kinetic data.
@@ -2014,8 +2025,6 @@ Previously, we have discussed the kinetics of chemical reactions without discuss
 Here, we provide a brief overview of different reactor technologies operating isothermally.
 Later in the course, we will revisit the reactor design equations to account for non-isothermal effects. 
 
-#self[Reminder no office hours on Friday. By appointment. Monday review. Any questions about format of midterm?]
-
 == The Mass Balance <conservation-of-mass>
 
 In order to understand the behavior of chemical reactors, we must start with the key governing principle behind it all: the conservation of mass.
@@ -2026,12 +2035,12 @@ This is depicted in #ref(<fig:reactor_volume>).
 
 #figure(
   image("figures/reactor_volume.svg", width:33%),
-  caption:[Schematic of a reactor volume, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of producing $j$ from chemical reactions given by $G_j$.]
+  caption:[Schematic of a reactor volume, $V$, with an inlet molar flow given by $dot(n)_(j,0)$, outlet molar flow given by $dot(n)_(j,1)$ and rate of producing species $A_j$ from chemical reactions given by $G_j$.]
 )<fig:reactor_volume>
 
 
 Written out, this can be described as follows:
-$ ["accumulation of "j] = ["rate of flow of " j "in"] - ["rate of flow of " j "out"]\ + ["rate of generation of " j] $
+$ ("accumulation of " A_j) = ("rate of flow of " A_j "in") - ("rate of flow of " A_j "out")\ + ("rate of generation of " A_j) $
 or mathematically as
 $ (dif n_j) / (dif t) = dot(n)_(j,0) - dot(n)_(j,1) + G_j, $
 where $dif n_j \/ dif t$ is the rate of change of species $A_j$ in the control volume (i.e. its rate of accumulation), $dot(n)_(j,0)$ is the molar flow rate of species $A_j$ into the volume, $dot(n)_(j,1)$ is the molar flow rate of species $A_j$ out of the volume at time $t$, and $G_j$ is the rate of generation of species $A_j$ from chemical reactions.
@@ -2067,7 +2076,11 @@ $ r_j = 1/V (dif n_j)/(dif t). $<eq:batch_rate>
 If we assume that the batch reactor operates with a constant volume for the reaction mixture, as is oftentimes the case, we can write the rate directly in terms of concentration:
 $ r_j = (dif [A_j])/(dif t). $ 
 We have arrived at the rate expression we have used countless times throughout this course.
-#self[Draw A vs. t plot]
+
+#figure(
+  image("figures/conc_time.svg", width:25%),
+  caption:[Concentration profile of reactant A as a function of time and its relation to $r_ce("A")$.]
+)
 
 
 === Conversion Basis
@@ -2077,13 +2090,14 @@ Recognizing that $X_j = 1 - n_j\/n_(j,0)$ and therefore $n_j= n_(j,0)(1-X_j)$, w
 $ r_j = n_(j,0)/V (dif (1-X_j))/(dif t) $
 $ r_j = -n_(j,0)/V (dif X_j) / (dif t). $
 
-#self[Make a plot of X_A vs. t]
+#figure(
+  image("figures/conv_time.svg", width:25%),
+  caption:[Conversion profile of reactant A as a function of time and its relation to $r_ce("A")$.]
+)
+
 In general, one can substitute in the rate law for $r_j$ and integrate in order to find the time to achieve a pre-specified concentration or conversion:
-$ integral_(0)^(t) dif t' = -n_(j,0) integral_(0)^(X_j) 1/(r_j V) dif X'_j. $
 $ t = -n_(j,0) integral_(0)^(X_j) 1/(r_j V) dif X'_j. $
 The analytical solution of this form is typically known as a design equation since it guides the design of how we wish to construct and operate our reactor.
-
-
 
 
 == Plug-Flow Reactors <plug-flow-reactors>
@@ -2097,36 +2111,32 @@ Generally, solid-catalyzed vapor-phase reactions --- as are common in the field 
   caption:[Schematic of a plug-flow reactor.]
 )<fig:pfr>
 
-=== Concentration Basis
-
 For a PFR, the design equation can be solved by differentiating the mole balance with respect to volume, but an easier way is to perform a mole balance on species $A_j$ through a differential slice of the reactor volume, $dif V$.
 Assuming steady-state conditions (i.e. excluding start-up and shut-down periods), the differential mole balance can be written as 
 $ 0 = dot(n)_(j)|_V - dot(n)_(j)|_(V+delta V) + r_j delta V $
 $ r_j = (dot(n)_(j)|_(V+delta V) - dot(n)_(j)|_(V))/(delta V). $
 Taking the limit as $delta V->0$ (i.e. invoking the definition of the derivative) yields
-$ r_j = (dif dot(n)_j) / (dif V). $<eq:pbr>
+$ r_j = (dif dot(n)_j) / (dif V). $<eq:pfr>
 
 Under the assumption of a constant volumetric flow rate, we can define a property known as the residence time, $tau$, as
 $ tau equiv V/dot(v) = (A_"c "z)/dot(v) = z/u, $<eq:residence_time>
 where $dot(v)$ is the volumetric flow rate (i.e. $"m "^3$/s), $A_"c "$ is the cross-sectional area of the reactor tube (i.e. $"m"^2$), $z$ is the length of the reactor (i.e. m), and $u$ is the linear velocity of the fluid (i.e. m/s).
 The value of $tau$ has units of time and reflects the time a given packet of fluid spends inside the reactor.
 The residence time is the natural analogue to the clock time $t$ used in the batch reactor derivation.
-We can plug the definition of $tau$ into #ref(<eq:pbr>) to arrive at
+We can plug the definition of $tau$ into #ref(<eq:pfr>) to arrive at
 $ r_j = (dif [A_j] ) / (dif tau) = u (dif [A_j] ) / (dif z). $<eq:pfr_mass_balance>
 As is likely quite apparent, the design equation for a PFR is identical to that of a batch reactor where we have swapped out $t$ for $tau$.
 For instance, if we revisit the derivation of the concentration profile for an irreversible, first-order reaction described in #ref(<irreversible-first-order-reaction>), we would now have $conc("A") = conc("A")_0 e^(-k tau)$ instead of $conc("A") = conc("A")_0 e^(-k t)$.
 
-#self[
-  Draw the $A_c$ and $z$ to emphasize $z$ is the length of the reactor.
-]
-=== Conversion Basis
+#figure(
+  image("figures/pbr.svg", width:30%),
+  caption:[Schematic of a packed-bed reactor. To ensure a consistent concentration profile in the axial dimension, the cylindrical tube needs to be filled with catalyst pellets.]
+)<fig:pbr>
 
-Recognizing that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$, we can plug this into #ref(<eq:pbr>) expression to get
-$ r_j = - dot(n)_(j,0) (dif X_j) / (dif V). $<eq:pfr_r_a>
+If the reaction is carried out with a heterogeneous catalyst (as is the case with a packed-bed reactor like that shown in #ref(<fig:pbr>)), then the catalyst mass $W$ may be used in place of $V$ to normalize the rate, such that #ref(<eq:pfr>) becomes
+$ r_j = (dif dot(n)_j) / (dif W). $<eq:pbr>
+Similarly, $tau$ will be more naturally described by $tau equiv W\/dot(m)$, where $dot(m)$ is the mass flow rate.
 
-If the reaction is carried out with a heterogeneous catalyst (as is the case with a packed bed reactor), then the catalyst mass $W$ may be used in place of volume to normalize the rate.
-In this case, we have
-$ r_j = - dot(n)_(j,0) (dif X_j) / (dif W). $
 
 == Continuous-Stirred Tank Reactors <continuous-stirred-tank-reactors>
 
@@ -2137,8 +2147,6 @@ CSTRs are typically assumed to be operated near steady state (such that the accu
   image("figures/cstr.svg", width:25%),
   caption:[Schematic of a continuous-stirred tank reactor.]
 )<fig:cstr>
-
-=== Concentration Basis
 
 The mole balance for the CSTR can be written as 
 $ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $<eq:cstr_unsteady>
@@ -2181,26 +2189,22 @@ Plugging in #ref(<eq:a_conversion>) again yields
 $ X_ce("A") = (k tau conc("A")_0(1-X_ce("A")))/conc("A")_0 $
 $ X_ce("A") = k tau - k tau X_ce("A") $
 $ X_ce("A") = (k tau)/(1+k tau). $
-For large values of $k tau$, the concentration of #ce("A") will become small as expected.
-
-=== Conversion Basis
-
-If we wish to write the CSTR design equation in terms of conversion, we can once again note that $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$ and therefore $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$.
-Plugging this into #ref(<eq:cstr>), we arrive at
-$ r_j = - (dot(n)_(j,0) X_j ) / V. $<eq:cstr_r_a>
-
+For large values of $k tau$, the conversion of #ce("A") will approach 1 as expected.
 
 == Comparing Flow Reactors
 
-=== Volume Considerations
-
 We can also make a direct comparison between CSTRs and PFRs.
-The conversion-based design equation for the PFR given by #ref(<eq:pfr_r_a>) is extremely similar to that of the CSTR given by #ref(<eq:cstr_r_a>):
+The conversion-based design equation for the PFR is extremely similar to that of the CSTR:
 $ 
-r_j = -dot(n)_(j,0) (dif X_j)/(dif V) quad ("PFR") quad quad r_j = -dot(n)_(j,0) (X_j)/(V) quad ("CSTR")\
+r_j = -dot(n)_(j,0) (dif X_j)/(dif V) quad ("PFR") quad quad r_j = -dot(n)_(j,0) (X_j)/(V) quad ("CSTR").
+$
+The above conversion-based design equations can be readily derived by using the definition of conversion, $X_j = 1 - dot(n)_(j) \/ dot(n)_(j,0)$, such that $dot(n)_(j) = dot(n)_(j,0) (1-X_j)$ can be plugged into #ref(<eq:pfr>) (PFR) and #ref(<eq:cstr>) (CSTR).
+
+We can also write the conversion-based design equations in terms of the necessary reactor volume to achieve a given conversion, which (when plotted) results in a Levenspiel plot:
+$
 V = integral_(0)^X_j -(dot(n)_(j,0))/(r_j) dif X'_j quad ("PFR") quad quad V = -dot(n)_(j,0)/(r_j) dot.op X_j quad ("CSTR").
 $
-Here, we have written the expressions in terms of the necessary reactor volume to achieve a given conversion, which (when plotted) is known as a Levenspiel plot.
+
 
 For the PFR, the volume is simply the area under the curve in a Levenspiel plot of $-dot(n)_(j,0)\/r_j$ vs $X_j$.
 In contrast, for the CSTR, the volume is the area of a rectangle with height $-dot(n)_(j,0)\/r_j$ and width $X_j$ in a Levenspiel plot.
@@ -2223,17 +2227,9 @@ From this comparison, it also becomes immediately clear that an infinite set of 
 
 
 #figure(
-  image("figures/levenspiel_cstr_series.png", width:30%),
-  caption:[Levenspiel plot for a series of continuous-stirred tank reactors.]
+  image("figures/cstr_series.png", width:25%),
+  caption:[Levenspiel plot for a series of four CSTRs.]
 )<fig:cstr_series>
-
-=== Residence Time Considerations
-
-Similarly, we can compare the PFR and CSTR based on the residence time to achieve a specific outlet concentration:
-$ r_j = (dif [A_j] ) / (dif tau) quad ("PFR"), quad quad r_j =  ([A_j] - [A_j]_0) / tau quad ("CSTR") $
-$ tau = integral_([A_j]_0)^([A_j]) (1) / (r_j) dif [A_j]' quad ("PFR"), quad quad tau = 1/r_j dot.op ([A_j] - [A_j]_0) quad ("CSTR") $
-Therefore, we can graphically compare the required $tau$ by making a plot of $1\/r_j$ vs. $[A_j] - [A_j]_0$ in analogy with the Levenspiel plots in #ref(<fig:levenspiel>).
-
 
 = Nonisothermal Considerations
 
@@ -2248,7 +2244,7 @@ Normally, we would derive an expression for $r_j$ and integrate to identify how 
 Implicitly, this procedure was done under the assumption that we were operating at a given value of $T$.
 However, in a non-isothermal reactor, the value of $T$ is not a constant value and will change with time.
 Therefore, under non-isothermal conditions we have $ r_(j) (T) = (dif [A_j])/(dif t)  quad  ("with" (dif T)/(dif t) != 0). $
-Ultimately, this leads us to a coupled system of differential equations (i.e. the mass and energy balances) that must be solved simultaneously in order to understand how the reaction proceeds with time.
+Ultimately, this leads us to a coupled system of differential equations (i.e. both mass and energy balances) that must be solved simultaneously in order to understand how the reaction proceeds with time.
 
 == General Energy Balance
 
@@ -2297,8 +2293,8 @@ $ (dif (U + "KE" + "PE"))/(dif t) = accent(Q,dot) + accent(W,dot)_"s " - P (dif 
 
 From here, we will make some assumptions.
 The first assumption is that the shaft work is negligible (i.e. $accent(W,dot)_"s "=0$), which is generally true so long as the stirrers and other equipment are not drawing significant power.
-The second approximation we will make is that the kinetic energy of the fluid does not appreciably change (i.e. $dif "KE"\/dif t=0$), which is particularly reasonable for a batch reactor but even for flow reactors since the flows themselves are not drastically changing speeds.
-The final approximation we will make is that the change in potential energy is negligible (i.e. $dif "PE"\/dif t=0$), which is reasonable for a batch reactor but may not be reasonable for reactors in the presence of external fields (e.g. an electrochemical system).
+The second approximation we will make is that the kinetic energy of the fluid does not appreciably change (i.e. $dif"KE"\/dif t=0$), which is particularly reasonable for a batch reactor but even for flow reactors since the flows themselves are not drastically changing speeds.
+The final approximation we will make is that the change in potential energy is negligible (i.e. $dif"PE"\/dif t=0$), which is reasonable for a batch reactor but may not be reasonable for reactors in the presence of external fields (e.g. an electrochemical system).
 
 With this, we have
 $ (dif U)/(dif t) = accent(Q,dot) - P (dif V)/(dif t). $
@@ -2483,8 +2479,6 @@ Clearly, there needs to be some amount of temperature control in order for the r
 
 Generally, these systems of ordinary differential equations (ODEs) can only be solved numerically.
 The details of numerical methods are beyond the scope of this course, but it is still useful to have a high-level understanding of what is involved in setting up such equations.
-#footnote[Scenarios like this, where you understand the scientific context but may need assistance on how to begin carrying out the computation, can be great use cases for large language models. Pasting an image of #ref(<eq:batch_simultaneous>) into ChatGPT 4o with the prompt "Write me a Python script that will solve this system of ODEs. Note that k(T)." yields an example script that is nearly perfect (in this case, the Arrhenius equation was simply missing the factor of $R$ in the denominator of the exponential).
-]
 
 #plot[https://marimo.app/l/gygake]
 
