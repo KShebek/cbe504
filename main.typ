@@ -2606,7 +2606,7 @@ This not a niche point --- such considerations are just as relevant for even the
 
 == Continuous-Stirred Tank Reactors
 
-=== Energy Balance
+=== General Approach
 
 To derive the expression for the CSTR energy balance, we start again from the general energy balance given by #ref(<eq:general_energy_balance>), neglecting the kinetic and potential energy terms as well as the shaft work:
 $ (dif U)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot) - P (dif V)/(dif t). $
@@ -2615,8 +2615,21 @@ $ (dif H)/(dif t) - V (dif P)/(dif t) - P (dif V)/(dif t) = accent(m,dot)_0 acce
 which simplifies to
 $ (dif H)/(dif t) - V (dif P)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $
 
+=== Energy Balance
+
+==== Summary
+
+Once again, many simplifications can be made.
+The energy balance under steady-state conditoins, constant $hat(C)_"P "$, constant $P$, and $dot(v)=dot(v)$ is shown below:
+
+$ 0 = - sum_i Delta H_("rxn",i) r_i + (rho hat(C)_("P ") (T_0 - T))/tau + accent(Q,dot)/V quad ("steady-state, constant" hat(C)_"P " "and" P) $<eq:cstr_steady_energy>
+
+_We will not discuss the derivation in class for the sake of time, but the details have been reproduced below for clarity._
+
+==== Derivation
+
 Like the batch reactor example, we can consider a single-phase system where the enthalpy changes due to temperature, pressure, and the moles of species $j$.
-Plugging #ref(<eq:dif_h>) into the above expression yields
+Plugging in the definition of $dif H$ from #ref(<eq:dif_h>) into the above expression yields
 $ (m hat(C)_"P " dif T + V(1- alpha T) dif P + sum_j accent(H,macron)_j dif n_j)/(dif t)  - V (dif P)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot), $
 which simplifies to
 $ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $ <eq:cstr_energy_unsteady>
@@ -2640,10 +2653,11 @@ Leveraging the definition of a partial molar property, we can state
 $ sum_j dot(n)_(j,0) macron(C)_("P ",j) = dot(n)_0 c_("P ") = dot(m)_0 hat(C)_"P ", $
 such that we can rewrite the energy balance as
 $ 0 = - V sum_i Delta H_("rxn",i) r_i + dot(m)_(0) hat(C)_("P ") (T_0 - T) + accent(Q,dot). $
-If we wish to express the above energy balance in terms of $tau$, we can divide through by $V$ and use $dot(v)_0 = dot(m)_0 rho $ to arrive at
-$ 0 = - sum_i Delta H_("rxn",i) r_i + (rho hat(C)_("P ") (T_0 - T))/tau + accent(Q,dot)/V. $
-
-<eq:cstr_steady_energy>
+If we wish to express the above energy balance in terms of $tau$, we can divide through by $V$ to arrive at
+$ 0 = -  sum_i Delta H_("rxn",i) r_i + dot(m)_(0)/V hat(C)_("P ") (T_0 - T) + accent(Q,dot)/V, $
+which becomes
+$ 0 = - sum_i Delta H_("rxn",i) r_i + (rho hat(C)_("P ") (T_0 - T))/tau + accent(Q,dot)/V $
+after invoking $dot(m)_0= dot(v)_0 rho_0$, $tau equiv V\/dot(v)$, and a constant volumetric flow rate between the inlet and outlet.
 
 === Multiple Steady States
 
@@ -2654,7 +2668,7 @@ Consider a CSTR operated adiabatically and at steady-state conditions with the f
 $ ce("A") fwdArrow(k) ce("B"). $
 
 The energy balance can be concisely written using #ref(<eq:cstr_steady_energy>) to state
-$  0 = - Delta H_("rxn") r V  + (rho hat(C)_("P ") (T_0 - T))/tau. $
+$  0 = - Delta H_("rxn") r  + (rho hat(C)_("P ") (T_0 - T))/tau. $
 Similarly, we know from #ref(<eq:cstr_mass_balance>) that the mass balance for the CSTR can be written as
 $ r_ce("A") = (conc("A") - conc("A")_0)/tau $
 for a constant volumetric flow rate.
