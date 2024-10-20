@@ -2170,7 +2170,7 @@ With our definition of $tau$, we can write the rate expression as
 $ r_j =  ([A_j] - [A_j]_0) / tau. $<eq:cstr_mass_balance>
 Unlike the batch reactor and PFR, the CSTR design equation contains no derivatives and is merely a simple algebraic equation.
 
-==== Example
+=== Example
 
 Consider the first-order, elementary reaction given by
 $ ce("A->B"). $
@@ -2249,8 +2249,9 @@ Ultimately, this leads us to a coupled system of differential equations (i.e. bo
 == General Energy Balance
 
 We will begin with the general energy balance
-$ (dif E)/(dif t) = accent(m,dot)_0 accent(E,hat)_0 - accent(m,dot)_1 accent(E,hat)_1 + accent(Q,dot) + accent(W,dot), $
-where $E$ represents the total energy, $accent(m,dot)$ is a mass flow rate, $accent(E,hat)$ is an energy per unit mass, $accent(Q,dot)$ is the rate of heat added to the system, and $accent(W,dot)$ is the rate of work done on the system.
+$ (dif E)/(dif t) = accent(m,dot)_0 accent(E,hat)_0 - accent(m,dot)_1 accent(E,hat)_1 + accent(Q,dot) + accent(W,dot), $<eq:starting_energy_balance>
+where $E$ represents the total energy of the system, $accent(m,dot)$ is a mass flow rate, $accent(E,hat)$ is an energy per unit mass, $accent(Q,dot)$ is the rate of heat added to the system, and $accent(W,dot)$ is the rate of work done on the system.
+
 The work term is defined as
 $ accent(W,dot) = accent(W,dot)_"f " + accent(W,dot)_"s " + accent(W,dot)_"b ", $
 where the individual terms are for work done by flow streams moving through the reactor, shaft work being done by stirrers, compressors, and other equipment, and work done when moving the system boundary (if moved), respectively.
@@ -2264,20 +2265,26 @@ $ accent(W,dot)_"b " = -P (dif V)/(dif t). $
 With this, we will rewrite $accent(W,dot)$ as 
 $ accent(W,dot) = dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t), $
 where we will leave the shaft work as an abstract variable for now since it depends on what equipment is being used.
+#footnote[Note that $dot(v) = dot(m)\/rho$, where $rho$ is the fluid density and $dot(m)$ is the mass-flow rate. As such, you may see $dot(m)\/rho$ used in place of $dot(v)$ in the energy balance depending on the properties that are easiest to measure.]
+With a more illustrative expression for $dot(W)$, we can rewrite #ref(<eq:starting_energy_balance>) as 
+$ (dif E)/(dif t) = accent(m,dot)_0 accent(E,hat)_0 - accent(m,dot)_1 accent(E,hat)_1 + accent(Q,dot) +  dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t). $
 
 The total energy of the system is the sum of all internal, potential, and kinetic energies:
 $ E = U + "KE" + "PE". $
-We can rewrite our derivative as
+We can rewrite our energy balance derivative as
 $ (dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(U,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(U,hat) + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot) + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t). $
-We will now take advantage of the definition of enthalpy, $H = U + P V$, to say that
+
+We will now take advantage of the definition of enthalpy, $H equiv U + P V$, to say that
 $
-accent(H,hat) =  accent(U,hat) + (P V)/m = accent(U,hat) + P/rho.
+accent(H,hat) =  accent(U,hat) + (P V)/m.
 $
 Now we can state
 $
-(dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 - P_0/rho_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) - P/rho + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t)
+(dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 - (P_0 V_0)/(m_0) + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) - (P V)/m + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t)
 $
-Since dimensional analysis will readily indicate that $accent(m,dot) P \/ rho=dot(v) P$, we can simplify our expression a bit to arrive at
+Since dimensional analysis will readily indicate that $accent(m,dot) V\/ m=dot(v)$, we can rewrite our expression a bit to be
+$ (dif (U + "KE" + "PE"))/(dif t) = [accent(m,dot)_0 (accent(H,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0)- dot(v)_0 P_0]  - [accent(m,dot) (accent(H,hat) + accent("KE",hat) + accent("PE",hat)) - dot(v) P] \ + accent(Q,dot)  + dot(v)_0 P_0 -dot(v) P + accent(W,dot)_"s " - P (dif V)/(dif t), $
+such that it simplifies to the following:
 $
 (dif (U + "KE" + "PE"))/(dif t) = accent(m,dot)_0 (accent(H,hat)_0 + accent("KE",hat)_0 + accent("PE",hat)_0) - accent(m,dot) (accent(H,hat) + accent("KE",hat) + accent("PE",hat)) \ + accent(Q,dot)  + accent(W,dot)_"s " - P (dif V)/(dif t)
 $<eq:general_energy_balance>
@@ -2293,19 +2300,21 @@ $ (dif (U + "KE" + "PE"))/(dif t) = accent(Q,dot) + accent(W,dot)_"s " - P (dif 
 
 From here, we will make some assumptions.
 The first assumption is that the shaft work is negligible (i.e. $accent(W,dot)_"s "=0$), which is generally true so long as the stirrers and other equipment are not drawing significant power.
-The second approximation we will make is that the kinetic energy of the fluid does not appreciably change (i.e. $dif"KE"\/dif t=0$), which is particularly reasonable for a batch reactor but even for flow reactors since the flows themselves are not drastically changing speeds.
+The second approximation we will make is that the kinetic energy of the fluid does not appreciably change (i.e. $dif"KE"\/dif t=0$), which is particularly reasonable for a batch reactor but even for flow reactors since the flows themselves are usually not drastically changing speeds.
 The final approximation we will make is that the change in potential energy is negligible (i.e. $dif"PE"\/dif t=0$), which is reasonable for a batch reactor but may not be reasonable for reactors in the presence of external fields (e.g. an electrochemical system).
 
 With this, we have
 $ (dif U)/(dif t) = accent(Q,dot) - P (dif V)/(dif t). $
 
-We now will use enthalpy for the rest of our derivation, noting that the differential form is given by
+Internal energy is a bit difficult to think about from an experimental perspective, so we will use enthalpy for the rest of our derivation, noting that the differential form is given by
 $
-dif H &= dif U + P dif V + V dif P.
+dif H equiv dif U + dif (P V) = dif U + P dif V + V dif P.
 $<eq:enthalpy_definition>
 Substituting in for $dif U$ results in
 $
-(dif H - P dif V - V dif P)/(dif t) &= accent(Q,dot) - P (dif V)/(dif t)\
+(dif H - P dif V - V dif P)/(dif t) &= accent(Q,dot) - P (dif V)/(dif t)
+$
+$
 (dif H)/(dif t) - V (dif P)/(dif t) &= accent(Q,dot).
 $<eq:dH_batch>
 For single-phase systems, we can write the total differential of the enthalpy as 
@@ -2343,15 +2352,15 @@ We will take care of that now.
 
 We know from the mass balance on the batch reactor (#ref(<eq:batch_rate>)) that
 $ (dif n_j)/(dif t) = r_j V. $<eq:batch_r_j>
-Here, $r_j$ is on a per-species basis.
 For reasons that will become clearer shortly, we can use #ref(<eq:sum_stoichs_rate>) to restate the above expression as
-$ (dif n_j)/(dif t) = V sum_i nu_(i,j) r_i. $ <eq:dn_j_batch>
+$ (dif n_j)/(dif t) = V sum_i nu_(i,j) r_i, $ <eq:dn_j_batch>
+where as usual $i$ indicates the index of a reaction and $j$ indicates the index of a species.
 Plugging this expression into our energy balance yields
 $ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_j accent(H,macron)_j sum_i nu_(i,j) r_i + accent(Q,dot). $
 We can re-group this a bit to help us out in visualizing a substitution that is about to come:
 $ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_i ( sum_j nu_(i,j) accent(H,macron)_j) r_i + accent(Q,dot). $
 
-If we assume that the partial molar enthalpies are the same as pure component enthalpies, then we can take advantage of the following relationship exists for a given reaction $i$ and species $j$:
+If we assume that the partial molar enthalpies are the same as pure component enthalpies, then we can take advantage of the following relationship that exists for a given reaction $i$ and species $j$:
 $ sum_j nu_(i,j) accent(H,macron)_j=Delta H_("rxn",i), $<eq:partial_molar_enthalpy>
 such that
 $ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) &= - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot). $<eq:energy_balance_batch_general>
@@ -2362,19 +2371,20 @@ There we have it --- a compact expression for the energy balance in a single-pha
 
 === Simplifying Cases
 
-From here, there are many simplifications that can be made depending on the system under investigation.
-We will not discuss these derivations at length in class for the sake of time and since the mathematical gymnastics is essentially the same, but the full details are reproduced below for full clarity.
-
 ==== Summary
+
+
+From here, there are many simplifications that can be made depending on the system under investigation:
 
 $ m hat(C)_"P " (dif T)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + accent(Q,dot) quad ("constant" P "or incompressible")
 $
 $ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + alpha/kappa T  Delta V_("rxn",i))  r_i   + accent(Q,dot) quad ("constant" V) $
 $ m hat(C)_"V " (dif T)/(dif t)  &= V sum_i (-Delta H_("rxn",i) + R T sum_j nu_(i,j))  r_i   + accent(Q,dot) quad ("constant " V, "ideal gas") $
 
+_We will not discuss these derivations at length in class for the sake of time and because the mathematical gymnastics is essentially the same, but the full details are reproduced below for full clarity.
+_
 ==== Constant Pressure or Incompressible Fluid
 
-We can now consider some optional simplifications that may or may not apply to a given batch reactor of interest.
 If the reactor operates under constant pressure, then we can say $dif P\/ dif t=0$.
 If the reactor fluid is incompressible, then $alpha=0$.
 In both cases, we have
@@ -2458,8 +2468,8 @@ Thus far, this is essentially the same procedure we have done many times before,
 However, we cannot proceed with the integration yet since $k(T)$ and $T(t)$ for non-isothermal operation.
 
 We now move onto the simplified energy balance from #ref(<eq:batch_energy_balance_ideal>) to state
-$ rho hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) r, $
-where we note that $sum_j nu_j = 1$ for the given reaction, $dot(Q)=0$ for an adiabatic process.
+$ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) r V, $
+where we note that $sum_j nu_j = 1$ for the given reaction and $dot(Q)=0$ for an adiabatic process.
 We know that $ r = - r_"A " = k conc("A"), $
 such that
 $ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) k conc("A") V. $
@@ -2480,23 +2490,78 @@ Clearly, there needs to be some amount of temperature control in order for the r
 Generally, these systems of ordinary differential equations (ODEs) can only be solved numerically.
 The details of numerical methods are beyond the scope of this course, but it is still useful to have a high-level understanding of what is involved in setting up such equations.
 
-#plot[https://marimo.app/l/gygake]
+#plot[#align(center+horizon)[https://marimo.app/l/gygake]]
 
-==== Temperature-Dependence for the Enthalpy
+==== An Analytical Example
 
-For the sake of simplicity, it is sometimes assumed that the temperature dependence of $Delta H_"rxn"$ is weak over the relatively limited range of operating temperatures.
-To relax this somewhat questionable assumption, one can typically use an empirical relationship known as the Shomate equation, which takes the following form:
-$ C_"P " = A + B T + C T^2 + D T^3 + E/T^2, $
-where each parameter is determined based on statistical regression to experimental data.
-If the different components in a fluid behave ideally, the fluid's heat capacity is simply the sum of its individual component heat capacities.
-This is useful to know, as pure component heat capacities are tabulated in many places, such as the _NIST Chemistry WebBook_. 
+Consider the exothermic, elementary, liquid-phase reaction given by
+$ ce("A + B") fwdArrow(k) ce("C"), $
+which is carried out in a bach reactor.
+A cooling coil maintains the reactor temperature at 27 #sym.degree.c.
+At $t=0$, the reactor has 2.0 M each of A and B with no product.
 
-From this, we can express the temperature-dependence for enthalpy as
-$ H(T_2) - H(T_1) = integral_(T_1)^(T_2) C_"P " dif T $
-$ H(T_2) - H(T_1) = A Delta T + (B (Delta T)^2)/2 + (C (Delta T)^3)/3 + (D (Delta T)^4)/4 - E/(Delta T), $
-which comes from the definition of the constant-pressure heat capacity, $C_"P "$.
-Since $Delta H_"rxn"$ is a state function, we can equivalently use $Delta H_"rxn"$ in the above expression in place of $H$.
-The value for $C_"V "$ in the energy balance can also depend on temperature, albeit much less so than $Delta H_"rxn"$.
+===== Maintaining Isothermal Operation
+
+Here, we will ask the following question: how much heat needs to be removed by the cooling coil to maintain isothermal operation?
+To address this question, we start by assuming that the incompressible-fluid energy balance is suitable:
+$ m hat(C)_"P " (dif T)/(dif t) = -  Delta H_("rxn") r V + accent(Q,dot).
+$
+Since we are operating isothermally, $dif T\/dif t =0$, such that
+$ Delta H_("rxn") r V = accent(Q,dot).
+$
+We know that $r = - dif conc("A")\/dif t$, such that
+$ -Delta H_("rxn") V (dif conc("A"))/(dif t) = accent(Q,dot).
+$
+Integrating
+$ integral_(conc("A")_0)^(conc("A")) -Delta H_("rxn") V dif conc("A")' = integral_(0)^(t) accent(Q,dot) dif t'.
+$
+and simplifying
+$ Q = -Delta H_("rxn") V (conc("A")-conc("A")_0).
+$
+The above expression makes intuitive sense.
+We know that $conc("A")<conc("A")_0$, such that $Q<0$ if $Delta H_"rxn"$ is exothermic.
+Additionally, the more exothermic the reaction is and the more A that gets converted, the more heat will need to be removed.
+
+===== Adiabatic Temperature Rise
+
+Now we will relax the assumption of isothermal operation and ask: if operated adiabatically, how would the temperature change over the course of the reaction?
+We return to the energy balance
+$ m hat(C)_"P " (dif T)/(dif t) = -  Delta H_("rxn") r V + accent(Q,dot).
+$
+Now, we set $dot(Q)=0$, such that
+$ m hat(C)_"P " (dif T)/(dif t) = -  Delta H_("rxn") r V.
+$
+We know that $r = - dif conc("A")\/dif t$, such that
+$ m hat(C)_"P " (dif T)/(dif t) = Delta H_("rxn") (dif conc("A"))/(dif t) V
+$
+and simplifying
+$ m hat(C)_"P " dif T = Delta H_("rxn") dif conc("A") V.
+$
+Now we can integrate to find an expression for the temperature change
+$ integral_(T_1)^(T_2)  dif T = integral_(conc("A")_0)^(conc("A")) (Delta H_("rxn")V)/(m hat(C)_"P ") dif conc("A")',
+$
+which simplifies to
+$ Delta T = (Delta H_("rxn")V (conc("A")-conc("A")_0))/(m hat(C)_"P ").
+$
+This expression also makes intuitive sense.
+Since $conc("A")< conc("A")_0$, if $Delta H_"rxn"$ is exothermic, then $Delta T>0$.
+Additionally, the more exothermic the reaction is and the more A that gets consumed, the larger the temperature rise will be.
+
+// === Temperature-Dependence for the Enthalpy
+
+// For the sake of simplicity, it is sometimes assumed that the temperature dependence of $Delta H_"rxn"$ is weak over the relatively limited range of operating temperatures.
+// To relax this somewhat questionable assumption, one can typically use an empirical relationship known as the Shomate equation, which takes the following form:
+// $ C_"P " = A + B T + C T^2 + D T^3 + E/T^2, $
+// where each parameter is determined based on statistical regression to experimental data.
+// If the different components in a fluid behave ideally, the fluid's heat capacity is simply the sum of its individual component heat capacities.
+// This is useful to know, as pure component heat capacities are tabulated in many places, such as the _NIST Chemistry WebBook_. 
+
+// From this, we can express the temperature-dependence for enthalpy as
+// $ H(T_2) - H(T_1) = integral_(T_1)^(T_2) C_"P " dif T $
+// $ H(T_2) - H(T_1) = A Delta T + (B (Delta T)^2)/2 + (C (Delta T)^3)/3 + (D (Delta T)^4)/4 - E/(Delta T), $
+// which comes from the definition of the constant-pressure heat capacity, $C_"P "$.
+// Since $Delta H_"rxn"$ is a state function, we can equivalently use $Delta H_"rxn"$ in the above expression in place of $H$.
+// The value for $C_"V "$ in the energy balance can also depend on temperature, albeit much less so than $Delta H_"rxn"$.
 
 == Plug Flow Reactors
 
@@ -2506,8 +2571,8 @@ For the sake of brevity, we will forego a detailed derivation of the PFR energy,
 #footnote[For a thorough derivation of reactor energy balances, refer to Chapter 6 of _Chemical Reactor Analysis and Design Fundamentals_ by J.B. Rawlings and J.G. Ekerdt.]
 Instead, in analogy with the single-phase batch reactor energy balance given by #ref(<eq:batch_nonisothermal>), we will simply state that single-phase PFR energy balance is
 $ rho hat(C)_"P " (dif T)/(dif tau) + (1-alpha T) (dif P)/(dif tau) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V. $
-Assuming the cross-sectional area, $A_"c "$, of the PFR is constant, then we can equivalently write the derivatives in terms of $z$ instead of $V$ via a simple change of variables (i.e. using the relationship of $tau = z \/u $ from #ref(<eq:residence_time>)):
-$ rho u hat(C)_"P " (dif T)/(dif z) + rho u (1-alpha T) (dif P)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V, $
+Assuming the cross-sectional area, $A_"c "$, of the PFR is constant, then we can equivalently write the derivatives in terms of $z$ instead of $tau$ via a simple change of variables (i.e. using the relationship of $tau = z \/u $ from #ref(<eq:residence_time>)):
+$ rho u hat(C)_"P " (dif T)/(dif z) +  u (1-alpha T) (dif P)/(dif z) = - sum_i Delta H_("rxn",i) r_i + dot(Q)/V, $
 where $u$ is the linear velocity of the fluid.
 
 If the pressure drop along the reactor is negligible or the fluid is an ideal gas mixture (i.e. $alpha T =1$), then $dif P\/dif tau = dif P\/dif z = 0$, simplifying the energy balance further:
@@ -2535,9 +2600,9 @@ If $Delta H_"rxn"$ is highly exothermic, the hot spot can spike to extremely hig
 The exothermic reaction causes an increase in temperature, which itself increases the rate of reaction.
 If the rate of heat loss to the surroundings via $dot(Q)$ is not sufficiently large, then the reaction will go to completion extremely quickly, raising the temperature to dangerously high values.
 Clearly, robust temperature control is a necessity when dealing with non-isothermal reactors.
-This not a niche point --- such considerations are just as relevant for even the simplest of reactors like a reaction flask in the lab!
+This not a niche point --- such considerations are just as relevant for even the simplest of reactions in the lab!
 
-#plot[https://marimo.app/l/v1cm6a]
+#plot[#align(center+horizon)[https://marimo.app/l/v1cm6a]]
 
 == Continuous-Stirred Tank Reactors
 
@@ -2552,16 +2617,16 @@ $ (dif H)/(dif t) - V (dif P)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent
 
 Like the batch reactor example, we can consider a single-phase system where the enthalpy changes due to temperature, pressure, and the moles of species $j$.
 Plugging #ref(<eq:dif_h>) into the above expression yields
-$ (m hat(C)_"P " dif T + V(1- alpha T) dif P + sum_j accent(H,macron)_j dif n_j)/(dif t)  - P (dif V)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot), $
+$ (m hat(C)_"P " dif T + V(1- alpha T) dif P + sum_j accent(H,macron)_j dif n_j)/(dif t)  - V (dif P)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot), $
 which simplifies to
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $ <eq:cstr_energy_unsteady>
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) + sum_j accent(H,macron)_j (dif n_j)/(dif t) = accent(m,dot)_0 accent(H,hat)_0 - accent(m,dot) accent(H,hat) + accent(Q,dot). $ <eq:cstr_energy_unsteady>
 
 We know from the mass balance on the CSTR (#ref(<eq:cstr_unsteady>)) that 
 $ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + r_j V, $
-or equivalently via #ref(<eq:sum_stoichs_rate>):
+or equivalently by invoking #ref(<eq:sum_stoichs_rate>):
 $ (dif n_j)/(dif t) = dot(n)_(j,0) - dot(n)_(j) + V sum_i nu_(i,j) r_i. $
 Plugging the CSTR mass balance into #ref(<eq:cstr_energy_unsteady>) and following the same approach taken in the batch reactor derivation from #ref(<batch-general>) results in 
-$ m hat(C)_"P " (dif T)/(dif t) - alpha T (dif P)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) (accent(H,macron)_(j,0) - accent(H,macron)_(j)) + accent(Q,dot). $
+$ m hat(C)_"P " (dif T)/(dif t) - alpha T V (dif P)/(dif t) = - V sum_i Delta H_("rxn",i) r_i + sum_j dot(n)_(j,0) (accent(H,macron)_(j,0) - accent(H,macron)_(j)) + accent(Q,dot). $
 
 From here, we can start applying our typical approximations.
 For instance, we can invoke steady-state conditions to arrive at
@@ -2600,7 +2665,7 @@ This system of non-linear equations is a bit deceptive.
 Depending on the initial guess one uses and the reaction conditions themselves, different solutions can potentially be found, each of which may be physically sound and equally valid.
 In these scenarios, the CSTR exhibits multiple steady states, and small perturbations to the reaction conditions can trigger drastic changes in the reaction, resulting in an unstable reactor.
 
-#plot[https://marimo.app/l/ebu1s6]
+#plot[#align(center+horizon)[https://marimo.app/l/ebu1s6]]
 
 = Transition State Theory <transition-state-theory>
 
