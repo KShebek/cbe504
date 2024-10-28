@@ -2135,8 +2135,9 @@ For instance, if we revisit the derivation of the concentration profile for an i
 )<fig:pbr>
 
 If the reaction is carried out with a heterogeneous catalyst (as is the case with a packed-bed reactor like that shown in #ref(<fig:pbr>)), then the catalyst mass $W$ may be used in place of $V$ to normalize the rate, such that #ref(<eq:pfr>) becomes
-$ r_j = (dif dot(n)_j) / (dif W). $<eq:pbr>
-Similarly, $tau$ will be more naturally described by $tau equiv W\/dot(m)$, where $dot(m)$ is the mass flow rate.
+$ r_j = (dif dot(n)_j) / (dif W), $<eq:pbr>
+where $r_j$ now has units of mol/(kg-catalyst #sym.dot s).
+Similarly, $tau$ will be more naturally described by $tau equiv W\/dot(m)$, where $dot(m)$ is the mass flow rate.#footnote[Note, however, that $tau$ in this case technically has units of kg-catalyst/(kg-fluid #sym.dot s). In order to make the units of #ref(<eq:pfr_mass_balance>) work out, $[A_j]$ should have units of mol/kg-fluid, which can be related to the typical units of mol/volume through a factor of $1\/rho$.]
 
 
 == Continuous-Stirred Tank Reactors <continuous-stirred-tank-reactors>
@@ -2696,11 +2697,52 @@ In these scenarios, the CSTR exhibits multiple steady states, and small perturba
 In the previous sections, we have made extensive use of the rate constant, $k$.
 Here, we seek to provide theoretical insights into what factors dictate the value of $k$ while also providing an atomistic justification for the functional form of the Arrhenius equation.
 
-#self[Needs an example problem.]
+== Simple Kinetic Theories
 
-#self[Could use an MLIP demo of a TS, map of PES.]
+Before discussing transition state theory, it is worthwhile to briefly introduce simpler kinetic models and their limitations.
 
-== Setting the Stage <setting-the-stage>
+== Collision Theory
+
+Perhaps the simplest model one can consider is collision theory.
+Consider the reaction of two species, such as #ce("A + B -> C").
+Here, we will treat each species as a hard sphere, wherein a reaction only occurs if the two spheres becomes closer than some distance $sigma_ce("AB")$.
+The natural definition for $sigma_ce("AB")$ is
+$ sigma_ce("AB") = 1/2 (sigma_ce("A") + sigma_ce("B")), $
+where $sigma_ce("A")$ is the diameter of #ce("A"), and $sigma_ce("B")$ is the diameter of B.
+As shown in #ref(<fig:hard_sphere>), it immediately becomes clear that the potential energy landscape for such an interaction does not match reality.
+Namely, the attractive region is completely ignored.
+
+#figure(
+  image("figures/hard_sphere.svg", width: 60%),
+  caption: [Comparison of a typical potential energy diagram for a reaction between #ce("A") and #ce("B") (left) and that of a hard-sphere model (right).]
+)<fig:hard_sphere>
+
+
+Assuming that #ce("A") and #ce("B") follow a Maxwell--Boltzmann distribution of speeds at a given temperature $T$, the frequency of collisions that occur at a given temperature can be shown to be#footnote[For additional details refer to "Chapter 2: The Mechanisms of Chemical Reactions in Homogeneous Phases" in J.B. Butt, _Reaction Kinetics and Reactor Design_ (2#super[nd] ed.).]
+$ macron(Z) = n_ce("A") n_ce("B") pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2), $<eq:z_collision>
+where $n_ce("A")$ and $n_ce("B")$ are the number density of A and B (i.e. units of $"particle/m "^(3)$), and $mu_ce("AB")$ is the so-called reduced mass of the #ce("AB") system given as
+$ mu_ce("AB") equiv (m_ce("A") m_ce("B"))/(m_ce("A") + m_ce("B")), $
+where $m_ce("A")$ and $m_ce("B")$ represent the mass of species A and B, respectively.
+
+The typical units of $macron(Z)$ are $"collisions"\/"cm"^(3)"-s"$ (i.e. the number of collisions to occur in a given volume over a given time period).
+When scaled up from number of collisions to a mole of collisions via Avogadro's constant, $macron(Z)$ can be naively thought of as a rate of reaction, as is clear from dimensional analysis alone.
+In doing so, one might say that
+$ macron(Z)_ce("AB") = r = k n_ce("A") n_ce("B") $
+for an elementary, bimolecular reaction of A and B.
+By inspection of #ref(<eq:z_collision>), this would imply that
+$ k = pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2). $
+While this is reasonably suitable in describing the direct collision of two species, it is not reflective of the kinetics of reactions because there is no exponential dependency on temperature that we know must exist from the Arrhenius equation.
+
+The missing link is that molecules only react if they collide with sufficient energy. We, therefore, must define a threshold energy $eta^"*"$, above which reactions can proceed.
+This allows us to refine our expression for $k$ to instead be given as
+$ k = pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2) exp(-eta^"*"/(k_"B " T)). $<eq:collision_refined>
+Typically, a multiplicative factor of $p$ is also included, which is known as the steric factor and is essentially a catch-all term for all additional factors that influence the collision--reaction probability beyond those associated with the energy.
+
+With #ref(<eq:collision_refined>), we have an exponential energy dependence, but we also see that there is a $sqrt(T)$ term as well.
+The $sqrt(T)$ dependence in what is effectively the pre-exponential factor provides some justification for #ref(<eq:arrhenius_mod>) where we wrote the modified form of the Arrhenius equation with a factor $A' T^n$ (here, $n=0.5$).
+In general, while collision theory clearly has major limitations, it can be fairly reasonable in describing reactions with very low values of $eta^"*"$ like radical reactions.
+
+== Setting the Stage for Transition State Theory <setting-the-stage>
 
 === Rate in Terms of an Equilibrium Constant
 
@@ -2718,6 +2760,7 @@ $<eq:tst_rxn>
 The net rate of reaction can be represented as
 $ r = nu^ddagger conc("AB")^ddagger, $<eq:nu_dagger>
 where $nu^ddagger$ is the frequency (in units of $"time "^(-1)$) associated with the vibrational mode along the reaction coordinate that connects the transition state to the product and $conc("AB")^ddagger$ is the concentration of the transition state species.
+
 The concentration of the transition state species, however, is not an observable quantity since the transition state itself is fleeting.
 To take care of this challenge, we assume that the transition state is in quasi-equilibrium with the reactants, such that we can return to the definition of the equilibrium constant: 
 $ K_"C "^ddagger = conc("AB")^ddagger / (conc("A") conc("B")). $<eq:tst_kc>
@@ -2735,14 +2778,15 @@ Before then, however, we need to figure out what to do with $K_"C "^ddagger$.
 The most pressing situation to address in our definition of $k$ is $K_"C "^ddagger$.
 Thankfully, with a healthy dose of statistical thermodynamics, this becomes relatively manageable.
 Although it will not be derived here, from statistical mechanics it is known that the equilibrium constant can be expressed in terms of molecular partition functions as follows:
-$ K_"a " equiv product_j a_(j)^nu_j  = product_j Z_(j)^(nu_i) exp(- (Delta E^ddagger) / (R T)), $<eq:k_a_partition_functions>
-were $Z_j$ is the (unitless) molecular partition function for species $j$ and $Delta E^ddagger$ is the change in electronic energy between the transition state and reactant(s).
-#footnote[The reason for the $exp(-Delta E^ddagger\/R T)$ term will become clearer when we introduce the electronic partition function.]
+$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) exp(- (Delta E^ddagger) / (R T)), $<eq:k_a_partition_functions>
+were $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species and $Delta E^ddagger$ is the change in electronic energy between the transition state and reactant(s).
+#footnote[The reason for the $exp(-Delta E^ddagger\/R T)$ term will become clearer when we introduce the electronic partition function. It is based on what we decide to take as the zero-energy reference.]
+We will forego a formal derivation linking $Z_j$ to the equilibrium constant. That said, we can think of it as being intuitively reasonable because the ratio of molecular partition functions describes the distribution of energetic states between the products and reactants, which dictates the direction for the equilibrium in a manner analogous to the change in Gibbs free energy.
 
 We will describe how one determines a molecular partition function in a moment, but before we do, recall that we have been dealing with concentrations and $K_"C "^ddagger$.
 As such, we will instead use
-$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E^ddagger) / (R T)), $
-where $Z'_j$ is the molecular partition function per unit volume.
+$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E^ddagger) / (R T)), $
+where $Z'_j$ is the molecular partition function per unit volume for the $j$-th species.
 The need for $Z'_j$ being in units of $"volume"^(-1)$ is so that we arrive at the appropriate units for $K_"C "^ddagger$.
 The factor of $1\/N_"A "^(1-m)$, where $m$ is the molecularity (i.e. $m = 2$ for this example),
 #footnote[We could have equally used $delta^ddagger$ in place of $1-m$, where where $delta^dagger$ is the change in stoichiometric numbers between the transition state and reactants. Since we are only focusing on a single transition state-producing event, we use for $1-m$ simplicity.]
@@ -2778,7 +2822,7 @@ We now must define each of the partition functions.
 The translational partition function derived from the particle-in-a-box model in quantum chemistry is typically approximated as
 $ z_"trans" = V ((2 pi m k_"B " T)/h^2)^(3/2) = V / Lambda^3, quad Lambda equiv h / sqrt(2 pi m k_"B " T) $
 where $V$ is a reference volume,
-$m$ is the mass of the molecule, $h$ is Planck's constant, and $Lambda$ is the thermal de Broglie wavelength.
+$m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $Lambda$ is the thermal de Broglie wavelength.
 
 When dealing with gases, one can equivalently use a standard-state pressure $P^std$ (typically taken as 1 bar) in place of $V$, such as by invoking the ideal gas law: $V = k_"B " T\/P^std$.
 This would ultimately ensure that our rate constant is expressed with pressure-based units rather than concentrations.
@@ -2805,18 +2849,23 @@ $
 where $Theta_("rot")$ is the characteristic rotational temperature.
 In these equations, $sigma$ represents the rotational symmetry number and is determined by the number of spatial orientations of the subject molecule that are identical.
 For instance, $sigma$ is a value of 2 for linear molecules with a center of symmetry (e.g. a homonuclear diatomic molecule) and 1 for linear molecules without a center of symmetry (e.g. a heteronuclear diatomic molecule).
+
 The quantity $I$ is the moment of inertia, and for the nonlinear case they are the three principal moments.
 The moment of inertia is defined as
-$ I equiv sum_j M_j r_(j)^2 $
-where $M_j$ is the mass of atom $j$ and $r_j$ is the distance of atom $j$ to the axis of rotation.
+$ I equiv sum_i M_j r_(i)^2 $
+where $M_i$ is the mass of atom $i$ and $r_i$ is the distance of atom $i$ to the axis of rotation.
+#footnote[For a linear, symmetric molecule like #ce("CO2") (i.e. #ce("O=C=O")), the moment of inertia is $I=2 M_ce("O") d_ce("CO")^2$, where $M_ce("O")$ is the mass of the oxygen atom and $d_ce("CO")$ is the C--O bond length.]
+For a diatomic molecule, the moment of inertia can be conveniently expressed as
+$ I = (M_1 M_2)/(M_1 + M_2) d^2 = mu d^2, $
+where $mu$ is called the reduced mass and $d$ is the distance between the two atoms.
 
 === Vibrational Partition Function
 
 The vibrational partition function is derived based on the harmonic-oscillator quantum-mechanical model and is given by
-$ z_"vib" =  product_(j=0)^N (exp(- (h nu_j)/(2 k_"B " T)))/(1 - exp(- (h nu_j)/(k_"B " T))) = product_(j=0)^N (exp(- Theta_(j,"vib")/(2 T)))/(1 - exp(- (Theta_(j,"vib"))/T)), quad Theta_(j,"vib") equiv (h nu_j)/k_"B " $
-where the product is taken over all vibrational modes in the system, $N$ is the number of vibrational modes, $nu_j$ is the $j$-th vibrational frequency, and $Theta_(j,"vib")$ is the characteristic vibrational temperature.
+$ z_"vib" =  product_(i=0)^N (exp(- (h nu_i)/(2 k_"B " T)))/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=0)^N (exp(- Theta_(i,"vib")/(2 T)))/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $
+where the product is taken over all vibrational modes in the system, $N$ is the number of vibrational modes, $nu_i$ is the $i$-th vibrational frequency, and $Theta_(i,"vib")$ is the characteristic vibrational temperature.
 It should be noted that vibrational spectra are normally reported in units of wavenumbers ($"cm"^(-1)$), $accent(nu,tilde)$.
-To convert a wavenumber to a frequency, the following relationship can be used: $nu_j = c accent(nu,tilde)_j$.
+To convert a wavenumber to a frequency, the following relationship can be used: $nu_j = c accent(nu,tilde)_i$, where $c$ is the speed of light.
 
 The number of vibrational modes can be determined as follows:
 #footnote[For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly, only the real vibrational modes should be included in calculating $z_"vib"$. This mode will be accounted for with $nu^ddagger$.]
@@ -2826,18 +2875,18 @@ N=3N_0 - 5 quad ("linear")\
 N=3N_0 - 6 quad ("nonlinear").
 $
 For pedagogical purposes, it is helpful to rewrite the vibrational partition function slightly as
-$ z_"vib" =  exp(-E_"ZPVE" / (k_"B " T)) product_(j=0)^N 1/(1 - exp(- (Theta_(j,"vib"))/T)), quad E_"ZPVE" equiv 1/2 sum_j h nu_j, $<eq:vib_part>
+$ z_"vib" =  exp(-E_"ZPVE" / (k_"B " T)) product_(i=0)^N 1/(1 - exp(- (Theta_(i,"vib"))/T)), quad E_"ZPVE" equiv 1/2 sum_i h nu_i, $<eq:vib_part>
 where $E_"ZPVE"$ is the zero-point vibrational energy.
 #tip[You may see some people use $Delta U^ddagger$ in place of $Delta E^ddagger$ in the expression for $K_"C "^ddagger$. If this is done, it necessarily implies that the $exp(-E_"ZPVE"\/k_"B " T)$ term was factored out of the vibrational partition function and instead included as part of $Delta U^ddagger$ since $U equiv E + E_"ZPVE"$.]
 
 === Electronic Partition Function
 
 Finally, the electronic partition function is given by
-$ z_"el" = sum_j g_i exp(- E_j / (k_"B " T) ) $
-where $g_j$ is the degeneracy of electronic state $j$ and $E_j$ is the electronic energy for electronic state $j$.
-As is typically done, we will adopt the ground-state (i.e. $j=0$) as the zero-energy reference point, such that all values of $E_j$ are taken with respect to $E_0$.
+$ z_"el" = sum_i g_i exp(- E_i / (k_"B " T) ) $
+where $g_i$ is the degeneracy of electronic state $i$ and $E_i$ is the electronic energy for electronic state $i$.
+As is typically done, we will adopt the ground-state (i.e. $j=0$) as the zero-energy reference point, such that all values of $E_i$ are taken with respect to $E_0$.
 #tip[This is where the $exp(-Delta E^ddagger\/R T)$ term comes from in our expression for $K_"C "^ddagger$. It is because we have factored out the energy of the electronic ground state for each species from $z_"el"$ so we could have the ground state contribution to $z_"el"$ be equal to $g_0$.]
-For the sake of simplicity, excited states (i.e. $j>=1$) are often assumed to have a negligible contribution to $z_"el"$ due to their high energies with respect to the ground state.
+For the sake of simplicity, excited states (i.e. $i>=1$) are often assumed to have a negligible contribution to $z_"el"$ due to their high energies with respect to the ground state.
 In this case, we can simply state
 $ z_"el" = g_0. $
 
@@ -3174,8 +3223,12 @@ For full clarity, there is no direct relationship between $G_i^std$ and the viab
 ==== Closed Cycles
 
 We can use the de Donder relations as a way to immediately rule out physically impossible reaction mechanisms.
-For instance, consider the cyclic reaction scheme in Figure XYZ.
-#self[draw triangle like in Neil's review.]
+For instance, consider the cyclic reaction scheme in #ref(<fig:cycle>).
+#figure(
+  image("figures/rxn_cycle.svg", width: 15%),
+  caption: [A closed reaction cycle that is not viable.]
+)<fig:cycle>
+
 Like with any set of state functions in a closed cycle, we know that
 $ sum_i A_i = 0. $
 However, it is impossible for this statement to be true unless $A_i=0$ for each step.
