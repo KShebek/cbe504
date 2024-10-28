@@ -2701,7 +2701,7 @@ Here, we seek to provide theoretical insights into what factors dictate the valu
 
 Before discussing transition state theory, it is worthwhile to briefly introduce simpler kinetic models and their limitations.
 
-== Collision Theory
+=== Collision Theory
 
 Perhaps the simplest model one can consider is collision theory.
 Consider the reaction of two species, such as #ce("A + B -> C").
