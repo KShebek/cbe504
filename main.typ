@@ -2727,7 +2727,7 @@ where $m_ce("A")$ and $m_ce("B")$ represent the mass of species A and B, respect
 The typical units of $macron(Z)$ are $"collisions"\/"cm"^(3)"-s"$ (i.e. the number of collisions to occur in a given volume over a given time period).
 When scaled up from number of collisions to a mole of collisions via Avogadro's constant, $macron(Z)$ can be naively thought of as a rate of reaction, as is clear from dimensional analysis alone.
 In doing so, one might say that
-$ macron(Z)_ce("AB") = r = k n_ce("A") n_ce("B") $
+$ macron(Z) = r = k n_ce("A") n_ce("B") $
 for an elementary, bimolecular reaction of A and B.
 By inspection of #ref(<eq:z_collision>), this would imply that
 $ k = pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2). $
@@ -2737,6 +2737,7 @@ The missing link is that molecules only react if they collide with sufficient en
 This allows us to refine our expression for $k$ to instead be given as
 $ k = pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2) exp(-eta^"*"/(k_"B " T)). $<eq:collision_refined>
 Typically, a multiplicative factor of $p$ is also included, which is known as the steric factor and is essentially a catch-all term for all additional factors that influence the collision--reaction probability beyond those associated with the energy.
+In general, $p<=1$.
 
 With #ref(<eq:collision_refined>), we have an exponential energy dependence, but we also see that there is a $sqrt(T)$ term as well.
 The $sqrt(T)$ dependence in what is effectively the pre-exponential factor provides some justification for #ref(<eq:arrhenius_mod>) where we wrote the modified form of the Arrhenius equation with a factor $A' T^n$ (here, $n=0.5$).
@@ -2796,6 +2797,8 @@ It may seem that we have not made much progress here because we do not yet know 
 
 === Thermochemistry from Partition Functions <thermochemistry-from-partition-functions>
 
+_This section was not covered in class but is included for additional context._
+
 It should be noted that statistical mechanics allows us to determine thermodynamic properties like the internal energy $U$, enthalpy $H$, entropy $S$, and Gibbs free energy $G$  of the translational, rotational, vibrational, and electronic partition functions can also be used in terms of the partition function.
 For the interested reader, we refer you to external sources on the subject matter.
 #footnote[Refer to "Section 10.3: Ensemble Properties and Basic Statistical Mechanics" in _Essentials of Computational Chemistry: Theories and Models_ (2#super[nd] ed.) by C.J. Cramer.]
@@ -2826,8 +2829,7 @@ $m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $L
 
 When dealing with gases, one can equivalently use a standard-state pressure $P^std$ (typically taken as 1 bar) in place of $V$, such as by invoking the ideal gas law: $V = k_"B " T\/P^std$.
 This would ultimately ensure that our rate constant is expressed with pressure-based units rather than concentrations.
-#caution[It must be emphasized that $V$ is describing the volume used to normalize the wavefunction within the particle-in-a-box model.
-In other words, it is best thought of as a reference volume for bookkeeping purposes and is not necessarily the volume of the reactor.
+#caution[It must be emphasized that $V$ is describing a reference volume for bookkeeping purposes and is not necessarily the volume of the reactor.
 In return, $P^std$ in the translational partition function is the standard state pressure and is not the same as the operating pressure.
 ]
 
@@ -2852,9 +2854,9 @@ For instance, $sigma$ is a value of 2 for linear molecules with a center of symm
 
 The quantity $I$ is the moment of inertia, and for the nonlinear case they are the three principal moments.
 The moment of inertia is defined as
-$ I equiv sum_i M_j r_(i)^2 $
-where $M_i$ is the mass of atom $i$ and $r_i$ is the distance of atom $i$ to the axis of rotation.
-#footnote[For a linear, symmetric molecule like #ce("CO2") (i.e. #ce("O=C=O")), the moment of inertia is $I=2 M_ce("O") d_ce("CO")^2$, where $M_ce("O")$ is the mass of the oxygen atom and $d_ce("CO")$ is the C--O bond length.]
+$ I equiv sum_i m_i r_(i)^2 $
+where $M_i$ is the mass of atom (not species) $i$ and $r_i$ is the distance of atom $i$ to the axis of rotation.
+#footnote[For a linear, symmetric molecule like #ce("CO2") (i.e. #ce("O=C=O")), the moment of inertia is $I= M_ce("O") d_ce("CO")^2 + M_ce("O") d_ce("CO")^2= 2 M_ce("O") d_ce("CO")^2$, where $M_ce("O")$ is the mass of the oxygen atom and $d_ce("CO")$ is the C--O bond length. This is because the central atom is the location of the axis of rotation.]
 For a diatomic molecule, the moment of inertia can be conveniently expressed as
 $ I = (M_1 M_2)/(M_1 + M_2) d^2 = mu d^2, $
 where $mu$ is called the reduced mass and $d$ is the distance between the two atoms.
@@ -2862,35 +2864,41 @@ where $mu$ is called the reduced mass and $d$ is the distance between the two at
 === Vibrational Partition Function
 
 The vibrational partition function is derived based on the harmonic-oscillator quantum-mechanical model and is given by
-$ z_"vib" =  product_(i=0)^N (exp(- (h nu_i)/(2 k_"B " T)))/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=0)^N (exp(- Theta_(i,"vib")/(2 T)))/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $
+$ z_"vib" =  product_(i=1)^N (exp(- (h nu_i)/(2 k_"B " T)))/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N (exp(- Theta_(i,"vib")/(2 T)))/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $
 where the product is taken over all vibrational modes in the system, $N$ is the number of vibrational modes, $nu_i$ is the $i$-th vibrational frequency, and $Theta_(i,"vib")$ is the characteristic vibrational temperature.
 It should be noted that vibrational spectra are normally reported in units of wavenumbers ($"cm"^(-1)$), $accent(nu,tilde)$.
-To convert a wavenumber to a frequency, the following relationship can be used: $nu_j = c accent(nu,tilde)_i$, where $c$ is the speed of light.
+To convert a wavenumber to a frequency, the following relationship can be used: $nu_i = c accent(nu,tilde)_i$, where $c$ is the speed of light.
 
 The number of vibrational modes can be determined as follows:
 #footnote[For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly, only the real vibrational modes should be included in calculating $z_"vib"$. This mode will be accounted for with $nu^ddagger$.]
 $
-N=0 quad ("monatomic")\
-N=3N_0 - 5 quad ("linear")\
-N=3N_0 - 6 quad ("nonlinear").
+N&=0 quad ("monatomic")\
+N&=3N_0 - 5 quad ("linear")\
+N&=3N_0 - 6 quad ("nonlinear").
 $
-For pedagogical purposes, it is helpful to rewrite the vibrational partition function slightly as
-$ z_"vib" =  exp(-E_"ZPVE" / (k_"B " T)) product_(i=0)^N 1/(1 - exp(- (Theta_(i,"vib"))/T)), quad E_"ZPVE" equiv 1/2 sum_i h nu_i, $<eq:vib_part>
+You may also see the vibrational partition function rewritten as
+$ z_"vib" =  exp(-E_"ZPVE" / (k_"B " T)) product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))), quad E_"ZPVE" equiv 1/2 sum_i h nu_i, $<eq:vib_part>
 where $E_"ZPVE"$ is the zero-point vibrational energy.
-#tip[You may see some people use $Delta U^ddagger$ in place of $Delta E^ddagger$ in the expression for $K_"C "^ddagger$. If this is done, it necessarily implies that the $exp(-E_"ZPVE"\/k_"B " T)$ term was factored out of the vibrational partition function and instead included as part of $Delta U^ddagger$ since $U equiv E + E_"ZPVE"$.]
+#tip[You may see the vibrational partition function written as 
+$ z_"vib" =  product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))), $
+where the ZPVE term has been removed.
+If this is done, then by necessity the expression for $K_"C "^ddagger$ must be rewritten as
+$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta U^ddagger) / (R T)), $
+since $U equiv E + E_"ZPVE"$. Care should be taken not to mix and match $Delta E^ddagger$ and $Delta U^ddagger$ with the wrong definition of $z_"vib"$.
+]
 
 === Electronic Partition Function
 
 Finally, the electronic partition function is given by
 $ z_"el" = sum_i g_i exp(- E_i / (k_"B " T) ) $
 where $g_i$ is the degeneracy of electronic state $i$ and $E_i$ is the electronic energy for electronic state $i$.
-As is typically done, we will adopt the ground-state (i.e. $j=0$) as the zero-energy reference point, such that all values of $E_i$ are taken with respect to $E_0$.
-#tip[This is where the $exp(-Delta E^ddagger\/R T)$ term comes from in our expression for $K_"C "^ddagger$. It is because we have factored out the energy of the electronic ground state for each species from $z_"el"$ so we could have the ground state contribution to $z_"el"$ be equal to $g_0$.]
+As is typically done, we will adopt the ground-state (i.e. $i=0$) as the zero-energy reference point, such that all values of $E_i$ are taken with respect to $E_0$.
+#tip[This is where the $exp(-Delta E^ddagger\/R T)$ term comes from in our expression for $K_"C "^ddagger$. It is because we have factored out the energy of the electronic ground state for each species from $z_"el"$.]
 For the sake of simplicity, excited states (i.e. $i>=1$) are often assumed to have a negligible contribution to $z_"el"$ due to their high energies with respect to the ground state.
 In this case, we can simply state
 $ z_"el" = g_0. $
 
-The degeneracy, $g_j$, is analogous to the spin multiplicity, defined as the number of unpaired electrons plus one.
+The degeneracy, $g_i$, is analogous to the spin multiplicity, defined as the number of unpaired electrons plus one.
 For instance, #ce("CH4^∙") has one unpaired electron and therefore has $g_0=2$ (i.e. the ground-state has a degeneracy of 2).
 Similarly, most non-radical species have $q_"el" approx 1$.
 However, this is not universally true.
@@ -2940,6 +2948,144 @@ k = A exp(-(Delta E^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_"A "^(1-m))
 $<eq:tst_a>
 Thinking back to the modified Arrhenius expressions with temperature-dependence terms on the prefactor as in #ref(<eq:arrhenius_mod>), we can see the $T^n$ dependence of the prefactor has $n=0$ for the empirical Arrhenius expression and $n=1$ from transition state theory.
 In practice, however, the temperature effects of this $T$ factor are often negligible when comparing $k$ values at different temperatures, as the exponential term is the main dominating factor.
+
+=== Example: Applying Transition State Theory
+
+==== Overview
+
+Let us consider the following gas-phase reaction:
+$ ce("F^∙ + H2 -> HF + H^∙"). $
+We wish to find the rate constant at 300 K by invoking transition state theory.
+Well, now what?
+
+We start by invoking our transition state theory definition of $k$:
+$ k = (k_"B " T)/h 1/(N_"A "^(1-m)) Z'_ce("TS")/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E^ddagger)/(R T)). $
+We know that the molecularity of this reaction is two, so $m=2$ here.
+We also know the temperature of interest, which is $T$ = 300 K.
+
+Next, we will tackle the partition functions, recognizing that
+$ Z'_ce("TS")/(Z'_ce("F^∙") Z'_ce("H2")) = (z'_"trans" z_"rot" z_"vib" z_"el")_ce("TS")/((z'_"trans" z_"rot" z_"vib" z_"el")_ce("F^∙") (z'_"trans" z_"rot" z_"vib" z_"el")_ce("H2")). $
+
+==== Translational Partition Function
+
+We recall that the translational partition function (per unit volume) is given by
+$ z'_"trans" = ((2 pi m k_"B " T)/h^2)^(d/2), $
+where we have $d = 3$ for each species because all three translational degrees of freedom are accessible for a gas-phase molecule.
+We have everything we need to compute the translational partition functions, so we will do just that:
+$ (z'_"trans")_"TS"/((z'_"trans")_ce("F^∙") (z'_"trans")_ce("H2")) = ((2 pi m_ce("TS") k_"B " T)/h^2)^(3/2)/(((2 pi m_ce("F^∙") k_"B " T)/h^2)^(3/2) ((2 pi m_ce("H2") k_"B " T)/h^2)^(3/2)) \
+= (9.407 times 10^28 1/"L ")/((8.086 times 10^28 1/"L ")(2.795 times 10^27 1/"L ")) = 4.162 times 10^(-28) "L ", $
+where $m_ce("TS") = m_ce("F^∙") + m_ce("H2")$, which can be readily obtained from the periodic table.
+Note that the magnitudes of the translational partition functions are quite large.
+This is expected.
+
+To summarize, the only non-tabulated information needed when calculating the translational partition function (on a per-volume basis) is:
+
+1. The experimentally relevant (absolute) temperature, $T$.
+2. The number of translational degrees of freedom for each species, $d$.
+
+==== Rotational Partition Function
+
+Now we shall move onto the rotational partition function.
+We recall that
+$ z_"rot" &= 1 quad ("monatomic")\
+z_"rot" &= (8 pi^2 I k_"B " T) / (sigma h^2) quad ("linear"). $
+
+F is monatomic, so $(z_"rot")_ce("F^∙")=1$. That is easy enough.
+
+By definition, #ce("H2") like any diatomic species is linear.
+The moment of inertia can then be given as 
+$ I_ce("H2") = (M_ce("H") M_ce("H"))/(M_ce("H")+ M_ce("H")) d_ce("H---H")^2 = 4.583 times 10^(-48) " kg m"^2, $
+where $M_ce("H")$ is the mass of the hydrogen atom, and $d_ce("H---H")$ is the H---H bond distance in #ce("H2"), which is known to be 0.74 Å.
+We also know or can readily look up that $ sigma_ce("H2") = 2. $
+The reason for this value is that #ce("H2") has two indistinguishable orientations through symmetrical rotations: rotation by 0#sym.degree (i.e. no rotation), and rotation by 180#sym.degree.
+This gives us all the information we need to calculate $(z_"rot")_ce("H2")$.
+
+For the transition state, we first need to know if it is linear or non-linear.
+In practice, the easiest way to determine this is through a quantum-mechanical calculation (e.g. using density functional theory).
+Here, we will assume that theory suggests the transition state is linear.
+The geometry of the transition state from theory will also dictate $sigma$, but in this case it is apparent without doing so that $ sigma_ce("TS")=1 $ given the asymmetric nature of an F---H---H transition state.
+The moment of inertia also depends on the transition state geometry but is a bit trickier to determine in this case since the center of mass is not in the midpoint of the structure.
+In any case, we will assume that quantum-chemical modeling suggests that the moment of inertia is $ I_ce("TS") = 1.234 times 10^(-46) " kg m"^2. $
+
+With this, we can write
+$ (z_"rot")_"TS"/((z_"rot")_ce("F^∙") (z_"rot")_ce("H2")) = (8 pi^2 I_ce("TS") k_"B " T) / (sigma h^2)/((1)( (8 pi^2 I_ce("H2") k_"B " T) / (sigma h^2))) = (29.258)/((1)(0.543)) = 53.851 $
+
+To summarize, the non-tabulated information needed when calculating the rotational partition function is:
+
+1. The experimentally relevant (absolute) temperature, $T$.
+2. Whether each species (i.e. reactants, transition state) are monatomic, non-linear, or linear. This is usually self-evident from the molecules themselves, but density functional theory can always be used to determine the molecular geometry if there is uncertainty (e.g. as might be the case with the transition state).
+3. The rotational symmetry number, $sigma$, for each species. Again, this depends on the geometry.
+4. The moment of inertia, $I$, for each species. This also depends on the geometry, although rotational spectroscopy can be used to discern this information for the reactants.
+
+As can be seen above, the key information needed here is the geometry of the reactants and transition state.
+Since it is impossible to experimentally isolate a transition state, one must either make assumptions about the transition state geometry or rely on quantum-chemical calculations.
+
+==== Vibrational Partition Function
+
+Now we will tackle the vibrational partition function.
+We recall the functional form is as follows:
+$ z_"vib" =  product_(i=1)^N (exp(- (h nu_i)/(2 k_"B " T)))/(1 - exp(- (h nu_i)/(k_"B " T))), $
+where the number of vibrational modes will vary depending on the geometry of the molecule.
+
+F is monatomic, so there are no vibrational modes and $ (z_"rot")_ce("F^∙")=1. $
+
+#ce("H2") is linear and has two atoms, the number of vibrational modes is given by $3(2)-5=1$.
+It is known from IR spectroscopy that the vibrational stretching frequency of #ce("H2") is 4395 $"cm"^(-1)$.
+Plugging this in yields
+$ (z_"vib")_ce("H2") = 2.648 times 10^(-5). $
+
+The transition state has three atoms and is assumed to be linear. Normally, there would be $3(3)-5=4$ vibrational modes.
+However, because this is a transition state, one of those modes becomes associated with the motion along the reaction coordinate and so there are only three real vibrational modes.
+From quantum-mechanical calculations, we will say that these values are 4007 $"cm"^(-1)$, 398 $"cm"^(-1)$, and 398 $"cm"^(-1)$.
+This results in
+$ (z_"vib")_ce("TS") = 1.372 times 10^(-5) $
+
+With this information, we can write
+$ ((z_"vib")_ce("TS"))/((z_"vib")_ce("F^∙") (z_"vib")_ce("H2")) = (1.372 times 10^(-5))/((1)(2.648 times 10^(-5)))= 0.518. $
+
+To summarize, the non-tabulated information needed when calculating the rotational partition function is:
+1. The experimentally relevant (absolute) temperature, $T$.
+2. The (real) vibrational modes for the reactants and transition state. For the reactants, this can be determined from IR spectroscopy. However, this is not possible for the transition state. In practice, the vibrational modes are typically computed from quantum-chemical calculations.
+
+==== Electronic Partition Function
+
+For the electronic partition function, we recall that
+$ z_"el" = g_0, $
+where we have chosen to neglect the contribution from the excited electronic states and have taken the ground-state energy as the zero-energy reference.
+Since #ce("H2") has no unpaired electrons, we can state
+
+$ (z_"el")_ce("H2") = 1. $
+
+However, #ce("F^∙") has one unpaired electron and so
+$ (z_"el")_ce("F^∙") = 2. $
+As for the transition state, whether it has radical character or not may be a little less clear.
+However, one useful rule of thumb is that (provided the total number of electrons remains the same) the total number of unpaired electrons cannot change from odd to even or vice versa.
+#footnote[This is because an odd-numbered spin multiplicity can only occur when the total number of unpaired electrons is even and vice versa.]
+In other words,
+$ (z_"el")_ce("TS") = 2. $
+Therefore,
+$ ((z_"el")_ce("TS"))/((z_"el")_ce("F^∙") (z_"el")_ce("H^∙")) = (2)/((2)(1)) = 1. $
+
+To summarize, the (non-tabulated) information needed is:
+
+1. Whether the excited electronic states can be ignored (typically the case).
+2. The spin multiplicity (i.e. number of unpaired electrons + 1) for each species. For the reactants, this can be determined from a magnetic susceptibility balance or from Mössbauer spectroscopy.
+
+==== Putting It All Together
+
+Now we will put all the pieces together:
+
+$ k = (k_"B " T)/h N_"A " (4.162 times 10^(-28) "L") (53.851) (0.518) (1) exp(-(Delta E^ddagger)/(R T)). $
+This simplifies to
+$ k = (4.37 times 10^(10) "L/mol-s") exp(-(Delta E^ddagger)/(R T)). $
+We have the pre-exponential factor.
+Now we need the activation energy.
+The activation energy, as defined based on electronic energy differences, can only be computed from quantum-mechanical calculations.
+Here, we will assume it is $Delta E^ddagger$ = 6 kJ/mol from quantum-mechanical calculations.
+#footnote[Note that $Delta E^ddagger$ is not the same as $E_"a "$, although it is analogous. The $Delta E^ddagger$ term only includes the electronic energy difference and includes no thermal corrections.]
+This gets us
+$ k_"TST" = 3.94 times 10^(9) "L/(mol-s)". $
+For comparison, the NIST Kinetics Database indicates that $k = 1.4 times 10^(10) "L/mol-s"$ for this reaction (at 298 K, which is close enough to our 300 K scenario).
 
 === Accounting for Thermodynamic Non-Idealities
 
@@ -3289,6 +3435,8 @@ The term on the right-hand side is a significant thermodynamic term, which is he
 If the activity of each reactant and product is the same as that at equilibrium, the right-hand side becomes 0, and the net rate becomes 0 as well.
 
 = Energy and Reactivity Trends <reaction-energy-diagrams>
+
+#self[Add Bronsted law stuf from pg 375 of Dill and Bromberg. Then Hammett and Taft., isoelectronic]
 
 == Reaction Energy Diagrams
 
