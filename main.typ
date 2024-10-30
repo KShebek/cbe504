@@ -2779,14 +2779,22 @@ Before then, however, we need to figure out what to do with $K_"C "^ddagger$.
 The most pressing situation to address in our definition of $k$ is $K_"C "^ddagger$.
 Thankfully, with a healthy dose of statistical thermodynamics, this becomes relatively manageable.
 Although it will not be derived here, from statistical mechanics it is known that the equilibrium constant can be expressed in terms of molecular partition functions as follows:
-$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) exp(- (Delta E^ddagger) / (R T)), $<eq:k_a_partition_functions>
-were $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species and $Delta E^ddagger$ is the change in electronic energy between the transition state and reactant(s).
-#footnote[The reason for the $exp(-Delta E^ddagger\/R T)$ term will become clearer when we introduce the electronic partition function. It is based on what we decide to take as the zero-energy reference.]
+$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (tilde(Z)^ddagger) / (tilde(Z)_ce("A") tilde(Z)_ce("B")), $
+where $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species (the tildes are simply to distinguish this equation from the one that follows).
 We will forego a formal derivation linking $Z_j$ to the equilibrium constant. That said, we can think of it as being intuitively reasonable because the ratio of molecular partition functions describes the distribution of energetic states between the products and reactants, which dictates the direction for the equilibrium in a manner analogous to the change in Gibbs free energy.
 
-We will describe how one determines a molecular partition function in a moment, but before we do, recall that we have been dealing with concentrations and $K_"C "^ddagger$.
+In practice, the molecular partition functions are generally defined with respect to the lowest energy state for that molecule.
+If we adopt this convention, then $K_"a "^ddagger$ becomes
+$
+K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) exp(- (Delta E_0^ddagger)/(R T)),
+$<eq:k_a_partition_functions>
+as we will justify shortly.
+Here, $E_0^ddagger$ is the energy difference between the transition state and reactants at 0 K (i.e. the sum of electronic energy and zero-point energy contributions).
+We will adopt this convention for the partition functions going forward.
+
+Before proceeding, recall that we have been dealing with concentrations and $K_"C "^ddagger$.
 As such, we will instead use
-$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E^ddagger) / (R T)), $
+$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger)/(R T)), $<eq:k_c_partition_functions>
 where $Z'_j$ is the molecular partition function per unit volume for the $j$-th species.
 The need for $Z'_j$ being in units of $"volume"^(-1)$ is so that we arrive at the appropriate units for $K_"C "^ddagger$.
 The factor of $1\/N_"A "^(1-m)$, where $m$ is the molecularity (i.e. $m = 2$ for this example),
@@ -2835,7 +2843,7 @@ In return, $P^std$ in the translational partition function is the standard state
 
 It is also worth noting that $z_"trans"$ can be generalized to an arbitrary set of $d$ dimensions (e.g. in the case of a system that does not have all three translational degrees of freedom).
 To do so, it is as simple as stating
-$ z_"trans" = (L / Lambda)^d, $
+$ z_"trans" = L ((2 pi m k_"B " T)/h^2)^(d/2), $
 where $L$ is now a reference length dimension.
 
 === Rotational Partition Function
@@ -2864,59 +2872,64 @@ where $mu$ is called the reduced mass and $d$ is the distance between the two at
 === Vibrational Partition Function
 
 The vibrational partition function is derived based on the harmonic-oscillator quantum-mechanical model and is given by
-$ z_"vib" =  product_(i=1)^N (exp(- (h nu_i)/(2 k_"B " T)))/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N (exp(- Theta_(i,"vib")/(2 T)))/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $
-where the product is taken over all vibrational modes in the system, $N$ is the number of vibrational modes, $nu_i$ is the $i$-th vibrational frequency, and $Theta_(i,"vib")$ is the characteristic vibrational temperature.
-It should be noted that vibrational spectra are normally reported in units of wavenumbers ($"cm"^(-1)$), $accent(nu,tilde)$.
-To convert a wavenumber to a frequency, the following relationship can be used: $nu_i = c accent(nu,tilde)_i$, where $c$ is the speed of light.
+$ tilde(z)_"vib" = exp(-E_"ZPVE" / (k_"B " T)) product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))), quad E_"ZPVE" equiv 1/2 sum_i h nu_i. $
+Here, $N$ is the number of vibrational modes, $nu_i$ is the $i$-th vibrational frequency, and $E_"ZPVE"$ is known as the zero-point vibrational energy.
 
-The number of vibrational modes can be determined as follows:
+However, as mentioned earlier, the convention is such that the molecular partition functions will be defined based on their lowest-energy states as the point of reference.
+As such, we will factor out the $E_"ZPVE"$ term.
+The corresponding vibrational partition function is now
+$ z_"vib" = product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N 1/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $<eq:vib_part>
+where $Theta_(i,"vib")$ is known as the characteristic vibrational temperature.
+
+The number of vibrational modes for a molecule can be determined as follows:
 #footnote[For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly, only the real vibrational modes should be included in calculating $z_"vib"$. This mode will be accounted for with $nu^ddagger$.]
 $
 N&=0 quad ("monatomic")\
 N&=3N_0 - 5 quad ("linear")\
 N&=3N_0 - 6 quad ("nonlinear").
 $
-You may also see the vibrational partition function rewritten as
-$ z_"vib" =  exp(-E_"ZPVE" / (k_"B " T)) product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))), quad E_"ZPVE" equiv 1/2 sum_i h nu_i, $<eq:vib_part>
-where $E_"ZPVE"$ is the zero-point vibrational energy.
-#tip[You may see the vibrational partition function written as 
-$ z_"vib" =  product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))), $
-where the ZPVE term has been removed.
-If this is done, then by necessity the expression for $K_"C "^ddagger$ must be rewritten as
-$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta U^ddagger) / (R T)), $
-since $U equiv E + E_"ZPVE"$. Care should be taken not to mix and match $Delta E^ddagger$ and $Delta U^ddagger$ with the wrong definition of $z_"vib"$.
+
+Finally, it should be noted that vibrational spectra are normally reported in units of wavenumbers ($"cm"^(-1)$), $accent(nu,tilde)$.
+To convert a wavenumber to a frequency, the following relationship can be used: $nu_i = c accent(nu,tilde)_i$, where $c$ is the speed of light.
+
+#tip[
+  The $exp(-E_"ZPVE"\/R T)$ term that we have factored out from $z_"vib"$ does not disappear entirely. Instead, it ends up being included as part of the $exp(- Delta E_0^ddagger\/R T)$ term in our expression for $K_"C "^ddagger$ given by #ref(<eq:k_c_partition_functions>). Since $E_0 equiv E_"el" + E_"ZPVE"$, the latter term comes from the modified vibrational partition function.
 ]
 
 === Electronic Partition Function
 
 Finally, the electronic partition function is given by
-$ z_"el" = sum_i g_i exp(- E_i / (k_"B " T) ) $
-where $g_i$ is the degeneracy of electronic state $i$ and $E_i$ is the electronic energy for electronic state $i$.
-As is typically done, we will adopt the ground-state (i.e. $i=0$) as the zero-energy reference point, such that all values of $E_i$ are taken with respect to $E_0$.
-#tip[This is where the $exp(-Delta E^ddagger\/R T)$ term comes from in our expression for $K_"C "^ddagger$. It is because we have factored out the energy of the electronic ground state for each species from $z_"el"$.]
+$ z_"el" = sum_i g_i exp(- epsilon_i / (k_"B " T) ) $
+where $g_i$ is the degeneracy of electronic state $i$ and $epsilon_i$ is the electronic energy for electronic state $i$.
+As with the vibrational partition function, we will adopt the ground-state (i.e. $i=0$) as the zero-energy reference point, such that all values of $epsilon_i$ are taken with respect to $epsilon_0$.
 For the sake of simplicity, excited states (i.e. $i>=1$) are often assumed to have a negligible contribution to $z_"el"$ due to their high energies with respect to the ground state.
-In this case, we can simply state
+
+By ignoring the contribution from excited states and setting $epsilon_0=0 "eV"$ by convention, we can simply state
 $ z_"el" = g_0. $
 
-The degeneracy, $g_i$, is analogous to the spin multiplicity, defined as the number of unpaired electrons plus one.
+The ground-state degeneracy, $g_0$, is analogous to the spin multiplicity, defined as the number of unpaired electrons plus one.
 For instance, #ce("CH4^∙") has one unpaired electron and therefore has $g_0=2$ (i.e. the ground-state has a degeneracy of 2).
 Similarly, most non-radical species have $q_"el" approx 1$.
 However, this is not universally true.
 For instance, the ground-state magnetic configuration of #ce("O2") has two unpaired electrons, such that $g_0=3$ (i.e. the ground-state is a triplet).
+
+#tip[
+  The $exp(-epsilon_0\/R T)$ term that we have factored out from $z_"el"$ does not disappear entirely. Instead, it ends up being included as part of the $exp(- Delta E_0^ddagger\/R T)$ term in our expression for $K_"C "^ddagger$ given by #ref(<eq:k_c_partition_functions>). Since $E_0 equiv E_"el" + E_"ZPVE"$, the former term comes from the modified electronic partition function (where $E_"el" = epsilon_0$).
+]
 
 == Rates of Reaction from Partition Functions <rates-of-reaction>
 
 === The Idealized Case
 
 With the partition function business out of the way, let's revisit our expression for the concentration-based rate constant:
-$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(-(Delta E^ddagger )/ (R T)). $
+$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(-(Delta E_0^ddagger )/ (R T)). $
 We now know how to compute the partition functions, which is a relief.
 The main ingredient we need to either compute or measure are the vibrational modes of the system (and the spin multiplicity or excited states, if relevant).
 
 Revisiting our rate expression from #ref(<eq:tst_rate_kc>), we have
 $
 r &= nu^ddagger K_"C "^ddagger conc("A") conc("B")\
-r &= nu^ddagger 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E^ddagger) / (R T)) conc("A") conc("B").
+r &= nu^ddagger 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
 $<eq:rate_tst_intermediate>
 
 We are still left to figure out what do we do about $nu^ddagger$.
@@ -2928,23 +2941,24 @@ where the latter approximation is made because $h nu^ddagger << k_"B " T$ in mos
 #footnote[We have implicitly taken advantage of the Taylor expansion $exp(x) = 1 + x + x^2\/2! + x^3\/3! + ...$ and dropped the second-order and higher terms.]
 With some rearrangement, we have
 $ nu^ddagger = (k_"B " T) / h 1/ z_"vib, TS mode" $
-This expression implies that we can state $nu^ddagger = k_"B " T \/ h$ if we remove this one (imaginary) vibrational mode from the expression for $z_"vib"^ddagger$, which we have already done per convention.
+This expression implies that we can state $nu^ddagger = k_"B " T \/ h$, provided that we do not include this one (imaginary) vibrational mode in the expression for $z_"vib"^ddagger$.
 
 By plugging our result into #ref(<eq:rate_tst_intermediate>), we arrive at
 $
 r &= (k_"B " T)/h K_"C "^ddagger conc("A") conc("B")\
-r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E^ddagger) / (R T)) conc("A") conc("B"),
+r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B"),
 $<eq:tst_final>
 or more generally as
-$ r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (product_(j,nu_(j)<0) Z'_(j)^(|nu_j|)) exp(- (Delta E^ddagger) / (R T)) product_(j,nu_(j)<0) [A_j]^(|nu_j|). $
+$ r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (product_(j,nu_(j)<0) Z'_(j)^(|nu_j|)) exp(- (Delta E_0^ddagger) / (R T)) product_(j,nu_(j)<0) [A_j]^(|nu_j|). $
 
 From the above expression, we can see that
 $
 k = (k_"B " T)/h K_"C "^ddagger
 $
 or, equivalently, in terms of the partition functions,
+#footnote[Note that $Delta E_0^ddagger$ is not the same as $E_"a "$, although it is analogous. The $Delta E_0^ddagger$ term is at 0 K, whereas $E_"a "$ includes thermal corrections.]
 $
-k = A exp(-(Delta E^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_"A "^(1-m)) (Z'_("AB")^ddagger) / (Z'_"A " Z'_"B ").
+k = A exp(-(Delta E_0^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_"A "^(1-m)) (Z'_("AB")^ddagger) / (Z'_"A " Z'_"B ").
 $<eq:tst_a>
 Thinking back to the modified Arrhenius expressions with temperature-dependence terms on the prefactor as in #ref(<eq:arrhenius_mod>), we can see the $T^n$ dependence of the prefactor has $n=0$ for the empirical Arrhenius expression and $n=1$ from transition state theory.
 In practice, however, the temperature effects of this $T$ factor are often negligible when comparing $k$ values at different temperatures, as the exponential term is the main dominating factor.
@@ -2959,7 +2973,7 @@ We wish to find the rate constant at 300 K by invoking transition state theory.
 Well, now what?
 
 We start by invoking our transition state theory definition of $k$:
-$ k = (k_"B " T)/h 1/(N_"A "^(1-m)) Z'_ce("TS")/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E^ddagger)/(R T)). $
+$ k = (k_"B " T)/h 1/(N_"A "^(1-m)) Z'_ce("TS")/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E_0^ddagger)/(R T)). $
 We know that the molecularity of this reaction is two, so $m=2$ here.
 We also know the temperature of interest, which is $T$ = 300 K.
 
@@ -2994,8 +3008,8 @@ F is monatomic, so $(z_"rot")_ce("F^∙")=1$. That is easy enough.
 
 By definition, #ce("H2") like any diatomic species is linear.
 The moment of inertia can then be given as 
-$ I_ce("H2") = (M_ce("H") M_ce("H"))/(M_ce("H")+ M_ce("H")) d_ce("H---H")^2 = 4.583 times 10^(-48) " kg m"^2, $
-where $M_ce("H")$ is the mass of the hydrogen atom, and $d_ce("H---H")$ is the H---H bond distance in #ce("H2"), which is known to be 0.74 Å.
+$ I_ce("H2") = (M_ce("H") M_ce("H"))/(M_ce("H")+ M_ce("H")) d_ce("H--H")^2 = 4.583 times 10^(-48) " kg m"^2, $
+where $M_ce("H")$ is the mass of the hydrogen atom, and $d_ce("H--H")$ is the H---H bond distance in #ce("H2"), which is known to be 0.74 Å.
 We also know or can readily look up that $ sigma_ce("H2") = 2. $
 The reason for this value is that #ce("H2") has two indistinguishable orientations through symmetrical rotations: rotation by 0#sym.degree (i.e. no rotation), and rotation by 180#sym.degree.
 This gives us all the information we need to calculate $(z_"rot")_ce("H2")$.
@@ -3024,7 +3038,7 @@ Since it is impossible to experimentally isolate a transition state, one must ei
 
 Now we will tackle the vibrational partition function.
 We recall the functional form is as follows:
-$ z_"vib" =  product_(i=1)^N (exp(- (h nu_i)/(2 k_"B " T)))/(1 - exp(- (h nu_i)/(k_"B " T))), $
+$ z_"vib" =  product_(i=1)^N (1)/(1 - exp(- (h nu_i)/(k_"B " T))), $
 where the number of vibrational modes will vary depending on the geometry of the molecule.
 
 F is monatomic, so there are no vibrational modes and $ (z_"rot")_ce("F^∙")=1. $
@@ -3032,7 +3046,7 @@ F is monatomic, so there are no vibrational modes and $ (z_"rot")_ce("F^∙")=1.
 #ce("H2") is linear and has two atoms, the number of vibrational modes is given by $3(2)-5=1$.
 It is known from IR spectroscopy that the vibrational stretching frequency of #ce("H2") is 4395 $"cm"^(-1)$.
 Plugging this in yields
-$ (z_"vib")_ce("H2") = 2.648 times 10^(-5). $
+$ (z_"vib")_ce("H2") approx 1. $
 
 The transition state has three atoms and is assumed to be linear. Normally, there would be $3(3)-5=4$ vibrational modes.
 However, because this is a transition state, one of those modes becomes associated with the motion along the reaction coordinate and so there are only three real vibrational modes.
@@ -3041,7 +3055,7 @@ This results in
 $ (z_"vib")_ce("TS") = 1.372 times 10^(-5) $
 
 With this information, we can write
-$ ((z_"vib")_ce("TS"))/((z_"vib")_ce("F^∙") (z_"vib")_ce("H2")) = (1.372 times 10^(-5))/((1)(2.648 times 10^(-5)))= 0.518. $
+$ ((z_"vib")_ce("TS"))/((z_"vib")_ce("F^∙") (z_"vib")_ce("H2")) = (1.378)/((1)(1))= 1.378. $
 
 To summarize, the non-tabulated information needed when calculating the rotational partition function is:
 1. The experimentally relevant (absolute) temperature, $T$.
@@ -3075,16 +3089,15 @@ To summarize, the (non-tabulated) information needed is:
 
 Now we will put all the pieces together:
 
-$ k = (k_"B " T)/h N_"A " (4.162 times 10^(-28) "L") (53.851) (0.518) (1) exp(-(Delta E^ddagger)/(R T)). $
+$ k_"TST" = (k_"B " T)/h N_"A " (4.162 times 10^(-28) "L ") (53.851) (1.378) (1) exp(-(Delta E_0^ddagger)/(R T)). $
 This simplifies to
-$ k = (4.37 times 10^(10) "L/mol-s") exp(-(Delta E^ddagger)/(R T)). $
+$ k_"TST" = (1.163 times 10^11 "L/mol-s") exp(-(Delta E_0^ddagger)/(R T)). $
 We have the pre-exponential factor.
 Now we need the activation energy.
 The activation energy, as defined based on electronic energy differences, can only be computed from quantum-mechanical calculations.
-Here, we will assume it is $Delta E^ddagger$ = 6 kJ/mol from quantum-mechanical calculations.
-#footnote[Note that $Delta E^ddagger$ is not the same as $E_"a "$, although it is analogous. The $Delta E^ddagger$ term only includes the electronic energy difference and includes no thermal corrections.]
+Here, we will assume it is $Delta E_0^ddagger$ = 6 kJ/mol from quantum-mechanical calculations.
 This gets us
-$ k_"TST" = 3.94 times 10^(9) "L/(mol-s)". $
+$ k_"TST" = 1.05 times 10^(10) "L/(mol-s)". $
 For comparison, the NIST Kinetics Database indicates that $k = 1.4 times 10^(10) "L/mol-s"$ for this reaction (at 298 K, which is close enough to our 300 K scenario).
 
 === Accounting for Thermodynamic Non-Idealities
@@ -3101,10 +3114,10 @@ $ conc("AB")^ddagger = (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamm
 Plugging this into our rate expression now yields
 $
 r &= (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B")\
-r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B"),
+r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B"),
 $
 or more generally as
-$ r = (k_"B " T)/h C^std Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E^ddagger)/(R T)) 1/gamma^ddagger product_(j,nu_j<0) a^(|nu_j|).
+$ r = (k_"B " T)/h C^std Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) 1/gamma^ddagger product_(j,nu_j<0) a^(|nu_j|).
 $<eq:tst_activities>
 
 Here, the definition of $K_"a "^ddagger$ was substituted in from #ref(<eq:k_a_partition_functions>).
@@ -3115,7 +3128,7 @@ From the above expression, we can see that
 $ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger $<eq:k_nonideal>
 or, equivalently, in terms of the partition functions,
 $ 
-k_"nonideal" = A_("nonideal") exp(-(Delta E^ddagger)/(R T))\
+k_"nonideal" = A_("nonideal") exp(-(Delta E_0^ddagger)/(R T))\
 A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") (gamma_"A " gamma_"B ")/gamma^ddagger
 $<eq:tst_nonideal>
 in analogy with #ref(<eq:tst_a>).
