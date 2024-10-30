@@ -2882,7 +2882,7 @@ $ z_"vib" = product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N
 where $Theta_(i,"vib")$ is known as the characteristic vibrational temperature.
 
 The number of vibrational modes for a molecule can be determined as follows:
-#footnote[For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly, only the real vibrational modes should be included in calculating $z_"vib"$. This mode will be accounted for with $nu^ddagger$.]
+#footnote[For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly when we define $nu^ddagger$, only the real vibrational modes will need to be included in calculating $z_"vib"$.]
 $
 N&=0 quad ("monatomic")\
 N&=3N_0 - 5 quad ("linear")\
@@ -2941,7 +2941,7 @@ where the latter approximation is made because $h nu^ddagger << k_"B " T$ in mos
 #footnote[We have implicitly taken advantage of the Taylor expansion $exp(x) = 1 + x + x^2\/2! + x^3\/3! + ...$ and dropped the second-order and higher terms.]
 With some rearrangement, we have
 $ nu^ddagger = (k_"B " T) / h 1/ z_"vib, TS mode" $
-This expression implies that we can state $nu^ddagger = k_"B " T \/ h$, provided that we do not include this one (imaginary) vibrational mode in the expression for $z_"vib"^ddagger$.
+This expression implies that we can state $nu^ddagger = k_"B " T \/ h$, provided that we remove this one vibrational mode associated with the transition state in the expression for $z_"vib"^ddagger$.
 
 By plugging our result into #ref(<eq:rate_tst_intermediate>), we arrive at
 $
@@ -3041,7 +3041,7 @@ We recall the functional form is as follows:
 $ z_"vib" =  product_(i=1)^N (1)/(1 - exp(- (h nu_i)/(k_"B " T))), $
 where the number of vibrational modes will vary depending on the geometry of the molecule.
 
-F is monatomic, so there are no vibrational modes and $ (z_"rot")_ce("F^∙")=1. $
+F is monatomic, so there are no vibrational modes and $ (z_"vib")_ce("F^∙")=1. $
 
 #ce("H2") is linear and has two atoms, the number of vibrational modes is given by $3(2)-5=1$.
 It is known from IR spectroscopy that the vibrational stretching frequency of #ce("H2") is 4395 $"cm"^(-1)$.
@@ -3052,7 +3052,7 @@ The transition state has three atoms and is assumed to be linear. Normally, ther
 However, because this is a transition state, one of those modes becomes associated with the motion along the reaction coordinate and so there are only three real vibrational modes.
 From quantum-mechanical calculations, we will say that these values are 4007 $"cm"^(-1)$, 398 $"cm"^(-1)$, and 398 $"cm"^(-1)$.
 This results in
-$ (z_"vib")_ce("TS") = 1.372 times 10^(-5) $
+$ (z_"vib")_ce("TS") = 1.378 $
 
 With this information, we can write
 $ ((z_"vib")_ce("TS"))/((z_"vib")_ce("F^∙") (z_"vib")_ce("H2")) = (1.378)/((1)(1))= 1.378. $
@@ -3100,6 +3100,111 @@ This gets us
 $ k_"TST" = 1.05 times 10^(10) "L/(mol-s)". $
 For comparison, the NIST Kinetics Database indicates that $k = 1.4 times 10^(10) "L/mol-s"$ for this reaction (at 298 K, which is close enough to our 300 K scenario).
 
+== Applications to Elementary Processes
+
+=== Degrees of Freedom
+
+As was shown previously, the rate constant for a given elementary step is related to the ratio of partition functions for the transition state and the reactant(s).
+If one considers a free molecule (e.g. in the gas phase), it has three translational degrees of freedom, three rotational degrees of freedom if nonlinear or two rotational degrees of freedom if linear, and several vibrational degrees of freedom depending on the number of atoms $N_0$.
+We will represent this as follows, where the exponents in quotes are simply how many degrees of freedom there are.#footnote[We have tacitly assumed that the excited states are energetically negligible, such that $z_"el" = g_0$ and therefore $z_"el"$ has only one degree of freedom.]
+$ Z' = z_"trans"^((3))/V z_"rot"^((m)) z_"vib"^((N)) z_"el" $
+where
+$
+m=0, quad N &=0 quad ("monatomic")\
+m=2, quad N &= 3N_0-5 quad ("linear")\
+m=3, quad N &=3N_0-6 quad ("non-linear").
+$
+
+For a transition state, one vibrational degree of freedom is lost, such that
+$ Z'^ddagger = z_"trans"^(ddagger(3))/V z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger) $
+
+With this, we can often make order-of-magnitude arguments and simplifications via
+$ k prop Z'^ddagger/(Z'_"AB" Z'_"C "), $
+which we will do below.
+Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
+
+In general, the following order of magnitude arguments are fairly reasonable in the temperature range of 300---500 K or so:
+$ z_"trans", quad &f_"trans" approx 10^9-10^10 "1/L per DOF" \
+ z_"rot", quad &f_"rot" approx 10^1-10^2 "per DOF" \
+ z_"vib", quad &f_"vib" approx 10^0-10^1 "per DOF"\
+ z_"el", quad &f_"el" approx 1.
+ $
+That said, these are simply rough rules-of-thumb.
+
+=== Adsorption
+
+// draw energy diagram
+
+When a molecule adsorbs onto a surface, some of these degrees of freedom are lost.
+If the adsorbate is strongly chemisorbed onto the surface, then there are likely no translational or rotational degrees of freedom left.
+The vibrational degrees of freedom are still present, although the vibrational modes are likely to differ substantially from the gas phase, and there are now $3N_0$ modes.
+These approximations are often known as the harmonic limit.
+
+If the adsorbate is somewhat weakly bound, then the remaining degrees of freedom are likely to be somewhere between that used for a free gas and that of a chemisorbed species.
+More complicated expressions are available to model these intermediate behaviors, such as the hindered translator--hindered rotor model.
+#footnote[L.H. Sprowl, C.T. Campbell, L. Árnadóttir, "Hindered Translator and Hindered Rotor Models for Adsorbates: Partition Functions and Entropies," _J. Phys. Chem. C_, 120, 9719--9731 (2016).]
+
+For the sake of simplicity, let us assume that an adsorbate binds strongly to the catalyst surface via chemisorption.
+The transition state for this process is, by definition, partway between the gas-phase species and the adsorbed species, such that the transition state itself has some intermediate number of motional degrees of freedom remaining.
+In other words, the transition state is a semi-mobile species on or near the surface.
+
+Starting from #ref(<eq:tst_a>), if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
+$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((3)) z_"vib"^((N)) z_"el"), $
+where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
+Note that the $exp(- Delta E_0^ddagger)\/R T$ term is no longer present because $Delta E_0^ddagger=0$ for non-activated adsorption processes,
+#footnote[By this, we mean that we are referring to the binding of the adsorbate to the surface without breaking any chemical bonds.] and the $1\/N_"A "^(1-m)$ term is gone because $m=1$ for this process.
+#footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier. It is perhaps better to think about this as $E_"a "->0$.]
+
+If we make several assumptions, namely that the rotational, vibrational, and electronic partition functions do not appreciable change between the gas-phase and the transition state upon adsorption, then we arrive at
+$ k_"ads" = (k_"B " T)/h z^(ddagger (2))_"trans"/z^((3))_"trans". $
+Certainly, this is a lot cleaner looking.
+Substituting in for the definition of the translational partition functions yields
+$ k_"ads" = (k_"B " T)/h (L\/Lambda)^2/(L\/Lambda)^3 = (k_"B "T)/h Lambda/L = (k_"B " T)/(L sqrt(2 pi m k_"B " T)). $
+Assuming we have an ideal gas, we can invoke the ideal gas law in the form of
+$ P = (k_"B " T)/V. $
+With this, we obtain what is known as the Hertz--Knudsen equation:
+$ k_"ads" = (P A)/(sqrt(2 pi m k_"B " T)), $
+where $A$ is a reference area obtained from $V\/L$.
+Here, $P$ is specifically the (partial) pressure of the gaseous species being adsorbed, and $A$ is generally taken as the surface area of the adsorption site.
+Sometimes, an empirical sticking coefficient $s$ will also be included in the numerator to account for the probability that the adsorbate will stick to the surface.
+
+Before continuing, it must be emphasized that the Hertz--Knudsen equation is not universal for all adsorption properties.
+While it holds for many systems, if the adsorption process breaks any of the aforementioned assumptions (e.g. loss of one translational mode only, ideal gas behavior), one must use transition state theory directly or re-derive a new analytical expression.
+
+=== Desorption
+
+// draw energy diagram
+
+We now shift our focus to desorption, which is simply the reverse process of adsorption.
+Unlike adsorption, however, there is a barrier for desorption (it is the heat of desorption).
+With desorption, we are going from an adsorbed state to the free gas, with a transition state somewhere in the middle.
+If we assume that the adsorbed state has no translational or rotational degrees of freedom and that two translational degrees of freedom and all three rotational degrees of freedom are restored at the transition state (i.e. the reverse of the process described in the derivation of the Hertz--Knudsen equation), then we have
+$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^(ddagger (N)) z_"el") exp(- (Delta E_"des")/(R T)), $
+which we will simplify to
+$ k_"des" = (k_"B " T)/h (z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) z_("vib")^(ddagger (N-1))z_("el")^(ddagger))/(z_("vib")^((N))z_("el")) exp(- (Delta E_"des")/(R T)). $
+
+From here, we will assume that the change in the vibrational partition function is negligible compared to the change in the translational partition functions and that the change in electronic partition function is also negligible (both of which are almost always going to be true).
+With this, we can state
+$ k_"des" = (k_"B " T)/h z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
+From here, we plug in our definitions of the partition functions.
+We will start with the translational partition function:
+$ k_"des" = (k_"B " T)/h (L/Lambda)^2 z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)) $
+$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2  z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
+At this point, we need to have some information about the shape of our transition state (i.e. unimolecular, linear, or non-linear).
+For the sake of simplicity, let's continue our derivation assuming a linear transition state.
+$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2 T/(sigma Theta_"rot")  exp(- (Delta E_"des")/(R T)). $
+Repeating this process for a transition state of different geometry is simply a matter of plugging in a different expression for $z_("rot")^ddagger$.
+
+=== Surface Reaction
+
+For surface reactions, differences in the translational and rotational degrees of freedom for both the reactant(s) and transition state are typically negligible.
+Formally, we can make an even stronger statement that the translational and rotational degrees of freedom are zero, such that we have
+$ k_"SR" = (k_"B " T)/h  (z_"trans"^(ddagger (0))/V z_"rot"^(ddagger (0)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)). $
+We can now simplify to
+$ k_"SR" = (k_"B " T)/h  (z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)). $
+Personally, this is about as far as I am willing to simplify things in most cases without further information.
+
+
 === Accounting for Thermodynamic Non-Idealities
 
 In the derivations of the transition state theory rate constant thus far, we have implicitly neglected any thermodynamic non-idealities.
@@ -3116,7 +3221,7 @@ $
 r &= (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B")\
 r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B"),
 $
-or more generally as
+or more generally as#footnote[In contrast with statements made in G. Lente, "Facts and Alternative Facts in Chemical Kinetics: Remarks About the Kinetic Use of Activities, Termolecular Processes, and Linearization Techniques", _Curr. Opin. Chem. Eng._, 21, 76--83 (2018), rate expressions can indeed be expressed using activities rather than concentrations, as demonstrated throughout this section.]
 $ r = (k_"B " T)/h C^std Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) 1/gamma^ddagger product_(j,nu_j<0) a^(|nu_j|).
 $<eq:tst_activities>
 
@@ -3149,102 +3254,6 @@ Therefore, we can say that if we stabilize the reactants via solvation, then $k_
 In contrast, if our reaction media selectively stabilizes the transition state, then $k_"nonideal"$ will decrease.
 Similar arguments can be made about gas-phase reactions by considering the fugacity coefficient $phi_j$ in place of the activity coefficient $gamma_j$.
 
-== Applications to Elementary Processes
-
-=== Degrees of Freedom
-
-As was shown previously, the rate constant for a given elementary step is related to the ratio of partition functions for the transition state and the reactant(s).
-If one considers a free molecule (e.g. in the gas phase), it has three translational degrees of freedom, three rotational degrees of freedom if nonlinear or two rotational degrees of freedom if linear, and several vibrational degrees of freedom depending on the number of atoms $N_0$.
-We will represent this as follows, where the exponents in quotes are simply how many degrees of freedom there are.#footnote[We have tacitly assumed that the excited states are energetically negligible, such that $z_"el" = g_0$ and therefore $z_"el"$ has only one degree of freedom.]
-$ Z' = z_"trans"^((3))/V z_"rot"^((m)) z_"vib"^((N)) z_"el" $
-where
-$
-m=0, quad N &=0 quad ("monatomic")\
-m=2, quad N &= 3N_0-5 quad ("linear")\
-m=3, quad N &=3N_0-6 quad ("non-linear").
-$
-
-For a transition state, one vibrational degree of freedom is lost, such that
-$ Z'^ddagger = z_"trans"^(ddagger(3))/V z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger) $
-
-With this, we can often make order-of-magnitude arguments and simplifications via
-$ k prop Z'^ddagger/(Z'_"AB" Z'_"C "), $
-which we will do below.
-Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
-
-=== Adsorption
-
-// draw energy diagram
-
-When a molecule adsorbs onto a surface, some of these degrees of freedom are lost.
-If the adsorbate is strongly chemisorbed onto the surface, then there are likely no translational or rotational degrees of freedom left.
-The vibrational degrees of freedom are still present, although the vibrational modes are likely to differ substantially from the gas phase, and there are now $3N_0$ modes.
-These approximations are often known as the harmonic limit.
-
-If the adsorbate is somewhat weakly bound, then the remaining degrees of freedom are likely to be somewhere between that used for a free gas and that of a chemisorbed species.
-More complicated expressions are available to model these intermediate behaviors, such as the hindered translator--hindered rotor model.
-#footnote[L.H. Sprowl, C.T. Campbell, L. Árnadóttir, "Hindered Translator and Hindered Rotor Models for Adsorbates: Partition Functions and Entropies," _J. Phys. Chem. C_, 120, 9719--9731 (2016).]
-
-For the sake of simplicity, let us assume that an adsorbate binds strongly to the catalyst surface via chemisorption.
-The transition state for this process is, by definition, partway between the gas-phase species and the adsorbed species, such that the transition state itself has some intermediate number of motional degrees of freedom remaining.
-In other words, the transition state is a semi-mobile species on or near the surface.
-
-Starting from #ref(<eq:tst_a>), if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
-$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((3)) z_"vib"^((N)) z_"el"), $
-where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
-Note that the $exp(- Delta E^ddagger)\/R T$ term is no longer present because $Delta E^ddagger=0$ for non-activated adsorption processes
-#footnote[By this, we mean that we are referring to the binding of the adsorbate to the surface without breaking any chemical bonds.] and the $1\/N_"A "^(1-m)$ term is gone because $m=1$ for this process.
-#footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier. It is perhaps better to think about this as $E_"a "->0$.]
-
-If we make several assumptions, namely that the rotational, vibrational, and electronic partition functions do not appreciable change between the gas-phase and the transition state upon adsorption, then we arrive at
-$ k_"ads" = (k_"B " T)/h z^(ddagger (2))_"trans"/z^((3))_"trans". $
-Certainly, this is a lot cleaner looking.
-Substituting in for the definition of the translational partition functions yields
-$ k_"ads" = (k_"B " T)/h (L\/Lambda)^2/(L\/Lambda)^3 = (k_"B "T)/h Lambda/L = (k_"B " T)/(L sqrt(2 pi m k_"B " T)). $
-Assuming we have an ideal gas, we can invoke the ideal gas law in the form of
-$ P = (k_"B " T)/V. $
-With this, we obtain what is known as the Hertz--Knudsen equation:
-$ k_"ads" = (P A)/(sqrt(2 pi m k_"B " T)), $
-where $A$ is a reference area obtained from $V\/L$.
-Here, $P$ is specifically the (partial) pressure of the gaseous species being adsorbed, and $A$ is generally taken as the surface area of the adsorption site.
-Sometimes, an empirical sticking coefficient $s$ will also be included in the numerator to account for the probability that the adsorbate will stick to the surface.
-
-Before continuing, it must be emphasized that the Hertz--Knudsen equation is not universal for all adsorption properties.
-While it holds for many systems, if the adsorption process breaks any of the aforementioned assumptions (e.g. loss of one translational mode only, ideal gas behavior), one must use transition state theory directly or re-derive a new analytical expression.
-
-=== Desorption
-
-// draw energy diagram
-
-We now shift our focus to desorption, which is simply the reverse process of adsorption.
-Unlike adsorption, however, there is a barrier for desorption (it is the heat of desorption).
-With desorption, we are going from an adsorbed state to the free gas, with a transition state somewhere in the middle.
-If we assume that the adsorbed state has no translational or rotational degrees of freedom and that two translational degrees of freedom and all three rotational degrees of freedom are restored at the transition state (i.e. the reverse of the process described in the derivation of the Hertz--Knudsen equation), then we have
-$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^(ddagger (N)) z_"el"), $
-which we will simplify to
-$ k_"des" = (k_"B " T)/h (z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) z_("vib")^(ddagger (N-1))z_("el")^(ddagger))/(z_("vib")^((N))z_("el")) exp(- (Delta E_"des")/(R T)). $
-
-From here, we will assume that the change in the vibrational partition function is negligible compared to the change in the translational partition functions and that the change in electronic partition function is also negligible (both of which are almost always going to be true).
-With this, we can state
-$ k_"des" = (k_"B " T)/h z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
-From here, we plug in our definitions of the partition functions.
-We will start with the translational partition function:
-$ k_"des" = (k_"B " T)/h (L/Lambda)^2 z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)) $
-$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2  z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
-At this point, we need to have some information about the shape of our transition state (i.e. unimolecular, linear, or non-linear).
-For the sake of simplicity, let's continue our derivation assuming a linear transition state.
-$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2 T/(sigma Theta_"rot")  exp(- (Delta E_"des")/(R T)). $
-Repeating this process for a transition state of different geometry is simply a matter of plugging in a different expression for $z_("rot")^ddagger$.
-
-=== Surface Reaction
-
-For surface reactions, differences in the translational and rotational degrees of freedom for both the reactant(s) and transition state are typically negligible.
-Formally, we can make an even stronger statement that the translational and rotational degrees of freedom are zero, such that we have
-$ k_"SR" = (k_"B " T)/h  (z_"trans"^(ddagger (0))/V z_"rot"^(ddagger (0)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E^ddagger)/(R T)). $
-We can now simplify to
-$ k_"SR" = (k_"B " T)/h  (z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"vib"^((N)) z_"el") exp(- (Delta E^ddagger)/(R T)). $
-Personally, this is about as far as I am willing to simplify things in most cases without further information.
-
 == A Thermodynamic Perspective
 
 Previously, we derived an expression for $k$ based on a statistical mechanics approach (i.e. using partition functions).
@@ -3267,7 +3276,6 @@ In the thermodynamically ideal case (i.e. $gamma_"A "=gamma_"B "=gamma^ddagger =
 The net rate of reaction also be written out in full as
 $ r = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B"), $<eq:eyring_final_rate>
 or more generally as
-#footnote[In contrast with statements made in G. Lente, "Facts and Alternative Facts in Chemical Kinetics: Remarks About the Kinetic Use of Activities, Termolecular Processes, and Linearization Techniques", _Curr. Opin. Chem. Eng._, 21, 76--83 (2018), rate expressions can indeed be expressed using activities rather than concentrations, as demonstrated throughout this section.]
 $ r = (k_"B "T )/h C^std exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) 1/gamma^ddagger product_(j,nu_j<0) a_(j)^(|nu_j|). $
 For the sake of illustration, we can separate out the various terms in $k$ in analogy with the Arrhenius equation to arrive at
 $
