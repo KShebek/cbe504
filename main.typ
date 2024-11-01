@@ -3,6 +3,8 @@
 // 2. Spend a little bit more time on BEPs. How to read handbook values. Relevance of temperature and pressure in handbook and how to adjust.
 // 3. Do reactor archetypes after the midterm
 // 4. Sprinkle in more examples
+// 5. Make exams 9am-5pm
+// 6. Make exam corrections a required homework problem. No extra credit.
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -2922,14 +2924,14 @@ For instance, the ground-state magnetic configuration of #ce("O2") has two unpai
 === The Idealized Case
 
 With the partition function business out of the way, let's revisit our expression for the concentration-based rate constant:
-$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(-(Delta E_0^ddagger )/ (R T)). $
+$ K_"C "^ddagger = 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"A" Z'_ce("B")) exp(-(Delta E_0^ddagger )/ (R T)). $
 We now know how to compute the partition functions, which is a relief.
 The main ingredients we need to either compute or measure are the geometries and vibrational modes of the system (and the spin multiplicity or excited states, if relevant).
 
 Revisiting our rate expression from #ref(<eq:tst_rate_kc>), we have
 $
 r &= nu^ddagger K_"C "^ddagger conc("A") conc("B")\
-r &= nu^ddagger 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
+r &= nu^ddagger 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
 $<eq:rate_tst_intermediate>
 
 We are still left to figure out what do we do about $nu^ddagger$.
@@ -2942,11 +2944,12 @@ where the latter approximation is made because $h nu^ddagger << k_"B " T$ in mos
 With some rearrangement, we have
 $ nu^ddagger = (k_"B " T) / h 1/ z_"vib, TS mode" $
 This expression implies that we can state $nu^ddagger = k_"B " T \/ h$, provided that we remove this one vibrational mode associated with the transition state in the expression for $z_"vib"^ddagger$.
+As for which mode to remove, it is the one and only imaginary mode associated with the transition state.
 
 By plugging our result into #ref(<eq:rate_tst_intermediate>), we arrive at
 $
 r &= (k_"B " T)/h K_"C "^ddagger conc("A") conc("B")\
-r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_"AB" Z'_"C ") exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B"),
+r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B"),
 $<eq:tst_final>
 or more generally as
 $ r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (product_(j,nu_(j)<0) Z'_(j)^(|nu_j|)) exp(- (Delta E_0^ddagger) / (R T)) product_(j,nu_(j)<0) [A_j]^(|nu_j|). $
@@ -2973,12 +2976,12 @@ We wish to find the rate constant at 300 K by invoking transition state theory.
 Well, now what?
 
 We start by invoking our transition state theory definition of $k$:
-$ k = (k_"B " T)/h 1/(N_"A "^(1-m)) Z'_ce("TS")/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E_0^ddagger)/(R T)). $
+$ k = (k_"B " T)/h 1/(N_"A "^(1-m)) Z'^ddagger/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E_0^ddagger)/(R T)). $
 We know that the molecularity of this reaction is two, so $m=2$ here.
 We also know the temperature of interest, which is $T$ = 300 K.
 
 Next, we will tackle the partition functions, recognizing that
-$ Z'_ce("TS")/(Z'_ce("F^∙") Z'_ce("H2")) = (z'_"trans" z_"rot" z_"vib" z_"el")_ce("TS")/((z'_"trans" z_"rot" z_"vib" z_"el")_ce("F^∙") (z'_"trans" z_"rot" z_"vib" z_"el")_ce("H2")). $
+$ Z'^ddagger/(Z'_ce("F^∙") Z'_ce("H2")) = (z'_"trans" z_"rot" z_"vib" z_"el")^ddagger/((z'_"trans" z_"rot" z_"vib" z_"el")_ce("F^∙") (z'_"trans" z_"rot" z_"vib" z_"el")_ce("H2")). $
 
 ==== Translational Partition Function
 
@@ -2986,9 +2989,9 @@ We recall that the translational partition function (per unit volume) is given b
 $ z'_"trans" = ((2 pi m k_"B " T)/h^2)^(d/2), $
 where we have $d = 3$ for each species because all three translational degrees of freedom are accessible for a gas-phase molecule.
 We have everything we need to compute the translational partition functions, so we will do just that:
-$ (z'_"trans")_"TS"/((z'_"trans")_ce("F^∙") (z'_"trans")_ce("H2")) = ((2 pi m_ce("TS") k_"B " T)/h^2)^(3/2)/(((2 pi m_ce("F^∙") k_"B " T)/h^2)^(3/2) ((2 pi m_ce("H2") k_"B " T)/h^2)^(3/2)) \
+$ (z'_"trans")^ddagger/((z'_"trans")_ce("F^∙") (z'_"trans")_ce("H2")) = ((2 pi m_ce("TS") k_"B " T)/h^2)^(3/2)/(((2 pi m_ce("F") k_"B " T)/h^2)^(3/2) ((2 pi m_ce("H2") k_"B " T)/h^2)^(3/2)) \
 = (9.407 times 10^28 1/"L ")/((8.086 times 10^28 1/"L ")(2.795 times 10^27 1/"L ")) = 4.162 times 10^(-28) "L ", $
-where $m_ce("TS") = m_ce("F^∙") + m_ce("H2")$, which can be readily obtained from the periodic table.
+where $m_ce("TS") = m_ce("F") + m_ce("H2")$, which can be readily obtained from the periodic table.
 Note that the magnitudes of the translational partition functions are quite large.
 This is expected.
 
@@ -3022,7 +3025,7 @@ The moment of inertia also depends on the transition state geometry but is a bit
 In any case, we will assume that quantum-chemical modeling suggests that the moment of inertia is $ I_ce("TS") = 1.234 times 10^(-46) " kg m"^2. $
 
 With this, we can write
-$ (z_"rot")_"TS"/((z_"rot")_ce("F^∙") (z_"rot")_ce("H2")) = (8 pi^2 I_ce("TS") k_"B " T) / (sigma h^2)/((1)( (8 pi^2 I_ce("H2") k_"B " T) / (sigma h^2))) = (29.258)/((1)(0.543)) = 53.851 $
+$ (z_"rot")^ddagger/((z_"rot")_ce("F^∙") (z_"rot")_ce("H2")) = (8 pi^2 I_ce("TS") k_"B " T) / (sigma_ce("TS") h^2)/((1)( (8 pi^2 I_ce("H2") k_"B " T) / (sigma_ce("H2") h^2))) = (91.917)/((1)(1.707)) = 53.851 $
 
 To summarize, the non-tabulated information needed when calculating the rotational partition function is:
 
@@ -3044,7 +3047,7 @@ where the number of vibrational modes will vary depending on the geometry of the
 F is monatomic, so there are no vibrational modes and $ (z_"vib")_ce("F^∙")=1. $
 
 #ce("H2") is linear and has two atoms, the number of vibrational modes is given by $3(2)-5=1$.
-It is known from IR spectroscopy that the vibrational stretching frequency of #ce("H2") is 4395 $"cm"^(-1)$.
+It is known from spectroscopy that the vibrational stretching frequency of #ce("H2") is 4395 $"cm"^(-1)$.
 Plugging this in yields
 $ (z_"vib")_ce("H2") approx 1 $
 since large vibrational modes do not substantially contribute to $z_"vib"$.
@@ -3053,14 +3056,14 @@ The transition state has three atoms and is assumed to be linear. Normally, ther
 However, because this is a transition state, one of those modes becomes associated with the motion along the reaction coordinate and so there are only three real vibrational modes.
 From quantum-mechanical calculations, we will say that these values are 4007 $"cm"^(-1)$, 398 $"cm"^(-1)$, and 398 $"cm"^(-1)$.
 This results in
-$ (z_"vib")_ce("TS") = 1.378 $
+$ (z_"vib")^ddagger = 1.378 $
 
 With this information, we can write
-$ ((z_"vib")_ce("TS"))/((z_"vib")_ce("F^∙") (z_"vib")_ce("H2")) = (1.378)/((1)(1))= 1.378. $
+$ ((z_"vib")^ddagger)/((z_"vib")_ce("F^∙") (z_"vib")_ce("H2")) = (1.378)/((1)(1))= 1.378. $
 
 To summarize, the non-tabulated information needed when calculating the rotational partition function is:
 1. The experimentally relevant (absolute) temperature, $T$.
-2. The (real) vibrational modes for the reactants and transition state. For the reactants, this can be determined from IR spectroscopy. However, this is not possible for the transition state. In practice, the vibrational modes are typically computed from quantum-chemical calculations.
+2. The (real) vibrational modes for the reactants and transition state. For the reactants, this can be determined from spectroscopy (e.g. IR, Raman). However, this is not possible for the transition state. In practice, the vibrational modes are typically computed from quantum-chemical calculations.
 
 ==== Electronic Partition Function
 
@@ -3077,9 +3080,9 @@ As for the transition state, whether it has radical character or not may be a li
 However, one useful rule of thumb is that (provided the total number of electrons remains the same) the total number of unpaired electrons cannot change from odd to even or vice versa.
 #footnote[This is because an odd-numbered spin multiplicity can only occur when the total number of unpaired electrons is even and vice versa.]
 In other words,
-$ (z_"el")_ce("TS") = 2. $
+$ (z_"el")^ddagger = 2. $
 Therefore,
-$ ((z_"el")_ce("TS"))/((z_"el")_ce("F^∙") (z_"el")_ce("H^∙")) = (2)/((2)(1)) = 1. $
+$ ((z_"el")^ddagger)/((z_"el")_ce("F^∙") (z_"el")_ce("H^∙")) = (2)/((2)(1)) = 1. $
 
 To summarize, the (non-tabulated) information needed is:
 
@@ -3094,11 +3097,11 @@ $ k_"TST" = (k_"B " T)/h N_"A " (4.162 times 10^(-28) "L ") (53.851) (1.378) (1)
 This simplifies to
 $ k_"TST" = (1.163 times 10^11 "L/mol-s") exp(-(Delta E_0^ddagger)/(R T)). $
 We have the pre-exponential factor.
-Now we need the activation energy.
-The activation energy, as defined based on electronic energy differences, can only be computed from quantum-mechanical calculations.
-Here, we will assume it is $Delta E_0^ddagger$ = 6 kJ/mol from quantum-mechanical calculations.
+Now we need the $Delta E_0^ddagger$ term.
+Strictly speaking, $Delta E_0^ddagger$ can only be computed from quantum-mechanical calculations.
+Here, we will assume it is $Delta E_0^ddagger$ = 6 kJ/mol.
 This gets us
-$ k_"TST" = 1.05 times 10^(10) "L/(mol-s)". $
+$ k_"TST" = 1.05 times 10^(10) "L/mol-s". $
 For comparison, the NIST Kinetics Database indicates that $k = 1.4 times 10^(10) "L/mol-s"$ for this reaction (at 298 K, which is close enough to our 300 K scenario).
 Usually, transition state theory will over-estimate the actual value of $k$, although in this case it does not.
 The reason for $k_"TST"$ being less than $k$ here is likely just due to underlying errors in the quantum-chemical calculations.
@@ -3163,7 +3166,7 @@ In other words, the transition state is a semi-mobile species on or near the sur
 Starting from #ref(<eq:tst_a>), if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
 $ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((3)) z_"vib"^((N)) z_"el"), $
 where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
-Note that the $exp(- Delta E_0^ddagger)\/R T$ term is no longer present because $Delta E_0^ddagger=0$ for non-activated adsorption processes,
+Note that the $exp(- Delta E_0^ddagger\/R T)$ term is no longer present because $Delta E_0^ddagger=0$ for non-activated adsorption processes,
 #footnote[By this, we mean that we are referring to the binding of the adsorbate to the surface without breaking any chemical bonds.] and the $1\/N_"A "^(1-m)$ term is gone because $m=1$ for this process.
 #footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier. It is perhaps better to think about this as $E_"a "->0$.]
 
@@ -3291,8 +3294,8 @@ or more generally as
 $ r = (k_"B "T )/h C^std exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) 1/gamma^ddagger product_(j,nu_j<0) a_(j)^(|nu_j|). $
 For the sake of illustration, we can separate out the various terms in $k$ in analogy with the Arrhenius equation to arrive at
 $
-k &= A_0 exp(- (Delta H^std^ddagger) / (R T))\
-A_0 &equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_"A " gamma_"B ")/gamma^ddagger.
+k &= A_0 exp(- (Delta H^std^ddagger) / (R T)),quad
+A_0 equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_"A " gamma_"B ")/gamma^ddagger.
 $
 
 === The Transmission Coefficient
@@ -3402,6 +3405,7 @@ For full clarity, there is no direct relationship between $G_i^std$ and the viab
 ==== Closed Cycles
 
 We can use the de Donder relations as a way to immediately rule out physically impossible reaction mechanisms.
+#footnote[For additional details, refer to W.L. Holstein and M. Boudart, "Application of the De Donder Relation to the Mechanism of Catalytic Reactions", _J. Phys. Chem. B_, 101, 9991--9994 (1997).]
 For instance, consider the cyclic reaction scheme in #ref(<fig:cycle>).
 #figure(
   image("figures/rxn_cycle.svg", width: 15%),
