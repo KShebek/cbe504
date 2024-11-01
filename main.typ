@@ -1,4 +1,5 @@
 // Notes for next time
+// 0. Render with newer typst version
 // 1. Add an entire lesson on equilibrium. To prepare for Problem1 Pset 3 from Justin and provide context.
 // 2. Spend a little bit more time on BEPs. How to read handbook values. Relevance of temperature and pressure in handbook and how to adjust.
 // 3. Do reactor archetypes after the midterm
@@ -63,7 +64,7 @@
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
   author: "Andrew S. Rosen",
-  abstract: [Lectures notes for a graduate-level course.],
+  abstract: [Lectures notes for a graduate-level course.\ Version: #datetime.today().display().],
   paper-size: "us-letter",
   preface: [#align(center + horizon)[Copyright #sym.copyright 2024 Andrew S. Rosen.
 
