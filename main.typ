@@ -1,11 +1,13 @@
 // Notes for next time
 // 0. Render with newer typst version
-// 1. Add an entire lesson on equilibrium. To prepare for Problem1 Pset 3 from Justin and provide context.
+// 1. Add an entire lesson on equilibrium. To prepare for Problem1 Pset 3 from Justin and provide context. Emphasize reaction quotient vs equilibrium.
 // 2. Spend a little bit more time on BEPs. How to read handbook values. Relevance of temperature and pressure in handbook and how to adjust.
 // 3. Do reactor archetypes after the midterm
-// 4. Sprinkle in more examples
+// 4. Sprinkle in more examples in-class
 // 5. Make exams 9am-5pm
 // 6. Make exam corrections a required homework problem. No extra credit.
+// 7. Match grading scale used by Thanos in CBE 503
+// 8. Enable "Hide totals in student grades summary" on Canvas
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -64,7 +66,7 @@
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
   author: "Andrew S. Rosen",
-  abstract: [Lectures notes for a graduate-level course.\ Version: #datetime.today().display().],
+  abstract: [Lectures notes for a graduate-level course.\ Compiled on #datetime.today().display().],
   paper-size: "us-letter",
   preface: [#align(center + horizon)[Copyright #sym.copyright 2024 Andrew S. Rosen.
 
@@ -1968,6 +1970,7 @@ with the net reaction #ce("C2H2 + H2 -> C2H4").
 We will assume that the hydrogenation reaction is rate-limiting, such that the #ce("H2") adsorption is quasi-equilibrated.
 
 Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism), which is very slightly different than the typical LHHW kinetics since the reaction is not taking place solely on the surface.
+#footnote[For a critical discussion on the viability of Eley--Rideal mechanisms, refer to D. Kiani, I.E. Wachs, _ACS Catal._, 14, 16770--16784 (2024).]
 The rate of product formation, which is identical to the rate of reaction, is given by
 $ r = (k'_"H " conc("H^*")^2 p_ce("C2H2"))/(conc("*")_0), $
 To get rid of the intermediate in our rate expression, we can invoke the quasi-equilibrium assumption on the first step to arrive at
@@ -3111,8 +3114,9 @@ The reason for $k_"TST"$ being less than $k$ here is likely just due to underlyi
 
 === Degrees of Freedom
 
-As was shown previously, the rate constant for a given elementary step is related to the ratio of partition functions for the transition state and the reactant(s).
-If one considers a free molecule (e.g. in the gas phase), it has three translational degrees of freedom, three rotational degrees of freedom if nonlinear or two rotational degrees of freedom if linear, and several vibrational degrees of freedom depending on the number of atoms $N_0$.
+As was shown previously, the rate constant for a given elementary step is related to the ratio of partition functions for the transition state and the reactant(s):
+$ k prop Z'^ddagger/(Z'_ce("A") Z'_ce("B")), $
+If one considers a free molecule (e.g. in the gas phase), it has three translational degrees of freedom, three rotational degrees of freedom (if nonlinear) or two rotational degrees of freedom (if linear), and several vibrational degrees of freedom depending on the number of atoms, $N_0$.
 We will represent this as follows, where the exponents in quotes are simply how many degrees of freedom there are.#footnote[We have tacitly assumed that the excited states are energetically negligible, such that $z_"el" = g_0$ and therefore $z_"el"$ has only one degree of freedom.]
 $ Z' = z_"trans"^((3))/V z_"rot"^((m)) z_"vib"^((N)) z_"el" $
 where
@@ -3125,18 +3129,16 @@ $
 For a transition state, one vibrational degree of freedom is lost, such that
 $ Z'^ddagger = z_"trans"^(ddagger(3))/V z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger) $
 
-With this, we can often make order-of-magnitude arguments and simplifications via
-$ k prop Z'^ddagger/(Z'_ce("A") Z'_ce("B")), $
-which we will do below.
+With this, we can often make order-of-magnitude arguments and simplifications, which we will do below.
 Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
 
 As a point of reference, the following order of magnitude arguments are fairly reasonable in the temperature range of 300---500 K or so:
-$ z_"trans" &approx 10^9-10^10 "1/L per DOF" \
- z_"rot" &approx 10^1-10^2 "per DOF" \
- z_"vib" &approx 10^0-10^1 "per DOF"\
- z_"el" &approx 1,
- $
- where DOF stands for degree of freedom.
+$ z_"trans" &approx O(10^8-10^9) " cm"^(-d) "per DOF" \
+ z_"rot" &approx O(10^1-10^2) "per DOF" \
+ z_"vib" &approx O(10^0-10^1) "per DOF"\
+ z_"el" &approx O(10^0),
+$
+where DOF stands for degree of freedom.
 That said, these are simply rough rules-of-thumb.
 
 === Adsorption
@@ -3475,6 +3477,7 @@ If the activity of each reactant and product is the same as that at equilibrium,
 = Energy and Reactivity Trends <reaction-energy-diagrams>
 
 #self[Add Bronsted law stuf from pg 375 of Dill and Bromberg. Then Hammett and Taft., isoelectronic]
+#self[Do a mini lecture on methane activation, Norskov's example]
 
 == Reaction Energy Diagrams
 
