@@ -3133,7 +3133,7 @@ With this, we can often make order-of-magnitude arguments and simplifications, w
 Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
 
 As a point of reference, the following order of magnitude arguments are fairly reasonable in the temperature range of 300---500 K or so:
-$ z_"trans" &approx O(10^8-10^9) " cm"^(-d) "per DOF" \
+$ z'_"trans" &approx O(10^8-10^9) " cm"^(-d) "per DOF" \
  z_"rot" &approx O(10^1-10^2) "per DOF" \
  z_"vib" &approx O(10^0-10^1) "per DOF"\
  z_"el" &approx O(10^0),
@@ -3146,13 +3146,11 @@ That said, these are simply rough rules-of-thumb.
 // draw energy diagram
 
 When a molecule adsorbs onto a surface, some of these degrees of freedom are lost.
-If the adsorbate is strongly chemisorbed onto the surface, then there are likely no translational or rotational degrees of freedom left, depending on how strongly the molecule is adsorbed.
+If the adsorbate is strongly chemisorbed onto the surface (#ref(<fig:chemisorbed>)), then there are likely no translational or rotational degrees of freedom left, depending on how strongly the molecule is adsorbed.
 The vibrational degrees of freedom are still present, although the vibrational modes are likely to differ substantially from the gas phase, and there are now $3N_0$ modes.
 Collectively, this set of approximations is often known as the harmonic limit.
 
-#self[
-  Draw adsorbate on surface having no translational or rotational degrees of freedom.
-]
+#figure(image("figures/chemisorbed_partition_functions.svg",width:33%),caption:[Schematic of a chemisorbed molecule on a surface. If the adsorbate is strongly bound, it will have no translational or rotational degrees of freedom.])<fig:chemisorbed>
 
 If the adsorbate is somewhat weakly bound, then the remaining degrees of freedom are likely to be somewhere between that used for a free gas and that of a chemisorbed species.
 More complicated expressions are available to model these intermediate behaviors, such as the hindered translator--hindered rotor model.
