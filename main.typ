@@ -464,7 +464,7 @@ k^(+) / k^(-) =
 $<eq:reversible_eq_rearrange>
 The expression given by the right-hand side of #ref(<eq:reversible_eq_rearrange>) leads to the definition of the concentration-based equilibrium constant, $K_"c "$, which can be expressed compactly as
 $ K_"C " equiv product_(j) [A_j]^(nu_j) $<eq:kc>
-and describes the ratio of the forward to reverse rate constants at equilibrium.
+and describes the ratio of the forward to reverse rate constants of a reversible, elementary reaction at equilibrium.
 #footnote[From here on out, we will omit the "eq" subscript since it is implicit when dealing with an equilibrium constant.]
 If one were to use partial pressures, $p_j$, instead of concentrations, one can define a pressure-based equilibrium constant, $K_"p "$, as
 #footnote[For an ideal gas, one can conveniently state $K_"p " = K_"C " (R T)^delta$ where $delta$ is the change in stoichiometric numbers.
@@ -3334,7 +3334,7 @@ For instance, it can be used to correct the Eyring equation representation of th
 $ k = kappa (k_"B " T)/h C^std^(1-m) exp(- (Delta G^std^ddagger) / (R T)) $
 in the thermodynamically ideal case.
 The value for $kappa$ is between 0 and 1, representing the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
-#footnote[In contrast with statements made in J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
+#footnote[In contrast with J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
 In other words, the rate constant (and rate) from transition state theory is generally an upper-estimate, even if all variables in the uncorrected rate expression were computed with perfect accuracy.
 
 === Relationship with Activation Energy <relationship-with-activation-energy>
@@ -3383,13 +3383,19 @@ Therefore, one should take care in clarifying which property is being reported.
 In the formulation of transition state theory, we derived the forward directional rate from reactant(s) to product(s) via the intermediate formation of an activated complex.
 It is worth thinking about how we can now leverage this information to describe reversible reactions.
 #footnote[For a thorough review on this topic, refer to N.K. Razdan, T.C. Lin, A. Bhan, "Concepts Relevant for the Kinetic Analysis of Reversible Reaction Systems", _Chem. Rev._, 123, 2950--3006 (2023).]
-One of the most fundamental properties of a reversible elementary reaction is its reversibility, introduced in #ref(<eq:reversibility>)
+One of the most fundamental properties of a reversible elementary reaction is its reversibility, first introduced in #ref(<eq:reversibility>)
 and repeated here as
 $z_i equiv r_(i)^- \/ r_(i)^+.$
 
 To make things a bit simpler to follow for those who do not enjoy gratuitous product notation as much as me, we will invoke an arbitrary reaction: #ce("A + B <--> P").
 Assuming we are dealing with directional rates in an elementary reaction, we know that
-$ z_i = r_(i)^- / r_(i)^+ = (k_(i)^- conc("P"))/(k_(i)^+ conc("A") conc("B")). $
+$ z_i = r_(i)^- / r_(i)^+ = (k_(i)^- conc("P"))/(k_(i)^+ conc("A") conc("B")). $<eq:z_relationship>
+
+Our end-goal here will be to show that
+$ z_i = exp((Delta G_i) /(R T)), $
+which will lead to a new concept known as the reaction affinity.
+We will start by finding an expression for the rate of rate constants, after which we will revisit the concentration terms.
+
 From the (non-idealized) Eyring equation, we know that
 $ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_"A "^std - G_"B "^std)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger\
 k_(i)^- &= (k_"B " T)/h exp(-(G^std^ddagger - G_"P "^std)/ (R T)) (gamma_"P ")/gamma^ddagger. $
@@ -3399,39 +3405,43 @@ $ k_(i)^- / (k_(i)^+) &= C^std exp((G_"P "^std - G_"A "^std - G_"B "^std) / (R T
 k_(i)^- / (k_(i)^+) &= C^std exp((Delta G_i^std) / (R T)) gamma_"P "/(gamma_"A " gamma_"B ").
 $<eq:de_donder_deriv1>
 
-That takes care of part of our expression for the reversibility.
-For the latter part, we know that the ratio of concentrations is related to the equilibrium constant.
+That takes care of part of our expression for the reversibility given by #ref(<eq:z_relationship>).
+For the ratio of concentrations, we know that they must be related to the equilibrium constant.
 Technically, we have made no assumptions about being at equilibrium here.
 As such, we will refer to our ratio of concentrations as a reaction quotient:
 $
 Delta G_i &= Delta G_i^std + R T ln(Q_"a ")\
 Delta G_i &= Delta G_i^std + R T ln(product_j a_(j)^(nu_(i,j))).
 $<eq:dg_nonstandard>
-where $Delta G_i$ is at the reaction conditions (i.e. not necessarily standard state) and $Q_"a "$ is the activity-based reaction quotient, computed in an analogous manner as the activity-based equilibrium constant but without a restriction of being at equilibrium
-We can convert between activities and concentrations via #ref(<eq:activity1>) to arrive at
+where $Delta G_i$ is at the reaction conditions (i.e. not necessarily standard state) and $Q_"a "$ is the activity-based reaction quotient, computed in an analogous manner as the activity-based equilibrium constant but without a restriction of the activities being those at equilibrium.
+We can convert between activities and concentrations to arrive at
 $
 Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_"A " conc("A")/C^std gamma_"B " conc("B")/C^std) )\
 conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_"A " gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T))
 $<eq:de_donder_deriv2>
 
-Now we can use #ref(<eq:de_donder_deriv1>) and #ref(<eq:de_donder_deriv2>), which thankfully simplifies very cleanly to
+Now we can plug both #ref(<eq:de_donder_deriv1>) and #ref(<eq:de_donder_deriv2>) into #ref(<eq:z_relationship>), which thankfully simplifies very cleanly to
 $ z_i = r_(i)^- / r_(i)^+ = exp((Delta G_i^std) / (R T)) exp((Delta G_i-Delta G_i^std)/(R T)) = exp((Delta G_i) /(R T)). $
 By convention, we will define 
 $ cal(A)_i equiv -Delta G_i, $
 where $cal(A)_i$ is known as the reaction affinity of the $i$-th reaction step.
 With this, we have
 $ z_i = r_(i)^- / r_(i)^+ = exp(-(cal(A)_i)/(R T)). $<eq:de_donder>
-The same result will hold regardless of the elementary reaction we chose to start with or if we neglected thermodynamic non-idealities.
-#ref(<eq:de_donder>) is known as the de Donder relation, which is a thermodynamic relationship between the forward and reverse rates of reaction
-Admittedly, there is a clear parallel between the de Donder relation and
-$ K_"a " = k_(i)^+ / k_(i)^- = exp(- (Delta G^std)/(R T)). $
-That said, it must be stressed once more that the de Donder relation is computed from the reaction conditions, not at standard state.
+The same result will hold regardless of the molecularity of the elementary reaction or if we neglected thermodynamic non-idealities.
+#ref(<eq:de_donder>) is known as the de Donder relation, which is a thermodynamic relationship between the forward and reverse rates of reaction.
 
-We can see that $z_i<1$ (i.e. an elementary step proceeds in the forward direction) only if $cal(A)_i>0$ and vice versa.
+We can see that $z_i<1$ (i.e. the reaction proceeds in the forward direction) only if $cal(A)_i>0$ and vice versa.
 Another way to frame this is as
 $ cal(A)_i (r_(i)^+-r_(i)^-) >=0, $
-which is known as de Donder's inequality.
-For full clarity, there is no direct relationship between $G_i^std$ and the viability of the net reaction proceeding in a given direction.
+for a reaction to proceed as-written, which is known as de Donder's inequality.
+For full clarity, there is no direct relationship between $G_i^std$ and the viability of the net reaction proceeding in a given direction --- it only depends on $cal(A)_i$ at the reaction conditions.
+
+#caution[
+  There is a clear parallel between the de Donder relation and the equilibrium constant:
+$ z_i = r_(i)^- / r_(i)^+ = exp(-(cal(A)_i)/(R T)), quad K_"a " = k_(i)^+ / k_(i)^- = exp(- (Delta G^std)/(R T)). $
+That said, it must be stressed once more that the de Donder relation is computed using the reaction conditions and does not involve a standard state.
+The de Donder relationship also describes a ratio of rates, not rate constants.
+]
 
 === Ruling Out Reaction Mechanisms
 
@@ -3442,13 +3452,13 @@ We can use the de Donder relations as a way to immediately rule out physically i
 For instance, consider the cyclic reaction scheme in #ref(<fig:cycle>).
 #figure(
   image("figures/rxn_cycle.svg", width: 15%),
-  caption: [A closed reaction cycle that is not viable.]
+  caption: [A closed reaction cycle that is not viable. Each arrow represents the direction each reaction is presumed to occur.]
 )<fig:cycle>
 
 Like with any set of state functions in a closed cycle, we know that
-$ sum_i A_i = 0. $
-However, it is impossible for this statement to be true unless $A_i=0$ for each step.
-At least one of the reaction steps must have $A_i<0$ in order for $sum_i A_i = 0$, which violates de Donder's inequality and implies that such a reaction scheme is not viable as written.
+$ sum_i cal(A)_i = 0. $
+However, it is impossible for this statement to be true unless $cal(A)_i=0$ for each step.
+At least one of the reaction steps must have $cal(A)_i<0$ in order for $sum_i cal(A)_i = 0$, which violates de Donder's inequality and implies that such a reaction scheme is not viable as written.
 Put another way, via de Donder's equality, we know that one of the reaction steps must actually proceed in the reverse direction, breaking the cyclic nature of the proposed mechanism.
 
 ==== Thermodynamic Coupling <thermo-coupling>
@@ -3465,7 +3475,7 @@ $ ce("3H2 + O2 <--> 2H2O + 2H^∙"). $
 For the sake of demonstration, consider the reaction taking place at standard state conditions, such that $A_i=A^(std)_i$.
 
 The de Donder inequality holds for net reaction sequences as well, provided we account for stoichiometry via
-$ cal(A) (r^(+)-r^(-)) >=0, quad cal(A) equiv sum_i sigma_i A_i. $
+$ cal(A) (r^(+)-r^(-)) >=0, quad cal(A) equiv sum_i sigma_i cal(A)_i. $
 Since $sum_i sigma_i cal(A)_i>0$, one might naively think that the net reaction proceeds in the forward direction, made possible via thermodynamic coupling between the two steps to yield an overall $cal(A)>0$.
 However, having $cal(A)>0$ is a necessary but not sufficient condition.
 When looking at the individual steps, we see that the first step has $cal(A)_i<0$, making it impossible for it to proceed in the forward direction.
@@ -3481,6 +3491,7 @@ $ cal(A)_i = cal(A)^std_i - R T ln(product_j a_(j)^(nu_(i,j))), quad cal(A)^std_
 such that
 $ cal(A)_i = R T ln(K_"a "/(product_j a_(j)^(nu_(i,j)))) = R T ln(((product_j a_(j)^(nu_(i,j)))_"eq")/(product_j a_(j)^(nu_(i,j)))). $ <eq:affinity>
 Therefore, the viability of the reaction mechanism at a given set of reaction conditions is dependent on how much the species activities (or concentrations, in the ideal case) differ from those at equilibrium.
+
 For instance, consider the moment the reaction is started.
 We will have only #ce("H2") at the start and therefore $cal(A)_1 > 0$ since $a_ce("H")approx 0$ and $ln(y\/x)-> infinity$ for $x->0$.
 This makes sense because the only direction the reaction can initially proceed is in the forward direction.
