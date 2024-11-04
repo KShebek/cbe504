@@ -3117,12 +3117,12 @@ With this, we can often make order-of-magnitude arguments and simplifications, w
 Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
 
 As a point of reference, the following order of magnitude arguments are fairly reasonable in the temperature range of 300---500 K or so:
-$ z'_"trans" &approx O(10^8-10^9) " cm"^(-d) "per DOF" \
+$ z'_"trans" &approx O(10^8-10^9) "per DOF" \
  z_"rot" &approx O(10^1-10^2) "per DOF" \
  z_"vib" &approx O(10^0-10^1) "per DOF"\
  z_"el" &approx O(10^0),
 $
-where DOF stands for degree of freedom.
+where DOF stands for degree of freedom. The units of $z'_"trans"$ are such that it has 1/$"cm"^3$ when there are three degrees of freedom.
 That said, these are simply rough rules-of-thumb.
 
 === Adsorption
@@ -3160,7 +3160,7 @@ Here, we can make some simplifying assumptions by noting that $Delta E_0^ddagger
 #footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier for such a process. It is perhaps better to think about this as $E_"a "->0$.]
 and we can remove the $1\/N_"A "^(1-m)$ term because $m=1$ for this process.
 Furthermore, if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
-$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((3)) z_"vib"^((N)) z_"el"), $<eq:adsorbed_k>
+$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (m)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((m))/V z_"rot"^((m)) z_"vib"^((N)) z_"el"), $<eq:adsorbed_k>
 where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
 
 
@@ -3190,20 +3190,21 @@ While it holds for many systems, if the adsorption process breaks any of the afo
 
 We now shift our focus to desorption, which is simply the reverse process of adsorption.
 We can revisit our expression for $k$ from #ref(<eq:adsorbed_k>) to state an analogous equation for the desorption process:
-$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((3N_0)) z_"el") exp(- (Delta E_"des")/(R T)), $
+$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (m)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E_"des")/(R T)), $
 which simplifies to
-$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2)) z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1))z^ddagger_"el")/(z_"vib"^((3N_0))z_"el") exp(- (Delta E_"des")/(R T)). $
+$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2)) z_"rot"^(ddagger (m)) z_"vib"^(ddagger (N-1))z^ddagger_"el")/(z_"vib"^((N))z_"el") exp(- (Delta E_"des")/(R T)). $
 
+Note that the $N$ vibrational degrees of freedom for the adsorbed molecule (i.e. in the denominator) are, in fact, $3N_0$ total modes.
 The numerator is the same as for the adsorption case, but the denominator is associated with the molecule in the adsorbed state.
 Unlike adsorption, however, there is a barrier for desorption (it is the same as the reaction energy of the desorption process, $Delta E_"des"$, as depicted in #ref(<fig:desorption>)).
 
 From here, we will assume that the change in the vibrational partition function is negligible compared to the change in the translational partition functions and that the change in electronic partition function is also negligible (both of which are almost always going to be true).
 With this, we can state
-$ k_"des" = (k_"B " T)/h z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
+$ k_"des" = (k_"B " T)/h z_("trans")^(ddagger (2)) z_("rot")^(ddagger (m)) exp(- (Delta E_"des")/(R T)). $
 Now we plug in our definitions of the partition functions.
 We will start with the translational partition function:
-$ k_"des" = (k_"B " T)/h (L/Lambda)^2 z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)) $
-$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2  z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
+$ k_"des" = (k_"B " T)/h (L/Lambda)^2 z_("rot")^(ddagger (m)) exp(- (Delta E_"des")/(R T)) $
+$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2  z_("rot")^(ddagger (m)) exp(- (Delta E_"des")/(R T)). $
 At this point, we need to have some information about the geometry of the transition state (i.e. unimolecular, linear, or non-linear) in order to define the rotational partition function.
 For the sake of simplicity, let's continue our derivation assuming a linear transition state, such that
 $ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2 T/(sigma Theta_"rot")  exp(- (Delta E_"des")/(R T)), $
@@ -3219,7 +3220,7 @@ Therefore,
 $ k_"SR" = (k_"B " T)/h  (z_"trans"^(ddagger (0))/V z_"rot"^(ddagger (0)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)), $
 which simplifies to
 $ k_"SR" = (k_"B " T)/h  (z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)). $
-Personally, this is about as far as I am willing to simplify things in most cases without further information.
+Again, the $N$ vibrational degrees of freedom here (for both the transition state and reactant) constitute $3N_0$ vibrational modes. Personally, this is about as far as I am willing to simplify things in most cases without further information.
 
 
 == Accounting for Thermodynamic Non-Idealities
