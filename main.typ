@@ -8,6 +8,7 @@
 // 6. Make exam corrections a required homework problem. No extra credit.
 // 7. Match grading scale used by Thanos in CBE 503
 // 8. Enable "Hide totals in student grades summary" on Canvas
+// 9. Remove section 7.5.3 with desorption. It just feels weird. How can the TS be there but also have a Delta E_ads.
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -2785,7 +2786,7 @@ Before then, however, we need to figure out what to do with $K_"C "^ddagger$.
 The most pressing situation to address in our definition of $k$ is $K_"C "^ddagger$.
 Thankfully, with a healthy dose of statistical thermodynamics, this becomes relatively manageable.
 Although it will not be derived here, from statistical mechanics it is known that the equilibrium constant can be expressed in terms of molecular partition functions as follows:
-$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")), $
+$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) quad ("unnormalized"), $
 where $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species.
 We will forego a formal derivation linking $Z_j$ to the equilibrium constant. That said, we can think of it as being intuitively reasonable because the ratio of molecular partition functions describes the distribution of energetic states between the products and reactants, which dictates the direction for the equilibrium in a manner analogous to the change in Gibbs free energy.
 
@@ -2875,12 +2876,15 @@ $ z_"vib" = product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N
 where $Theta_(i,"vib")$ is known as the characteristic vibrational temperature.
 
 The number of vibrational modes for a molecule can be determined as follows:
-#footnote[For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly when we define $nu^ddagger$, only the real vibrational modes will need to be included in calculating $z_"vib"$.]
 $
 N&=0 quad ("monatomic")\
 N&=3N_0 - 5 quad ("linear")\
 N&=3N_0 - 6 quad ("nonlinear").
 $
+
+For transition states, one of the $N$ vibrational modes is imaginary. As we will justify shortly when we define $nu^ddagger$, only the real vibrational modes will need to be included in calculating $z_"vib"$.
+Additionally, for a molecule adsorbed on a surface, the number of vibrational modes will be given by $N = 3N_0$ instead.
+#footnote[For an isolated molecule with $N_0$ atoms, there are three degrees of freedom per atom (one for each dimension) for a total of $3N_0$ degrees of freedom. However, three of these $3N_0$ degrees of freedom are associated with translational motion in $x$, $y$, and $z$. Two (linear) or three (non-linear) of these degrees of freedom are due to rotation. This is the cause of the $3N_0-5$ or $3N_0-6$ vibrational modes for a free molecule. If the molecule is strongly adsorbed, the translational and rotational degrees of freedom are not present, and all $3N_0$ degrees of freedom are associated with vibrations.]
 
 Finally, it should be noted that vibrational spectra are normally reported in units of wavenumbers ($"cm"^(-1)$), $accent(nu,tilde)$.
 To convert a wavenumber to a frequency, the following relationship can be used: $nu_i = c accent(nu,tilde)_i$, where $c$ is the speed of light.
@@ -3099,7 +3103,7 @@ The reason for $k_"TST"$ being less than $k$ here is likely just due to underlyi
 === Degrees of Freedom
 
 As was shown previously, the rate constant for a given elementary step is related to the ratio of partition functions for the transition state and the reactant(s):
-$ k prop Z'^ddagger/(Z'_ce("A") Z'_ce("B")), $
+$ k prop Z'^ddagger/(Z'_ce("A") Z'_ce("B")). $
 If one considers a free molecule (e.g. in the gas phase), it has three translational degrees of freedom, three rotational degrees of freedom (if nonlinear) or two rotational degrees of freedom (if linear), and several vibrational degrees of freedom depending on the number of atoms, $N_0$.
 We will represent this as follows, where the exponents in quotes are simply how many degrees of freedom there are.#footnote[We have tacitly assumed that the excited states are energetically negligible, such that $z_"el" = g_0$ and therefore $z_"el"$ has only one degree of freedom.]
 $ Z' = z'_"trans"^((3)) z_"rot"^((m)) z_"vib"^((N)) z_"el" $
@@ -3111,7 +3115,7 @@ m=3, quad N &=3N_0-6 quad ("non-linear").
 $
 
 For a transition state, one vibrational degree of freedom is lost, such that
-$ Z'^ddagger = z'_"trans"^(ddagger(3)) z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger) $
+$ Z'^ddagger = z'_"trans"^(ddagger(3)) z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger). $
 
 With this, we can often make order-of-magnitude arguments and simplifications, which we will do below.
 Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
@@ -3134,7 +3138,6 @@ That said, these are simply rough rules-of-thumb.
 When a molecule adsorbs onto a surface, some of these degrees of freedom are lost.
 If the adsorbate is strongly chemisorbed onto the surface (#ref(<fig:chemisorbed>)), then there are likely no translational or rotational degrees of freedom left, depending on how strongly the molecule is adsorbed.
 The vibrational degrees of freedom are still present, although the vibrational modes are likely to differ substantially from the gas phase, and there are now $3N_0$ vibrational modes instead of $3N_0-5$ or $3N_0-6$ (unless $N_0=1$, in which case there are no vibrational modes).
-#footnote[For an isolated molecule with $N_0$ atoms, there are three degrees of freedom per atom (one for each dimension) for a total of $3N_0$ degrees of freedom. However, three of these $3N_0$ degrees of freedom are associated with translational motion in $x$, $y$, and $z$. Two (linear) or three (non-linear) of these degrees of freedom are due to rotation. This is the cause of the $3N_0-5$ or $3N_0-6$ vibrational modes for a free molecule. If the molecule is strongly adsorbed, the translational and rotational degrees of freedom are not present, and all $3N_0$ degrees of freedom are associated with vibrations.]
 Collectively, this set of approximations is often known as the harmonic limit.
 
 #figure(image("figures/chemisorbed_partition_functions.svg",width:33%),caption:[Schematic of a chemisorbed molecule on a surface. If the adsorbate is strongly bound, it will have no translational or rotational degrees of freedom.])<fig:chemisorbed>
@@ -3239,7 +3242,7 @@ $ conc("AB")^ddagger = (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamm
 Plugging this into our rate expression now yields
 $
 r &= (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B")\
-r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B")\
+r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B").
 $<eq:tst_activities>
 
 Here, the definition of $K_"a "^ddagger$ was substituted in from #ref(<eq:k_a_partition_functions>).
@@ -3261,7 +3264,7 @@ we see that the difference in the rate when accounting for thermodynamic non-ide
 $ k_"nonideal" = k_"ideal" (gamma_ce("A") gamma_ce("B"))/(gamma^ddagger). $<eq:k_relationship>
 
 A natural question to ask at this point is what value this analysis can provide if it relies on $gamma^ddagger$, which cannot be readily determined from experiments.
-Naturally, one answer is that it is possible --- like with other aspects of the transition state theory representation of $k$ --- to calculate $gamma^ddagger$ from quantum-mechanical calculations.
+Naturally, one answer is that it is possible --- like with other aspects of the transition state theory representation of $k$ --- to determine $gamma^ddagger$ from theory.
 Perhaps more importantly, however, is that #ref(<eq:k_relationship>) can be used in a qualitative way to rationalize the effects of non-idealities.
 
 For instance, in the liquid-phase, if a solvent selectively stabilizes a given species, the activity coefficient for that species will likely be greater than 1.
