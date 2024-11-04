@@ -2785,8 +2785,8 @@ Before then, however, we need to figure out what to do with $K_"C "^ddagger$.
 The most pressing situation to address in our definition of $k$ is $K_"C "^ddagger$.
 Thankfully, with a healthy dose of statistical thermodynamics, this becomes relatively manageable.
 Although it will not be derived here, from statistical mechanics it is known that the equilibrium constant can be expressed in terms of molecular partition functions as follows:
-$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (tilde(Z)^ddagger) / (tilde(Z)_ce("A") tilde(Z)_ce("B")), $
-where $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species (the tildes are simply to distinguish this equation from the one that follows).
+$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")), $
+where $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species.
 We will forego a formal derivation linking $Z_j$ to the equilibrium constant. That said, we can think of it as being intuitively reasonable because the ratio of molecular partition functions describes the distribution of energetic states between the products and reactants, which dictates the direction for the equilibrium in a manner analogous to the change in Gibbs free energy.
 
 In practice, the molecular partition functions are generally defined with respect to the lowest energy state for that molecule.
@@ -2809,21 +2809,6 @@ is included simply as a means of ensuring that $K_"C "^ddagger$ is in molar unit
 
 It may seem that we have not made much progress here because we do not yet know how to calculate $Z'_j$. Not to worry though, as that will be addressed below.
 
-=== Thermochemistry from Partition Functions <thermochemistry-from-partition-functions>
-
-_This section was not covered in class but is included for additional context._
-
-It should be noted that statistical mechanics allows us to determine thermodynamic properties like the internal energy $U$, enthalpy $H$, entropy $S$, and Gibbs free energy $G$  of the translational, rotational, vibrational, and electronic partition functions can also be used in terms of the partition function.
-For the interested reader, we refer you to external sources on the subject matter.
-#footnote[Refer to "Section 10.3: Ensemble Properties and Basic Statistical Mechanics" in _Essentials of Computational Chemistry: Theories and Models_ (2#super[nd] ed.) by C.J. Cramer.]
-That said, a brief summary is as follows:
-$ U &= k_"B " T^2 ((diff ln(Z)) / (diff T))_(N,V) $
-$ H &equiv U + P V $
-$ S &= k_"B " ln(Z) + k_"B " T ((diff ln(Z))/ (diff T))_(N,V) $
-$ G &equiv H - T S, $
-where the above holds for the single-particle partition function $Z$.
-For $N$ indistinguishable atoms or molecules, one should instead use $Z^N\/N!$ in place of $Z$.
-
 == Contributions to the Partition Function
 
 The total molecular partition function for a species can be broken down into the products of vibrational, rotational, translational, and electronic partition functions.
@@ -2837,19 +2822,21 @@ These individual contributions can also be used to define the translational, rot
 
 We now must define each of the partition functions.
 The translational partition function derived from the particle-in-a-box model in quantum chemistry is typically approximated as
-$ z_"trans" = V ((2 pi m k_"B " T)/h^2)^(3/2) = V / Lambda^3, quad Lambda equiv h / sqrt(2 pi m k_"B " T) $
+$ z_"trans" = V ((2 pi m k_"B " T)/h^2)^(3/2) = V / Lambda^3, quad Lambda equiv h / sqrt(2 pi m k_"B " T) $<eq:trans_function>
 where $V$ is a reference volume,
 $m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $Lambda$ is the thermal de Broglie wavelength.
+As with all paritition functions, $z_"trans"$ is unitless.
+This, in turn, means that $z'_"trans"$ (i.e. $z_"trans"\/V$) has units of inverse volume.
 
 When dealing with gases, one can equivalently use a standard-state pressure $P^std$ (typically taken as 1 bar) in place of $V$, such as by invoking the ideal gas law: $V = k_"B " T\/P^std$.
 This would ultimately ensure that our rate constant is expressed with pressure-based units rather than concentrations.
-#caution[It must be emphasized that $V$ is describing a reference volume for bookkeeping purposes and is not necessarily the volume of the reactor.
+#caution[It must be emphasized that $V$ is describing a reference volume and is generally not the volume of the reactor.
 In return, $P^std$ in the translational partition function is the standard state pressure and is not the same as the operating pressure.
 ]
 
 It is also worth noting that $z_"trans"$ can be generalized to an arbitrary set of $d$ dimensions (e.g. in the case of a system that does not have all three translational degrees of freedom).
 To do so, it is as simple as stating
-$ z_"trans" = (L / Lambda)^d, $
+$ z_"trans" = (L / Lambda)^d, $<eq:trans_d>
 where $L$ is now a reference length dimension.
 
 === Rotational Partition Function
@@ -2953,19 +2940,17 @@ As for which mode to remove, it is the one and only imaginary mode associated wi
 By plugging our result into #ref(<eq:rate_tst_intermediate>), we arrive at
 $
 r &= (k_"B " T)/h K_"C "^ddagger conc("A") conc("B")\
-r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B"),
+r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
 $<eq:tst_final>
-or more generally as
-$ r &= (k_"B "T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (product_(j,nu_(j)<0) Z'_(j)^(|nu_j|)) exp(- (Delta E_0^ddagger) / (R T)) product_(j,nu_(j)<0) [A_j]^(|nu_j|). $
 
-From the above expression, we can see that
+From the above expression, we can write $r= k conc("A") conc("B")$ where
 $
 k = (k_"B " T)/h K_"C "^ddagger
 $
 or, equivalently, in terms of the partition functions,
 #footnote[Note that $Delta E_0^ddagger$ is not the same as $E_"a "$, although it is analogous. The $Delta E_0^ddagger$ term is at 0 K, whereas $E_"a "$ includes thermal corrections.]
 $
-k = A exp(-(Delta E_0^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_"A "^(1-m)) (Z'_("AB")^ddagger) / (Z'_"A " Z'_"B ").
+k equiv A exp(-(Delta E_0^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")).
 $<eq:tst_a>
 Thinking back to the modified Arrhenius expressions with temperature-dependence terms on the prefactor as in #ref(<eq:arrhenius_mod>), we can see the $T^n$ dependence of the prefactor has $n=0$ for the empirical Arrhenius expression and $n=1$ from transition state theory.
 In practice, however, the temperature effects of this $T$ factor are often negligible when comparing $k$ values at different temperatures, as the exponential term is the main dominating factor.
@@ -2990,8 +2975,7 @@ $ Z'^ddagger/(Z'_ce("F^∙") Z'_ce("H2")) = (z'_"trans" z_"rot" z_"vib" z_"el")^
 ==== Translational Partition Function
 
 We recall that the translational partition function (per unit volume) is given by
-$ z'_"trans" = ((2 pi m k_"B " T)/h^2)^(d/2), $
-where we have $d = 3$ for each species because all three translational degrees of freedom are accessible for a gas-phase molecule.
+$ z'_"trans" = ((2 pi m k_"B " T)/h^2)^(3/2). $
 We have everything we need to compute the translational partition functions, so we will do just that:
 $ (z'_"trans")^ddagger/((z'_"trans")_ce("F^∙") (z'_"trans")_ce("H2")) = ((2 pi m_ce("TS") k_"B " T)/h^2)^(3/2)/(((2 pi m_ce("F") k_"B " T)/h^2)^(3/2) ((2 pi m_ce("H2") k_"B " T)/h^2)^(3/2)) \
 = (9.407 times 10^28 1/"L ")/((8.086 times 10^28 1/"L ")(2.795 times 10^27 1/"L ")) = 4.162 times 10^(-28) "L ", $
@@ -3118,7 +3102,7 @@ As was shown previously, the rate constant for a given elementary step is relate
 $ k prop Z'^ddagger/(Z'_ce("A") Z'_ce("B")), $
 If one considers a free molecule (e.g. in the gas phase), it has three translational degrees of freedom, three rotational degrees of freedom (if nonlinear) or two rotational degrees of freedom (if linear), and several vibrational degrees of freedom depending on the number of atoms, $N_0$.
 We will represent this as follows, where the exponents in quotes are simply how many degrees of freedom there are.#footnote[We have tacitly assumed that the excited states are energetically negligible, such that $z_"el" = g_0$ and therefore $z_"el"$ has only one degree of freedom.]
-$ Z' = z_"trans"^((3))/V z_"rot"^((m)) z_"vib"^((N)) z_"el" $
+$ Z' = z'_"trans"^((3)) z_"rot"^((m)) z_"vib"^((N)) z_"el" $
 where
 $
 m=0, quad N &=0 quad ("monatomic")\
@@ -3127,7 +3111,7 @@ m=3, quad N &=3N_0-6 quad ("non-linear").
 $
 
 For a transition state, one vibrational degree of freedom is lost, such that
-$ Z'^ddagger = z_"trans"^(ddagger(3))/V z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger) $
+$ Z'^ddagger = z'_"trans"^(ddagger(3)) z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1)) z_"el"^(ddagger) $
 
 With this, we can often make order-of-magnitude arguments and simplifications, which we will do below.
 Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
@@ -3145,9 +3129,12 @@ That said, these are simply rough rules-of-thumb.
 
 // draw energy diagram
 
+==== Degrees of Freedom
+
 When a molecule adsorbs onto a surface, some of these degrees of freedom are lost.
 If the adsorbate is strongly chemisorbed onto the surface (#ref(<fig:chemisorbed>)), then there are likely no translational or rotational degrees of freedom left, depending on how strongly the molecule is adsorbed.
-The vibrational degrees of freedom are still present, although the vibrational modes are likely to differ substantially from the gas phase, and there are now $3N_0$ modes.
+The vibrational degrees of freedom are still present, although the vibrational modes are likely to differ substantially from the gas phase, and there are now $3N_0$ vibrational modes instead of $3N_0-5$ or $3N_0-6$ (unless $N_0=1$, in which case there are no vibrational modes).
+#footnote[For an isolated molecule with $N_0$ atoms, there are three degrees of freedom per atom (one for each dimension) for a total of $3N_0$ degrees of freedom. However, three of these $3N_0$ degrees of freedom are associated with translational motion in $x$, $y$, and $z$. Two (linear) or three (non-linear) of these degrees of freedom are due to rotation. This is the cause of the $3N_0-5$ or $3N_0-6$ vibrational modes for a free molecule. If the molecule is strongly adsorbed, the translational and rotational degrees of freedom are not present, and all $3N_0$ degrees of freedom are associated with vibrations.]
 Collectively, this set of approximations is often known as the harmonic limit.
 
 #figure(image("figures/chemisorbed_partition_functions.svg",width:33%),caption:[Schematic of a chemisorbed molecule on a surface. If the adsorbate is strongly bound, it will have no translational or rotational degrees of freedom.])<fig:chemisorbed>
@@ -3155,33 +3142,43 @@ Collectively, this set of approximations is often known as the harmonic limit.
 If the adsorbate is somewhat weakly bound, then the remaining degrees of freedom are likely to be somewhere between that used for a free gas and that of a chemisorbed species.
 More complicated expressions are available to model these intermediate behaviors, such as the hindered translator--hindered rotor model.
 #footnote[L.H. Sprowl, C.T. Campbell, L. Árnadóttir, "Hindered Translator and Hindered Rotor Models for Adsorbates: Partition Functions and Entropies," _J. Phys. Chem. C_, 120, 9719--9731 (2016).]
+Additional consideration can be found in the literature related to molecules that adsorb within porous materials, where spatial confinement may restrict some degrees of freedom.
+#footnote[
+  P.J. Dauenhauer, O.A. Abdelrahman, "A Universal Descriptor for the Entropy of Adsorbed Molecules in Confined Spaces", _ACS Catal._, 4, 1235--1243 (2018).
+]
 
-For the sake of simplicity, let us assume that an adsorbate binds strongly to the catalyst surface via chemisorption.
+==== Hertz--Knudsen Equation
+
+For the sake of demonstration, let us assume that an adsorbate binds strongly to the catalyst surface via chemisorption.
 The transition state for this process is, by definition, partway between the gas-phase species and the adsorbed species, such that the transition state itself has some intermediate number of motional degrees of freedom remaining.
 In other words, the transition state is a semi-mobile species on or near the surface.
 
-#self[
-  Draw transition state for chemisorption.
-]
-
-Starting from #ref(<eq:tst_a>), if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
-$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((3)) z_"vib"^((N)) z_"el"), $
+Starting from the transition state theory definition of the rate constant (#ref(<eq:tst_a>)), we have
+$ k = (k_"B " T)/h 1/(N_"A "^(1-m)) (Z'^ddagger) / (Z') exp(-(Delta E_0^ddagger)/(R T)), $
+where $Z'$ represents the volume-normalized partition function for the molecule before adsorption, and $Z'^ddagger$ is the volume-normalized partition function for the transition state associated with the adsorption process.
+Here, we can make some simplifying assumptions by noting that $Delta E_0^ddagger=0$ for non-activated adsorption processes,
+#footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier for such a process. It is perhaps better to think about this as $E_"a "->0$.]
+and we can remove the $1\/N_"A "^(1-m)$ term because $m=1$ for this process.
+Furthermore, if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
+$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((3)) z_"vib"^((N)) z_"el"), $<eq:adsorbed_k>
 where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
-Note that the $exp(- Delta E_0^ddagger\/R T)$ term is no longer present because $Delta E_0^ddagger=0$ for non-activated adsorption processes,
-#footnote[By this, we mean that we are referring to the binding of the adsorbate to the surface without breaking any chemical bonds.] and the $1\/N_"A "^(1-m)$ term is gone because $m=1$ for this process.
-#footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier. It is perhaps better to think about this as $E_"a "->0$.]
 
-If we make several assumptions, namely that the rotational, vibrational, and electronic partition functions do not appreciable change between the gas-phase and the transition state upon adsorption (at least compared to the changes due to translational degrees of freedom), then we arrive at
+
+If we make several assumptions, namely that the rotational, vibrational, and electronic partition functions do not exhibit an appreciable change between the gas-phase and the transition state (at least compared to the changes due to translational degrees of freedom), then we arrive at
 $ k_"ads" = (k_"B " T)/h z^(ddagger (2))_"trans"/z^((3))_"trans". $
 Certainly, this is a lot cleaner looking.
+
+From #ref(<eq:trans_d>), recall that the definition of the translational partition function is
+$ z_"trans" equiv (L/Lambda)^d, quad Lambda equiv h / sqrt(2 pi m k_"B " T) $
+for $d$ translational degrees of freedom.
 Substituting in for the definition of the translational partition functions yields
 $ k_"ads" = (k_"B " T)/h (L\/Lambda)^2/(L\/Lambda)^3 = (k_"B "T)/h Lambda/L = (k_"B " T)/(L sqrt(2 pi m k_"B " T)). $
 Assuming we have an ideal gas, we can invoke the ideal gas law in the form of
-$ P = (k_"B " T)/V. $
+$ P V = k_"B " T. $
 With this, we obtain what is known as the Hertz--Knudsen equation:
 $ k_"ads" = (P A)/(sqrt(2 pi m k_"B " T)), $
 where $A$ is a reference area obtained from $V\/L$.
-Here, $P$ is specifically the (partial) pressure of the gaseous species being adsorbed, and $A$ is generally taken as the surface area of the adsorption site.
+Here, $P$ is the (partial) pressure of the gaseous species being adsorbed, and $A$ is generally taken as the surface area of the adsorption site.
 Sometimes, an empirical sticking coefficient $s$ will also be included in the numerator to account for the probability that the adsorbate will stick to the surface.
 
 Before continuing, it must be emphasized that the Hertz--Knudsen equation is not universal for all adsorption properties.
@@ -3189,39 +3186,45 @@ While it holds for many systems, if the adsorption process breaks any of the afo
 
 === Desorption
 
-// draw energy diagram
+#figure(image("figures/desorption.svg",width:33%))<fig:desorption>
 
 We now shift our focus to desorption, which is simply the reverse process of adsorption.
-Unlike adsorption, however, there is a barrier for desorption (it is the heat of desorption).
-With desorption, we are going from an adsorbed state to the free gas, with a transition state somewhere in the middle.
-If we assume that the adsorbed state has no translational or rotational degrees of freedom and that two translational degrees of freedom and all three rotational degrees of freedom are restored at the transition state (i.e. the reverse of the process described in the derivation of the Hertz--Knudsen equation), then we have
-$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^(ddagger (N)) z_"el") exp(- (Delta E_"des")/(R T)), $
-which we will simplify to
-$ k_"des" = (k_"B " T)/h (z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) z_("vib")^(ddagger (N-1))z_("el")^(ddagger))/(z_("vib")^((N))z_("el")) exp(- (Delta E_"des")/(R T)). $
+We can revisit our expression for $k$ from #ref(<eq:adsorbed_k>) to state an analogous equation for the desorption process:
+$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((3N_0)) z_"el") exp(- (Delta E_"des")/(R T)), $
+which simplifies to
+$ k_"des" = (k_"B " T)/h  (z_"trans"^(ddagger (2)) z_"rot"^(ddagger (3)) z_"vib"^(ddagger (N-1))z^ddagger_"el")/(z_"vib"^((3N_0))z_"el") exp(- (Delta E_"des")/(R T)). $
+
+The numerator is the same as for the adsorption case, but the denominator is associated with the molecule in the adsorbed state.
+Unlike adsorption, however, there is a barrier for desorption (it is the same as the reaction energy of the desorption process, $Delta E_"des"$, as depicted in #ref(<fig:desorption>)).
 
 From here, we will assume that the change in the vibrational partition function is negligible compared to the change in the translational partition functions and that the change in electronic partition function is also negligible (both of which are almost always going to be true).
 With this, we can state
 $ k_"des" = (k_"B " T)/h z_("trans")^(ddagger (2)) z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
-From here, we plug in our definitions of the partition functions.
+Now we plug in our definitions of the partition functions.
 We will start with the translational partition function:
 $ k_"des" = (k_"B " T)/h (L/Lambda)^2 z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)) $
 $ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2  z_("rot")^(ddagger (3)) exp(- (Delta E_"des")/(R T)). $
-At this point, we need to have some information about the shape of our transition state (i.e. unimolecular, linear, or non-linear).
-For the sake of simplicity, let's continue our derivation assuming a linear transition state.
-$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2 T/(sigma Theta_"rot")  exp(- (Delta E_"des")/(R T)). $
-Repeating this process for a transition state of different geometry is simply a matter of plugging in a different expression for $z_("rot")^ddagger$.
+At this point, we need to have some information about the geometry of the transition state (i.e. unimolecular, linear, or non-linear) in order to define the rotational partition function.
+For the sake of simplicity, let's continue our derivation assuming a linear transition state, such that
+$ k_"des" = (k_"B " T)/h (A (2 pi m k_"B " T))/h^2 T/(sigma Theta_"rot")  exp(- (Delta E_"des")/(R T)), $
+which simplifies to
+$ k_"des" = (k_"B " T^3)/h^3 (A (2 pi m k_"B "))/(sigma Theta_"rot")  exp(- (Delta E_"des")/(R T)). $
 
-=== Surface Reaction
+Repeating this process for a transition state of a different geometry is simply a matter of plugging in a different expression for $z_("rot")^ddagger$.
 
-For surface reactions, differences in the translational and rotational degrees of freedom for both the reactant(s) and transition state are typically negligible.
-Formally, we can make an even stronger statement that the translational and rotational degrees of freedom are zero, such that we have
-$ k_"SR" = (k_"B " T)/h  (z_"trans"^(ddagger (0))/V z_"rot"^(ddagger (0)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)). $
-We can now simplify to
+=== Surface Reactions
+
+For surface reactions, the adsorbed reactant(s) and transition states typically have negligible translational and rotational degrees of freedom.
+Therefore,
+$ k_"SR" = (k_"B " T)/h  (z_"trans"^(ddagger (0))/V z_"rot"^(ddagger (0)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)), $
+which simplifies to
 $ k_"SR" = (k_"B " T)/h  (z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)). $
 Personally, this is about as far as I am willing to simplify things in most cases without further information.
 
 
-=== Accounting for Thermodynamic Non-Idealities
+== Accounting for Thermodynamic Non-Idealities
+
+=== Derivation in Terms of Activity Coefficients
 
 In the derivations of the transition state theory rate constant thus far, we have implicitly neglected any thermodynamic non-idealities.
 Now it is time for us to revisit our expressions with a fresh mindset.
@@ -3235,75 +3238,100 @@ $ conc("AB")^ddagger = (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamm
 Plugging this into our rate expression now yields
 $
 r &= (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B")\
-r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B"),
-$
-or more generally as#footnote[In contrast with statements made in G. Lente, "Facts and Alternative Facts in Chemical Kinetics: Remarks About the Kinetic Use of Activities, Termolecular Processes, and Linearization Techniques", _Curr. Opin. Chem. Eng._, 21, 76--83 (2018), rate expressions can indeed be expressed using activities rather than concentrations, as demonstrated throughout this section.]
-$ r = (k_"B " T)/h C^std Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) 1/gamma^ddagger product_(j,nu_j<0) a^(|nu_j|).
+r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B")\
 $<eq:tst_activities>
 
 Here, the definition of $K_"a "^ddagger$ was substituted in from #ref(<eq:k_a_partition_functions>).
-Note that the partition functions (i.e. $Z$) here are their unitless values, not normalized by the reference volume (i.e. $Z'$).
-The above expression is the non-ideal analogy to #ref(<eq:tst_final>).
+Note that the partition functions (i.e. $Z$) are their unitless values, not normalized by the reference volume (i.e. $Z'$) since that was needed to reproduce the constants of $K_"C "^ddagger$, whereas we are dealing with $K_"a "^ddagger$.
+#ref(<eq:tst_activities>) is the non-ideal analogy to #ref(<eq:tst_final>).
 
-From the above expression, we can see that
-$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger $<eq:k_nonideal>
+From the above expression, we can write $r= k_"nonideal" conc("A") conc("B"),$ where
+$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_"a "^ddagger (gamma_"A " gamma_"B ")/gamma^ddagger  $<eq:k_nonideal>
 or, equivalently, in terms of the partition functions,
 $ 
-k_"nonideal" = A_("nonideal") exp(-(Delta E_0^ddagger)/(R T))\
-A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_"A " Z_"B ") (gamma_"A " gamma_"B ")/gamma^ddagger
+k_"nonideal" equiv A_("nonideal") exp(-(Delta E_0^ddagger)/(R T))\
+A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("A") Z_ce("B"))  (gamma_"A " gamma_"B ")/gamma^ddagger .
 $<eq:tst_nonideal>
-in analogy with #ref(<eq:tst_a>).
 
 Comparing the non-ideal rate constant in #ref(<eq:tst_nonideal>) with the idealized case in #ref(<eq:tst_a>),
-#footnote[Note that $1\/ N_"A "^(1-m) product_j (Z'_j)^(nu_j)$ in the definition of $k_"ideal"$ is equivalent to $(C^std)^(1-m) product_j (Z_j)^(nu_j)$ in the definition of $k_"nonideal"$ since $Z'_j equiv Z_j\/V$.]
 we see that the difference in the rate when accounting for thermodynamic non-idealities can be traced back to the ratio of activity coefficients via the following relationship:
-$ k_"nonideal" = k_"ideal" (gamma_"A " gamma_"B ")/(gamma^ddagger). $<eq:k_relationship>
-#caution[As can be seen from #ref(<eq:k_relationship>), a rate law of the form $r = k conc("A") conc("B")$ cannot simply be rewritten as $r = k a_"A " a_"B "$ to account for thermodynamic non-idealities, as doing so would omit the importance of $gamma^ddagger$.]
+#footnote[Note that $1\/ N_"A "^(1-m) product_(j,nu_j<0) Z'_(j)^(|nu_j|)$ in the definition of $A_"ideal"$ is equivalent to $(C^std)^(1-m) product_(j,nu_j<0) Z_j^(|nu_j|)$ in the definition of $A_"nonideal"$ since $Z'_j equiv Z_j\/V$.]
+
+$ k_"nonideal" = k_"ideal" (gamma_ce("A") gamma_ce("B"))/(gamma^ddagger). $<eq:k_relationship>
 
 A natural question to ask at this point is what value this analysis can provide if it relies on $gamma^ddagger$, which cannot be readily determined from experiments.
 Naturally, one answer is that it is possible --- like with other aspects of the transition state theory representation of $k$ --- to calculate $gamma^ddagger$ from quantum-mechanical calculations.
 Perhaps more importantly, however, is that #ref(<eq:k_relationship>) can be used in a qualitative way to rationalize the effects of non-idealities.
 
 For instance, in the liquid-phase, if a solvent selectively stabilizes a given species, the activity coefficient for that species will likely be greater than 1.
-From a qualitative standpoint, this is because the effective concentration (i.e. activity) of the solute will necessarily be higher since the solute will be less accessible given that it is highly solvated.
-Therefore, we can say that if we stabilize the reactants via solvation, then $k_"nonideal"$ will increase.
+#footnote[From a qualitative standpoint, this is because the effective concentration (i.e. activity) of the solute will necessarily be higher since it will be less accessible given that it is highly solvated.]
+Therefore, we can say that if we stabilize the reactants via solvation, then $k_"nonideal"$ would increase.
 In contrast, if our reaction media selectively stabilizes the transition state, then $k_"nonideal"$ will decrease.
 Similar arguments can be made about gas-phase reactions by considering the fugacity coefficient $phi_j$ in place of the activity coefficient $gamma_j$.
+
+=== Replacing Concentrations with Activities
+
+Naturally, another question one might ask is: can one simply replace concentrations by activities in a rate expression if we wish to account for thermodynamic non-idealities?
+Consider a rate law of the form
+$ r = k conc("A") conc("B"). $
+Using #ref(<eq:k_relationship>), we can state
+$ r_"nonideal" = k_"nonideal" conc("A") conc("B")  $
+$ r_"nonideal" =  k_"ideal" (gamma_ce("A") gamma_ce("B"))/gamma^ddagger conc("A") conc("B"). $
+By recognizing that $a_j equiv gamma_j [A_j]\/C^std$, we can rewrite the above expression as
+$ r_"nonideal" =  k_"ideal" (C^std)^(m) (1)/gamma^ddagger a_ce("A") a_ce("B"). $
+Therefore, while it is perfectly reasonable to use activities in a rate expression, 
+#footnote[This is in contrast with statements made in G. Lente, "Facts and Alternative Facts in Chemical Kinetics: Remarks About the Kinetic Use of Activities, Termolecular Processes, and Linearization Techniques", _Curr. Opin. Chem. Eng._, 21, 76--83 (2018).] 
+one must take care in doing so.
+Namely, the additional component that needs to be accounted for is the factor of $1\/gamma^ddagger$ (in addition to ensuring the units work out via the appropriate factors of $C^std$.)
+
 
 == A Thermodynamic Perspective
 
 Previously, we derived an expression for $k$ based on a statistical mechanics approach (i.e. using partition functions).
 We will show in this subsection that an analogous expression can be derived from simple thermodynamic arguments, albeit without the atomistic details.
 
+=== Thermochemistry from Partition Functions <thermochemistry-from-partition-functions>
+
+_This section was not covered in class but is included for additional context._
+
+It should be noted that statistical mechanics allows us to determine thermodynamic properties like the internal energy $U$, enthalpy $H$, entropy $S$, and Gibbs free energy $G$ of the translational, rotational, vibrational, and electronic partition functions directly from the partition function.
+For the interested reader, we refer you to external sources on the subject matter.
+#footnote[Refer to "Section 10.3: Ensemble Properties and Basic Statistical Mechanics" in _Essentials of Computational Chemistry: Theories and Models_ (2#super[nd] ed.) by C.J. Cramer.]
+That said, a brief summary is as follows:
+$ U &= k_"B " T^2 ((diff ln(Z)) / (diff T))_(N,V) $
+$ H &equiv U + P V $
+$ S &= k_"B " ln(Z) + k_"B " T ((diff ln(Z))/ (diff T))_(N,V) $
+$ G &equiv H - T S. $
+
+
 === The Eyring Equation <thermodynamic-perspective>
 
-We know from thermodynamics that
+Here, we will derive the Eyring equation, which takes an analogous functional form as the transition state theory formalism for the rate constant but does not rely on statistical mechanics.
+
+We start by recalling that 
 $ Delta G^std^ddagger &= - R T ln(K_("a ")^ddagger), $
 such that
 $ K_"a "^ddagger = exp(-(Delta G^std^ddagger)/ (R T)). $
-Plugging $K_"a "^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_nonideal>) yields
-$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $<eq:k_dg>
-Naturally, when taking advantage of the thermodynamic relationship
-$ Delta G^std = Delta H^std - T Delta S^std $
-this becomes
-$ k = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $ <eq:eyring-final>
+Plugging $K_"a "^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_nonideal>) (which we will simply refer to as $k$ here) yields
+$ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $<eq:k_dg>
 In the thermodynamically ideal case (i.e. $gamma_"A "=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
 
-The net rate of reaction also be written out in full as
-$ r = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger conc("A") conc("B"), $<eq:eyring_final_rate>
-or more generally as
-$ r = (k_"B "T )/h C^std exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) 1/gamma^ddagger product_(j,nu_j<0) a_(j)^(|nu_j|). $
-For the sake of illustration, we can separate out the various terms in $k$ in analogy with the Arrhenius equation to arrive at
+Naturally, when taking advantage of the thermodynamic relationship
+$ Delta G^std = Delta H^std - T Delta S^std $
+we can rewrite the above expression as
+$ k = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $ <eq:eyring-final>
+or in Arrhenius form as
 $
-k &= A_0 exp(- (Delta H^std^ddagger) / (R T)),quad
-A_0 equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_"A " gamma_"B ")/gamma^ddagger.
+k equiv A exp(- (Delta H^std^ddagger) / (R T)),quad
+A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_"A " gamma_"B ")/gamma^ddagger.
 $
+With this, we can write our usual rate equation of the form $r = k conc("A") conc("B")$ in terms of enthalpies and entropies of activation.
 
 === The Transmission Coefficient
 
-It is worth noting that in practice, a multiplicative correction factor $kappa$, known as the transmission coefficient, is often included in the expression for $k$.
+In practice, a multiplicative correction factor $kappa$, known as the transmission coefficient, is often included in the expression for $k$.
 For instance, it can be used to correct the Eyring equation representation of the rate constant via
-$ k = kappa (k_"B " T)/h C^std^(1-m) exp(- (Delta H^std^ddagger) / (R T)) exp((Delta S^std^ddagger)/R) $
+$ k = kappa (k_"B " T)/h C^std^(1-m) exp(- (Delta G^std^ddagger) / (R T)) $
 in the thermodynamically ideal case.
 The value for $kappa$ is between 0 and 1, representing the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
 #footnote[In contrast with statements made in J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
@@ -3312,13 +3340,13 @@ In other words, the rate constant (and rate) from transition state theory is gen
 === Relationship with Activation Energy <relationship-with-activation-energy>
 
 We can also ask how the apparent activation energy commonly reported in experiments from an Arrhenius plot is related to $Delta H^std^ddagger$.
-First, we recall the definition of the activation energy from #ref(<eq:apparent_e_a>):
+First, we recall the definition of the apparent activation energy from #ref(<eq:apparent_e_a>):
 $
-E_"a " &= R T^2 (diff ln(k))/(diff T).
+E_"a " = R T^2 (diff ln(k))/(diff T).
 $
 Plugging in $k$ from the Eyring equation into the above expression yields
 $
-E_"a " &= R T^2 (diff ((k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)))) / (diff T)
+E_"a " &= R T^2 (diff ln((k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)))) / (diff T)
 $
 $ E_"a " &= R T^2 ((diff ln((k_"B ")/h))/(diff T) + (diff ln(T))/(diff T) + (diff ln(C^std^(1-m)))/(diff T) + (diff ((Delta S^std^ddagger)/R))/(diff T) - (diff ((Delta H^std^ddagger)/(R T)))/(diff T)) $
 $
@@ -3331,11 +3359,15 @@ What we do from here depends on what system we are studying.
 If we are studying a solid or a liquid, we might reasonably state that $C^std$ is independent of temperature.
 In this case, we end up with
 $ E_"a " = Delta H^std^ddagger + R T quad ("solids, liquids"). $
-However, if we are studying a gas, then we cannot make the assumption that $C^std$ is independent of temperature.
+However, if we are studying a gas, it is more natural to use a standard-state pressure $P^std$.
 Assuming the ideal gas law holds, we instead have
 $
-E_"a " &= Delta H^std^ddagger + R T + R T^2 ((diff ln((P / (R T))^(1-m)))/(diff T))\
-E_"a " &= Delta H^std^ddagger + R T + R T^2 ((m-1)/T)\
+E_"a " &= Delta H^std^ddagger + R T + R T^2 ((diff ln((P^std / (R T))^(1-m)))/(diff T))
+$
+$
+E_"a " &= Delta H^std^ddagger + R T + R T^2 ((m-1)/T)
+$
+$
 E_"a " &= Delta H^std^ddagger + m R T quad ("ideal gas").
 $<eq:e_app_tst>
 
@@ -3358,7 +3390,7 @@ $z_i equiv r_(i)^- \/ r_(i)^+.$
 To make things a bit simpler to follow for those who do not enjoy gratuitous product notation as much as me, we will invoke an arbitrary reaction: #ce("A + B <--> P").
 Assuming we are dealing with directional rates in an elementary reaction, we know that
 $ z_i = r_(i)^- / r_(i)^+ = (k_(i)^- conc("P"))/(k_(i)^+ conc("A") conc("B")). $
-From the (non-idealized) Eyring equation in #ref(<eq:eyring_final_rate>), we know that
+From the (non-idealized) Eyring equation, we know that
 $ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_"A "^std - G_"B "^std)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger\
 k_(i)^- &= (k_"B " T)/h exp(-(G^std^ddagger - G_"P "^std)/ (R T)) (gamma_"P ")/gamma^ddagger. $
 
@@ -3466,7 +3498,7 @@ $ r_i = r_(i)^+ - r_(i)^- = r_(i)^+ (1-Z_i) = r_(i)^+ (1-exp(-(cal(A)_i)/(R T)))
 From here, we can make use of #ref(<eq:affinity>) to substitute in for $cal(A)_i$ in our above expression and arrive at
 $ r_i =r_(i)^(+) - r_(i)^(-)= r_(i)^+ (1-1/K_"a " product_j a_(j)^(nu_(i,j))). $
 
-We can define $r_(i)^+$ using the Eyring equation (#ref(<eq:eyring_final_rate>)) and arrive at
+We can define $r_(i)^+$ using the Eyring equation and arrive at
 $ r_i = r_(i)^(+) - r_(i)^(-) =  [(k_"B "T )/h C^std exp(-( Delta G_(i)^std^ddagger) / (R T)) 1/gamma^ddagger product_(j,nu_(i,j)<0) a_(j)^(|nu_(i,j)|)] [1-1/K_"a " product_j a_(j)^(nu_(i,j))]. $
 The term on the left-hand side is a significant kinetic term, which is heavily dependent on the activation (free) energy computed at the standard state.
 The term on the right-hand side is a significant thermodynamic term, which is heavily dependent on the equilibrium constant also at the standard state and represents the approach to equilibrium.
