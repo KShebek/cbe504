@@ -6,7 +6,7 @@
 // 4. Sprinkle in more examples in-class
 // 5. Make exams 9am-5pm
 // 6. Make exam corrections a required homework problem. No extra credit.
-// 7. Match grading scale used by Thanos in CBE 503
+// 7. Change course grading to be 30% problem sets, 35% midterm, 35% final
 // 8. Enable "Hide totals in student grades summary" on Canvas
 // 9. Remove section 7.5.3 with desorption. It just feels weird. How can the TS be there but also have a Delta E_ads.
 #import "@preview/xarrow:0.3.1": xarrow
@@ -3223,7 +3223,7 @@ Therefore,
 $ k_"SR" = (k_"B " T)/h  (z_"trans"^(ddagger (0))/V z_"rot"^(ddagger (0)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((0))/V z_"rot"^((0)) z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)), $
 which simplifies to
 $ k_"SR" = (k_"B " T)/h  (z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"vib"^((N)) z_"el") exp(- (Delta E_0^ddagger)/(R T)). $
-Again, the $N$ vibrational degrees of freedom here (for both the transition state and reactant) constitute $3N_0$ vibrational modes. Personally, this is about as far as I am willing to simplify things in most cases without further information.
+Again, the $N$ here constitutes $3N_0$ vibrational modes. Personally, this is about as far as I am willing to simplify things in most cases without further information.
 
 
 == Accounting for Thermodynamic Non-Idealities
@@ -3286,7 +3286,7 @@ $ r_"nonideal" =  k_"ideal" (C^std)^(m) (1)/gamma^ddagger a_ce("A") a_ce("B"). $
 Therefore, while it is perfectly reasonable to use activities in a rate expression, 
 #footnote[This is in contrast with statements made in G. Lente, "Facts and Alternative Facts in Chemical Kinetics: Remarks About the Kinetic Use of Activities, Termolecular Processes, and Linearization Techniques", _Curr. Opin. Chem. Eng._, 21, 76--83 (2018).] 
 one must take care in doing so.
-Namely, the additional component that needs to be accounted for is the factor of $1\/gamma^ddagger$ (in addition to ensuring the units work out via the appropriate factors of $C^std$.)
+Namely, the additional component that needs to be accounted for is the factor of $1\/gamma^ddagger$ (in addition to ensuring the units work out via the appropriate factors of $C^std$).
 
 
 == A Thermodynamic Perspective
@@ -3319,6 +3319,7 @@ $ K_"a "^ddagger = exp(-(Delta G^std^ddagger)/ (R T)). $
 Plugging $K_"a "^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_nonideal>) (which we will simply refer to as $k$ here) yields
 $ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $<eq:k_dg>
 In the thermodynamically ideal case (i.e. $gamma_"A "=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
+By convention, $C^std$ is typically taken as $P\/R T$ at 1 bar for gases or as the molar concentration of pure components for liquids. 
 
 Naturally, when taking advantage of the thermodynamic relationship
 $ Delta G^std = Delta H^std - T Delta S^std $
@@ -3330,6 +3331,7 @@ k equiv A exp(- (Delta H^std^ddagger) / (R T)),quad
 A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_"A " gamma_"B ")/gamma^ddagger.
 $
 With this, we can write our usual rate equation of the form $r = k conc("A") conc("B")$ in terms of enthalpies and entropies of activation.
+#footnote[There is generally a correlation between $Delta H^std^ddagger$ and $Delta S^std^ddagger$ but not necessarily for the reasons one might anticipate. Refer to G.C. McBane, "Chemistry from Telephone Numbers: The False Isokinetic Relationship", _J. Chem. Educ._, 75, 919--922 (1998).]
 
 === The Transmission Coefficient
 
@@ -3398,7 +3400,7 @@ $ z_i = r_(i)^- / r_(i)^+ = (k_(i)^- conc("P"))/(k_(i)^+ conc("A") conc("B")). $
 Our end-goal here will be to show that
 $ z_i = exp((Delta G_i) /(R T)), $
 which will lead to a new concept known as the reaction affinity.
-We will start by finding an expression for the rate of rate constants, after which we will revisit the concentration terms.
+We will start by finding an expression for the rate constants, after which we will revisit the concentration terms.
 
 From the (non-idealized) Eyring equation, we know that
 $ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_"A "^std - G_"B "^std)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger\
@@ -3417,7 +3419,7 @@ $
 Delta G_i &= Delta G_i^std + R T ln(Q_"a ")\
 Delta G_i &= Delta G_i^std + R T ln(product_j a_(j)^(nu_(i,j))).
 $<eq:dg_nonstandard>
-where $Delta G_i$ is at the reaction conditions (i.e. not necessarily standard state) and $Q_"a "$ is the activity-based reaction quotient, computed in an analogous manner as the activity-based equilibrium constant but without a restriction of the activities being those at equilibrium.
+where $Delta G_i$ is at the reaction conditions (i.e. not necessarily standard state), and $Q_"a "$ is the activity-based reaction quotient, computed in an analogous manner as the activity-based equilibrium constant but without a restriction of the activities being those at equilibrium.
 We can convert between activities and concentrations to arrive at
 $
 Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_"A " conc("A")/C^std gamma_"B " conc("B")/C^std) )\
@@ -3435,9 +3437,10 @@ The same result will hold regardless of the molecularity of the elementary react
 #ref(<eq:de_donder>) is known as the de Donder relation, which is a thermodynamic relationship between the forward and reverse rates of reaction.
 
 We can see that $z_i<1$ (i.e. the reaction proceeds in the forward direction) only if $cal(A)_i>0$ and vice versa.
-Another way to frame this is as
-$ cal(A)_i (r_(i)^+-r_(i)^-) >=0, $
+Another way to frame this is by stating
+$ cal(A)_i r_i >=0 $
 for a reaction to proceed as-written, which is known as de Donder's inequality.
+Here, $r_i$ is the net reaction rate of step $i$.
 For full clarity, there is no direct relationship between $G_i^std$ and the viability of the net reaction proceeding in a given direction --- it only depends on $cal(A)_i$ at the reaction conditions.
 
 #caution[
@@ -3461,7 +3464,7 @@ For instance, consider the cyclic reaction scheme in #ref(<fig:cycle>).
 
 Like with any set of state functions in a closed cycle, we know that
 $ sum_i cal(A)_i = 0. $
-However, it is impossible for this statement to be true unless $cal(A)_i=0$ for each step.
+However, it is impossible for this statement to be true unless $cal(A)_i=0$ for each step, which would imply no reaction progress.
 At least one of the reaction steps must have $cal(A)_i<0$ in order for $sum_i cal(A)_i = 0$, which violates de Donder's inequality and implies that such a reaction scheme is not viable as written.
 Put another way, via de Donder's equality, we know that one of the reaction steps must actually proceed in the reverse direction, breaking the cyclic nature of the proposed mechanism.
 
@@ -3470,17 +3473,18 @@ Put another way, via de Donder's equality, we know that one of the reaction step
 We can also leverage de Donder relations in non-cyclic reactions.
 Consider the following proposed reaction sequence:
 $ 
-ce("H2 &<--> 2H^∙") quad A^std_(1) = -331 "kJ/mol"\
-ce("2H2 + O2 &<--> 2 H2O") quad A^std_(2) = 385 "kJ/mol".
+ce("H2 &<--> 2H^∙") quad cal(A)^std_(1) = -331 "kJ/mol"\
+ce("2H2 + O2 &<--> 2 H2O") quad cal(A)^std_(2) = 385 "kJ/mol".
 $
 for the following overall reaction:
 $ ce("3H2 + O2 <--> 2H2O + 2H^∙"). $
 
-For the sake of demonstration, consider the reaction taking place at standard state conditions, such that $A_i=A^(std)_i$.
 
 The de Donder inequality holds for net reaction sequences as well, provided we account for stoichiometry via
-$ cal(A) (r^(+)-r^(-)) >=0, quad cal(A) equiv sum_i sigma_i cal(A)_i. $
-Since $sum_i sigma_i cal(A)_i>0$, one might naively think that the net reaction proceeds in the forward direction, made possible via thermodynamic coupling between the two steps to yield an overall $cal(A)>0$.
+$ cal(A) r >=0, quad cal(A) equiv sum_i sigma_i cal(A)_i. $
+
+For the sake of demonstration, consider the reaction taking place at standard state conditions, such that $cal(A)_i=cal(A)^(std)_i$.
+Since $sum_i sigma_i cal(A)_i>0$ for this reaction at standard-state conditions, one might naively think that the net reaction would proceed in the forward direction, made possible via thermodynamic coupling between the two steps to yield an overall $cal(A)>0$.
 However, having $cal(A)>0$ is a necessary but not sufficient condition.
 When looking at the individual steps, we see that the first step has $cal(A)_i<0$, making it impossible for it to proceed in the forward direction.
 Clearly, the proposed mechanism cannot proceed as-written even though the net reaction has $cal(A)>0$.
@@ -3497,18 +3501,27 @@ $ cal(A)_i = R T ln(K_"a "/(product_j a_(j)^(nu_(i,j)))) = R T ln(((product_j a_
 Therefore, the viability of the reaction mechanism at a given set of reaction conditions is dependent on how much the species activities (or concentrations, in the ideal case) differ from those at equilibrium.
 
 For instance, consider the moment the reaction is started.
-We will have only #ce("H2") at the start and therefore $cal(A)_1 > 0$ since $a_ce("H")approx 0$ and $ln(y\/x)-> infinity$ for $x->0$.
+We will have only #ce("H2") at the start and therefore $cal(A)_1 > 0$ since $a_ce("H^∙")approx 0$ and $ln(y\/x)-> +infinity$ for $x->0$.
 This makes sense because the only direction the reaction can initially proceed is in the forward direction.
-When the extent of reaction is non-negligible (e.g. at steady state), however, the highly negative value of $cal(A)_1$ suggests the step would be unlikely to proceed in the forward direction.
+When the extent of reaction is non-negligible (e.g. at steady state), however, the highly negative value of $cal(A)^std_1$ suggests the step would be unlikely to proceed in the forward direction as-written.
 
 Ultimately, this brings us to the idea of kinetic coupling wherein a thermodynamically unfavorable (i.e. $cal(A)^std_i<0$) step can be overcome by having the concentration of a reactant kept high or a product concentration kept low with respect to its standard state, equilibrium value via coupling with another step in the mechanism.
 For #ce("H2 <--> 2H^∙") to proceed in the forward direction at steady state, there would likely need to be a separate, favorable reaction that it could kinetically couple to --- namely one that would rapidly and continually consume #ce("H^∙").
+As an example, the following three-step mechanism is one that is known to be thermodynamically viable and support kinetic coupling:
+$
+ce("OH^∙ + H2 &<--> H2O + H^∙")\
+ce("H^∙ + O2 &<--> OH^∙ + O^∙∙")\
+ce("O^∙∙ + H2 &<--> OH^∙ + H^∙").
+$
+
 
 === Thermodynamic and Kinetic Factors in Reversible Reaction Rates
 
+_This section was not covered in class but is included for additional context._
+
 We can now see that there are thermodynamic factors that influence the reversibility of a reaction and, in turn, the net reaction rate.
 To make this even clearer, consider the net rate of a reaction step, which we can rewrite in terms of reversibility as
-$ r_i = r_(i)^+ - r_(i)^- = r_(i)^+ (1-Z_i) = r_(i)^+ (1-exp(-(cal(A)_i)/(R T))). $
+$ r_i = r_(i)^+ - r_(i)^- = r_(i)^+ (1-z_i) = r_(i)^+ (1-exp(-(cal(A)_i)/(R T))). $
 
 From here, we can make use of #ref(<eq:affinity>) to substitute in for $cal(A)_i$ in our above expression and arrive at
 $ r_i =r_(i)^(+) - r_(i)^(-)= r_(i)^+ (1-1/K_"a " product_j a_(j)^(nu_(i,j))). $
