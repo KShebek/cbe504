@@ -3319,6 +3319,7 @@ $ K_"a "^ddagger = exp(-(Delta G^std^ddagger)/ (R T)). $
 Plugging $K_"a "^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_nonideal>) (which we will simply refer to as $k$ here) yields
 $ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $<eq:k_dg>
 In the thermodynamically ideal case (i.e. $gamma_"A "=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
+#footnote[There is sometimes a linear correlation between $Delta H^std^ddagger$ and $Delta S^std^ddagger$ but not necessarily for the reasons one might anticipate. Refer to G.C. McBane, "Chemistry from Telephone Numbers: The False Isokinetic Relationship", _J. Chem. Educ._, 75, 919--922 (1998).]
 By convention, $C^std$ is typically taken as $P\/R T$ at 1 bar for gases or as the molar concentration of pure components for liquids. 
 
 Naturally, when taking advantage of the thermodynamic relationship
@@ -3331,7 +3332,10 @@ k equiv A exp(- (Delta H^std^ddagger) / (R T)),quad
 A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_"A " gamma_"B ")/gamma^ddagger.
 $
 With this, we can write our usual rate equation of the form $r = k conc("A") conc("B")$ in terms of enthalpies and entropies of activation.
-#footnote[There is generally a correlation between $Delta H^std^ddagger$ and $Delta S^std^ddagger$ but not necessarily for the reasons one might anticipate. Refer to G.C. McBane, "Chemistry from Telephone Numbers: The False Isokinetic Relationship", _J. Chem. Educ._, 75, 919--922 (1998).]
+
+An Arrhenius-type plot can also be made of $ln(k/T)$ vs. $1\/T$ to back out $Delta H^std^ddagger$ from the slope and $Delta S^std^ddagger$ from the $y$-intercept, at least in the ideal case where the activity coefficients can be neglected:
+$ ln(k/T) = -(Delta H^std^ddagger)/R dot.op 1/T + [ln(k_"B "/h C^std^(1-m)) + (Delta S^std^ddagger)/R]. $
+The linearized expression is only useful if one can assume that $Delta H^std^ddagger$ and $Delta S^std^ddagger$ are reasonably independent of temperature.
 
 === The Transmission Coefficient
 
