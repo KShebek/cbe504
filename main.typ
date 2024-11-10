@@ -2725,7 +2725,7 @@ Namely, the attractive region is completely ignored.
 
 
 Assuming that #ce("A") and #ce("B") follow a Maxwell--Boltzmann distribution of speeds at a given temperature $T$, the frequency of collisions that occur at a given temperature can be shown to be#footnote[For additional details refer to "Chapter 2: The Mechanisms of Chemical Reactions in Homogeneous Phases" in J.B. Butt, _Reaction Kinetics and Reactor Design_ (2#super[nd] ed.).]
-$ macron(Z) = n_ce("A") n_ce("B") pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2), $<eq:z_collision>
+$ macron(Z) = n_ce("A") n_ce("B") sigma_ce("AB")^2 ((8 pi k_"B " T)/(mu_ce("AB")))^(1/2), $<eq:z_collision>
 where $n_ce("A")$ and $n_ce("B")$ are the number density of A and B (i.e. units of $"particle/m "^(3)$), and $mu_ce("AB")$ is the so-called reduced mass of the #ce("AB") system given as
 $ mu_ce("AB") equiv (m_ce("A") m_ce("B"))/(m_ce("A") + m_ce("B")), $
 where $m_ce("A")$ and $m_ce("B")$ represent the mass of species A and B, respectively.
@@ -2736,12 +2736,12 @@ In doing so, one might say that
 $ macron(Z) = r = k n_ce("A") n_ce("B") $
 for an elementary, bimolecular reaction of A and B.
 By inspection of #ref(<eq:z_collision>), this would imply that
-$ k = pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2). $
+$ k = sigma_ce("AB")^2 ((8 pi k_"B " T)/(mu_ce("AB")))^(1/2). $
 While this is reasonably suitable in describing the direct collision of two species, it is not reflective of the kinetics of reactions because there is no exponential dependency on temperature that we know must exist from the Arrhenius equation.
 
 The missing link is that molecules only react if they collide with sufficient energy. We, therefore, must define a threshold energy $eta^"*"$, above which reactions can proceed.
 This allows us to refine our expression for $k$ to instead be given as
-$ k = pi sigma_ce("AB")^2 ((8 k_"B " T)/(pi mu_ce("AB")))^(1/2) exp(-eta^"*"/(k_"B " T)). $<eq:collision_refined>
+$ k = sigma_ce("AB")^2 ((8 pi k_"B " T)/(mu_ce("AB")))^(1/2) exp(-eta^"*"/(k_"B " T)). $<eq:collision_refined>
 Typically, a multiplicative factor of $p$ is also included, which is known as the steric factor and is essentially a catch-all term for all additional factors that influence the collision--reaction probability beyond those associated with the energy.
 In general, $p<=1$.
 
@@ -2823,21 +2823,14 @@ These individual contributions can also be used to define the translational, rot
 We now must define each of the partition functions.
 The translational partition function derived from the particle-in-a-box model in quantum chemistry is typically approximated as
 $ z_"trans" = V ((2 pi m k_"B " T)/h^2)^(3/2) = V / Lambda^3, quad Lambda equiv h / sqrt(2 pi m k_"B " T) $<eq:trans_function>
-where $V$ is a reference volume,
-$m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $Lambda$ is the thermal de Broglie wavelength.
-As with all paritition functions, $z_"trans"$ is unitless.
+where $V$ is the volume that confines the translational motion, $m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $Lambda$ is the thermal de Broglie wavelength.
+As with all partition functions, $z_"trans"$ is unitless.
 This, in turn, means that $z'_"trans"$ (i.e. $z_"trans"\/V$) has units of inverse volume.
-
-When dealing with gases, one can equivalently use a standard-state pressure $P^std$ (typically taken as 1 bar) in place of $V$, such as by invoking the ideal gas law: $V = k_"B " T\/P^std$.
-This would ultimately ensure that our rate constant is expressed with pressure-based units rather than concentrations.
-#caution[It must be emphasized that $V$ is describing a reference volume and is generally not the volume of the reactor.
-In return, $P^std$ in the translational partition function is the standard state pressure and is not the same as the operating pressure.
-]
 
 It is also worth noting that $z_"trans"$ can be generalized to an arbitrary set of $d$ dimensions (e.g. in the case of a system that does not have all three translational degrees of freedom).
 To do so, it is as simple as stating
 $ z_"trans" = (L / Lambda)^d, $<eq:trans_d>
-where $L$ is now a reference length dimension.
+where $L$ is now a length that confines that degree of translational motion.
 
 === Rotational Partition Function
 
@@ -2865,7 +2858,9 @@ where $mu$ is called the reduced mass and $d$ is the distance between the two at
 === Vibrational Partition Function
 
 The vibrational partition function is derived based on the harmonic-oscillator quantum-mechanical model and is given by
-$ tilde(z)_"vib" = exp(-E_"ZPVE" / (k_"B " T)) product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))), quad E_"ZPVE" equiv 1/2 sum_i h nu_i. $
+$ z_"vib" = exp(-E_"ZPVE" / (k_"B " T)) product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))) quad ("unnormalized"), $
+where
+$ E_"ZPVE" equiv 1/2 sum_i h nu_i. $
 Here, $N$ is the number of vibrational modes, $nu_i$ is the $i$-th vibrational frequency, and $E_"ZPVE"$ is known as the zero-point vibrational energy.
 
 However, as mentioned earlier, the convention is such that the molecular partition functions will be defined based on their lowest-energy states as the point of reference.
@@ -3292,19 +3287,7 @@ Namely, the additional component that needs to be accounted for is the factor of
 Previously, we derived an expression for $k$ based on a statistical mechanics approach (i.e. using partition functions).
 We will show in this subsection that an analogous expression can be derived from simple thermodynamic arguments, albeit without the atomistic details.
 
-=== Thermochemistry from Partition Functions <thermochemistry-from-partition-functions>
-
-_This section was not covered in class but is included for additional context._
-
-It should be noted that statistical mechanics allows us to determine thermodynamic properties like the internal energy $U$, enthalpy $H$, entropy $S$, and Gibbs free energy $G$ of the translational, rotational, vibrational, and electronic partition functions directly from the partition function.
-For the interested reader, we refer you to external sources on the subject matter.
-#footnote[Refer to "Section 10.3: Ensemble Properties and Basic Statistical Mechanics" in _Essentials of Computational Chemistry: Theories and Models_ (2#super[nd] ed.) by C.J. Cramer.]
-That said, a brief summary is as follows:
-$ U &= k_"B " T^2 ((diff ln(Z)) / (diff T))_(N,V) $
-$ H &equiv U + P V $
-$ S &= k_"B " ln(Z) + k_"B " T ((diff ln(Z))/ (diff T))_(N,V) $
-$ G &equiv H - T S. $
-
+// === Thermochemistry from Pan
 
 === The Eyring Equation <thermodynamic-perspective>
 
@@ -3341,9 +3324,11 @@ In practice, a multiplicative correction factor $kappa$, known as the transmissi
 For instance, it can be used to correct the Eyring equation representation of the rate constant via
 $ k = kappa (k_"B " T)/h C^std^(1-m) exp(- (Delta G^std^ddagger) / (R T)) $
 in the thermodynamically ideal case.
-When the value for $kappa$ is between 0 and 1, it represents the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
+The value for $kappa$ is typically between 0 and 1, in which case it represents the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
 #footnote[In contrast with J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
 In other words, the rate constant (and rate) from transition state theory is generally an upper-estimate, even if all variables in the uncorrected rate expression were computed with perfect accuracy.
+If one considers the possibility of quantum-tunneling through the barrier, then it would be possible for $kappa$ to be greater than 1, however.
+Unless otherwise stated, we will assume that $kappa = 1$.
 
 === Relationship with Activation Energy <relationship-with-activation-energy>
 
@@ -3460,10 +3445,14 @@ That said, it must be stressed once more that the de Donder relation is computed
 The de Donder relationship also describes a ratio of rates, not rate constants.
 ]
 
+The de Donder relationship can also be used to describe the net rate of reaction:
+$ r_i equiv r_(i)^+ - r_(i)^-=r^+ - r^+ exp(- cal(A)_i/(R T)) = r^+ (1-exp(- cal(A)_i/(R T))). $
+When written in this manner, it is clear that the net rate of reaction can be expressed as a combination of kinetic and thermodynamic terms.
+
 === Ruling Out Reaction Mechanisms
 
 We can use the de Donder relations as a way to immediately rule out physically impossible reaction mechanisms.
-#footnote[For additional details, refer to W.L. Holstein and M. Boudart, "Application of the De Donder Relation to the Mechanism of Catalytic Reactions", _J. Phys. Chem. B_, 101, 9991--9994 (1997).]
+// #footnote[For additional details, refer to W.L. Holstein and M. Boudart, "Application of the De Donder Relation to the Mechanism of Catalytic Reactions", _J. Phys. Chem. B_, 101, 9991--9994 (1997).]
 For instance, consider the cyclic reaction scheme in #ref(<fig:cycle>).
 #figure(
   image("figures/rxn_cycle.svg", width: 15%),
