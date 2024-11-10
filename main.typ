@@ -7,8 +7,7 @@
 // 5. Make exams 9am-5pm
 // 6. Make exam corrections a required homework problem. No extra credit.
 // 7. Change course grading to be 30% problem sets, 35% midterm, 35% final
-// 8. Enable "Hide totals in student grades summary" on Canvas
-// 9. Remove section 7.5.3 with desorption. It just feels weird. How can the TS be there but also have a Delta E_ads.
+// 8. Remove section 7.5.3 with desorption. It just feels weird. How can the TS be there but also have a Delta E_ads.
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -365,7 +364,7 @@ In the case of #ref(<eq:rate_pressure>), the units of $k$ instead must be given 
 
 For a set of several plausible reactions, we can fully generalize this approach by defining the rate of the $i$-th reaction as
 $ r_i = k product_(j, nu_(i,j) < 0) [A_j]^(|nu_(i,j)|), $<eq:general_math_irreversible_rxn>
-where $nu_(i,j)<0$ is simply stating that the multplication is being carried out for the reactants only.
+where $nu_(i,j)<0$ is simply stating that the multiplication is being carried out for the reactants only.
 As previously alluded to, if we are dealing with gas-phase species, it may be more convenient to replace $[A_j]$ with  $p_j$, but otherwise the expression remains the same.
 
 Before continuing, it is important to reiterate that #ref(<eq:general_math_irreversible_rxn>) is only strictly valid for elementary reactions. 
@@ -2786,14 +2785,14 @@ Before then, however, we need to figure out what to do with $K_"C "^ddagger$.
 The most pressing situation to address in our definition of $k$ is $K_"C "^ddagger$.
 Thankfully, with a healthy dose of statistical thermodynamics, this becomes relatively manageable.
 Although it will not be derived here, from statistical mechanics it is known that the equilibrium constant can be expressed in terms of molecular partition functions as follows:
-$ K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) quad ("unnormalized"), $
+$ K_("a ")^ddagger equiv (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) quad ("unnormalized"), $
 where $Z_j$ is the (unitless) molecular partition function#footnote[The molecular partition function is the sum over all energetic states in the system. In the canonical ensemble, it is given as $Z(N,V,T) equiv sum_i exp(-E_i\/k_"B " T)$ for all possible states $i$.] for the $j$-th species.
 We will forego a formal derivation linking $Z_j$ to the equilibrium constant. That said, we can think of it as being intuitively reasonable because the ratio of molecular partition functions describes the distribution of energetic states between the products and reactants, which dictates the direction for the equilibrium in a manner analogous to the change in Gibbs free energy.
 
 In practice, the molecular partition functions are generally defined with respect to the lowest energy state for that molecule.
 If we adopt this convention, then $K_"a "^ddagger$ becomes
 $
-K_("a ")^ddagger = (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) exp(- (Delta E_0^ddagger)/(R T)),
+K_("a ")^ddagger equiv (a^ddagger)/(a_ce("A") a_ce("B")) = (Z^ddagger) / (Z_ce("A") Z_ce("B")) exp(- (Delta E_0^ddagger)/(R T)),
 $<eq:k_a_partition_functions>
 as we will justify shortly.
 Here, $E_0^ddagger$ is the energy difference between the transition state and reactants at 0 K (i.e. the sum of electronic energy and zero-point energy contributions).
@@ -3288,7 +3287,6 @@ Therefore, while it is perfectly reasonable to use activities in a rate expressi
 one must take care in doing so.
 Namely, the additional component that needs to be accounted for is the factor of $1\/gamma^ddagger$ (in addition to ensuring the units work out via the appropriate factors of $C^std$).
 
-
 == A Thermodynamic Perspective
 
 Previously, we derived an expression for $k$ based on a statistical mechanics approach (i.e. using partition functions).
@@ -3320,7 +3318,7 @@ Plugging $K_"a "^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_n
 $ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_"A " gamma_"B ")/gamma^ddagger. $<eq:k_dg>
 In the thermodynamically ideal case (i.e. $gamma_"A "=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
 #footnote[There is sometimes a linear correlation between $Delta H^std^ddagger$ and $Delta S^std^ddagger$ but not necessarily for the reasons one might anticipate. Refer to G.C. McBane, "Chemistry from Telephone Numbers: The False Isokinetic Relationship", _J. Chem. Educ._, 75, 919--922 (1998).]
-By convention, $C^std$ is typically taken as $P\/R T$ at 1 bar for gases or as the molar concentration of pure components for liquids. 
+By convention, $C^std$ is typically taken as $P\/R T$ at 1 bar for gases or as 1 M for liquids. 
 
 Naturally, when taking advantage of the thermodynamic relationship
 $ Delta G^std = Delta H^std - T Delta S^std $
@@ -3343,7 +3341,7 @@ In practice, a multiplicative correction factor $kappa$, known as the transmissi
 For instance, it can be used to correct the Eyring equation representation of the rate constant via
 $ k = kappa (k_"B " T)/h C^std^(1-m) exp(- (Delta G^std^ddagger) / (R T)) $
 in the thermodynamically ideal case.
-The value for $kappa$ is between 0 and 1, representing the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
+When the value for $kappa$ is between 0 and 1, it represents the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
 #footnote[In contrast with J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
 In other words, the rate constant (and rate) from transition state theory is generally an upper-estimate, even if all variables in the uncorrected rate expression were computed with perfect accuracy.
 
@@ -3416,18 +3414,26 @@ k_(i)^- / (k_(i)^+) &= C^std exp((Delta G_i^std) / (R T)) gamma_"P "/(gamma_"A "
 $<eq:de_donder_deriv1>
 
 That takes care of part of our expression for the reversibility given by #ref(<eq:z_relationship>).
-For the ratio of concentrations, we know that they must be related to the equilibrium constant.
+For the ratio of concentrations, we know that this looks like an equilibrium constant.
 Technically, we have made no assumptions about being at equilibrium here.
-As such, we will refer to our ratio of concentrations as a reaction quotient:
+As such, we will invoke the concept of the reaction quotient:
+$ Q_"a " equiv product_j  a_j^(nu_j) quad ("out-of-equilibrium") $
+The relationship between the reaction quotient and Gibbs free energy is given by
+$ Delta G_i = R T ln(Q_"a "/K_"a ") $
 $
-Delta G_i &= Delta G_i^std + R T ln(Q_"a ")\
+Delta G_i &= Delta G_i^std + R T ln(Q_"a ").
+$
+
+$
 Delta G_i &= Delta G_i^std + R T ln(product_j a_(j)^(nu_(i,j))).
 $<eq:dg_nonstandard>
-where $Delta G_i$ is at the reaction conditions (i.e. not necessarily standard state), and $Q_"a "$ is the activity-based reaction quotient, computed in an analogous manner as the activity-based equilibrium constant but without a restriction of the activities being those at equilibrium.
-We can convert between activities and concentrations to arrive at
+Here, $Delta G_i$ is at the reaction conditions (i.e. not necessarily standard state).
+Note that at equilibrium (and at standard state conditions), $Q_"a " = K_"a "$ and therefore $Delta G_i = 0$.
+
+We can convert between activities and concentrations to arrive at the following expression for our toy reaction:
 $
 Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_"A " conc("A")/C^std gamma_"B " conc("B")/C^std) )\
-conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_"A " gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T))
+conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_"A " gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T)).
 $<eq:de_donder_deriv2>
 
 Now we can plug both #ref(<eq:de_donder_deriv1>) and #ref(<eq:de_donder_deriv2>) into #ref(<eq:z_relationship>), which thankfully simplifies very cleanly to
@@ -3445,7 +3451,7 @@ Another way to frame this is by stating
 $ cal(A)_i r_i >=0 $
 for a reaction to proceed as-written, which is known as de Donder's inequality.
 Here, $r_i$ is the net reaction rate of step $i$.
-For full clarity, there is no direct relationship between $G_i^std$ and the viability of the net reaction proceeding in a given direction --- it only depends on $cal(A)_i$ at the reaction conditions.
+For full clarity, there is no direct relationship between $cal(A)_i^std$ and the viability of the net reaction proceeding in a given direction --- it only depends on $cal(A)_i$ at the reaction conditions.
 
 #caution[
   There is a clear parallel between the de Donder relation and the equilibrium constant:
@@ -3456,21 +3462,25 @@ The de Donder relationship also describes a ratio of rates, not rate constants.
 
 === Ruling Out Reaction Mechanisms
 
-==== Closed Cycles
-
 We can use the de Donder relations as a way to immediately rule out physically impossible reaction mechanisms.
 #footnote[For additional details, refer to W.L. Holstein and M. Boudart, "Application of the De Donder Relation to the Mechanism of Catalytic Reactions", _J. Phys. Chem. B_, 101, 9991--9994 (1997).]
 For instance, consider the cyclic reaction scheme in #ref(<fig:cycle>).
 #figure(
   image("figures/rxn_cycle.svg", width: 15%),
-  caption: [A closed reaction cycle that is not viable. Each arrow represents the direction each reaction is presumed to occur.]
+  caption: [A closed reaction cycle that is not viable. Each arrow represents the net direction each reaction is presumed to occur.]
 )<fig:cycle>
 
 Like with any set of state functions in a closed cycle, we know that
-$ sum_i cal(A)_i = 0. $
+$ sum_i cal(A)_i = 0, $
+such that
+$ cal(A)_1 + cal(A)_2 + cal(A)_3 = 0. $
 However, it is impossible for this statement to be true unless $cal(A)_i=0$ for each step, which would imply no reaction progress.
 At least one of the reaction steps must have $cal(A)_i<0$ in order for $sum_i cal(A)_i = 0$, which violates de Donder's inequality and implies that such a reaction scheme is not viable as written.
 Put another way, via de Donder's equality, we know that one of the reaction steps must actually proceed in the reverse direction, breaking the cyclic nature of the proposed mechanism.
+
+#self[Draw reverse arrow for B and have it go to completion]
+
+=== Thermodynamics vs. Kinetic Coupling
 
 ==== Thermodynamic Coupling <thermo-coupling>
 
@@ -3478,80 +3488,103 @@ We can also leverage de Donder relations in non-cyclic reactions.
 Consider the following proposed reaction sequence:
 $ 
 ce("H2 &<--> 2H^∙") quad cal(A)^std_(1) = -331 "kJ/mol"\
-ce("2H2 + O2 &<--> 2 H2O") quad cal(A)^std_(2) = 385 "kJ/mol".
+ce("2H2 + O2 &<--> 2 H2O") quad cal(A)^std_(2) = 385 "kJ/mol"
 $
 for the following overall reaction:
 $ ce("3H2 + O2 <--> 2H2O + 2H^∙"). $
+For now, we will consider the reaction taking place at standard state conditions such that $cal(A)_i = cal(A)^std_i$.
 
+The overall reaction affinity for any reaction can be given by
+$ cal(A) equiv sum_i sigma_i cal(A)_i, $
+such that for the reaction of interest here we have $cal(A)= 54$ kJ/mol.
+The natural question to ask here is as follows: can "thermodynamic coupling," wherein we combine thermodynamically unfavorable and unfavorable steps, result in a viable mechanism provided that the overall affinity is positive?
 
-The de Donder inequality holds for net reaction sequences as well, provided we account for stoichiometry via
-$ cal(A) r >=0, quad cal(A) equiv sum_i sigma_i cal(A)_i. $
-
-For the sake of demonstration, consider the reaction taking place at standard state conditions, such that $cal(A)_i=cal(A)^(std)_i$.
-Since $sum_i sigma_i cal(A)_i>0$ for this reaction at standard-state conditions, one might naively think that the net reaction would proceed in the forward direction, made possible via thermodynamic coupling between the two steps to yield an overall $cal(A)>0$.
-However, having $cal(A)>0$ is a necessary but not sufficient condition.
-When looking at the individual steps, we see that the first step has $cal(A)_i<0$, making it impossible for it to proceed in the forward direction.
-Clearly, the proposed mechanism cannot proceed as-written even though the net reaction has $cal(A)>0$.
+As it turns out, having $cal(A)>0$ is a necessary but not sufficient condition.
+When looking at the individual steps, we see that the first step has $cal(A)_i<0$, and de Donder's inequality must hold for every individual step in the proposed mechanism.
+Thermodynamic coupling is not a viable route to ensure a reaction proceeds in a specific direction.
 
 ==== Kinetic Coupling
 
-What if we considered the same mechanism in #ref(<thermo-coupling>) but relaxed the assumption that we are operating at standard state conditions?
+Now, we will revisit the mechanism in #ref(<thermo-coupling>) but relax the assumption that we are operating at standard state conditions.
 In this scenario, $cal(A)_i != cal(A)^std_i$, and even though $cal(A)^std_1<0$, this does not necessarily mean the step is impossible since the de Donder relations apply to $cal(A)_i$ and not $A^std_i$.
+We will show that a concept known as kinetic coupling can enable the reaction to proceed as-written.
 
-We know that
+We know from the definition of Gibbs free energy, and therby reaction affinity, that
 $ cal(A)_i = cal(A)^std_i - R T ln(product_j a_(j)^(nu_(i,j))), quad cal(A)^std_i = R T ln(K_"a "),  $
 such that
 $ cal(A)_i = R T ln(K_"a "/(product_j a_(j)^(nu_(i,j)))) = R T ln(((product_j a_(j)^(nu_(i,j)))_"eq")/(product_j a_(j)^(nu_(i,j)))). $ <eq:affinity>
 Therefore, the viability of the reaction mechanism at a given set of reaction conditions is dependent on how much the species activities (or concentrations, in the ideal case) differ from those at equilibrium.
 
 For instance, consider the moment the reaction is started.
-We will have only #ce("H2") at the start and therefore $cal(A)_1 > 0$ since $a_ce("H^∙")approx 0$ and $ln(y\/x)-> +infinity$ for $x->0$.
+We will have only #ce("H2") at the start, such that $a_ce("H^∙") approx 0$.
+Therefore, the reaction affinity for this step immediately after the reaction begins can be given as
+$ cal(A)_1 = lim_(a_ce("H^∙")->0) R T ln((a_ce("H^∙")^2\/a_ce("H2"))_"eq" / (a_ce("H^∙")^2\/a_ce("H2"))) = +infinity, $
+such that $cal(A)_1 > 0$ even though $cal(A)^std_1 < 0$.
 This makes sense because the only direction the reaction can initially proceed is in the forward direction.
 When the extent of reaction is non-negligible (e.g. at steady state), however, the highly negative value of $cal(A)^std_1$ suggests the step would be unlikely to proceed in the forward direction as-written.
 
 Ultimately, this brings us to the idea of kinetic coupling wherein a thermodynamically unfavorable (i.e. $cal(A)^std_i<0$) step can be overcome by having the concentration of a reactant kept high or a product concentration kept low with respect to its standard state, equilibrium value via coupling with another step in the mechanism.
-For #ce("H2 <--> 2H^∙") to proceed in the forward direction at steady state, there would likely need to be a separate, favorable reaction that it could kinetically couple to --- namely one that would rapidly and continually consume #ce("H^∙").
+
+For #ce("H2 <--> 2H^∙") to proceed in the forward direction at steady state, there would need to be a separate, favorable reaction that it could kinetically couple to --- namely one that would rapidly and continually consume #ce("H^∙").
 As an example, the following three-step mechanism is one that is known to be thermodynamically viable and support kinetic coupling:
 $
-ce("OH^∙ + H2 &<--> H2O + H^∙")\
-ce("H^∙ + O2 &<--> OH^∙ + O^∙∙")\
-ce("O^∙∙ + H2 &<--> OH^∙ + H^∙").
+ce("OH^∙ + H2 &<--> H2O + H^∙") quad &(sigma_1 = 2)\
+ce("H^∙ + O2 &<--> OH^∙ + O^∙∙") quad &(sigma_2 = 1)\
+ce("O^∙∙ + H2 &<--> OH^∙ + H^∙") quad &(sigma_3 = 1)
 $
 
-
-=== Thermodynamic and Kinetic Factors in Reversible Reaction Rates
-
-_This section was not covered in class but is included for additional context._
-
-We can now see that there are thermodynamic factors that influence the reversibility of a reaction and, in turn, the net reaction rate.
-To make this even clearer, consider the net rate of a reaction step, which we can rewrite in terms of reversibility as
-$ r_i = r_(i)^+ - r_(i)^- = r_(i)^+ (1-z_i) = r_(i)^+ (1-exp(-(cal(A)_i)/(R T))). $
-
-From here, we can make use of #ref(<eq:affinity>) to substitute in for $cal(A)_i$ in our above expression and arrive at
-$ r_i =r_(i)^(+) - r_(i)^(-)= r_(i)^+ (1-1/K_"a " product_j a_(j)^(nu_(i,j))). $
-
-We can define $r_(i)^+$ using the Eyring equation and arrive at
-$ r_i = r_(i)^(+) - r_(i)^(-) =  [(k_"B "T )/h C^std exp(-( Delta G_(i)^std^ddagger) / (R T)) 1/gamma^ddagger product_(j,nu_(i,j)<0) a_(j)^(|nu_(i,j)|)] [1-1/K_"a " product_j a_(j)^(nu_(i,j))]. $
-The term on the left-hand side is a significant kinetic term, which is heavily dependent on the activation (free) energy computed at the standard state.
-The term on the right-hand side is a significant thermodynamic term, which is heavily dependent on the equilibrium constant also at the standard state and represents the approach to equilibrium.
-If the activity of each reactant and product is the same as that at equilibrium, the right-hand side becomes 0, and the net rate becomes 0 as well.
 
 = Energy and Reactivity Trends <reaction-energy-diagrams>
 
-#self[Add Bronsted law stuf from pg 375 of Dill and Bromberg. Then Hammett and Taft., isoelectronic]
+In this section, we will cover energy and reactivity trends.
+We have already introduced some of these trends, most notably the Bell--Evans--Polanyi (BEP) relationship.
+Now, we can provide more context for such equations.
+
+== Linear Free Energy Relationships
+
+=== Brønsted Relationship
+
+One of the earliest forms of linear energy relationships has to do with acid--base chemistry.
+Consider the following acid-catalyzed reaction:
+$ ce("AH") &eqArrow(K_"a ") ce("H+ + A-")\
+ce("R") &fwdArrow(k) ce("P"),
+$
+where the acid #ce("AH") is acting as a catalyst to enable the conversion of #ce("R") to #ce("P").
+Here, $K_"a "$ is an acid dissociation equilibrium constant given by
+$ K_"a " = (conc("H+") conc("A-"))/conc("AH"). $
+It has been shown that there exists an empirical relationship wherein the stronger the acid is (i.e. the larger $K_"a "$ is), the faster the conversion of R to P is (i.e. the larger $k$ is).
+The above relationship is typically expressed as
+$ log(k) = alpha log(K_"a ") + c, $
+where $alpha>0$ and $c$ is a constant.
+The reason for invoking the $log$ transformations here is that $"pK"_"a " = -log(K_"a ")$, and $"pK"_"a "$ values are widely tabulated for acids.
+A similar relationship is found for base-catalyzed reactions, except that the slope (i.e. $alpha$) has the opposite sign.
+
+#ref(<eq:bronsted_relationship>) is known as the Brønsted relationship and was one of the first reported linear free energy relationships.
+One can rationalize such an empirical relationship by noting that the rate-limiting step in the non-elementary $ce("R->P")$ reaction is typically the removal of the proton from the #ce("AH") catalyst, such that this step would become more rapid in the presence of a stronger acid.
+If a new acid is investigated and it yields significant deviations from the Brønsted relationship for a given acid-catalyzed reaction, then it is likely that the reaction proceeds via a different mechanism.
+
+Since $k$ is related to $E_"a "$ and $Delta G^std$ is related to $K_"a "$, in invoking the above relationship, one is implying that there exists a linear relationship between the activation energy for the reaction and the free energy of acid dissociation:
+$ E_"a " = a Delta G_"acid"^std + b, $<eq:bronsted_relationship>
+where $E_"a "$ is the (apparent) barrier associated with #ce("R->P"), and $Delta G^std_"acid"$ is the standard-state Gibbs free energy associated with #ce("HA <-> H+ + A-").
+Here, $a$ and $b$ are empirical constants.
+The more exergonic the acid dissociation process is, the lower the activation energy is for the acid-catalyzed reaction #ce("R->P").
+
+=== The Evans--Polanyi Model
+
+#self[377 from Dill and Bromberg]
+
+==== Hammett and Taft Parameters
+
+== Scaling Relationships in Catalysis
+
+#self[6 and 7 of Norskov book]
 #self[Do a mini lecture on methane activation, Norskov's example]
 
-== Reaction Energy Diagrams
-
-#self[todo]
-// show what it is, references at 0, etc. for a typical catalytic cycle
-// show apparent activation energy
-
-== Trends in Adsorption Energies <trends-in-adsorption>
+=== Trends in Adsorption Energies <trends-in-adsorption>
 
 Adsorption is the first step of any catalytic process, so understanding trends in adsorption energies can be particularly valuable for catalyst design purposes. Here, we outline a few common trends in adsorption behavior on surfaces.
 
-=== Physisorption Trends
+==== Physisorption Trends
 
 Since physisorption is governed primarily by van der Waals interactions, it is to be expected that adsorption will generally be stronger for larger adsorbates, particularly those within the same family of molecules.
 Adsorption is generally an exothermic process, so stronger adsorption in this case refers to a more negative value.
@@ -3567,7 +3600,7 @@ If the adsorbate is bound in an on-top position, for instance, the increased siz
   caption: [Desorption energy of $n$-alkanes on various surfaces as a function of chain length. Source: S.L. Tait, Z. Dohnálek, C.T. Campbell, B.D. Kay, _J. Chem. Phys._, 125, 234308 (2006).]
 )<fig:physisorption-trends>
 
-=== Chemisorption Trends
+==== Chemisorption Trends
 
 Chemisorption is governed by chemical bonding interactions, which are generally more complicated than van der Waals interactions.
 Nonetheless, there are countless reports of chemisorption trends in the literature, albeit different than those reported for physisorption.
@@ -3587,7 +3620,7 @@ Importantly, these chemisorption scaling trends are not restricted to hydrocarbo
 ) <fig:chemisorption_trends>
 
 
-== Trends in Rates <trends-in-rates>
+=== Trends in Rates <trends-in-rates>
 
 In this subsection, we highlight different ways to estimate trends in reactivity.
 There are many reasons why one might be interested in this task.
@@ -3599,7 +3632,7 @@ In order to engineer new reactions of societal interest, a solid foundation in r
 
 In reaction engineering, the most common type of trend that is invoked is the so-called linear energy relationship, which seeks to linearly correlate $ln(k)$ with some energy difference that is generally easier to measure or is more readily tabulated.
 In reaction engineering, the most popular relationship of this type is the Bell--Evans--Polanyi (BEP) relationship:
-$ E_"a " = E_0 + alpha Delta H_"rxn", $
+$ E_"a " = alpha Delta H_"rxn" + E_0, $<eq:bep>
 where $E_0$ and $alpha$ are constants for a given family of closely related reactions.
 Generally, $alpha$ can be thought of as the relative position of the transition state along the reaction coordinate, taken from 0 (towards the reactants, also known as an "early" transition state) to 1 (towards the products, also known as a "late" transition state).
 
