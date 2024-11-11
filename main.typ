@@ -2823,14 +2823,19 @@ These individual contributions can also be used to define the translational, rot
 We now must define each of the partition functions.
 The translational partition function derived from the particle-in-a-box model in quantum chemistry is typically approximated as
 $ z_"trans" = V ((2 pi m k_"B " T)/h^2)^(3/2) = V / Lambda^3, quad Lambda equiv h / sqrt(2 pi m k_"B " T) $<eq:trans_function>
-where $V$ is the volume that confines the translational motion, $m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $Lambda$ is the thermal de Broglie wavelength.
+where $V$ is a reference volume containing the molecule,
+#footnote[
+  The presence of $V$ is what ultimately dictates the need for choosing a "standard-state" for the sake of internal consistency.
+  If one is considering a gas, it is typically more natural to replace $V$ with pressure $P$, such as by invoking the ideal gas law of the form $V = k_"B " T\/P$ and taking the pressure to be a standard-state value of 1 bar.
+]
+$m$ is the mass of the molecule, $h$ is Planck's constant (units of J-s), and $Lambda$ is the thermal de Broglie wavelength.
 As with all partition functions, $z_"trans"$ is unitless.
-This, in turn, means that $z'_"trans"$ (i.e. $z_"trans"\/V$) has units of inverse volume.
+This, in turn, means that $z_"trans"\/V$ has units of inverse volume.
 
-It is also worth noting that $z_"trans"$ can be generalized to an arbitrary set of $d$ dimensions (e.g. in the case of a system that does not have all three translational degrees of freedom).
+It is also worth noting that $z_"trans"$ can be generalized to an arbitrary set of $d$ integer dimensions (e.g. in the case of a system that does not have all three translational degrees of freedom).
 To do so, it is as simple as stating
 $ z_"trans" = (L / Lambda)^d, $<eq:trans_d>
-where $L$ is now a length that confines that degree of translational motion.
+where $L$ is now a reference length associated with the degree of translational motion.
 
 === Rotational Partition Function
 
@@ -2852,7 +2857,7 @@ $ I equiv sum_i m_i r_(i)^2 $
 where $M_i$ is the mass of atom (not species) $i$ and $r_i$ is the distance of atom $i$ to the axis of rotation.
 #footnote[For a linear, symmetric molecule like #ce("CO2") (i.e. #ce("O=C=O")), the moment of inertia is $I= M_ce("O") d_ce("CO")^2 + M_ce("O") d_ce("CO")^2= 2 M_ce("O") d_ce("CO")^2$, where $M_ce("O")$ is the mass of the oxygen atom and $d_ce("CO")$ is the C--O bond length. This is because the central atom is the location of the axis of rotation.]
 For a diatomic molecule, the moment of inertia can be conveniently expressed as
-$ I = (M_1 M_2)/(M_1 + M_2) d^2 = mu d^2, $
+$ I = (M_1 M_2)/(M_1 + M_2) d^2 = mu d^2, quad mu equiv (M_1 M_2)/(M_1 + M_2) $
 where $mu$ is called the reduced mass and $d$ is the distance between the two atoms.
 
 === Vibrational Partition Function
@@ -3114,18 +3119,18 @@ $ Z'^ddagger = z'_"trans"^(ddagger(3)) z_"rot"^(ddagger(m)) z_"vib"^(ddagger(N-1
 With this, we can often make order-of-magnitude arguments and simplifications, which we will do below.
 Note, however, that one can always simply use the transition state theory expression for $k$ in its full form, calculating each partition function without further simplifications (provided the underlying data is accessible).
 
-As a point of reference, the following order of magnitude arguments are fairly reasonable in the temperature range of 300---500 K or so:
+As a point of reference, the following order of magnitude arguments are fairly reasonable in the temperature range of 300---500 K or so for common molecules:
 $ z'_"trans" &approx O(10^8-10^9) "per DOF" \
  z_"rot" &approx O(10^1-10^2) "per DOF" \
  z_"vib" &approx O(10^0-10^1) "per DOF"\
  z_"el" &approx O(10^0),
 $
 where DOF stands for degree of freedom. The units of $z'_"trans"$ are such that it has 1/$"cm"^3$ when there are three degrees of freedom.
-That said, these are simply rough rules-of-thumb.
+That said, these are simply rough rules-of-thumb, and exceptions will inevitably arise.
+Given how straightforward it is to calculate the translational partition function and its major impact on the rate constant, this is generally one that is worth computing rather than estimating.
+
 
 === Adsorption
-
-// draw energy diagram
 
 ==== Degrees of Freedom
 
@@ -3157,7 +3162,7 @@ Here, we can make some simplifying assumptions by noting that $Delta E_0^ddagger
 #footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier for such a process. It is perhaps better to think about this as $E_"a "->0$.]
 and we can remove the $1\/N_"A "^(1-m)$ term because $m=1$ for this process.
 Furthermore, if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
-$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (m)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((m))/V z_"rot"^((m)) z_"vib"^((N)) z_"el"), $<eq:adsorbed_k>
+$ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (m)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((m)) z_"vib"^((N)) z_"el"), $<eq:adsorbed_k>
 where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
 
 
