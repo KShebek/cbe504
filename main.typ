@@ -3536,7 +3536,7 @@ Now, we can provide more context for such equations.
 
 === Brønsted Relationship
 
-One of the earliest forms of linear energy relationships has to do with acid--base chemistry.
+One of the earliest forms of linear energy relationships (LFERs) has to do with acid--base chemistry.
 Consider the following acid-catalyzed reaction:
 $ ce("AH") &eqArrow(K_"a ") ce("H+ + A-")\
 ce("R") &fwdArrow(k) ce("P"),
@@ -3623,8 +3623,8 @@ Provided that the entropy of activation is similar across the reactions being co
 
 === Revisiting the Bell--Evans--Polanyi Relationship
 
-We can see that #ref(<eq:evans>) looks very similar to the Bell--Evans--Polanyi (BEP) empirical relationship we have invoked throughout the course, given by $E_"a " = alpha Delta H + E_0$. In this case, the BEP relationship uses $Delta H^std$ trends in place of $Delta E$, as the former is experimentally measurable, and trends for $Delta H^std$ are largely the same as trends for $Delta E$.
-Once again, if the product is stabilized relative to the reactant (i.e. $Delta H$ is made more exothermic), then $E_"a "$ tends to be reduced.
+We can see that #ref(<eq:evans>) looks very similar to the Bell--Evans--Polanyi (BEP) empirical relationship we have invoked throughout the course, given by $E_"a " = alpha Delta H^std + E_0$. In this case, the BEP relationship uses $Delta H^std$ trends in place of $Delta E$, as the former is experimentally measurable, and trends for $Delta H^std$ are largely the same as trends for $Delta E$.
+Once again, if the product is stabilized relative to the reactant (i.e. $Delta H^std$ is made more exothermic), then $E_"a "$ tends to be reduced.
 
 To be clear, the BEP relationship is not identical to the Evans--Polanyi model, but it takes a similar functional form.
 Like with $a$, the value of $alpha$ takes on values of $0<=alpha<=1$ and describes the position of the transition state along the reaction coordinate.
@@ -3656,7 +3656,7 @@ The Hammett relationship compares the reactivity of different organic molecules 
 
 #align(center)[
   #figure(
-    image("figures/hammett_molecules.png",width:60%),caption:[For a series of molecules with different R groups, the Hammett relationship links the acid-dissociation equilibrium constant to the rate constant.]
+    image("figures/hammett_molecules.svg",width:60%),caption:[For a series of molecules with different R groups, the Hammett relationship links the acid-dissociation equilibrium constant to the rate constant.]
   )<fig:hammett_molecules>
 ]
 
