@@ -3563,7 +3563,7 @@ The more exergonic the acid dissociation process is, the lower the activation en
 
 === The Evans--Polanyi Model
 
-We will now seek to explain why such linear (free) energy relationships tend to exist by invoking what is known as the Evans--Polanyi model.
+We will now seek to explain one explanation for why such linear (free) energy relationships can exist by invoking what is known as the Evans--Polanyi model.
 Consider the reaction
 $ ce("AB +C -> A + BC"). $
 
@@ -3614,29 +3614,26 @@ In turn, $b$ must also be positive.
 We have now arrived at an expression relating the activation energy (a kinetic parameter) to the reaction energy (a thermodynamic parameter) via a linear relationship involving two constants.
 If $Delta E$ is made more exothermic (e.g. by increasing the stability of the product), it will result in a corresponding decrease in $E_"a "$.
 
-It is worth thinking about the physical meaning of the Evans--Polanyi model parameters, in particular $a$ (#ref(<fig:early_late_ts>)).
-When $m_1>>|m_2|$, the transition state resembles the reactants much more than the products and is said to be an "early" transition state. Additionally, $a->1$ in this scenario, such that the change in $E_"a "$ is highly sensitive to changes in $Delta E$. Any stabilization of the product will cause a correlated change in the energy of the transition state and, thereby, the activation energy.
-When $m_1<<|m_2|$, the transition state resembles the products much more than the reactants and is said to be a "late" transition state. Additionally, $a->0$ in this scenario, such that the change in $E_"a "$ is barely sensitive to changes in $Delta E$. Any stabilization of the product will have minimal impact on the energy of the transition state and, thereby, the activation energy.
+When $a->1$, the change in $E_"a "$ is highly sensitive to changes in $Delta E$. Any stabilization of the product will cause a correlated change in the energy of the transition state and, thereby, the activation energy.
+When $a->0$, the change in $E_"a "$ is barely sensitive to changes in $Delta E$. Any stabilization of the product will have minimal impact on the energy of the transition state and, thereby, the activation energy.
 
-#align(center)[
-  #figure(
-    image("figures/early_late_ts.svg",width:80%),caption:[Demonstration of how changes to $m_1$ and $m_2$ (and, thereby, $a$) dictate whether the transition state is early or late.]
-  )<fig:early_late_ts>
-]
-
-
-Returning back to the Brønsted relationship and similar linear free energy relationships, there exists a correlation between $E_"a "$ and $Delta G^std$, provided that the entropy of activation is similar across the reactions being considered (since trends in $Delta H^std$ will closely match trends in $Delta E$).
+Returning back to the Brønsted relationship and similar linear free energy relationships, recall that we had a correlation between $E_"a "$ and $Delta G^std$.
+In general, trends in $Delta H^std$ tend to closely match trends in $Delta E$.
+Provided that the entropy of activation is similar across the reactions being considered, then $Delta G^std$ will match trends in $Delta E$ as well, such that it does not the scaling is largely independent of the choice of thermodynamic state function.
 
 === Revisiting the Bell--Evans--Polanyi Relationship
 
 We can see that #ref(<eq:evans>) looks very similar to the Bell--Evans--Polanyi (BEP) empirical relationship we have invoked throughout the course, given by $E_"a " = alpha Delta H + E_0$. In this case, the BEP relationship uses $Delta H^std$ trends in place of $Delta E$, as the former is experimentally measurable, and trends for $Delta H^std$ are largely the same as trends for $Delta E$.
 Once again, if the product is stabilized relative to the reactant (i.e. $Delta H$ is made more exothermic), then $E_"a "$ tends to be reduced.
 
-The BEP parameters, however, do not take on the same meaning as the $a$ and $b$ parameters of the Evans--Polanyi model, even though it has the same functoinal form.
+To be clear, the BEP relationship is not identical to the Evans--Polanyi model, but it takes a similar functional form.
 Like with $a$, the value of $alpha$ takes on values of $0<=alpha<=1$ and describes the position of the transition state along the reaction coordinate.
-Here, however, $alpha->0$ directly refers to the position of the transition state along the reaction coordinate and does not require any assumptions aboud the relative slopes of potential energy curves.
-A value of $alpha->0$ refers to an early transition state, whereas $alpha->1$ refers to a late transition state.
+With the BEP relationship, a value of $alpha->0$ refers to an early transition state (i.e. one that is closer to the side of the reactants), whereas $alpha->1$ refers to a late transition state (i.e. one that is closer to the side of the products).
 
+The value of $alpha$ is a constant for a given reaction family and is not a parameter that should be thought as tunable.
+Instead, $alpha$ simply describes the sensitivity of the activation energy to changes in $Delta H^std$.
+In the case of the BEP relationship, $alpha->0$ yields a situation in which changes to $Delta H^std$ barely change $E_"a "$.
+In contrast, if $alpha->1$, then changes to $Delta H^std$ will significantly change $E_"a "$.
 
 #align(center)[
   #figure(
@@ -3644,11 +3641,7 @@ A value of $alpha->0$ refers to an early transition state, whereas $alpha->1$ re
   )<fig:bep_hammond>
 ]
 
-The value of $alpha$ is a constant for a given reaction family and is not a parameter that should be thought as tunable.
-Instead, $alpha$ simply describes the sensitivity of the activation energy to changes in $Delta H^std$.
-In the case of the BEP relationship, $alpha->0$ yields a situation in which changes to $Delta H^std$ barely change $E_"a "$.
-In contrast, if $alpha->1$, then changes to $Delta H^std$ will significantly change $E_"a "$.
-This can best be rationalized in combination with Hammond's postulate, which states that highly exothermic reactions tend to have early transition states, whereas highly endothermic reactions tend to have late transition states (#ref(<fig:bep_hammond>)).
+Intuition behind the BEP relationship can best be gained by interpreting it within the context of Hammond's postulate, which states that highly exothermic reactions tend to have early transition states, whereas highly endothermic reactions tend to have late transition states (#ref(<fig:bep_hammond>)).
 The lower the energy of the transition state with respect to the reactants, the closer to the reactants the transition state will be and, therefore, changes to the product stability will not play a major role (and vice versa).
 
 
@@ -3683,15 +3676,16 @@ $ log(k_ce("R")/k_ce("H")) = rho sigma_ce("R"), quad sigma_ce("R") equiv log(K_(
 The above expression is the typical form of the Hammett relationship.
 
 Here, $sigma_ce("R")$ is known as the Hammett parameter.
-Hammett parameters are widely tabulated for different functional groups and are based on the acid-dissociation constants of the substituted and unsubstituted forms of a molecule.
+Hammett parameters are widely tabulated for different functional groups (typically for both the meta- and para- positions, where applicable) and are based on the acid-dissociation equilibrium constants of the substituted and unsubstituted forms of a molecule, which can be readily measured.
 The Hammett parameters are dependent solely on the different functional group and not the reaction conditions.
 In contrast, $rho$ depends on the reaction environment and conditions.
 
-In practice, if one were studying the reactivity of several organic molecules, you would look up the $sigma_ce("R")$ values of the differing functional groups, measure $k$ for each reaction, and make a plot of $log(k_ce("R")\/k_ce("H"))$ vs. $sigma_ce("R")$ (while forcing the $y$-intercept to be 0) to find $rho$.
+In practice, if you were studying the reactivity of several organic molecules, you would look up the $sigma_ce("R")$ values of the differing functional groups, measure $k$ for each reaction, and make a plot of $log(k_ce("R")\/k_ce("H"))$ vs. $sigma_ce("R")$ (while forcing the $y$-intercept to be 0) to find $rho$.
 For new molecules you have not tested yet, you would be able to determine the rate constant via the linear correlation you developed.
 
 When comparing different possible substituents, if a given R group has a higher $sigma_ce("R")$ value, this means that its acid-dissociation reaction is shifted more towards the products (i.e. the molecule is more acidic).
 This is typically due to some combination of inductive and/or resonance effects that helps stabilize the negative charge of the conjugate base.
+
 If $sigma_ce("R")>0$, such a substituent is considered to be an electron-withdrawing group because it will stabilize the product anion by withdrawing electron density (i.e. negative charge) away from the reactive site (compared to the unsubstituted analogue).
 If $sigma_ce("R")<0$, such a substituent is considered to be an electron-donating group since the electron density is increased near the reactive site.
 
@@ -3701,7 +3695,7 @@ If $sigma_ce("R")<0$, such a substituent is considered to be an electron-donatin
   )<fig:hammett_plot>
 ]
 
-As for $rho$, it describes the sensitivity of the rate constant to the electron-donating or electron-withdrawing character of the substituent. 
+As for $rho$, it describes the sensitivity of the rate constant to the electron-donating or electron-withdrawing character of the substituent.
 For $rho >1$, the reaction is assisted by electron-withdrawing groups ($sigma_ce("R")>0$). The molecule is accepting electron density from the other reagent during the course of the reaction, and the electron-withdrawing group helps stabilize this buildup of electron density at the active center.
 For $rho <1$, the reaction is assisted by electron-donating groups ($sigma_ce("R")<0$). The molecule is donating electron density to the other reagent during the course of the reaction, and the electron-donating group helps stabilize this transfer of negative charge.
 These effects are summarized in #ref(<fig:hammett_plot>).
@@ -3712,11 +3706,12 @@ These effects are summarized in #ref(<fig:hammett_plot>).
 There are many variations on the Hammett parameter idea to account for different effects.
 One notable model is the Taft equation, which seeks to more directly capture steric effects that are largely neglected by the Hammett parameter.
 The Taft equation is given by
-$ log(k_ce("R")/k_ce("CH3")) = rho^* sigma^* + E_"s ", $
+$ log(k_ce("R")/k_ce("CH3")) = rho^* sigma_ce("R")^* + E_"s,R", $
 where $rho^*$ is a sensitivity factor analogous to the Hammett parameter $rho$.
-Instead of the Hammett parameter $sigma$, Taft parameters $sigma^*$ and $E_"s "$ are both tabulated for a given substituent.
-The $sigma^*$ term captures inductive effects, whereas the $E_"s "$ parameter captures sterics.
+Instead of the Hammett parameter $sigma_ce("R")$, two Taft parameters $sigma_ce("R")^*$ and $E_"s,R"$ are both tabulated for a given substituent.
+The $sigma_ce("R")^*$ term captures inductive (i.e. electron-donating or electron-withdrawing) effects like with the Hammett relationship, whereas the $E_"s,R"$ parameter captures sterics.
 The behavior of $rho^*$ with respect to electron-donating and electron-withdrawing groups is analogous to that of the Hammett relationship.
+Unlike the Hammett relationship, the Taft relationship has $k_ce("R")$ normalized with respect to a #ce("CH3") substituent.
 
 == Scaling Relationships in Catalysis
 
