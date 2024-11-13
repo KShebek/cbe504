@@ -3696,8 +3696,8 @@ If $sigma_ce("R")<0$, such a substituent is considered to be an electron-donatin
 ]
 
 As for $rho$, it describes the sensitivity of the rate constant to the electron-donating or electron-withdrawing character of the substituent.
-For $rho >1$, the reaction is assisted by electron-withdrawing groups ($sigma_ce("R")>0$). The molecule is accepting electron density from the other reagent during the course of the reaction, and the electron-withdrawing group helps stabilize this buildup of electron density at the active center.
-For $rho <1$, the reaction is assisted by electron-donating groups ($sigma_ce("R")<0$). The molecule is donating electron density to the other reagent during the course of the reaction, and the electron-donating group helps stabilize this transfer of negative charge.
+For a positive $rho$, the reaction is assisted by electron-withdrawing groups ($sigma_ce("R")>0$). The molecule is accepting electron density from the other reagent during the course of the reaction, and the electron-withdrawing group helps stabilize this buildup of electron density at the active center.
+For a negative $rho$, the reaction is assisted by electron-donating groups ($sigma_ce("R")<0$). The molecule is donating electron density to the other reagent during the course of the reaction, and the electron-donating group helps stabilize this transfer of negative charge.
 These effects are summarized in #ref(<fig:hammett_plot>).
 
 
