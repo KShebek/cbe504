@@ -8,6 +8,7 @@
 // 6. Make exam corrections a required homework problem. No extra credit.
 // 7. Change course grading to be 30% problem sets, 35% midterm, 35% final
 // 8. Remove section 7.5.3 with desorption. It just feels weird. How can the TS be there but also have a Delta E_ads.
+// 9. de Donder analysis was maybe too much?
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -3329,10 +3330,9 @@ In practice, a multiplicative correction factor $kappa$, known as the transmissi
 For instance, it can be used to correct the Eyring equation representation of the rate constant via
 $ k = kappa (k_"B " T)/h C^std^(1-m) exp(- (Delta G^std^ddagger) / (R T)) $
 in the thermodynamically ideal case.
-The value for $kappa$ is typically between 0 and 1, in which case it represents the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
+The value for $kappa$ is between 0 and 1, in which case it represents the probability that the vibrational motion given by $nu^ddagger$ pushes the transition state forward towards the products as opposed to backwards towards the reactants.
 #footnote[In contrast with J.F. Perez-Benito, "Some Considerations on the Fundamentals of Chemical Kinetics: Steady State, Quasi-Equilibrium, and Transition State Theory", _J. Chem. Educ._, 94, 1238--1246 (2017), $k$ cannot be proportional to $kappa(1-kappa)$ otherwise $r->0$ as $kappa->1$ and there becomes an unphysical maximum in the rate at $kappa=1\/2$.]
 In other words, the rate constant (and rate) from transition state theory is generally an upper-estimate, even if all variables in the uncorrected rate expression were computed with perfect accuracy.
-If one considers the possibility of quantum-tunneling through the barrier, then it would be possible for $kappa$ to be greater than 1, however.
 Unless otherwise stated, we will assume that $kappa = 1$.
 
 === Relationship with Activation Energy <relationship-with-activation-energy>
@@ -3470,9 +3470,7 @@ such that
 $ cal(A)_1 + cal(A)_2 + cal(A)_3 = 0. $
 However, it is impossible for this statement to be true unless $cal(A)_i=0$ for each step, which would imply no reaction progress.
 At least one of the reaction steps must have $cal(A)_i<0$ in order for $sum_i cal(A)_i = 0$, which violates de Donder's inequality and implies that such a reaction scheme is not viable as written.
-Put another way, via de Donder's equality, we know that one of the reaction steps must actually proceed in the reverse direction, breaking the cyclic nature of the proposed mechanism.
-
-#self[Draw reverse arrow for B and have it go to completion]
+Put another way, via de Donder's inequality, we know that one of the reaction steps must actually proceed in the reverse direction, breaking the cyclic nature of the proposed mechanism.
 
 === Thermodynamics vs. Kinetic Coupling
 
@@ -3510,7 +3508,7 @@ $ cal(A)_i = R T ln(K_"a "/(product_j a_(j)^(nu_(i,j)))) = R T ln(((product_j a_
 Therefore, the viability of the reaction mechanism at a given set of reaction conditions is dependent on how much the species activities (or concentrations, in the ideal case) differ from those at equilibrium.
 
 For instance, consider the moment the reaction is started.
-We will have only #ce("H2") at the start, such that $a_ce("H^∙") approx 0$.
+#ce("H2") will only just have started to dissociate, such that $a_ce("H^∙") approx 0$.
 Therefore, the reaction affinity for this step immediately after the reaction begins can be given as
 $ cal(A)_1 = lim_(a_ce("H^∙")->0) R T ln((a_ce("H^∙")^2\/a_ce("H2"))_"eq" / (a_ce("H^∙")^2\/a_ce("H2"))) = +infinity, $
 such that $cal(A)_1 > 0$ even though $cal(A)^std_1 < 0$.
@@ -3544,110 +3542,192 @@ $ ce("AH") &eqArrow(K_"a ") ce("H+ + A-")\
 ce("R") &fwdArrow(k) ce("P"),
 $
 where the acid #ce("AH") is acting as a catalyst to enable the conversion of #ce("R") to #ce("P").
+In other words, #ce("R->P") is the net reaction but is not elementary since it involves a more complex mechanism with the acid.
 Here, $K_"a "$ is an acid dissociation equilibrium constant given by
 $ K_"a " = (conc("H+") conc("A-"))/conc("AH"). $
 It has been shown that there exists an empirical relationship wherein the stronger the acid is (i.e. the larger $K_"a "$ is), the faster the conversion of R to P is (i.e. the larger $k$ is).
-The above relationship is typically expressed as
+This relationship is typically expressed as
 $ log(k) = alpha log(K_"a ") + c, $
 where $alpha>0$ and $c$ is a constant.
 The reason for invoking the $log$ transformations here is that $"pK"_"a " = -log(K_"a ")$, and $"pK"_"a "$ values are widely tabulated for acids.
 A similar relationship is found for base-catalyzed reactions, except that the slope (i.e. $alpha$) has the opposite sign.
 
 #ref(<eq:bronsted_relationship>) is known as the Brønsted relationship and was one of the first reported linear free energy relationships.
-One can rationalize such an empirical relationship by noting that the rate-limiting step in the non-elementary $ce("R->P")$ reaction is typically the removal of the proton from the #ce("AH") catalyst, such that this step would become more rapid in the presence of a stronger acid.
 If a new acid is investigated and it yields significant deviations from the Brønsted relationship for a given acid-catalyzed reaction, then it is likely that the reaction proceeds via a different mechanism.
 
-Since $k$ is related to $E_"a "$ and $Delta G^std$ is related to $K_"a "$, in invoking the above relationship, one is implying that there exists a linear relationship between the activation energy for the reaction and the free energy of acid dissociation:
+Since $log(k) prop E_"a "$ and $log(K_"a ") prop Delta G^std$, in invoking the above relationship, one is implying that there exists a linear relationship between the activation energy for the reaction and the free energy of acid dissociation:
 $ E_"a " = a Delta G_"acid"^std + b, $<eq:bronsted_relationship>
-where $E_"a "$ is the (apparent) barrier associated with #ce("R->P"), and $Delta G^std_"acid"$ is the standard-state Gibbs free energy associated with #ce("HA <-> H+ + A-").
-Here, $a$ and $b$ are empirical constants.
+where $E_"a "$ is the (apparent) barrier associated with #ce("R->P"), and $Delta G^std_"acid"$ is the standard-state Gibbs free energy associated with #ce("HA <--> H+ + A-").
+Here, $a$ and $b$ are empirical constants, and $a>0$.
 The more exergonic the acid dissociation process is, the lower the activation energy is for the acid-catalyzed reaction #ce("R->P").
 
 === The Evans--Polanyi Model
 
-#self[377 from Dill and Bromberg]
+We will now seek to explain why such linear (free) energy relationships tend to exist by invoking what is known as the Evans--Polanyi model.
+Consider the reaction
+$ ce("AB +C -> A + BC"). $
 
-==== Hammett and Taft Parameters
+The potential energy diagram for this reaction is shown in #ref(<fig:evans_polanyi_diagram1>).
+As the reaction coordinate progresses, $r_ce("AB")$ increases, and $r_ce("BC")$ decreases until it reaches the equilibrium bond length of $r_ce("BC")$.
+
+#align(center)[
+  #figure(
+    image("figures/pes_evans_polanyi.svg",width:40%),caption:[Schematic of the reaction coordinate for #ce("AB + C -> A + BC").]
+  )<fig:evans_polanyi_diagram1>
+]
+
+The Evans--Polanyi model approximates the energy landscape by a series of two straight lines that intersect at the transition state, as shown in #ref(<fig:evans_polanyi_diagram2>).
+
+#align(center)[
+  #figure(
+    image("figures/evans_polanyi_diagram.svg",width:40%),caption:[Schematic of the reaction coordinate for #ce("AB + C -> A + BC").]
+  )<fig:evans_polanyi_diagram2>
+]
+
+The equation of the first line from reactants to the transition state is given by
+$ E_ce("AB")(r) = m_1 (r-r_1),  $
+where $E_ce("AB")$ is the energy of A---B, $m_1$ is the slope of the aforementioned line, and $r_1$ is the equilibrium bond length of A---B.
+Here, $r$ is once again the position along the reaction coordinate (i.e. a variable).
+By definition, $m_1>0$.
+Note that the zero-energy reference is taken as the reactants by convention, so the $y$-intercept is 0.
+For this demonstration, we will use the above expression for the line to note that at $E_ce("AB")(r^ddagger)$, we are at the transition state, such that
+$ E_"a " = m_1 (r^ddagger - r_1). $<eq:evans_ea>
+
+In analogy with the first line, the equation of the second line is given by 
+$ E_ce("BC")(r) = m_2 (r-r^ddagger) +E_"a ", $
+where $E_"a "$ is as the energy of the transition state with respect to the reactants.
+Here, by definition, $m_2<0$.
+For this demonstration, we will use the above expression for the line to note that at $E_ce("BC")(r_2)$, we are at the value of $Delta E$, such that
+$ Delta E = m_2 (r_2 - r^ddagger) + E_"a ". $
+
+By solving for $r^ddagger$ in #ref(<eq:evans_ea>) and plugging this into the above expression, we arrive at
+$ Delta E = m_2 (r_2 - (E_"a "/m_1 +r_1)) + E_"a ". $
+After some rearrangement, we have
+$ E_"a " = m_1/(m_1-m_2) (Delta E - m_2 (r_2-r_1)). $
+We can define
+$ a equiv m_1/(m_1-m_2), quad b equiv -a m_2 (r_2-r_1) $
+to arrive at
+$ E_"a " = a Delta E + b. $<eq:evans>
+For clarity, $a$ must be positive because $m_1>0$ and $m_2<0$.
+In turn, $b$ must also be positive.
+
+We have now arrived at an expression relating the activation energy (a kinetic parameter) to the reaction energy (a thermodynamic parameter) via a linear relationship involving two constants.
+If $Delta E$ is made more exothermic (e.g. by increasing the stability of the product), it will result in a corresponding decrease in $E_"a "$.
+
+It is worth thinking about the physical meaning of the Evans--Polanyi model parameters, in particular $a$ (#ref(<fig:early_late_ts>)).
+When $m_1>>|m_2|$, the transition state resembles the reactants much more than the products and is said to be an "early" transition state. Additionally, $a->1$ in this scenario, such that the change in $E_"a "$ is highly sensitive to changes in $Delta E$. Any stabilization of the product will cause a correlated change in the energy of the transition state and, thereby, the activation energy.
+When $m_1<<|m_2|$, the transition state resembles the products much more than the reactants and is said to be a "late" transition state. Additionally, $a->0$ in this scenario, such that the change in $E_"a "$ is barely sensitive to changes in $Delta E$. Any stabilization of the product will have minimal impact on the energy of the transition state and, thereby, the activation energy.
+
+#align(center)[
+  #figure(
+    image("figures/early_late_ts.svg",width:80%),caption:[Demonstration of how changes to $m_1$ and $m_2$ (and, thereby, $a$) dictate whether the transition state is early or late.]
+  )<fig:early_late_ts>
+]
+
+
+Returning back to the Brønsted relationship and similar linear free energy relationships, there exists a correlation between $E_"a "$ and $Delta G^std$, provided that the entropy of activation is similar across the reactions being considered (since trends in $Delta H^std$ will closely match trends in $Delta E$).
+
+=== Revisiting the Bell--Evans--Polanyi Relationship
+
+We can see that #ref(<eq:evans>) looks very similar to the Bell--Evans--Polanyi (BEP) empirical relationship we have invoked throughout the course, given by $E_"a " = alpha Delta H + E_0$. In this case, the BEP relationship uses $Delta H^std$ trends in place of $Delta E$, as the former is experimentally measurable, and trends for $Delta H^std$ are largely the same as trends for $Delta E$.
+Once again, if the product is stabilized relative to the reactant (i.e. $Delta H$ is made more exothermic), then $E_"a "$ tends to be reduced.
+
+The BEP parameters, however, do not take on the same meaning as the $a$ and $b$ parameters of the Evans--Polanyi model, even though it has the same functoinal form.
+Like with $a$, the value of $alpha$ takes on values of $0<=alpha<=1$ and describes the position of the transition state along the reaction coordinate.
+Here, however, $alpha->0$ directly refers to the position of the transition state along the reaction coordinate and does not require any assumptions aboud the relative slopes of potential energy curves.
+A value of $alpha->0$ refers to an early transition state, whereas $alpha->1$ refers to a late transition state.
+
+
+#align(center)[
+  #figure(
+    image("figures/bep_hammond.svg",width:50%),caption:[Demonstration of the Hammond postulate, which correlates the relative energy of the transition state to whether the geometry is reactant- or product-like.]
+  )<fig:bep_hammond>
+]
+
+The value of $alpha$ is a constant for a given reaction family and is not a parameter that should be thought as tunable.
+Instead, $alpha$ simply describes the sensitivity of the activation energy to changes in $Delta H^std$.
+In the case of the BEP relationship, $alpha->0$ yields a situation in which changes to $Delta H^std$ barely change $E_"a "$.
+In contrast, if $alpha->1$, then changes to $Delta H^std$ will significantly change $E_"a "$.
+This can best be rationalized in combination with Hammond's postulate, which states that highly exothermic reactions tend to have early transition states, whereas highly endothermic reactions tend to have late transition states (#ref(<fig:bep_hammond>)).
+The lower the energy of the transition state with respect to the reactants, the closer to the reactants the transition state will be and, therefore, changes to the product stability will not play a major role (and vice versa).
+
+
+=== Hammett and Taft Parameters
+
+==== Hammett Parameters
+
+Chemists have a whole suite of correlations between rate constants and various empirical parameters.
+Perhaps the most famous such relationship is the Hammett relationship.
+The Hammett relationship compares the reactivity of different organic molecules that have varying functional (R) groups (#ref(<fig:hammett_molecules>)).
+
+
+#align(center)[
+  #figure(
+    image("figures/hammett_molecules.png",width:60%),caption:[For a series of molecules with different R groups, the Hammett relationship links the acid-dissociation equilibrium constant to the rate constant.]
+  )<fig:hammett_molecules>
+]
+
+
+Specifically, the Hammett relationship describes a linear logarithmic relationship between the rate constant of a given reaction and its equilibrium constant for acid-dissociation:
+$ log(k_ce("R")) = rho log(K_ce("R")) + c, $
+where $rho$ and $c$ are fitting parameters.
+Since $log(k) prop E_"a "$ and $log(K) prop Delta G^std$, the Hammett relationship is a linear-free energy relationship.
+
+In practice, one typically wishes to compare the rate across various R groups with respect to the unsubstituted form of the molecule (i.e. R = H).
+In this case, one can also write
+$ log(k_ce("H")) = rho log(K_ce("H")) + c, $
+such that
+$ log(k_ce("R")) - log(k_ce("H")) = rho log(K_ce("R")) - rho log(K_ce("H")), $
+which can be written more compactly as follows:
+$ log(k_ce("R")/k_ce("H")) = rho sigma_ce("R"), quad sigma_ce("R") equiv log(K_(ce("R"))/K_(ce("H"))). $
+The above expression is the typical form of the Hammett relationship.
+
+Here, $sigma_ce("R")$ is known as the Hammett parameter.
+Hammett parameters are widely tabulated for different functional groups and are based on the acid-dissociation constants of the substituted and unsubstituted forms of a molecule.
+The Hammett parameters are dependent solely on the different functional group and not the reaction conditions.
+In contrast, $rho$ depends on the reaction environment and conditions.
+
+In practice, if one were studying the reactivity of several organic molecules, you would look up the $sigma_ce("R")$ values of the differing functional groups, measure $k$ for each reaction, and make a plot of $log(k_ce("R")\/k_ce("H"))$ vs. $sigma_ce("R")$ (while forcing the $y$-intercept to be 0) to find $rho$.
+For new molecules you have not tested yet, you would be able to determine the rate constant via the linear correlation you developed.
+
+When comparing different possible substituents, if a given R group has a higher $sigma_ce("R")$ value, this means that its acid-dissociation reaction is shifted more towards the products (i.e. the molecule is more acidic).
+This is typically due to some combination of inductive and/or resonance effects that helps stabilize the negative charge of the conjugate base.
+If $sigma_ce("R")>0$, such a substituent is considered to be an electron-withdrawing group because it will stabilize the product anion by withdrawing electron density (i.e. negative charge) away from the reactive site (compared to the unsubstituted analogue).
+If $sigma_ce("R")<0$, such a substituent is considered to be an electron-donating group since the electron density is increased near the reactive site.
+
+#align(center)[
+  #figure(
+    image("figures/hammett_plot.svg",width:45%),caption:[Two representative Hammett plots highlighting the meaning of positive and negative $rho$ values as well as the range of electron-donating groups (EDGs) and electron-withdrawing groups (EWGs).]
+  )<fig:hammett_plot>
+]
+
+As for $rho$, it describes the sensitivity of the rate constant to the electron-donating or electron-withdrawing character of the substituent. 
+For $rho >1$, the reaction is assisted by electron-withdrawing groups ($sigma_ce("R")>0$). The molecule is accepting electron density from the other reagent during the course of the reaction, and the electron-withdrawing group helps stabilize this buildup of electron density at the active center.
+For $rho <1$, the reaction is assisted by electron-donating groups ($sigma_ce("R")<0$). The molecule is donating electron density to the other reagent during the course of the reaction, and the electron-donating group helps stabilize this transfer of negative charge.
+These effects are summarized in #ref(<fig:hammett_plot>).
+
+
+==== Taft Parameters
+
+There are many variations on the Hammett parameter idea to account for different effects.
+One notable model is the Taft equation, which seeks to more directly capture steric effects that are largely neglected by the Hammett parameter.
+The Taft equation is given by
+$ log(k_ce("R")/k_ce("CH3")) = rho^* sigma^* + E_"s ", $
+where $rho^*$ is a sensitivity factor analogous to the Hammett parameter $rho$.
+Instead of the Hammett parameter $sigma$, Taft parameters $sigma^*$ and $E_"s "$ are both tabulated for a given substituent.
+The $sigma^*$ term captures inductive effects, whereas the $E_"s "$ parameter captures sterics.
+The behavior of $rho^*$ with respect to electron-donating and electron-withdrawing groups is analogous to that of the Hammett relationship.
 
 == Scaling Relationships in Catalysis
 
-#self[6 and 7 of Norskov book]
-#self[Do a mini lecture on methane activation, Norskov's example]
+_Refer to PowerPoint slides for the following topics:_
+- Physisorption trends
+- Chemisorption scaling relationships
+- Transition state scaling relationships
+- Universal BEP relationships
+- Sabatier Principle
+- Volcano Plots
 
-=== Trends in Adsorption Energies <trends-in-adsorption>
-
-Adsorption is the first step of any catalytic process, so understanding trends in adsorption energies can be particularly valuable for catalyst design purposes. Here, we outline a few common trends in adsorption behavior on surfaces.
-
-==== Physisorption Trends
-
-Since physisorption is governed primarily by van der Waals interactions, it is to be expected that adsorption will generally be stronger for larger adsorbates, particularly those within the same family of molecules.
-Adsorption is generally an exothermic process, so stronger adsorption in this case refers to a more negative value.
-Generally, the adsorption strength of a molecule can be measured experimentally via temperature-programmed desorption experiments, in which case the desorption energy is the measured quantity and is an endothermic process.
-#ref(<fig:physisorption-trends>) shows experimentally measured desorption energies for various $n$-alkanes on three different surfaces.
-As the chain length increases, the desorption energy increases (i.e. the adsorbates are more strongly bound).
-In this case, the physisorption strength increases linearly with chain length, which makes for a valuable design principle.
-It should be noted, however, that trends such as this are going to depend strongly on the adsorbate and the adsorption mode of the adsorbate.
-If the adsorbate is bound in an on-top position, for instance, the increased size will likely not result in substantially increased van der Waals interactions.
-
-#figure(
-  image("figures/tait_jcp_2006_fig10.png", width: 40%),
-  caption: [Desorption energy of $n$-alkanes on various surfaces as a function of chain length. Source: S.L. Tait, Z. Dohnálek, C.T. Campbell, B.D. Kay, _J. Chem. Phys._, 125, 234308 (2006).]
-)<fig:physisorption-trends>
-
-==== Chemisorption Trends
-
-Chemisorption is governed by chemical bonding interactions, which are generally more complicated than van der Waals interactions.
-Nonetheless, there are countless reports of chemisorption trends in the literature, albeit different than those reported for physisorption.
-The classic example is the adsorption of $#ce("CH")_x$ species on the surface of transition metals, which tend to scale linearly with the adsorption energy of a single #ce("C") atom at the same surface site, as shown in #ref(<fig:chx_adsorption>).
-The results in #ref(<fig:chx_adsorption>) also highlight how adsorbates in the same family with fewer bonds tend to bind stronger to surfaces.
-Importantly, these chemisorption scaling trends are not restricted to hydrocarbons, as demonstrated in #ref(<fig:chemisorption_trends>).
-
-#figure(
-  image("figures/norskov_book_fig_6_3.png", width:50%),
-  caption: [Adsorption energy for various $#ce("CH")_x$ adsorbates as a function of the C atom adsorption energy for two different surface sites across various transition metals. Source: Figure 6.3 in J.K. Nørskov, F. Studt, F. Abild-Pedersen, T. Bligaard, _Fundamental Concepts in Heterogeneous Catalysis_. ]
-) <fig:chx_adsorption>
-
-
-#figure(
-  image("figures/norskov_book_fig_6_6.png", width:75%),
-  caption: [Chemisorption trends for various species across transition metal and metal sulfide surfaces. Source: Figure 6.6 in J.K. Nørskov, F. Studt, F. Abild-Pedersen, T. Bligaard, _Fundamental Concepts in Heterogeneous Catalysis_. ]
-) <fig:chemisorption_trends>
-
-
-=== Trends in Rates <trends-in-rates>
-
-In this subsection, we highlight different ways to estimate trends in reactivity.
-There are many reasons why one might be interested in this task.
-Naturally, being able to predict reactivity trends is essential for learning how to extrapolate to new, yet-to-be-studied reactions before running the necessary experiments.
-From a computational perspective, computing activation energies (and, therefore, rates of reaction) can also be incredibly challenging.
-In order to engineer new reactions of societal interest, a solid foundation in reactivity trends is essential.
-
-=== Bell--Evans--Polanyi Relationships <bell-evans-polanyi-relationships>
-
-In reaction engineering, the most common type of trend that is invoked is the so-called linear energy relationship, which seeks to linearly correlate $ln(k)$ with some energy difference that is generally easier to measure or is more readily tabulated.
-In reaction engineering, the most popular relationship of this type is the Bell--Evans--Polanyi (BEP) relationship:
-$ E_"a " = alpha Delta H_"rxn" + E_0, $<eq:bep>
-where $E_0$ and $alpha$ are constants for a given family of closely related reactions.
-Generally, $alpha$ can be thought of as the relative position of the transition state along the reaction coordinate, taken from 0 (towards the reactants, also known as an "early" transition state) to 1 (towards the products, also known as a "late" transition state).
-
-Take the dissociation of the C--H bond across different light alkanes on a catalyst surface.
-If this set of reactions follows the BEP relationship, than the bond dissociation enthalpy is linearly correlated with the activation energy, such that stronger C--H bonds (e.g. that of #ce("CH4")) would have a larger activation barrier for cleavage than that of weaker C--H bonds (e.g. that of #ce("C3H8")).
-
-One can rationalize the presence of BEP relationships in part through the Hammond--Leffler postulate, which states that the geometric structure (and, thereby, energy) of a transition state tends to be similar to the reactants than the products when the reaction is exothermic and _vice versa_.
-
-#self[Sketch out the Hammond--Leffler postulate, showcasing early vs. late transition states.]
-
-=== Transition State Scaling Relationships <linear-scaling-relationships>
-
-
-
-=== Universality in Scaling Relationships <universiality-in-scaling-relationships>
-
-#self[Highlight scaling relationships in https://doi.org/10.1021/acscatal.8b05178.]
-
-=== Sabatier Principle <sabatier-principle>
-
-=== Volcano Plots <volcano-plots>
 
 == Beyond the Sabatier Limit
 
@@ -3660,7 +3740,6 @@ One can rationalize the presence of BEP relationships in part through the Hammon
 // SAAs
 // https://pubs.acs.org/doi/10.1021/acs.jpclett.8b01888
 
-=== Spin and Multi-State Reactivity
 
 === Oscillations and Catalytic Resonance
 
