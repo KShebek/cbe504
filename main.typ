@@ -3848,7 +3848,7 @@ If the $y$-axis intercept is zero, the product is not primary.
 In practice, one may not know the ranks in advance, such that creating a plot of $Y_ce("P")\/X_ce("A")$ vs. $X_ce("A")$ would be insightful for determing product ranks.
 A sketch of the first-rank deplots for the aforementioned reaction networks is shown in #ref(<fig:first_delplot>).
 
-#figure(image("figures/first_delplot.svg",width:33%),caption:[First-rank delplot. Note that the finite $y$-intercept values points to a primary product, whereas a zero $y$-intercept value points to a higher rank product.])<fig:first_delplot>
+#figure(image("figures/first_delplot.svg",width:33%),caption:[First-rank delplot for the reaction scheme #ce("A->B->C"), #ce("A->D"). Note that the finite $y$-intercept values points to a primary product, whereas a zero $y$-intercept value points to a higher rank product.])<fig:first_delplot>
 
 === Higher Rank Delplots for Non-Primary Products
 
@@ -3863,7 +3863,7 @@ If a zero intercept is found, the product's rank is greater than secondary.
 If a divergence is found as $X_ce("A")->0$ (i.e. no $y$-intercept), the product's rank is primary.
 The second-rank delplot for the aforementioned reaction scheme is shown in #ref(<fig:second_delplot>).
 
-#figure(image("figures/second_delplot.svg",width:33%),caption:[Second delplot. Note that the finite $y$-intercept values points to a secondary product, whereas a diverging $y$-intercept value points to a lower rank product.])<fig:second_delplot>
+#figure(image("figures/second_delplot.svg",width:33%),caption:[Second-rank delplot for the reaction scheme #ce("A->B->C"), #ce("A->D"). Note that the finite $y$-intercept values points to a secondary product, whereas a diverging $y$-intercept value points to a lower rank product.])<fig:second_delplot>
 
 
 === Generalized Delplot Approach
@@ -3882,18 +3882,31 @@ The general procedure presented in #ref(<table:delplot>) can then be employed, w
   table(
     columns: 3,
     table.header(
-      [Species order],
+      [Reaction order],
       [$"Species rank"=1$],
       [$"Species rank">1$]
     ),
-    [$1$], [#delplot(1) = finite], [$delplot(m) = "finite"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$],
+    [$1$], [#delplot(1) = finite], [$delplot(m) = "finite"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$\ $delplot(m) = "diverges"$ if $"species rank"<m$],
     [$<1$], [#delplot(1) = finite], [$delplot(m) = "diverges"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$],
-    [$>1$], [#delplot(1) = finite], [$delplot(m) = 0$ if $"species rank">=m$\ $delplot(m) = "finite"$ if $"species rank"<m$],
+    [$>1$], [#delplot(1) = finite], [$delplot(m) = 0$ if $"species rank" >= m$\ $delplot(m)="finite"$ for $"species rank" < m$ ],
 
   ),
-  caption:[Summary of delplot intercepts for a product P formed from the conversion of A. $m$ is the rank of the delplot.]
+  caption:[Summary of delplot intercepts for a product P formed from the conversion of A. $m$ is the rank of the delplot, and the reaction order refers to the reaction producing product P.]
 )  <table:delplot>
 
+To demonstrate how #ref(<table:delplot>) can be used for higher-order reactions, second-rank and third-rank delplots are shown in #ref(<fig:second_delplot_order>) and #ref(<fig:third_delplot_order>), respectively, for the reaction scheme
+$ 
+ce("A->2B->C")\
+ce("A->D").
+$
+Since B and D are primary products from a first-order reaction, a second-rank delplot diverges for these species since the species rank (one) is less than the rank of the delplot (two), as is evident from the first row and third column of #ref(<table:delplot>).
+Since C is a secondary product from a reaction greater than one, a second-rank delplot has a zero $y$-intercept since the species rank (two) is equal to the rank of the delplot (two), as is evident from the third row and third column of #ref(<table:delplot>).
+
+As for the third-rank delplot, we again refer to #ref(<table:delplot>) and find that B and D again diverge since their rank (two) is less than the rank of the deplot (three).
+However, C now has a finite intercept since the species rank (two) is less than the rank of the delplot (three), which can be justified based on the third row and third column of #ref(<table:delplot>) 
+#figure(image("figures/second_delplot_order.svg",width:33%),caption:[Second-rank delplot for the reaction scheme #ce("A->2B->C"), #ce("A->D"). Note that the finite $y$-intercept values points to a secondary product, whereas a diverging $y$-intercept value points to a lower rank product.])<fig:second_delplot_order>
+
+#figure(image("figures/third_delplot_order.svg",width:33%),caption:[Third-rank delplot for the reaction scheme #ce("A->2B->C"), #ce("A->D"). Note that the finite $y$-intercept values points to a secondary product, whereas a diverging $y$-intercept value points to a lower rank product.])<fig:third_delplot_order>
 
 
 == Degree of Rate Control <degree-of-rate-control>
