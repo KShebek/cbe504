@@ -7,12 +7,12 @@
 // 5. Make exams 9am-5pm
 // 6. Make exam corrections a required homework problem. No extra credit.
 // 7. Change course grading to be 30% problem sets, 35% midterm, 35% final
-// 8. Remove section 7.5.3 with desorption. It just feels weird. How can the TS be there but also have a Delta E_ads.
-// 9. de Donder analysis was maybe too much?
+// 8. Redo de Donder with just Delta G
+// 9. Move delplots earlier
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
-#import "@preview/ilm:1.2.1": ilm
+#import "@preview/ilm:1.3.1": ilm
 
 #let correction(title: "Correction", icon: emoji.face.inv, ..args) = clue(
   accent-color: red,
@@ -62,7 +62,7 @@
   margin: 0.5em
 )
 #let ddagger = sym.dagger.double
-#let delplot(rank) = $""^rank"P "_"A "$
+#let delplot(rank,species:"A") = $""^rank ce("P")_ce("A")$
 
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
@@ -801,7 +801,7 @@ ce("B") &fwdArrow(k_2) ce("C").
 $
 Here, we are considering each reaction as a discrete event involving individual molecules.
 We define the propensity, $a_j$, of each reaction in an analogous way as we define the reaction rate:
-$ a_1 = k_1 x_"A ", quad a_2 = k_2 x_"B ", $
+$ a_1 = k_1 X_ce("A"), quad a_2 = k_2 x_"B ", $
 where each $x_j$ is the discrete number of $j$ molecules in the reactor (rather than the continuous value of concentration).
 We will also consider the time $t$ to be discretized, such that we are simulating reaction snapshots (or lack thereof) at each time step.
 
@@ -3721,42 +3721,32 @@ _Refer to PowerPoint slides for the following topics:_
 - Transition state scaling relationships
 - Universal BEP relationships
 - Sabatier Principle
-- Volcano Plots
-
-
-== Beyond the Sabatier Limit
-
-// Emphasize the need, because we are restricted to volcano line
-
-=== Breaking Scaling Relationships
-
-=== Decoupling Dissociation and Surface Reactions
-
-// SAAs
-// https://pubs.acs.org/doi/10.1021/acs.jpclett.8b01888
-
-
-=== Oscillations and Catalytic Resonance
-
-=== Plasma Activation
-
-// #[https://pubs.acs.org/doi/full/10.1021/acsenergylett.9b00263]
-
+- Volcano plots
+- Breaking linear scaling relationships
 
 = Complex Reaction Networks
 
-== Conversion, Selectivity, and Yield <conversion-selectivity-and-yield>
+In this section, we will describe a few ways to deal with understanding key information about complex (multi-step) reaction mechanisms.
 
-As we seen in prior examples, it is possible for multiple products to be produced from a given reaction.
+== Delplots <delplots>
+
+Here, we will introduce the concept of a delplot, which can be used to discern qualitative, temporal behavior of reaction networks.
+#footnote[N.A. Bhore, M.T. Klein, K.B. Bischoff, The Delplot Technique: A New Method for Reaction Pathway Analysis, _Industrial and Engineering Chemistry Research_, 29, 313--316 (1990).]
+
+=== A Refresher About Conversion, Selectivity, and Yield <conversion-selectivity-and-yield>
+
+As we saw in prior examples, it is possible for reactions to consist of many individual steps, and some of those steps may produce different products.
+In this scenario, we might be interested in the distribution of products within our reaction mixture.
+
 We briefly introduced the idea of conversion already, but it is worth ensuring clarity in vocabulary when describing such reations.
-Consider a product P produced from a reactant A in a reaction that may produce multiple products. The conversion of A ($X_"A "$), yield of P ($Y_"P "$), and selectivity of P ($S_"P "$) are defined as:
+Consider a product P produced from a reactant A in a reaction that may produce multiple products. The conversion of A ($X_ce("A")$), yield of P ($Y_ce("P")$), and selectivity of P ($S_ce("P")$) are defined as:
 $
-X_"A " &equiv ("moles of A converted") / ("moles of A fed")\
-Y_"P " &equiv ("moles of P formed") / ("moles of A fed")\
-S_"P " &equiv ("moles of P formed") / ("moles of A converted").
+X_ce("A") &equiv ("moles of A converted") / ("moles of A fed")\
+Y_ce("P") &equiv ("moles of P formed") / ("moles of A fed")\
+S_ce("P") &equiv ("moles of P formed") / ("moles of A converted").
 $
 Based on these definitions, it should also be noted that
-$ Y_"P " = X_"A " S_"P ". $
+$ Y_ce("P") = X_ce("A") S_ce("P"). $
 
 To make this a bit more concrete, consider the following reaction scheme:
 $
@@ -3766,20 +3756,18 @@ $
 
 The conversion of A, yield of P, and selectivity towards the production of P are the following, assuming a constant volume reactor:
 $
-X_"A " &= (conc("A")_0 - conc("A")) / conc("A")_0 = 1 - conc("A") / conc("A")_0\
-Y_"P " &= (conc("P") - conc("P")_0) / conc("A")_0\
+X_ce("A") &= (conc("A")_0 - conc("A")) / conc("A")_0 = 1 - conc("A") / conc("A")_0\
+Y_ce("P")&= (conc("P") - conc("P")_0) / conc("A")_0\
 S_"P " &= (conc("P") - conc("P")_0) / (conc("A")_0 - conc("A")) = (conc("P") - conc("P")_0) / (conc("P") + conc("Q")).
 $
 where the subscript 0 refers to an initial state.
-Strictly, speaking, these definitions are only applicable when $V$ is constant.
+These definitions are only applicable when $V$ is constant.
 Otherwise, the expression must be written directly in terms of moles.
 
-== Delplots <delplots>
+=== The Rank of a Species
 
-#self[make plots]
-
-We must introduce a new concept: the "rank" of a species, which is the numerical order in which a product appears.
-If a given product is produced first, it will have rank 1 and is called primary; if produced second, it will have rank 2 and is called secondary, and so on.
+We must introduce a new concept: the "rank" of a species, which is the numerical order in which a species is formed.
+If a given species is produced first, it will have rank 1 and is called primary; if produced second, it will have rank 2 and is called secondary, and so on.
 Written out, for the reaction #ce("A->B->C->D"), B is primary, C is secondary, and D is tertiary.
 This is distinct from the order of that species, which we will reserve for the exponential dependence of the rate on concentration.
 In a net reaction composed of many elementary reactions, it is also possible for a species to exhibit multiple ranks.
@@ -3787,10 +3775,12 @@ In a net reaction composed of many elementary reactions, it is also possible for
 Plots of species concentrations as a function of time are very powerful ways to determine the rank of different product species.
 This becomes immediately apparent when considering the simple reaction
 $ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C"). $
-A plot of the species concentrations as a function of time will indicate that B has a non-zero initial slope, whereas C has a zero initial slope since it cannot form until B is first produced.
+A plot of the species concentrations as a function of time will indicate that B has a non-zero initial slope, whereas C has a zero initial slope since it cannot form until B is first produced (#ref(<fig:abc_profile>)).
+#figure(image("figures/abc_plot.svg",width:30%),caption: [Concentration profile for the #ce("A->B->C") reaction, highlighting the different $y$-intercept values.])<fig:abc_profile>
+
 In mathematical terms, we have
 $ (dif conc("A"))/(dif t) = - k_1 conc("A"), quad quad (dif conc("B"))/(dif t) = k_1 conc("A") - k_2 conc("B"), quad quad (dif ce("C"))/(dif t) = -k_2 conc("B"). $
-For $t->0$, we have $conc("A") ->conc("A")_0 $, $conc("B")->0$, and $conc("C") -> 0$ such that 
+For $t->0$, we have $conc("A") ->conc("A")_0 $, $conc("B")->0$, and $conc("C") -> 0$, such that 
 $ ((dif conc("A"))/(dif t))_(t->0) = - k_1 conc("A")_0, quad quad ((dif conc("B"))/(dif t))_(t->0) = k_1 conc("A")_0, quad quad ((dif conc("C"))/(dif t))_(t->0) = 0. $
 
 This is in contrast with a parallel reaction scheme like
@@ -3798,61 +3788,110 @@ $
 ce("A") &fwdArrow(k_1) ce("B")\
 ce("A") &fwdArrow(k_2) ce("C"),
 $
-where both B and C would have a non-zero initial slope unlike the series reactions.
+where both B and C would have a non-zero initial slope.
 Again, in mathematical form we can write
 $  (dif conc("A"))/(dif t) = -k_1 conc("A") - k_2 conc("A"), quad quad (dif conc("B"))/(dif t) = k_1 conc("A"), quad quad (dif conc("C"))/(dif t) = k_2 conc("A"). $
 For $t->0$, we have
 $  ((dif conc("A"))/(dif t))_(t->0) = - (k_1 + k_2)conc("A")_0, quad ((dif conc("B"))/(dif t))_(t->0) = k_1 conc("A")_0, quad ((dif conc("C"))/(dif t))_(t->0) = k_2 conc("A")_0. $
-This kind of analysis can be extended to higher ranks and even to reactions of various orders to discern the rank of different species in a reaction network.
+What we have conclude from this simple exercise is that the initial slope (i.e. the rate of change in species concentration extrapolated to $t = 0$) can provide information about the rank of the species.
+For this set of examples, we found that the product C was primary if it had a finite (i.e. not zero) initial slope.
+If one were to measure a zero initial slope for the rate of change of #conc("C"), it can be concluded immediately that #ce("C") did not come from #ce("A") since primary products have a finite initial slope.
+As we will show, this kind of analysis can be made more general.
 
-This brings us to the concept of a delplot, which is a graphical method to determine the rank of a reaction product.
-#footnote[N.A. Bhore, M.T. Klein, K.B. Bischoff, The Delplot Technique: A New Method for Reaction Pathway Analysis, _Industrial and Engineering Chemistry Research_, 29, 313--316 (1990).]
-A delplot is a plot of $Y_"P " \/ X_"A "^m$ where $m$ is referred to as the rank of the delplot.
-By investigating the behavior at $X_"A "->0$ (i.e. $t->0$), we can identify the rank of the species.
+=== The First-Rank Delplot to Determine Primary Products
 
-This first-rank delplot is used to distinguish primary products from non-primary products, while higher rank delplots allow for the discernment of products that are secondary, tertiary, and so on.
-The following notation is used to describe delplots: $#delplot(1)$.
-Here, the left-hand superscript is a number representing the rank of the delplot (in this case $m=1$), P represents the product species under investigation, and the subscript A means that the delplot is based on the conversion of species A.
+Consider a more complicated reaction network like 
+$ 
+ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_3) ce("C") \
+ce("A") fwdArrow(k_2) ce("D").
+$
+Assuming the reaction starts with only A, then it can be shown that the integrated rate laws are given by
+$ 
+conc("A") &= conc("A")_0 e^(-(k_1+k_2)t)\
+conc("B") &= (k_1 conc("A")_0)/(k_3-k_1-k_2) (e^(-(k_1+k_2)t)-e^(-k_3 t))\
+conc("C") &= (k_1 k_3 conc("A")_0)/(k_3 - k_1 - k_2) ((1-e^((-k_1+k_2)t))/(k_1+k_2) - (1-e^(-k_3 t)/k_3))\
+conc("D") &= (k_2 conc("A")_0)/(k_1+k_2) (1-e^(-(k_1+k_2)t))
+$<eq:delplot_toy_rxn>
+in the case where $k_3 != k_1+k_2$.
 
-The first-rank delplot is simply a plot of selectivity versus conversion.
-In other words, it is a plot of $Y_"P " \/ X_"A "$ vs. $X_"A "$.
-For each product P, the delplot is extrapolated to $X_"A " -> 0$, typically corresponding to the initial time point for the reaction.
-This $y$-intercept, denoted as #delplot(1), can be evaluated as
+The approach we will take here is as follows.
+For each product P, we will make a plot of $Y_ce("P")\/X_ce("A")$ (i.e. selectivity) vs. $X_ce("A")$ and extrapolate to $X_ce("A")->0$ (i.e. $t->0$ or $tau->0$ depending on the reactor type).
+We will show that this approach can distinguish whether the product is primary or not based on whether the $y$-axis intercept has a finite value or not.
+Written mathematically, we seek to carry out the following analysis
+$ lim_(X_ce("A")->0)(Y_ce("P") / X_ce("A")) = lim_(X_ce("A")->0)((conc("P") \/ conc("A")_0) / (1 - conc("A") \/ conc("A")_0)) = lim_(X_ce("A")->0)(conc("P") / (conc("A")_0 - conc("A"))). $<eq:delplot_first>
 
-$ #delplot(1) = lim_(X_"A "->0)(Y_"P "  / X_"A ") = lim_(X_"A "->0)((conc("P") \/ conc("A")_0) / (1 - conc("A") \/ conc("A")_0)) = lim_(X_"A "->0)(conc("P") / (conc("A")_0 - conc("A"))) $<eq:delplot1>
+Of course, for our toy example we already know that B and D are primary products, whereas C is not primary.
+There would be no need to carry out any sort of analysis in this case.
+However, we will use this reaction scheme for demonstration purposes to justify our approach, which can then be applied to experimental data for which we do not know the ranks _a priori_.
 
-#ref(<eq:delplot1>) can be evaluated algebraically from known expressions of #conc("P") and #conc("A") as a function of time or numerically from the experimentally determined plots of selectivity versus conversion.
-Since the rate expressions are often not known _a priori_, delplots are typically a graphical approach based on experimental data.
-As previously alluded to, if a finite $y$-intercept is found in the first-rank delplot for species P, then P is primary since it is immediately produced upon the consumption of A.
-If the $y$-intercept is zero, then P is a non-primary product (i.e. the rank is greater than 1) because it lags behind the formation of the previous intermediate in the reaction network.
+We now substitute #ref(<eq:delplot_toy_rxn>) into #ref(<eq:delplot_first>) and will start with identifying the value for species B.
+$ lim_(t->0)(Y_ce("B") / X_ce("A")) = lim_(t->0) ((k_1 conc("A")_0)/(k_3-k_1-k_2) (e^(-(k_1+k_2)t)-e^(-k_3 t)))/(conc("A")_0-conc("A")_0 e^(-(k_1+k_2)t)). $
+If we naively plugged in $t=0$ exactly into the above expression, we would be left with $0\/0$.
+Instead, we must take advantage of L'Hôspital's rule, wherein 
+$ lim_(z->z_0) f(z)/g(z) = (f'(z_0))/(g'(z_0)), $
+provided that $f$ and $g$ are both differentiable functions.
+Thankfully, the derivatives are fairly straightforward in this case due to the nature of exponentials.
+We will omit the algebra to simply state that the limit becomes
+$ lim_(t->0)(Y_ce("B") / X_ce("A")) = k_1/(k_1+k_2). $
 
+If one were to carry out the same analysis for C and D, we would also have 
+$ lim_(t->0)(Y_ce("C") / X_ce("A")) &= 0\
+lim_(t->0)(Y_ce("D") / X_ce("A")) &= k_2/(k_1+k_2). $
+
+Here, we have found that B and D have finite values for the intercept, whereas C has a zero value.
+We know from the reaction scheme that B and D are primary, whereas C is not primary.
+It turns out that this method of determining primary from non-primary products can be fully generalized and is independent of the functional form of the kinetic equations at each step.
+
+This analysis is referred to as the first-rank delplot.
+If the $y$-axis intercept of the first-rank delplot is finite, the product is primary.
+If the $y$-axis intercept is zero, the product is not primary.
+In practice, one may not know the ranks in advance, such that creating a plot of $Y_ce("P")\/X_ce("A")$ vs. $X_ce("A")$ would be insightful for determing product ranks.
+A sketch of the first-rank deplots for the aforementioned reaction networks is shown in #ref(<fig:first_delplot>).
+
+#figure(image("figures/first_delplot.svg",width:33%),caption:[First-rank delplot. Note that the finite $y$-intercept values points to a primary product, whereas a zero $y$-intercept value points to a higher rank product.])<fig:first_delplot>
+
+=== Higher Rank Delplots for Non-Primary Products
+
+While first-rank delplots can determine whether a product is primary or not primary, in general it cannot be used to identify the particular rank of any non-primary species.
 Higher rank delplots allow for the sorting of products of rank greater than 1.
-The second-rank delplot consists of a plot of $Y_"P " \/ X_"A "^2$ vs. $X_"A "$.
+
+The second-rank delplot consists of a plot of $Y_ce("P")\/ X_ce("A")^2$ vs. $X_ce("A")$ and can be used to determine whether a product is secondary or not.
 The $y$-intercept of the second-rank delplot for a product P is
-$ #delplot(2) = lim_(X_"A "->0)(Y_"P "  / X_"A "^2) = (conc("P") \/ conc("A")_0) / (1-conc("A")\/conc("A")_0)^2 = (conc("A")_0 conc("P")) / (conc("A")_0 - conc("A"))^2. $
+$ lim_(X_ce("A")->0)(Y_ce("P") / X_ce("A")^2) = (conc("P") \/ conc("A")_0) / (1-conc("A")\/conc("A")_0)^2 = (conc("A")_0 conc("P")) / (conc("A")_0 - conc("A"))^2. $
 If a finite intercept is found, the product is secondary.
 If a zero intercept is found, the product's rank is greater than secondary.
-If a divergence is found as $X_"A "->0$ (i.e. no $y$-intercept), the product's rank is primary.
+If a divergence is found as $X_ce("A")->0$ (i.e. no $y$-intercept), the product's rank is primary.
+The second-rank delplot for the aforementioned reaction scheme is shown in #ref(<fig:second_delplot>).
 
-This can be summarized more generally.
-For a delplot of rank $m$ presented as a plot of $Y_"P " \/ X_"A "^m$ vs. $X_"A "$, the $y$-intercept can be found via
-$ " "^(m)"P "_"A " = lim_(X_"A "->0) (Y_"P " / (X_"A "^m)) = lim_(X_"A "->0)((conc("P") \/ conc("A")_0) / (1-conc("A")\/conc("A")_0)^m). $
+#figure(image("figures/second_delplot.svg",width:33%),caption:[Second delplot. Note that the finite $y$-intercept values points to a secondary product, whereas a diverging $y$-intercept value points to a lower rank product.])<fig:second_delplot>
+
+
+=== Generalized Delplot Approach
+
+The delplot process can be summarized more generally.
+We will use the following notation when describing delplots:
+#delplot(1).
+Here, the top-left superscript is the rank $m$ of the delplot (not the rank of the species), P represents the product species we are investigating, and the subscript A represents the species for which the conversion is being tracked.
+
+A delplot of rank $m$ is simply a plot of $Y_ce("P")\/ X_ce("A")^m$ vs. $X_ce("A")$.
+The $y$-intercept of a rank $m$ delplot can be found via
+$ delplot(m) = lim_(X_ce("A")->0) (Y_ce("P")/ (X_ce("A")^m)) = lim_(X_ce("A")->0)((conc("P") \/ conc("A")_0) / (1-conc("A")\/conc("A")_0)^m). $
 The general procedure presented in #ref(<table:delplot>) can then be employed, which we have extended to different reaction orders as well.
 #footnote[While a useful tool, delplots can be of limited use when $m$ is large due to propagation of error associated with raising low-conversion limit data to a large power.]
 #figure(
   table(
     columns: 3,
     table.header(
-      [Order],
-      [$"Rank"=1$],
-      [$"Rank">1$]
+      [Species order],
+      [$"Species rank"=1$],
+      [$"Species rank">1$]
     ),
-    [$1$], [#delplot(1) = finite], [$""^(m)"P "_"A " = 0$ for $"rank">m$\ $""^(m)"P "_"A " = "finite"$ for $"rank"=m$\ $""^(m)"P "_"A " = "diverges"$ for $"rank"<m$],
-    [$<1$], [#delplot(1) = finite], [$""^(m)"P "_"A " = 0$ for $"rank">m$\ $""^(m)"P "_"A " = "diverges"$ for $"rank"=m$],
-    [$>1$], [#delplot(1) = finite], [$""^(m)"P "_"A " = 0$ for $"rank">=m$\ $""^(m)"P "_"A " = "finite"$ for $"rank"<m$],
+    [$1$], [#delplot(1) = finite], [$delplot(m) = "finite"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$],
+    [$<1$], [#delplot(1) = finite], [$delplot(m) = "diverges"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$],
+    [$>1$], [#delplot(1) = finite], [$delplot(m) = 0$ if $"species rank">=m$\ $delplot(m) = "finite"$ if $"species rank"<m$],
 
   ),
-  caption:[Summary of delplot intercepts for a product P formed from the conversion of A. $m$ is the rank of the delplot, whereas "rank" refers to the rank of product P.]
+  caption:[Summary of delplot intercepts for a product P formed from the conversion of A. $m$ is the rank of the delplot.]
 )  <table:delplot>
 
 
