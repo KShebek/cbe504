@@ -1,5 +1,4 @@
 // Notes for next time
-// 0. Render with newer typst version
 // 1. Add an entire lesson on equilibrium. To prepare for Problem1 Pset 3 from Justin and provide context. Emphasize reaction quotient vs equilibrium.
 // 2. Spend a little bit more time on BEPs. How to read handbook values. Relevance of temperature and pressure in handbook and how to adjust.
 // 3. Do reactor archetypes after the midterm
@@ -8,7 +7,10 @@
 // 6. Make exam corrections a required homework problem. No extra credit.
 // 7. Change course grading to be 30% problem sets, 35% midterm, 35% final
 // 8. Redo de Donder with just Delta G
-// 9. Move delplots earlier
+// 9. Move delplots earlier. Move degree of rate control to end of scaling relationships section
+// 10. Get rid of project
+// 11. Get rid of methane paper from slides
+// 12. Add lumped rate constants section to beginning
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -3720,7 +3722,7 @@ _Refer to PowerPoint slides for the following topics:_
 - Chemisorption scaling relationships
 - Transition state scaling relationships
 - Universal BEP relationships
-- Sabatier Principle
+- Sabatier principle
 - Volcano plots
 - Breaking linear scaling relationships
 
@@ -3909,217 +3911,6 @@ However, C now has a finite intercept since the species rank (two) is less than 
 #figure(image("figures/third_delplot_order.svg",width:33%),caption:[Third-rank delplot for the reaction scheme #ce("A->2B->C"), #ce("A->D"). Note that the finite $y$-intercept values points to a secondary product, whereas a diverging $y$-intercept value points to a lower rank product.])<fig:third_delplot_order>
 
 
-== Degree of Rate Control <degree-of-rate-control>
+= Concluding Comment <outlook>
 
-=== The Degree of Rate Control of an Elementary Step
-
-In #ref(<rate-determining-step>), we introduced the concept of a rate-determining step that can greatly simplify a proposed mechanism.
-The rate-determining step also indicates, albeit indirectly, where improvements can be made to tune the overall rate of reaction most effectively.
-While a valuable principle, in most cases, it is not possible to identify a single rate-determining step.
-In these scenarios, we can rely on a concept known as the degree of rate control to guide our reaction engineering efforts.
-#footnote[For further details, refer to C.T. Campbell, The Degree of Rate Control: A Powerful Tool for Catalysis Research, _ACS Catalysis_, 4, 2770--2779 (2017). https://doi.org/10.1021/acscatal.7b00115.]
-
-The degree of rate control, $X_("RC",i)$ for elementary step $i$ is defined as
-$ X_("RC",i) equiv k_i / r ((diff r) / (diff k_i))_(k_(j != i), K_i) = 1/r ((diff r) / (diff ln(k_i)))_(k_(j != i), K_i). $ <eq:drc>
-Here, the partial derivative is taken such that the forward and reverse rate constants, $k_j$, for all steps other than $i$ are constant.
-Additionally, the equilibrium constant, $K_i$, for step $i$ is held fixed.
-While not explicitly written, it is also tacitly assumed that the reaction conditions themselves are constant (e.g. $T$, species concentrations) since we are focusing on the impact that an infinitesimal change on only the rate constant has on the rate.
-The reason that there is a factor of $k_i\/r$ proceeding the partial derivative in #ref(<eq:drc>) is to ensure that the expression is normalized such that it describes the relative change in the net rate scaled by the given $k_i$.
-
-By definition, if $X_("RC",i)$ is positive, then it implies that increasing the rate constant $k_i$ will increase the reaction rate and _vice versa_.
-In this case, step $i$ is said to be a rate-limiting (rather than determining) step.
-Similarly, if $X_("RC",i)$ is negative, it implies that increasing the rate constant $k_i$ will decrease the reaction rate and _vice versa_.
-In this case, step $i$ is said to be a rate-inhibiting step.
-
-Since the degree of rate control is most often applied to understand how perturbations on a free energy diagram influence reactivity, it is natural to replace $k_i$ in #ref(<eq:drc>) with free energy.
-From the Eyring equation, we know that
-$
-k_i &= C^std^(1-n) (k_"B "T )/h exp(-(Delta G_(i)^std^ddagger) / (R T))\
-ln(k_i) &= ln(C^std^(1-n) (k_"B "T )/h) - (Delta G_(i)^std^ddagger) / (R T).
-$
-Taking the derivative of both sides under the assumption that we are considering a given value of $T$ yields
-$ diff ln(k_i) = - diff((Delta G_(i)^std^ddagger) / (R T)) $
-since the derivative of a constant is always zero.
-Therefore, we can write that the degree of rate control is also equal to
-$
-X_("RC",i) = 1/r ((diff r) / (diff (-(Delta G_(i)^std^ddagger) / (R T))))_(k_(j != i),K_i)
-= 1/r ((diff r) / (diff (-(G_("TS",i)^std) / (R T))))_(G_(j!=i)^std^dagger,G_(m)^std),
-$
-where the partial derivative in the latter expression is taken such that the Gibbs free energy of the transition states for all steps other than $i$ are constant and the Gibbs free energy of all intermediates $m$ are constant.
-
-=== The Thermodynamic Degree of Rate Control for an Intermediate
-
-Admittedly, thinking about modifying the free energy of a transition state is a bit awkward.
-It is far more intuitive to think about how one might change the free energy of an intermediate along the reaction pathway.
-Thankfully, it is straightforward to extend the degree of rate control concept to intermediates as well, in which case it is often referred to as the thermodynamic degree of rate control.
-The thermodynamic degree of rate control for intermediate $n$ is given as
-$ X_("TRC",n) equiv 1/r ((diff r)/ (diff (-G_(n)^std / (R T))))_(G_(m != n)^std, G_(i)^std^ddagger). $
-Here, we are taking the derivative with the Gibbs free energy of all reactants, products, and intermediates other than $n$ as constant as well as the free energy of all transition states as fixed.
-The difference between $X_("RC",i)$ and $X_("TRC",n)$ is graphically depicted in #ref(<fig:drc>).
-#figure(
-  image("figures/campbell_acs_catal_2017_fig1.gif", width: 50%),
-  caption: [ "Schematic standard-state free-energy surface for the reaction AC(g) + B(g) → AB(g) + C(g), showing the degree of rate control based on a transition state free energy change and intermediate free energy change. Source: C. Campbell, _ACS Catal._, 4, 2770--2779 (2017). ]
-)<fig:drc>
-
-=== The Generalized Degree of Rate Control
-
-Given the similarity between $X_("RC",i)$ and $X_("TRC",n)$, a generalized degree of rate control for species $i$ can be written as
-$ "DRC"_i = 1/r ((diff r) / (diff (-G_(i)^std / (R T))))_(G_(j != i)^std) = - ((diff ln(r)) / (diff ((G_i^std) / (R T))))_G_(j!=i)^std, $<eq:drc_general>
-where the partial derivative is now taken such that the free energy of all species other than $i$ (including reactants, products, intermediates, transition states) is held fixed.
-In general,
-$ sum_"steps" X_("RC",i) = sum_("TSs") "DRC"_i = 1. $
-This implies that for a catalytic mechanism with a single rate-determining step $i$, the value of $X_("RC",i)$ is equal to 1, whereas it is 0 for the remaining steps since they do not contribute to the overall rate to a first approximation. 
-
-Ultimately, this brings us back to the concept of a rate-determining step.
-Some argue that there is no such thing as a rate-determining step.
-#footnote[S. Kozuch, J.M.L. Martin, The Rate-Determining Step is Dead. Long Live the Rate-Determining State! _ChemPhysChem_, 12, 1413--1418 (2011). https://doi.org/10.1002/cphc.201100137. ]
-Instead, what we have are rate-determining states, which are the states (including both minima and transition states) along the reaction coordinate that exhibit the largest degree of rate control.
-
-=== Applying the Degree of Rate Control to a Model Reaction
-
-While the value of the degree of rate control is in being able to analyze complex reaction networks, we will demonstrate its use on a toy reaction scheme simply for demonstration purposes.
-Consider the following reaction:
-$ 
-ce("A + *") &eqArrow(k_1,opposite:k_(-1)) ce("A^*")\
-ce("B + *") &eqArrow(k_2,opposite:k_(-2)) ce("B^*")\
-ce("A^* + B^*") &fwdArrow(k_3) ce("AB^* + *") quad ("RDS")\
-ce("AB^*") &eqArrow(k_4,opposite:k_(-4)) ce("AB + *")
-$
-for the surface-catalyzed reaction #ce("A + B -> AB") where the third reaction is the rate-determining step, thereby making the other steps in quasi-equilibrium.
-For the sake of demonstration, assume that the rate law can be approximated by 
-$ r = k_3 K_2/K_1 p_"B "/p_"A ". $
-
-We can write the rate law in terms of standard-state Gibbs free energies using the Eyring equation for $k_3$ and the definition of the equilibrium constant for $K_1$ and $K_2$:
-$
-r &= [(k_"B " T)/h 1/C^std exp(-(Delta G_(3)^std^ddagger)/(R T))] [(C^std exp(-(Delta G_(2)^std)/ (R T)))/(C^std exp(-(Delta G_(1)^std)/ (R T)))] p_"B "/p_"A "\
-r &= (k_"B " T)/h p_"B "/p_"A " 1/C^std exp((-Delta G_(3)^std^ddagger - Delta G_(2)^std + Delta G_(1)^std)/(R T)) \
-r &= (k_"B " T)/h p_"B "/p_"A " 1/C^std exp((-[G_(3)^std^ddagger - G_ce("A^*")^std - G_ce("B^*")^std] - [G_ce("B^*")^std - G_ce("B")^std - G_ce("*")^std] + [G_ce("A^*")^std - G_ce("A")^std - G_ce("*")^std])/(R T)) \
-r &= (k_"B " T)/h p_"B "/p_"A " 1/C^std exp((-G_(3)^std^ddagger + 2 G_ce("A^*")^std + G_ce("B")^std - G_ce("A")^std)/(R T))\
-r &= (k_"B " T)/h p_"B "/p_"A " 1/C^std exp((-G_(3)^std^ddagger + 2 G_ce("A^*")^std)/(R T)),
-$
-where the reactants (A and B) are taken as the zero-energy reference and can therefore be removed.
-Now we can calculate the generalized degree of rate control using #ref(<eq:drc_general>) to arrive at
-$ "DRC"_"TS"_3 = 1 $
-$ "DRC"_ce("A^*") = -2 $
-and $ "DRC"_j = 0$ for all other species.
-The degree of rate control for the rate-determining state (i.e. the transition state associated with the rate-determining step) is 1, which is a general feature of rate-determining steps.
-
-From this analysis, we can gain insights into how to improve the reaction via catalyst design.
-In general, we wish to stabilize transition states with large, positive degrees of rate control since it is these species that have the most outsized impact on the rate.
-However, we need to do so without significantly stabilizing intermediates with large, negative degrees of rate control since this would counteract the improvements to the rate. 
-
-= Approaches and Tools for Reaction and Reactor Modeling
-
-#self[Todo... maybe also focus on literature readings on interesting articles? SAAs? Scaling relationships? Let the class vote for what they want!]
-
-We will provide a high-level overview of computational reaction engineering in this section. 
-While this course is not a computational reaction engineering course, it is still valuable to understand what methods are out there and how they can be used to advance the field of reaction engineering.
-This section also highlights how all of the topics in this course can come together in a synergistic way.
-
-// == Density Functional Theory
-
-// #footnote[If you are interested in learning more about DFT, check out the book _Density Functional Theory: A Practical Introduction_ by D. Sholl and J.A. Steckel.]
-
-// == Microkinetics <microkinetic-modeling>
-
-// #footnote[A.H. Motagamwala, J.A. Dumesic, Microkinetic Modeling: A Tool for Rational Catalyst Design, _Chemical Reviews_, 121, 1049--1076 (2021). https://doi.org/10.1021/acs.chemrev.0c00394.]
-
-// // background needed. why are we doing this?
-// // what do we seek to predict?
-// // comparison against experiments and value?
-
-// In general, microkinetic modeling involves the following steps:
-
-// 1. Constructing a set of elementary reactions
-// 2. Deriving rate expressions for each elementary step, including estimates, predictions, or experimental measurements of rate constants
-// 3. Constructing a system of ordinary differential equations (ODEs) to describe the rates of change of each species
-// 4. Defining initial values for species concentrations (i.e. at $t=0$), model parameters (e.g. $T$), and partial pressures of gas-phase species
-// 5. Solving the system of ODEs to product concentration profiles as a function of time
-// 6. Comparison against experiments and/or prior theories
-
-// === Rate Expressions
-
-// In #ref(<analytical-rate-expressions>) and #ref(<rate-expressions-for-heterogeneous-reactions>), we derived analytical rate expressions for homogeneous and heterogeneous reactions like for the relatively simple LHHW kinetic models in #ref(<langmuir-hinshelwood-hougen-watson-kinetics>).
-// While undoubtedly valuable, most complex reaction networks are not amenable to such algebraic approach.
-// In this section, we will take a more numerical approach known as microkinetic modeling, wherein we seek to solve for species concentrations as a function of time.
-// We will primarily focus on microkinetic modeling of reactions in heterogeneous catalysis, but the approach is fully extensible to gas-phase or liquid-phase reactions by neglecting all discussions about coverages.
-
-// We start by writing the generalized form of rate of an elementary reaction $i$, originally described in #ref(<eq:general_math_irreversible_rxn>) and now rephrased to be based on fractional coverages for surface species and partial pressures for gas-phase species:
-// $ r_i =  k_(i)^+ product_(j,nu_(i,j)<0) p_(j)^(|nu_(i,j)|) theta_(j)^(|nu_(i,j)|). $
-// Here, we are implicitly defining $r_i$ to be in units of 1/time (i.e. a TOF).
-// If $theta_j$ were surface species concentrations, then $r_i$ would have the typical units for the rate (e.g. M/s).
-
-// With the above expression for the net rate of a single elementary reaction $i$, we can write a system of non-linear ordinary differential equations representing the change in coverage of each adsorbed species $j$ as
-// $ (dif theta_j)/(dif t) = sum_i nu_(i,j) r_i, $<eq:theta_evolve>
-// which is simply a slight restatement of #ref(<eq:sum_stoichs_rate>).
-// #footnote[This results in a challenging but still tractable set of differential equations to solve. Recent work has shown that reformulating these equations in terms of the absolute number of sites, rather than coverages, can be computationally advantageous: S. Vijay, H.H. Heenen, A.R. Singh, K. Chan, J. Voss, _Journal of Computational Chemistry_, 45, 546--551 (2023).]
-// Combining these two expressions yields a system of ODEs given by
-// $ (diff theta_j)/(diff t) = sum_i (nu_(i,j) k_(i) product_j p_(j)^(|nu_(i,j)|) theta_(j)^(|nu_(i,j)|)). $
-// Here, $diff theta_j\/diff t$ should be constructed for each surface species as well as the vacant sites themselves (i.e. $diff theta_*\/diff t$), which is treated as a pseudo-species.
-// This may look mathematically complex, but it is really not terribly difficult.
-
-// Consider the toy reaction mechanism
-// $
-// ce("A + *") &eqArrow(k_1,opposite:k_(-1)) ce("A")^*\
-// ce("B + *") &eqArrow(k_2,opposite:k_(-2)) ce("B")^*\
-// ce("A")^* &eqArrow(k_3,opposite:k_(-3)) ce("B")^*.
-// $
-
-// The system of ODEs would be given by
-// $ 
-// (diff theta_"A ")/(diff t) &= k_(1) p_"A " theta_* - k_(-1) theta_"A " - k_3 theta_"A " + k_(-3) theta_"B "\
-// (diff theta_"B ")/(diff t) &= k_(2) p_"B " theta_* - k_(-2) theta_"B " + k_3 theta_"A " - k_(-3) theta_"B "\
-// (diff theta_"* ")/(diff t) &= - k_(1) p_"A " theta_* + k_(-1) theta_"A " - k_(2) p_"B " theta_* + k_(-2) theta_"B ".
-// $
-
-// There are also two additional physical constraints that we should ensure are satisfied, namely that each surface coverage $theta_j$ is between 0--1 and that the conservation of mass is conserved: $1 = theta_* + sum_j theta_j$.
-// #footnote[We have implicitly assumed that each adsorbate binds to one adsorption site, as is the case for a mondentate adsorption mode. Slight modifications are needed to account for multi-dentate adsorption.]
-// We would solve this system of ODEs with a given set of initial conditions (say, $theta_"A "=theta_"B "=0$ and $theta_*=1$), a given temperature (e.g. $T= 600$ K), and a given set of partial pressures (e.g. $p_"A " = 10$ bar, $p_"B "= 1$ bar).
-// The simulation would be carried out until steady-state is reached.
-
-// The rate constants for each reaction are generally obtained from experiments, estimates, and/or quantum-chemical calculations depending on the available data and the expected importance of that reaction step.
-// For clarity, we will reiterate the Eyring equation from #ref(<eq:eyring-final>) in defining the rate constant for the $i$-th reaction in a mechanism:
-// $ k_(i) = (k_"B "T )/h C^std^(1-m) exp(( Delta S_(i)^std^ddagger) / R) exp(-(Delta H_(i)^std^ddagger) / (R T)). $
-
-// While the Eyring equation can also be used to describe both the forward and reverse rate constants for a reversible reaction, we will instead take advantage of the fact that this can be determined from the equilibrium constant to ensure internal consistency.
-// The equilibrium constant for the $i$-th elementary reaction is defined based on the reaction free energies, obtained from tabulated experimental data and/or quantum-chemical calculations via
-// #footnote[It is critical to ensure that thermodynamic consistency is maintained, such that the individual reaction enthalpies and entropies appropriately sum up to those of the net reaction. For details on this matter, refer to A.B. Mhadeshwar, H. Wang, D.G. Vlachos, _Journal of Physics B_, 107, 12721--12733 (2003).]
-// $ K_("eq",i) = exp(-(Delta G_(i)^std)/(R T)). $
-// The equilibrium constant is then used to find the reverse rate constant via
-// $ k_(i)^(-) = k_(i)^(+)/K_("eq",i). $
-
-// === Demonstration
-
-// There are several codes available for microkinetic modeling.
-// Here, we will provide a brief, high-level demonstration of MKMCXX (https://www.mkmcxx.nl) to showcase how  
-// #self[https://wiki.mkmcxx.nl/index.php/My_first_simulation]
-
-// == Reactor Modeling <chemical-reactor-modeling>
-
-// In the previous subsection, we discussed microkinetic modeling and how it can be used to predict and understand concentration profiles as a function of time.
-// The natural extension to this type of model is to ask how one might model a chemical reactor, including the coupling of kinetics, thermodynamics, and transport processes as a function of time.
-// In this subsection, we will do just that using the open-source software package Cantera, which can be found at https://cantera.org.
-// #footnote[If you are interested in learning more about the fundamentals of how to simulate chemically reacting systems, check out the following comprehensive textbook: R.J. Kee, M.E. Coltrin, P. Glarborg, H. Zhu, _Chemically Reacting Flow: Theory, Modeling, and Simulation_.]
-
-// === Automated Reaction Network Generation
-
-// Naturally, to have an accurate model, one must start with a reaction network containing all potentially significant reactions for the system under investigation.
-// In addition the kinetic parameters used in the microkinetic model, one also needs thermochemical properties for each species so that the energy balance can be solved.
-// The NIST Chemistry WebBook (https://webbook.nist.gov/chemistry) is an excellent source of experimental thermochemistry data.
-
-// Naturally, the question arises --- how does one know what the potentially significant reactions might be?
-// While intuition and prior experiments are certainly a solid start, recent advances in computational chemistry have ushered in an age of automated reaction mechanism generation.
-// One particularly notable example is the Reaction Mechanism Generator (RMG) (https://rmg.mit.edu) by Bill Green and Richard West.
-// #footnote[C.W. Gao, J.W. Allen, W.H. Green, R.H. West, "Reaction Mechanism Generator: Automatic construction of chemical kinetic mechanisms", _Comput. Phys. Commun._, 203, 212--225 (2016).]
-// With RMG, a library of reaction rules are established that define common chemical transformations vi 
-
-// Some of the species generated by a reaction network generator like RMG may not have tabulated thermochemical properties, either because they are too reactive to be isolated or because they simply have not been investigated yet.
-// In this case, thermochemical properties can be estimated from Benson group addivity methods or computed from quantum-chemical methods like DFT.
-
-// Kinetics again estimated or computed from DFT.
-
-// === Simulating the Reactor
-
-= Concluding Thoughts <outlook>
-
-#footnote[P. Bollini et al., Vision 2050: Reaction Engineering Roadmap, _ACS Engineering Au_, 6, 364--390 (2023). https://doi.org/10.1021/acsengineeringau.3c00023.]
+Congratulations! You have come far and learned much. For future research directions in reaction engineering, we refer the reader to external references.#footnote[P. Bollini et al., Vision 2050: Reaction Engineering Roadmap, _ACS Engineering Au_, 6, 364--390 (2023). https://doi.org/10.1021/acsengineeringau.3c00023.]
