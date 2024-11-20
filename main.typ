@@ -3758,11 +3758,12 @@ $
 
 The conversion of A, yield of P, and selectivity towards the production of P are the following, assuming a constant volume reactor:
 $
-X_ce("A") &= (conc("A")_0 - conc("A")) / conc("A")_0 = 1 - conc("A") / conc("A")_0\
-Y_ce("P")&= (conc("P") - conc("P")_0) / conc("A")_0\
-S_"P " &= (conc("P") - conc("P")_0) / (conc("A")_0 - conc("A")) = (conc("P") - conc("P")_0) / (conc("P") + conc("Q")).
-$
+X_ce("A") &= (conc("A")_0 - conc("A")) / conc("A")_0 = 1 - conc("A") / conc("A")_0, quad quad
+Y_ce("P")&= (conc("P") - conc("P")_0) / conc("A")_0, quad quad
+S_"P " &= (conc("P") - conc("P")_0) / (conc("A")_0 - conc("A")).
+$ 
 where the subscript 0 refers to an initial state.
+#footnote[Depending on convention, one might also write the selectivity as $S_ce("P")= (conc("P") - conc("P")_0) \/ (conc("P") + conc("Q"))$ such that it is with respect to all products.]
 These definitions are only applicable when $V$ is constant.
 Otherwise, the expression must be written directly in terms of moles.
 
@@ -3781,7 +3782,7 @@ A plot of the species concentrations as a function of time will indicate that B 
 #figure(image("figures/abc_plot.svg",width:30%),caption: [Concentration profile for the #ce("A->B->C") reaction, highlighting the different $y$-intercept values.])<fig:abc_profile>
 
 In mathematical terms, we have
-$ (dif conc("A"))/(dif t) = - k_1 conc("A"), quad quad (dif conc("B"))/(dif t) = k_1 conc("A") - k_2 conc("B"), quad quad (dif ce("C"))/(dif t) = -k_2 conc("B"). $
+$ (dif conc("A"))/(dif t) = - k_1 conc("A"), quad quad (dif conc("B"))/(dif t) = k_1 conc("A") - k_2 conc("B"), quad quad (dif ce("C"))/(dif t) = k_2 conc("B"). $
 For $t->0$, we have $conc("A") ->conc("A")_0 $, $conc("B")->0$, and $conc("C") -> 0$, such that 
 $ ((dif conc("A"))/(dif t))_(t->0) = - k_1 conc("A")_0, quad quad ((dif conc("B"))/(dif t))_(t->0) = k_1 conc("A")_0, quad quad ((dif conc("C"))/(dif t))_(t->0) = 0. $
 
@@ -3795,7 +3796,7 @@ Again, in mathematical form we can write
 $  (dif conc("A"))/(dif t) = -k_1 conc("A") - k_2 conc("A"), quad quad (dif conc("B"))/(dif t) = k_1 conc("A"), quad quad (dif conc("C"))/(dif t) = k_2 conc("A"). $
 For $t->0$, we have
 $  ((dif conc("A"))/(dif t))_(t->0) = - (k_1 + k_2)conc("A")_0, quad ((dif conc("B"))/(dif t))_(t->0) = k_1 conc("A")_0, quad ((dif conc("C"))/(dif t))_(t->0) = k_2 conc("A")_0. $
-What we have conclude from this simple exercise is that the initial slope (i.e. the rate of change in species concentration extrapolated to $t = 0$) can provide information about the rank of the species.
+What we have concluded from this simple exercise is that the initial slope (i.e. the rate of change in species concentration extrapolated to $t = 0$) can provide information about the rank of the species.
 For this set of examples, we found that the product C was primary if it had a finite (i.e. not zero) initial slope.
 If one were to measure a zero initial slope for the rate of change of #conc("C"), it can be concluded immediately that #ce("C") did not come from #ce("A") since primary products have a finite initial slope.
 As we will show, this kind of analysis can be made more general.
@@ -3811,7 +3812,7 @@ Assuming the reaction starts with only A, then it can be shown that the integrat
 $ 
 conc("A") &= conc("A")_0 e^(-(k_1+k_2)t)\
 conc("B") &= (k_1 conc("A")_0)/(k_3-k_1-k_2) (e^(-(k_1+k_2)t)-e^(-k_3 t))\
-conc("C") &= (k_1 k_3 conc("A")_0)/(k_3 - k_1 - k_2) ((1-e^((-k_1+k_2)t))/(k_1+k_2) - (1-e^(-k_3 t)/k_3))\
+conc("C") &= (k_1 k_3 conc("A")_0)/(k_3 - k_1 - k_2) ((1-e^(-(k_1+k_2)t))/(k_1+k_2) - (1-e^(-k_3 t)/k_3))\
 conc("D") &= (k_2 conc("A")_0)/(k_1+k_2) (1-e^(-(k_1+k_2)t))
 $<eq:delplot_toy_rxn>
 in the case where $k_3 != k_1+k_2$.
@@ -3820,7 +3821,8 @@ The approach we will take here is as follows.
 For each product P, we will make a plot of $Y_ce("P")\/X_ce("A")$ (i.e. selectivity) vs. $X_ce("A")$ and extrapolate to $X_ce("A")->0$ (i.e. $t->0$ or $tau->0$ depending on the reactor type).
 We will show that this approach can distinguish whether the product is primary or not based on whether the $y$-axis intercept has a finite value or not.
 Written mathematically, we seek to carry out the following analysis
-$ lim_(X_ce("A")->0)(Y_ce("P") / X_ce("A")) = lim_(X_ce("A")->0)((conc("P") \/ conc("A")_0) / (1 - conc("A") \/ conc("A")_0)) = lim_(X_ce("A")->0)(conc("P") / (conc("A")_0 - conc("A"))). $<eq:delplot_first>
+$ lim_(X_ce("A")->0)(Y_ce("P") / X_ce("A")) = lim_(X_ce("A")->0)((conc("P") \/ conc("A")_0) / (1 - conc("A") \/ conc("A")_0)) = lim_(X_ce("A")->0)(conc("P") / (conc("A")_0 - conc("A"))), $<eq:delplot_first>
+where we have assumed that there is no starting product P.
 
 Of course, for our toy example we already know that B and D are primary products, whereas C is not primary.
 There would be no need to carry out any sort of analysis in this case.
