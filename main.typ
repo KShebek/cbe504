@@ -1,14 +1,11 @@
 // Notes for next time
-// 1. Add an entire lesson on equilibrium. To prepare for Problem1 Pset 3 from Justin and provide context. Emphasize reaction quotient vs equilibrium.
-// 2. Spend a little bit more time on BEPs. How to read handbook values. Relevance of temperature and pressure in handbook and how to adjust.
-// 3. Do reactor archetypes after the midterm
-// 4. Sprinkle in more examples in-class
-// 5. Make exams 9am-5pm
-// 6. Make exam corrections a required homework problem. No extra credit.
-// 7. Change course grading to be 30% problem sets, 35% midterm, 35% final
-// 10. Get rid of project
-// 11. Get rid of methane paper from slides
-// 12. Add lumped rate constants section to beginning
+// 1. Add more content on equilibrium. Emphasize reaction quotient vs equilibrium.
+// 2. Spend a little bit more time on BEPs and how to read handbook values. Highlight the relevance of temperature and pressure in handbooks and how to adjust.
+// 3. Do reactor archetypes after the midterm.
+// 4. Sprinkle in more examples in-class.
+// 5. Add a brief discussion on lumped rate constants.
+// 6. Shorten exam period.
+// 7. Make exam corrections a required homework.
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
