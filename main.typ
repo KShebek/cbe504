@@ -1,6 +1,6 @@
 // Notes for next time
 // 1. Add more content on equilibrium. Emphasize reaction quotient vs equilibrium.
-// 2. Spend a little bit more time on BEPs and how to read handbook values. Highlight the relevance of temperature and pressure in handbooks and how to adjust.
+// 2. Spend a little bit more time on BEPs and how to read handbook values. Highlight the relevance of temperature and standard state pressure in handbooks and how to adjust.
 // 3. Do reactor archetypes after the midterm.
 // 4. Sprinkle in more examples in-class.
 // 5. Add a brief discussion on lumped rate constants.
@@ -1788,7 +1788,8 @@ $
 r_"SR" = (k_2 z conc("A^*") conc("B^*"))/conc("*")_0  - (k_(-2) z conc("C^*") conc("D^*"))/conc("*")_0,
 $<eq:sr_dual>
 where $z$ is the coordination number of the adsorption site.
-#caution[We use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two indistinguishable species, we would need to retain the 1/2 factor.]
+Note that we use a multiplicative factor of $z\/conc("*")_0$ instead of $z\/2 conc("*")_0$ because #ce("A^*") and #ce("B^*") are distinguishable. If the surface reaction takes place between two indistinguishable species, we would need to retain the 1/2 factor.
+
 From here on out, we will lump the $z$ (or $z\/2$) factor, where applicable, into the rate constant for the sake of simplicity:
 $
 r_"SR" &= (k'_2 conc("A^*") conc("B^*"))/conc("*")_0  - (k'_(-2) conc("C^*") conc("D^*"))/conc("*")_0.
@@ -1995,9 +1996,7 @@ conc("O^*") &= (conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p
 $<eq:co_final>
 Finally, substituting #ref(<eq:co_final>) into #ref(<eq:co_rate>) results in the desired rate expression based on experimental observables:
 $ r_ce("CO2") = (k'_3 K_1 p_("CO") conc("*")_0 sqrt(K_2 p_ce("O2"))) / (1+K_1 p_("CO") + sqrt(K_2 p_ce("O2")))^2. $
-Once again, you may note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
-
-#caution[If we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.]
+Note that if we did not include the $z\/conc("*")_0$ correction in #ref(<eq:co_rate>), the resulting rate expression at the end of the derivation would have a $conc("*")_(0)^2$ term instead of $conc("*")_0$ in the numerator. In general, the presence of higher-order $conc("*")_0$ terms is a sign that lattice statistics have been neglected.
 // #footnote[For an alternate opinion about the $conc("*")_0$ term in catalytic rate expressions, refer to D. Kiani, I.E. Wachs, "The Conundrum of Pair Sites in Langmuir–Hinshelwood Reaction Kinetics in Heterogeneous Catalysis", _ACS Catal._, 14, 10260--10270 (2024).]
 
 ==== Limiting Cases
