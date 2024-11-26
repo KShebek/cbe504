@@ -11,12 +11,6 @@
 #import "@preview/whalogen:0.2.0": ce
 #import "@preview/ilm:1.3.1": ilm
 
-#let correction(title: "Correction", icon: emoji.face.inv, ..args) = clue(
-  accent-color: red,
-  title: title,
-  icon: icon,
-  ..args
-)
 #let caution(title: "Caution", icon: emoji.warning, ..args) = clue(
   accent-color: orange,
   title: title,
@@ -1522,9 +1516,6 @@ Here, $M_s$ and $K_("ads",s)$ are both fitting parameters determined from an exp
 Generally, it is impossible to enumerate all possible surface sites, and even if one could, the number of fitting parameters would be huge.
 Instead, this model is typically used when it is clear there are (for instance) two major yet distinct adsorption sites that adsorbates can bind to.
 
-// #self[
-//   Showcase #ce("O2")/#ce("N2") example in https://doi.org/10.1021/jacs.9b12401.
-// ]
 
 === Competitive Adsorption <competitive-adsorption>
 
