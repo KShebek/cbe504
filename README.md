@@ -1,1 +1,1 @@
-This repository contains the source and compiled PDF for my graduate-level course on chemical reaction engineering at Princeton University. The notes were compiled using [Typst](https://typst.app/) 0.12.0.
+This repository contains the source and compiled PDF for my lecture notes on chemical reaction engineering based on CBE 504 at Princeton University. The notes were compiled using [Typst](https://typst.app/) 0.12.0.
