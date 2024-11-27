@@ -53,7 +53,7 @@
   margin: 0.5em
 )
 #let ddagger = sym.dagger.double
-#let delplot(rank,species:"A") = $""^rank ce("P")_ce("A")$
+#let delplot(rank) = $""^rank ce("P")_ce("A")$
 
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
