@@ -2983,6 +2983,9 @@ $
 where $Theta_("rot")$ is the characteristic rotational temperature.
 In these equations, $sigma$ represents the rotational symmetry number and is determined by the number of spatial orientations of the subject molecule that are identical.
 For instance, $sigma$ is a value of 2 for linear molecules with a center of symmetry (e.g. a homonuclear diatomic molecule) and 1 for linear molecules without a center of symmetry (e.g. a heteronuclear diatomic molecule).
+The NIST Chemistry WebBook has a variety of physical properties, including rotational symmetry numbers of common molecules.
+The rotational properties (e.g. moments of inertia, rotational symmetry number) of common molecules can be found on the NIST Chemsitry WebBook as well NIST's Computational Chemistry Comparison and Benchmark DataBase, among other resources.
+
 
 The quantity $I$ is the moment of inertia, and for the nonlinear case they are the three principal moments.
 The moment of inertia is defined as
@@ -3006,6 +3009,7 @@ As such, we will factor out the $E_"ZPVE"$ term.
 The corresponding vibrational partition function is now
 $ z_"vib" = product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N 1/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $<eq:vib_part>
 where $Theta_(i,"vib")$ is known as the characteristic vibrational temperature.
+The vibrational frequencies of common molecules can be found on the NIST Chemsitry WebBook as well NIST's Computational Chemistry Comparison and Benchmark DataBase, among other resources.
 
 The number of vibrational modes for a molecule can be determined as follows:
 $
