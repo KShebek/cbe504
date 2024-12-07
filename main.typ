@@ -3372,13 +3372,13 @@ Recall that we started off our transition state theory derivation with
 $ r = (k_"B " T)/h conc("AB")^ddagger, $
 as originally shown in #ref(<eq:nu_dagger>).
 Instead of substituting in for $K_"c "^ddagger$ to get rid of the $conc("AB")^ddagger$ intermediate, we will instead take advantage of the definition of $K_ce("a")^ddagger$ given by #ref(<eq:k_a_k_c_relationship>):
-$ K_ce("a")^ddagger = (1/C^std)^(1-m) (gamma^ddagger conc("AB")^ddagger)/(gamma_ce("a") conc("A") gamma_"B " conc("B")). $
+$ K_ce("a")^ddagger = (1/C^std)^(1-m) (gamma^ddagger conc("AB")^ddagger)/(gamma_ce("A") conc("A") gamma_"B " conc("B")). $
 Solving for $conc("AB")^ddagger$ yields
-$ conc("AB")^ddagger = (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("a") gamma_"B ")/gamma^ddagger conc("A") conc("B"). $
+$ conc("AB")^ddagger = (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("A") gamma_"B ")/gamma^ddagger conc("A") conc("B"). $
 Plugging this into our rate expression now yields
 $
-r &= (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("a") gamma_"B ")/gamma^ddagger conc("A") conc("B")\
-r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("a") Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger conc("A") conc("B").
+r &= (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("A") gamma_"B ")/gamma^ddagger conc("A") conc("B")\
+r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("a") Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger conc("A") conc("B").
 $<eq:tst_activities>
 
 Here, the definition of $K_ce("a")^ddagger$ was substituted in from #ref(<eq:k_a_partition_functions>).
@@ -3386,11 +3386,11 @@ Note that the partition functions (i.e. $Z$) are their unitless values, not norm
 #ref(<eq:tst_activities>) is the non-ideal analogy to #ref(<eq:tst_final>).
 
 From the above expression, we can write $r= k_"nonideal" conc("A") conc("B"),$ where
-$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("a") gamma_"B ")/gamma^ddagger  $<eq:k_nonideal>
+$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("A") gamma_"B ")/gamma^ddagger  $<eq:k_nonideal>
 or, equivalently, in terms of the partition functions,
 $ 
 k_"nonideal" equiv A_("nonideal") exp(-(Delta E_0^ddagger)/(R T))\
-A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("A") Z_ce("B"))  (gamma_ce("a") gamma_"B ")/gamma^ddagger .
+A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("A") Z_ce("B"))  (gamma_ce("A") gamma_"B ")/gamma^ddagger .
 $<eq:tst_nonideal>
 
 Comparing the non-ideal rate constant in #ref(<eq:tst_nonideal>) with the idealized case in #ref(<eq:tst_a>),
@@ -3440,19 +3440,19 @@ $ Delta G^std^ddagger &= - R T ln(K_("a ")^ddagger), $
 such that
 $ K_ce("a")^ddagger = exp(-(Delta G^std^ddagger)/ (R T)). $
 Plugging $K_ce("a")^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_nonideal>) (which we will simply refer to as $k$ here) yields
-$ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger. $<eq:k_dg>
-In the thermodynamically ideal case (i.e. $gamma_ce("a")=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
+$ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger. $<eq:k_dg>
+In the thermodynamically ideal case (i.e. $gamma_ce("A")=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
 #footnote[There is sometimes a linear correlation between $Delta H^std^ddagger$ and $Delta S^std^ddagger$ but not necessarily for the reasons one might anticipate. Refer to G.C. McBane, "Chemistry from Telephone Numbers: The False Isokinetic Relationship", _J. Chem. Educ._, 75, 919--922 (1998).]
 By convention, $C^std$ is typically taken as $P\/R T$ at 1 bar for gases or as 1 M for liquids. 
 
 Naturally, when taking advantage of the thermodynamic relationship
 $ Delta G^std = Delta H^std - T Delta S^std $
 we can rewrite the above expression as
-$ k = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger. $ <eq:eyring-final>
+$ k = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger. $ <eq:eyring-final>
 or in Arrhenius form as
 $
 k equiv A exp(- (Delta H^std^ddagger) / (R T)),quad
-A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_ce("a") gamma_"B ")/gamma^ddagger.
+A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_ce("A") gamma_"B ")/gamma^ddagger.
 $
 With this, we can write our usual rate equation of the form $r = k conc("A") conc("B")$ in terms of enthalpies and entropies of activation.
 
@@ -3531,12 +3531,12 @@ which will lead to a new concept known as the reaction affinity.
 We will start by finding an expression for the rate constants, after which we will revisit the concentration terms.
 
 From the (non-idealized) Eyring equation, we know that
-$ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_ce("a")^std - G_"B "^std)/ (R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger\
+$ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_ce("a")^std - G_"B "^std)/ (R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger\
 k_(i)^- &= (k_"B " T)/h exp(-(G^std^ddagger - G_"P "^std)/ (R T)) (gamma_"P ")/gamma^ddagger. $
 
 Therefore,
-$ k_(i)^- / (k_(i)^+) &= C^std exp((G_"P "^std - G_ce("a")^std - G_"B "^std) / (R T)) gamma_"P "/(gamma_ce("a") gamma_"B ")\
-k_(i)^- / (k_(i)^+) &= C^std exp((Delta G_i^std) / (R T)) gamma_"P "/(gamma_ce("a") gamma_"B ").
+$ k_(i)^- / (k_(i)^+) &= C^std exp((G_"P "^std - G_ce("a")^std - G_"B "^std) / (R T)) gamma_"P "/(gamma_ce("A") gamma_"B ")\
+k_(i)^- / (k_(i)^+) &= C^std exp((Delta G_i^std) / (R T)) gamma_"P "/(gamma_ce("A") gamma_"B ").
 $<eq:de_donder_deriv1>
 
 That takes care of part of our expression for the reversibility given by #ref(<eq:z_relationship>).
@@ -3558,8 +3558,8 @@ Note that at equilibrium (and at standard state conditions), $Q_ce("a") = K_ce("
 
 We can convert between activities and concentrations to arrive at the following expression for our toy reaction:
 $
-Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_ce("a") conc("A")/C^std gamma_"B " conc("B")/C^std) )\
-conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_ce("a") gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T)).
+Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_ce("A") conc("A")/C^std gamma_"B " conc("B")/C^std) )\
+conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_ce("A") gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T)).
 $<eq:de_donder_deriv2>
 
 Now we can plug both #ref(<eq:de_donder_deriv1>) and #ref(<eq:de_donder_deriv2>) into #ref(<eq:z_relationship>), which thankfully simplifies very cleanly to
