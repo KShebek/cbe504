@@ -53,7 +53,7 @@
   margin: 0.5em
 )
 #let ddagger = sym.dagger.double
-#let delplot(rank,species:"A") = $""^rank ce("P")_ce("A")$
+#let delplot(rank) = $""^rank ce("P")_ce("A")$
 
 #show: ilm.with(
   title: [Chemical Reaction Engineering],
@@ -258,7 +258,7 @@ $ alpha ce("A") + beta ce("B") -> gamma ce("C")\
 gamma ce("C") -> delta ce("D"), $
 we can define the individual rates of change for each species as
 $
-r_ce("a") &= r_(1,"A ")\
+r_ce("A") &= r_(1,"A ")\
 r_"B " &= r_(1,"B ")\
 r_"C " &= r_(1,"C ") + r_(2,"C ")\
 r_"D " &= r_(2,"D ").
@@ -291,7 +291,7 @@ Unlike the rate of change for a species, the rate of reaction is always a positi
 With this formalism, we can rewrite the net rate of change for a given species across multiple reactions (originally presented in #ref(<eq:sum_of_rxn_species>)) in terms of the individual reaction rates.
 For our example set of reactions, we would have
 $
-r_ce("a") &= -alpha r_1\
+r_ce("A") &= -alpha r_1\
 r_"B " &= -beta r_1\
 r_"C " &= gamma r_1 - gamma r_2\
 r_"D " &= delta r_2.
@@ -721,7 +721,7 @@ $ n ce("A") fwdArrow(k) m ce("B") $
 where $n$ is an arbitrary stoichiometric number.
 The rate of change in $conc("A")$ can be given by
 $ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $<eq:nth_order>
-#caution[Most sources write #ref(<eq:nth_order>) as $r_ce("a") = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_ce("a")$ must be $-n k conc("A")^n$ in order for $r = -r_ce("a")\/n$.]
+#caution[Most sources write #ref(<eq:nth_order>) as $r_ce("A") = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_ce("A")$ must be $-n k conc("A")^n$ in order for $r = -r_ce("A")\/n$.]
 
 Separating the variables and integrating this expression yields
 $ integral_(conc("A")_0)^conc("A") 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
@@ -756,7 +756,7 @@ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C").
 $
 As usual, we will write out the rates of change for each species:
 $
-r_ce("a") &= (dif conc("A")) / (dif t) = -k_1 conc("A")\
+r_ce("A") &= (dif conc("A")) / (dif t) = -k_1 conc("A")\
 r_"B " &= (dif conc("B")) / (dif t) = k_1 conc("A") - k_2 conc("B")\
 r_"C " &= (dif conc("C")) / (dif t) = k_2 conc("B").
 $
@@ -884,6 +884,8 @@ The second-rank delplot for the aforementioned reaction scheme is shown in #ref(
 
 === Generalized Delplot Approach
 
+// Table doesn't seem super accurate (see p4p2.m in teaching/cbe504/probem_sets/old_F2016_homeworks)
+
 The delplot process is summarized in #ref(<table:delplot>).
 We will use the following notation when describing delplots:
 #delplot(1).
@@ -900,11 +902,11 @@ Note that in practice, plots of $S_ce("P")\/X_ce("A")^(m-1)$ (where $S_ce("P")$ 
       [$"Species rank"=1$],
       [$"Species rank">1$]
     ),
-    [$1$], [#delplot(1) = finite], [$delplot(m) = "finite"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$\ $delplot(m) = "diverges"$ if $"species rank"<m$],
-    [$>1$], [#delplot(1) = finite], [$delplot(m) = 0$ if $"species rank" >= m$\ $delplot(m)="finite"$ for $"species rank" < m$ ],
-    [$<1$], [#delplot(1) = finite], [$delplot(m) = "diverges"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$],
+    [$n=1$], [#delplot(1) = finite], [$delplot(m) = "finite"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$\ $delplot(m) = "diverges"$ if $"species rank"<m$],
+    [$n>1$], [#delplot(1) = finite], [$delplot(m) = 0$ if $"species rank" >= m$],
+    [$n<1$], [#delplot(1) = finite], [$delplot(m) = "diverges"$ if $"species rank"=m$\ $delplot(m) = 0$ if $"species rank">m$],
   ),
-  caption:[Summary of delplot intercepts for a product P formed from the conversion of A. $m$ is the rank of the delplot, and the reaction order refers to the reaction producing product P and assumes the other steps have a reaction order of one.]
+  caption:[Summary of delplot intercepts for a product P based on the conversion of A. $m$ is the rank of the delplot, and the reaction order refers to the reaction producing product P. For $n>1$ and $n<1$, this analysis is only strictly valid if the last step is the only one with $n!=1$.]
 )  <table:delplot>
 
 To demonstrate how #ref(<table:delplot>) can be used for higher-order reactions, second-rank and third-rank delplots are shown in #ref(<fig:second_delplot_order>) and #ref(<fig:third_delplot_order>), respectively, for the reaction scheme
@@ -913,10 +915,13 @@ ce("A->2B->C")\
 ce("A->D").
 $
 Since B and D are primary products from a first-order reaction, a second-rank delplot diverges for these species since the species rank (one) is less than the rank of the delplot (two), as is evident from the first row and third column of #ref(<table:delplot>).
-Since C is a secondary product from a reaction order greater than one, a second-rank delplot has a zero $y$-intercept since the species rank (two) is equal to the rank of the delplot (two), as is evident from the third row and third column of #ref(<table:delplot>).
+Since C is a secondary product from a reaction order greater than one, a second-rank delplot has a zero $y$-intercept since the species rank (two) is equal to the rank of the delplot (two), as is evident from the second row and third column of #ref(<table:delplot>).
+If the reaction producing C were first order, then the intercept would instead be finite.
 
-As for the third-rank delplot, we again refer to #ref(<table:delplot>) and find that B and D again diverge since their rank (two) is less than the rank of the deplot (three).
-However, C now has a finite intercept since the species rank (two) is less than the rank of the delplot (three), which can be justified based on the third row and third column of #ref(<table:delplot>) 
+As for the third-rank delplot, we again refer to #ref(<table:delplot>) and find that B and D diverge since their rank (two) is less than the rank of the deplot (three).
+If the reaction producing C were first order, we would expect the intercept to diverge for this species too.
+However, this is not what we observe.
+Since the reaction producing C is greater than first order, C happens to have a finite intercept instead.
 #figure(image("figures/second_delplot_order.svg",width:33%),caption:[Second-rank delplot for the reaction scheme #ce("A->2B->C"), #ce("A->D"). Note that the zero $y$-intercept values points to a secondary product for C since the reaction order >1, whereas a diverging $y$-intercept value points to a lower rank product for B and D since the reaction order is 1.])<fig:second_delplot_order>
 
 #figure(image("figures/third_delplot_order.svg",width:33%),caption:[Third-rank delplot for the reaction scheme #ce("A->2B->C"), #ce("A->D"). Note that the finite $y$-intercept values points to a lower rank product for C since the reaction order is >1, whereas a diverging $y$-intercept value points to a lower rank product for B and D since the reaction order is 1.])<fig:third_delplot_order>
@@ -1020,11 +1025,11 @@ Also note that #conc("B") is not a constant, and --- while certainly small --- i
 
 
 If we take the time derivatives of each expression, we can observe some other interesting behavior:
-$ r_ce("a") = (dif conc("A"))/(dif t) = - conc("A")_0 k_1 e^(-k_1 t) $
+$ r_ce("A") = (dif conc("A"))/(dif t) = - conc("A")_0 k_1 e^(-k_1 t) $
 $ r_"B " = (dif conc("B"))/(dif t) = - conc("A")_0 (k_1^2) / (k_2) e^(-k_1 t) (approx 0) $
 $ r_"C " = (dif conc("C"))/(dif t) = conc("A")_0 k_1 e^(-k_1 t). $
 
-We can see from the above expressions that $r_ce("a") = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
+We can see from the above expressions that $r_ce("A") = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
 Of course, this is merely an _approximation_, but it is a quite useful one.
 
 #plot[#align(center)[https://marimo.app/l/bxr9r8]]
@@ -2621,7 +2626,7 @@ However, we cannot proceed with the integration yet since $k(T)$ and $T(t)$ for 
 We now move onto the simplified energy balance for an ideal gas at constant volume from #ref(<eq:batch_energy_balance_ideal>) to state
 $ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) r V, $
 where we note that $sum_j nu_j = 1$ for the given reaction and $dot(Q)=0$ for an adiabatic process.
-We know that $ r = - r_ce("a") = k conc("A"), $
+We know that $ r = - r_ce("A") = k conc("A"), $
 such that
 $ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) k conc("A") V. $
 This leaves us with a system of differential equations that must be solved simultaneously:
@@ -2983,6 +2988,9 @@ $
 where $Theta_("rot")$ is the characteristic rotational temperature.
 In these equations, $sigma$ represents the rotational symmetry number and is determined by the number of spatial orientations of the subject molecule that are identical.
 For instance, $sigma$ is a value of 2 for linear molecules with a center of symmetry (e.g. a homonuclear diatomic molecule) and 1 for linear molecules without a center of symmetry (e.g. a heteronuclear diatomic molecule).
+The NIST Chemistry WebBook has a variety of physical properties, including rotational symmetry numbers of common molecules.
+The rotational properties (e.g. moments of inertia, rotational symmetry number) of common molecules can be found on the NIST Chemsitry WebBook as well NIST's Computational Chemistry Comparison and Benchmark DataBase, among other resources.
+
 
 The quantity $I$ is the moment of inertia, and for the nonlinear case they are the three principal moments.
 The moment of inertia is defined as
@@ -3006,6 +3014,7 @@ As such, we will factor out the $E_"ZPVE"$ term.
 The corresponding vibrational partition function is now
 $ z_"vib" = product_(i=1)^N 1/(1 - exp(- (h nu_i)/(k_"B " T))) = product_(i=1)^N 1/(1 - exp(- (Theta_(i,"vib"))/T)), quad Theta_(i,"vib") equiv (h nu_i)/k_"B " $<eq:vib_part>
 where $Theta_(i,"vib")$ is known as the characteristic vibrational temperature.
+The vibrational frequencies of common molecules can be found on the NIST Chemsitry WebBook as well NIST's Computational Chemistry Comparison and Benchmark DataBase, among other resources.
 
 The number of vibrational modes for a molecule can be determined as follows:
 $
@@ -3368,13 +3377,13 @@ Recall that we started off our transition state theory derivation with
 $ r = (k_"B " T)/h conc("AB")^ddagger, $
 as originally shown in #ref(<eq:nu_dagger>).
 Instead of substituting in for $K_"c "^ddagger$ to get rid of the $conc("AB")^ddagger$ intermediate, we will instead take advantage of the definition of $K_ce("a")^ddagger$ given by #ref(<eq:k_a_k_c_relationship>):
-$ K_ce("a")^ddagger = (1/C^std)^(1-m) (gamma^ddagger conc("AB")^ddagger)/(gamma_ce("a") conc("A") gamma_"B " conc("B")). $
+$ K_ce("a")^ddagger = (1/C^std)^(1-m) (gamma^ddagger conc("AB")^ddagger)/(gamma_ce("A") conc("A") gamma_"B " conc("B")). $
 Solving for $conc("AB")^ddagger$ yields
-$ conc("AB")^ddagger = (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("a") gamma_"B ")/gamma^ddagger conc("A") conc("B"). $
+$ conc("AB")^ddagger = (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("A") gamma_"B ")/gamma^ddagger conc("A") conc("B"). $
 Plugging this into our rate expression now yields
 $
-r &= (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("a") gamma_"B ")/gamma^ddagger conc("A") conc("B")\
-r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("a") Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger conc("A") conc("B").
+r &= (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("A") gamma_"B ")/gamma^ddagger conc("A") conc("B")\
+r &= (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("a") Z_"B ") exp(- (Delta E_0^ddagger)/(R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger conc("A") conc("B").
 $<eq:tst_activities>
 
 Here, the definition of $K_ce("a")^ddagger$ was substituted in from #ref(<eq:k_a_partition_functions>).
@@ -3382,11 +3391,11 @@ Note that the partition functions (i.e. $Z$) are their unitless values, not norm
 #ref(<eq:tst_activities>) is the non-ideal analogy to #ref(<eq:tst_final>).
 
 From the above expression, we can write $r= k_"nonideal" conc("A") conc("B"),$ where
-$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("a") gamma_"B ")/gamma^ddagger  $<eq:k_nonideal>
+$ k_"nonideal" = (k_"B " T)/h (C^std)^(1-m) K_ce("a")^ddagger (gamma_ce("A") gamma_"B ")/gamma^ddagger  $<eq:k_nonideal>
 or, equivalently, in terms of the partition functions,
 $ 
 k_"nonideal" equiv A_("nonideal") exp(-(Delta E_0^ddagger)/(R T))\
-A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("A") Z_ce("B"))  (gamma_ce("a") gamma_"B ")/gamma^ddagger .
+A_("nonideal") equiv  (k_"B " T)/h (C^std)^(1-m) Z^ddagger/(Z_ce("A") Z_ce("B"))  (gamma_ce("A") gamma_"B ")/gamma^ddagger .
 $<eq:tst_nonideal>
 
 Comparing the non-ideal rate constant in #ref(<eq:tst_nonideal>) with the idealized case in #ref(<eq:tst_a>),
@@ -3436,19 +3445,19 @@ $ Delta G^std^ddagger &= - R T ln(K_("a ")^ddagger), $
 such that
 $ K_ce("a")^ddagger = exp(-(Delta G^std^ddagger)/ (R T)). $
 Plugging $K_ce("a")^ddagger$ into our expression for $k_"nonideal"$ in #ref(<eq:k_nonideal>) (which we will simply refer to as $k$ here) yields
-$ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger. $<eq:k_dg>
-In the thermodynamically ideal case (i.e. $gamma_ce("a")=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
+$ k = (k_"B " T)/h (C^std)^(1-m) exp(-(Delta G^std^ddagger)/ (R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger. $<eq:k_dg>
+In the thermodynamically ideal case (i.e. $gamma_ce("A")=gamma_"B "=gamma^ddagger = 1$), this expression is known as the Eyring equation.
 #footnote[There is sometimes a linear correlation between $Delta H^std^ddagger$ and $Delta S^std^ddagger$ but not necessarily for the reasons one might anticipate. Refer to G.C. McBane, "Chemistry from Telephone Numbers: The False Isokinetic Relationship", _J. Chem. Educ._, 75, 919--922 (1998).]
 By convention, $C^std$ is typically taken as $P\/R T$ at 1 bar for gases or as 1 M for liquids. 
 
 Naturally, when taking advantage of the thermodynamic relationship
 $ Delta G^std = Delta H^std - T Delta S^std $
 we can rewrite the above expression as
-$ k = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger. $ <eq:eyring-final>
+$ k = (k_"B "T )/h C^std^(1-m) exp(( Delta S^std^ddagger) / R) exp(-(Delta H^std^ddagger) / (R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger. $ <eq:eyring-final>
 or in Arrhenius form as
 $
 k equiv A exp(- (Delta H^std^ddagger) / (R T)),quad
-A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_ce("a") gamma_"B ")/gamma^ddagger.
+A equiv (k_"B " T)/h C^std^(1-m) exp((Delta S^std^ddagger)/R) (gamma_ce("A") gamma_"B ")/gamma^ddagger.
 $
 With this, we can write our usual rate equation of the form $r = k conc("A") conc("B")$ in terms of enthalpies and entropies of activation.
 
@@ -3527,12 +3536,12 @@ which will lead to a new concept known as the reaction affinity.
 We will start by finding an expression for the rate constants, after which we will revisit the concentration terms.
 
 From the (non-idealized) Eyring equation, we know that
-$ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_ce("a")^std - G_"B "^std)/ (R T)) (gamma_ce("a") gamma_"B ")/gamma^ddagger\
+$ k_(i)^+ &= (k_"B " T)/h (C^std)^(-1) exp(-(G^std^ddagger - G_ce("a")^std - G_"B "^std)/ (R T)) (gamma_ce("A") gamma_"B ")/gamma^ddagger\
 k_(i)^- &= (k_"B " T)/h exp(-(G^std^ddagger - G_"P "^std)/ (R T)) (gamma_"P ")/gamma^ddagger. $
 
 Therefore,
-$ k_(i)^- / (k_(i)^+) &= C^std exp((G_"P "^std - G_ce("a")^std - G_"B "^std) / (R T)) gamma_"P "/(gamma_ce("a") gamma_"B ")\
-k_(i)^- / (k_(i)^+) &= C^std exp((Delta G_i^std) / (R T)) gamma_"P "/(gamma_ce("a") gamma_"B ").
+$ k_(i)^- / (k_(i)^+) &= C^std exp((G_"P "^std - G_ce("a")^std - G_"B "^std) / (R T)) gamma_"P "/(gamma_ce("A") gamma_"B ")\
+k_(i)^- / (k_(i)^+) &= C^std exp((Delta G_i^std) / (R T)) gamma_"P "/(gamma_ce("A") gamma_"B ").
 $<eq:de_donder_deriv1>
 
 That takes care of part of our expression for the reversibility given by #ref(<eq:z_relationship>).
@@ -3554,8 +3563,8 @@ Note that at equilibrium (and at standard state conditions), $Q_ce("a") = K_ce("
 
 We can convert between activities and concentrations to arrive at the following expression for our toy reaction:
 $
-Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_ce("a") conc("A")/C^std gamma_"B " conc("B")/C^std) )\
-conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_ce("a") gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T)).
+Delta G_i = Delta G_i^std + R T ln((gamma_"P " conc("P")/C^std)/(gamma_ce("A") conc("A")/C^std gamma_"B " conc("B")/C^std) )\
+conc("P")/(conc("A") conc("B")) = 1/C^std (gamma_ce("A") gamma_"B ")/gamma_"P " exp((Delta G_i-Delta G_i^std)/(R T)).
 $<eq:de_donder_deriv2>
 
 Now we can plug both #ref(<eq:de_donder_deriv1>) and #ref(<eq:de_donder_deriv2>) into #ref(<eq:z_relationship>), which thankfully simplifies very cleanly to
