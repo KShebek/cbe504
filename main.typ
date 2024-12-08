@@ -258,7 +258,7 @@ $ alpha ce("A") + beta ce("B") -> gamma ce("C")\
 gamma ce("C") -> delta ce("D"), $
 we can define the individual rates of change for each species as
 $
-r_ce("a") &= r_(1,"A ")\
+r_ce("A") &= r_(1,"A ")\
 r_"B " &= r_(1,"B ")\
 r_"C " &= r_(1,"C ") + r_(2,"C ")\
 r_"D " &= r_(2,"D ").
@@ -291,7 +291,7 @@ Unlike the rate of change for a species, the rate of reaction is always a positi
 With this formalism, we can rewrite the net rate of change for a given species across multiple reactions (originally presented in #ref(<eq:sum_of_rxn_species>)) in terms of the individual reaction rates.
 For our example set of reactions, we would have
 $
-r_ce("a") &= -alpha r_1\
+r_ce("A") &= -alpha r_1\
 r_"B " &= -beta r_1\
 r_"C " &= gamma r_1 - gamma r_2\
 r_"D " &= delta r_2.
@@ -721,7 +721,7 @@ $ n ce("A") fwdArrow(k) m ce("B") $
 where $n$ is an arbitrary stoichiometric number.
 The rate of change in $conc("A")$ can be given by
 $ r_ce("A ") = (dif conc("A")) / (dif t) = -n k conc("A")^n. $<eq:nth_order>
-#caution[Most sources write #ref(<eq:nth_order>) as $r_ce("a") = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_ce("a")$ must be $-n k conc("A")^n$ in order for $r = -r_ce("a")\/n$.]
+#caution[Most sources write #ref(<eq:nth_order>) as $r_ce("A") = -k conc("A")^n$ and continue the derivation as such. However, if we are specifically considering an elementary reaction where we have the convention that $r=r_j\/nu_j$, then including the stoichiometric coefficient as a multiplicative factor is important for internal consistency. To convince yourself of this, you already know that the rate law is $r = k conc("A")^n$ for this elementary reaction. Therefore, $r_ce("A")$ must be $-n k conc("A")^n$ in order for $r = -r_ce("A")\/n$.]
 
 Separating the variables and integrating this expression yields
 $ integral_(conc("A")_0)^conc("A") 1 / conc("A")'^n dif conc("A")' = -n k integral_0^t dif t' $
@@ -756,7 +756,7 @@ ce("A") fwdArrow(k_1) ce("B") fwdArrow(k_2) ce("C").
 $
 As usual, we will write out the rates of change for each species:
 $
-r_ce("a") &= (dif conc("A")) / (dif t) = -k_1 conc("A")\
+r_ce("A") &= (dif conc("A")) / (dif t) = -k_1 conc("A")\
 r_"B " &= (dif conc("B")) / (dif t) = k_1 conc("A") - k_2 conc("B")\
 r_"C " &= (dif conc("C")) / (dif t) = k_2 conc("B").
 $
@@ -1020,11 +1020,11 @@ Also note that #conc("B") is not a constant, and --- while certainly small --- i
 
 
 If we take the time derivatives of each expression, we can observe some other interesting behavior:
-$ r_ce("a") = (dif conc("A"))/(dif t) = - conc("A")_0 k_1 e^(-k_1 t) $
+$ r_ce("A") = (dif conc("A"))/(dif t) = - conc("A")_0 k_1 e^(-k_1 t) $
 $ r_"B " = (dif conc("B"))/(dif t) = - conc("A")_0 (k_1^2) / (k_2) e^(-k_1 t) (approx 0) $
 $ r_"C " = (dif conc("C"))/(dif t) = conc("A")_0 k_1 e^(-k_1 t). $
 
-We can see from the above expressions that $r_ce("a") = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
+We can see from the above expressions that $r_ce("A") = - r_"C "$, which is another feature of PSSH when dealing with series reactions and is to be expected since $r_"B "$ is negligible in comparison (i.e. A can be thought of as almost instantaneously being transformed into C given the short lifetime of B).
 Of course, this is merely an _approximation_, but it is a quite useful one.
 
 #plot[#align(center)[https://marimo.app/l/bxr9r8]]
@@ -2621,7 +2621,7 @@ However, we cannot proceed with the integration yet since $k(T)$ and $T(t)$ for 
 We now move onto the simplified energy balance for an ideal gas at constant volume from #ref(<eq:batch_energy_balance_ideal>) to state
 $ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) r V, $
 where we note that $sum_j nu_j = 1$ for the given reaction and $dot(Q)=0$ for an adiabatic process.
-We know that $ r = - r_ce("a") = k conc("A"), $
+We know that $ r = - r_ce("A") = k conc("A"), $
 such that
 $ m hat(C)_"V " (dif T)/(dif t)  &= (-Delta H_("rxn") + R T) k conc("A") V. $
 This leaves us with a system of differential equations that must be solved simultaneously:
