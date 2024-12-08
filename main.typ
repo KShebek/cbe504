@@ -884,8 +884,6 @@ The second-rank delplot for the aforementioned reaction scheme is shown in #ref(
 
 === Generalized Delplot Approach
 
-// Table doesn't seem super accurate (see p4p2.m in teaching/cbe504/probem_sets/old_F2016_homeworks)
-
 The delplot process is summarized in #ref(<table:delplot>).
 We will use the following notation when describing delplots:
 #delplot(1).
