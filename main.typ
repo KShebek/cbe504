@@ -313,7 +313,7 @@ where $bold(r)_"species"$ and $bold(r)$ are the _net_ production rates of each s
 Thus far, we have defined the rate of a reaction as being some property that is defined by the rates of change of each species, normalized in an internally consistent manner that is not dependent on the choice of species.
 However, we can provide a slightly more proper definition if we introduce a new term: the extent of reaction.
 The extent of a reaction, $xi$, is a measure of the reaction progress (typically in units of moles) based on the number of chemical transformations,
-#footnote[For a reaction #ce("2A -> B + C") with an initial value of $n_ce("A")= 2 "mol"$ and final value of $n_ce("A") = 0.5 "mol"$, we would have $xi = -(0.5 "mol" - 2 "mol")\/2 = 0.75 "mol"$. This value of $xi$ could then be used to find the relative change in #ce("B") and #ce("C") based on their stoichiometric coefficients.]
+#footnote[For a reaction #ce("2A -> B + C") with an initial value of $N_ce("A")= 2 "mol"$ and final value of $N_ce("A") = 0.5 "mol"$, we would have $xi = -(0.5 "mol" - 2 "mol")\/2 = 0.75 "mol"$. This value of $xi$ could then be used to find the relative change in #ce("B") and #ce("C") based on their stoichiometric coefficients.]
 typically defined as
 $ dif xi equiv (dif n_j)/nu_j. $
 With this, we can define the rate of the $i$-th reaction as
@@ -1742,8 +1742,8 @@ The Temkin isotherm was proposed as a way to indirectly deal with adsorbate--ads
 // In modifying $x$, the volume of adsorbed gas $v$ is measured, from which both $v_"m "$ and $c$ can be obtained as fitting parameters for the particular temperature and adsorbate--adsorbent system.
 
 // With the value for $v_"m "$ obtained from experiments, the specific surface area of the material (typically reported in $"m "^2\/"g "$), $S_"BET"$, can be computed as
-// $ S_"BET" = (v_"m " N_ce("a") alpha)/V  dot 1/m_"adsorbent" , $
-// where $N_ce("a")$ is Avogadro's number, $alpha$ is the adsorption cross section of the adsorbate (i.e. the area that a single adsorbate would cover when adsorbed), $V$ is the molar volume of gas at the same conditions as $v_"m "$ was obtained, and $m_"adsorbent"$ is the mass of the adsorbent.
+// $ S_"BET" = (v_"m " N_ce("A") alpha)/V  dot 1/m_"adsorbent" , $
+// where $N_ce("A")$ is Avogadro's number, $alpha$ is the adsorption cross section of the adsorbate (i.e. the area that a single adsorbate would cover when adsorbed), $V$ is the molar volume of gas at the same conditions as $v_"m "$ was obtained, and $m_"adsorbent"$ is the mass of the adsorbent.
 // Typically, $alpha$ and $V$ are tabulated quantities, and $m_"adsorbent"$ is readily measurable.
 
 == Surface Reaction Rate Laws <heterogeneous-catalysis-reaction-mechanisms>
@@ -2861,15 +2861,15 @@ Namely, the attractive region is completely ignored.
 
 
 Assuming that #ce("A") and #ce("B") follow a Maxwell--Boltzmann distribution of speeds at a given temperature $T$, the frequency of collisions that occur at a given temperature can be shown to be#footnote[For additional details refer to "Chapter 2: The Mechanisms of Chemical Reactions in Homogeneous Phases" in J.B. Butt, _Reaction Kinetics and Reactor Design_ (2#super[nd] ed.).]
-$ macron(Z) = n_ce("A") n_ce("B") sigma_ce("AB")^2 ((8 pi k_"B " T)/(mu_ce("AB")))^(1/2), $<eq:z_collision>
-where $n_ce("A")$ and $n_ce("B")$ are the number density of A and B (i.e. units of $"particle/m "^(3)$), and $mu_ce("AB")$ is the so-called reduced mass of the #ce("AB") system given as
+$ macron(Z) = N_ce("A") n_ce("B") sigma_ce("AB")^2 ((8 pi k_"B " T)/(mu_ce("AB")))^(1/2), $<eq:z_collision>
+where $N_ce("A")$ and $n_ce("B")$ are the number density of A and B (i.e. units of $"particle/m "^(3)$), and $mu_ce("AB")$ is the so-called reduced mass of the #ce("AB") system given as
 $ mu_ce("AB") equiv (m_ce("A") m_ce("B"))/(m_ce("A") + m_ce("B")), $
 where $m_ce("A")$ and $m_ce("B")$ represent the mass of species A and B, respectively.
 
 The typical units of $macron(Z)$ are $"collisions"\/"cm"^(3)"-s"$ (i.e. the number of collisions to occur in a given volume over a given time period).
 When scaled up from number of collisions to a mole of collisions via Avogadro's constant, $macron(Z)$ can be naively thought of as a rate of reaction, as is clear from dimensional analysis alone.
 In doing so, one might say that
-$ macron(Z) = r = k n_ce("A") n_ce("B") $
+$ macron(Z) = r = k N_ce("A") n_ce("B") $
 for an elementary, bimolecular reaction of A and B.
 By inspection of #ref(<eq:z_collision>), this would imply that
 $ k = sigma_ce("AB")^2 ((8 pi k_"B " T)/(mu_ce("AB")))^(1/2). $
@@ -2936,10 +2936,10 @@ We will adopt this convention for the partition functions going forward.
 
 Before proceeding, recall that we have been dealing with concentrations and $K_"C "^ddagger$.
 As such, we will instead use
-$ K_"C "^ddagger = 1/(N_ce("a")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger)/(R T)), $<eq:k_c_partition_functions>
+$ K_"C "^ddagger = 1/(N_ce("A")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger)/(R T)), $<eq:k_c_partition_functions>
 where $Z'_j$ is the molecular partition function per unit volume for the $j$-th species.
 The need for $Z'_j$ being in units of $"volume"^(-1)$ is so that we arrive at the appropriate units for $K_"C "^ddagger$.
-The factor of $1\/N_ce("a")^(1-m)$, where $m$ is the molecularity (i.e. $m = 2$ for this example),
+The factor of $1\/N_ce("A")^(1-m)$, where $m$ is the molecularity (i.e. $m = 2$ for this example),
 #footnote[We could have equally used $delta^ddagger$ in place of $1-m$, where where $delta^dagger$ is the change in stoichiometric numbers between the transition state and reactants. Since we are only focusing on a single transition state-producing event, we use for $1-m$ simplicity.]
 is included simply as a means of ensuring that $K_"C "^ddagger$ is in molar units since the partition functions are defined on a per-molecule basis.
 
@@ -3058,14 +3058,14 @@ For instance, the ground-state magnetic configuration of #ce("O2") has two unpai
 === The Idealized Case
 
 With the partition function business out of the way, let's revisit our expression for the concentration-based rate constant:
-$ K_"C "^ddagger = 1/(N_ce("a")^(1-m)) (Z'^ddagger) / (Z'_"A" Z'_ce("B")) exp(-(Delta E_0^ddagger )/ (R T)). $
+$ K_"C "^ddagger = 1/(N_ce("A")^(1-m)) (Z'^ddagger) / (Z'_"A" Z'_ce("B")) exp(-(Delta E_0^ddagger )/ (R T)). $
 We now know how to compute the partition functions, which is a relief.
 The main ingredients we need to either compute or measure are the geometries and vibrational modes of the system (and the spin multiplicity or excited states, if relevant).
 
 Revisiting our rate expression from #ref(<eq:tst_rate_kc>), we have
 $
 r &= nu^ddagger K_"C "^ddagger conc("A") conc("B")\
-r &= nu^ddagger 1/(N_ce("a")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
+r &= nu^ddagger 1/(N_ce("A")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
 $<eq:rate_tst_intermediate>
 
 We are still left to figure out what do we do about $nu^ddagger$.
@@ -3083,7 +3083,7 @@ As for which mode to remove, it is the one and only imaginary mode associated wi
 By plugging our result into #ref(<eq:rate_tst_intermediate>), we arrive at
 $
 r &= (k_"B " T)/h K_"C "^ddagger conc("A") conc("B")\
-r &= (k_"B "T)/h 1/(N_ce("a")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
+r &= (k_"B "T)/h 1/(N_ce("A")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")) exp(- (Delta E_0^ddagger) / (R T)) conc("A") conc("B").
 $<eq:tst_final>
 
 From the above expression, we can write $r= k conc("A") conc("B")$ where
@@ -3093,7 +3093,7 @@ $
 or, equivalently, in terms of the partition functions,
 #footnote[Note that $Delta E_0^ddagger$ is not the same as $E_ce("a")$, although it is analogous. The $Delta E_0^ddagger$ term is at 0 K, whereas $E_ce("a")$ includes thermal corrections.]
 $
-k equiv A exp(-(Delta E_0^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_ce("a")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")).
+k equiv A exp(-(Delta E_0^ddagger)/(R T))\, quad A equiv (k_"B " T)/h 1/(N_ce("A")^(1-m)) (Z'^ddagger) / (Z'_ce("A") Z'_ce("B")).
 $<eq:tst_a>
 Thinking back to the modified Arrhenius expressions with temperature-dependence terms on the prefactor as in #ref(<eq:arrhenius_mod>), we can see the $T^n$ dependence of the prefactor has $n=0$ for the empirical Arrhenius expression and $n=1$ from transition state theory.
 In practice, however, the temperature effects of this $T$ factor are often negligible when comparing $k$ values at different temperatures, as the exponential term is the main dominating factor.
@@ -3108,7 +3108,7 @@ We wish to find the rate constant at 300 K by invoking transition state theory.
 Well, now what?
 
 We start by invoking our transition state theory definition of $k$:
-$ k = (k_"B " T)/h 1/(N_ce("a")^(1-m)) Z'^ddagger/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E_0^ddagger)/(R T)). $
+$ k = (k_"B " T)/h 1/(N_ce("A")^(1-m)) Z'^ddagger/(Z'_ce("F^∙") Z'_ce("H2")) exp(-(Delta E_0^ddagger)/(R T)). $
 We know that the molecularity of this reaction is two, so $m=2$ here.
 We also know the temperature of interest, which is $T$ = 300 K.
 
@@ -3224,7 +3224,7 @@ To summarize, the (non-tabulated) information needed is:
 
 Now we will put all the pieces together:
 
-$ k_"TST" = (k_"B " T)/h N_ce("a") (4.162 times 10^(-28) "L ") (53.851) (1.378) (1) exp(-(Delta E_0^ddagger)/(R T)). $
+$ k_"TST" = (k_"B " T)/h N_ce("A") (4.162 times 10^(-28) "L ") (53.851) (1.378) (1) exp(-(Delta E_0^ddagger)/(R T)). $
 This simplifies to
 $ k_"TST" = (1.163 times 10^11 "L/mol-s") exp(-(Delta E_0^ddagger)/(R T)). $
 We have the pre-exponential factor.
@@ -3296,11 +3296,12 @@ The transition state for this process is, by definition, partway between the gas
 In other words, the transition state is a semi-mobile species on or near the surface.
 
 Starting from the transition state theory definition of the rate constant (#ref(<eq:tst_a>)), we have
-$ k = (k_"B " T)/h 1/(N_ce("a")^(1-m)) (Z'^ddagger) / (Z') exp(-(Delta E_0^ddagger)/(R T)), $
+$ k = (k_"B " T)/h 1/(N_ce("A")^(1-m)) (Z'^ddagger) / (Z') exp(-(Delta E_0^ddagger)/(R T)), $
 where $Z'$ represents the volume-normalized partition function for the molecule before adsorption, and $Z'^ddagger$ is the volume-normalized partition function for the transition state associated with the adsorption process.
+Here, we have tacitly assumed that the partition functions for the surface remain unchanged before and after the adsorption process, such that we are only focusing on the adsorbate molecule itself.
 Here, we can make some simplifying assumptions by noting that $Delta E_0^ddagger=0$ for non-activated adsorption processes,
 #footnote[Admittedly, it is perhaps of questionable logic to invoke transition state theory when there is, formally, no activation barrier for such a process. It is perhaps better to think about this as $E_ce("a")->0$.]
-and we can remove the $1\/N_ce("a")^(1-m)$ term because $m=1$ for this process.
+and we can remove the $1\/N_ce("A")^(1-m)$ term because $m=1$ for this process.
 Furthermore, if we assume the gas-phase molecule only loses one translational degree of freedom at the transition state, we can write
 $ k_"ads" = (k_"B " T)/h  (z_"trans"^(ddagger (2))/V z_"rot"^(ddagger (m)) z_"vib"^(ddagger (N-1)) z_"el"^(ddagger))/(z_"trans"^((3))/V z_"rot"^((m)) z_"vib"^((N)) z_"el"), $<eq:adsorbed_k>
 where the numerator refers to the transition state partition functions, and the denominator refers to the partition functions of the gas-phase species before adsorption.
@@ -3398,7 +3399,7 @@ $<eq:tst_nonideal>
 
 Comparing the non-ideal rate constant in #ref(<eq:tst_nonideal>) with the idealized case in #ref(<eq:tst_a>),
 we see that the difference in the rate when accounting for thermodynamic non-idealities can be traced back to the ratio of activity coefficients via the following relationship:
-#footnote[Note that $1\/ N_ce("a")^(1-m) product_(j,nu_j<0) Z'_(j)^(|nu_j|)$ in the definition of $A_"ideal"$ is equivalent to $(C^std)^(1-m) product_(j,nu_j<0) Z_j^(|nu_j|)$ in the definition of $A_"nonideal"$ since $Z'_j equiv Z_j\/V$.]
+#footnote[Note that $1\/ N_ce("A")^(1-m) product_(j,nu_j<0) Z'_(j)^(|nu_j|)$ in the definition of $A_"ideal"$ is equivalent to $(C^std)^(1-m) product_(j,nu_j<0) Z_j^(|nu_j|)$ in the definition of $A_"nonideal"$ since $Z'_j equiv Z_j\/V$.]
 
 $ k_"nonideal" = k_"ideal" (gamma_ce("A") gamma_ce("B"))/(gamma^ddagger). $<eq:k_relationship>
 
