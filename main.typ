@@ -1441,13 +1441,13 @@ $ ce("A + *") eqArrow(k_"ads",opposite:k_"des") ce("A^*"). $<eq:molecular_ads>
 For example, this could be #ce("CO + * <=> CO^*").
 The equation for the rate of adsorption and desorption can be written as
 $
-r_"ads" &= k_"ads" p_ce("a") conc("*")\
+r_"ads" &= k_"ads" p_ce("A") conc("*")\
 r_"des" &= k_"des" conc("A^*").
 $<eq:rate_ads_des>
 From here, we are going to investigate equilibrium adsorption behavior to better understand this phenomena.
 In other words, we will consider the situation where the rates of the adsorption and desorption processes are equal (i.e. $r_"ads" = r_"des"$), such that
 $
-K_"ads" equiv k_"ads" / k_"des" &= conc("A^*") / (p_ce("a") conc("*")).
+K_"ads" equiv k_"ads" / k_"des" &= conc("A^*") / (p_ce("A") conc("*")).
 $<eq:molecular_ads_eq_constant>
 We can see that the above expression is the same as the thermodynamic definition of the equilibrium constant we described in #ref(<equilibrium-constants>).
 
@@ -1462,11 +1462,11 @@ In the case of #ref(<eq:molecular_ads>), the site balance becomes
 $ conc("*")_0 = conc("*") + conc("A^*"). $<eq:molecular_ads_site_balance>
 Solving for #conc("*") in #ref(<eq:molecular_ads_eq_constant>) and substituting into #ref(<eq:molecular_ads_site_balance>) yields
 $
-conc("*")_0 &= conc("A^*") / (K_"ads" p_ce("a")) + conc("A^*")\
-conc("*")_0 &= conc("A^*") (1/(K_"ads" p_ce("a")) + 1).
+conc("*")_0 &= conc("A^*") / (K_"ads" p_ce("A")) + conc("A^*")\
+conc("*")_0 &= conc("A^*") (1/(K_"ads" p_ce("A")) + 1).
 $
 Typically, a parameter $theta_j$ is defined that describes the fractional surface coverage of species $j$, such that
-$ theta_ce("a") equiv conc("A^*") / conc("*")_0 = 1 / (1 / (K_"ads" p_ce("A")) + 1) = (K_"ads" p_ce("a")) / (1 + K_"ads" p_ce("a")). $<eq:langmuir>
+$ theta_ce("A") equiv conc("A^*") / conc("*")_0 = 1 / (1 / (K_"ads" p_ce("A")) + 1) = (K_"ads" p_ce("A")) / (1 + K_"ads" p_ce("A")). $<eq:langmuir>
 
 
 #caution[
@@ -1491,18 +1491,18 @@ It also assumes that there are no adsorbate--adsorbate interactions, which in re
 All of these are fairly substantial approximations that can break down in real catalytic systems.
 Nonetheless, the Langmuir adsorption isotherm remains a useful qualitative tool for understanding the kinetics of adsorption.
 
-It is useful to think about how $theta_ce("a")$ might change with temperature and how it is related to thermodynamics.
+It is useful to think about how $theta_ce("A")$ might change with temperature and how it is related to thermodynamics.
 For this analysis, we note that $K_"ads"$ is a function of temperature and that we can write
-$ theta_ce("a") = (exp(- (Delta H^std - T Delta S^std) / (R T)) p_ce("a")) / (1 + exp(- (Delta H^std - T Delta S^std) / (R T)) p_ce("a")). $
-From this expression, it can be readily shown that increasing $T$ will decrease $theta_ce("a")$.
+$ theta_ce("A") = (exp(- (Delta H^std - T Delta S^std) / (R T)) p_ce("A")) / (1 + exp(- (Delta H^std - T Delta S^std) / (R T)) p_ce("A")). $
+From this expression, it can be readily shown that increasing $T$ will decrease $theta_ce("A")$.
 This is easily explained in physical terms by the fact that the adsorbate has more kinetic energy and, therefore, is more likely to be liberated from the surface.
-It can also be shown that decreasing $Delta H^std$ (i.e. making it more negative since adsorption is generally exothermic) will increase $theta_ce("a")$.
+It can also be shown that decreasing $Delta H^std$ (i.e. making it more negative since adsorption is generally exothermic) will increase $theta_ce("A")$.
 Again, this can be easily explained by the fact that a more exothermic adsorption energy implies a stronger bond to the surface, making the species less likely to desorb.
 
 #plot[#align(center)[https://marimo.app/l/e0dix3.]]
 
 Before continuing, it should be noted that we can rewrite our rates of adsorption and desorption in terms of fractional coverage as follows:
-$ r_"ads" &= k_"ads" p_ce("a") conc("*") = k_"ads" p_ce("a") conc("*")_0 theta_ce("*") = k_"ads" p_ce("a") conc("*")_0 (1-theta_ce("A")) \
+$ r_"ads" &= k_"ads" p_ce("A") conc("*") = k_"ads" p_ce("A") conc("*")_0 theta_ce("*") = k_"ads" p_ce("A") conc("*")_0 (1-theta_ce("A")) \
 r_"des" &= k_"des" conc("A^*") = k_"des" conc("*")_0 theta_ce("A"),
 $
 where we took advantage of the fact that $sum_j theta_j =1$, where $j$ includes both the adsorbate species and the vacant sites.
@@ -1513,7 +1513,7 @@ We can only use #ref(<eq:langmuir>) for the definition of $theta_ce("A")$, howev
 It is natural to think about how one might modify the Langmuir equation for a scenario where there are two or more energetically distinct adsorption sites on the catalyst surface.
 The procedure is no different than before if we make a leap of faith and assume that the adsorption at each binding site is independent from one another, such that we can treat the adsorption as a sum of individual Langmuir models.
 In other words, we can write
-$ theta_ce("a") = sum_s M_s (K_("ads",s) p_("A ")) / (1 + K_("ads",s) p_("A ")), $
+$ theta_ce("A") = sum_s M_s (K_("ads",s) p_("A ")) / (1 + K_("ads",s) p_("A ")), $
 where $K_("ads",s)$ is now an "equilibrium constant" for the adsorption of species A at site $s$, and $M_s$ is the maximum capacity of site $s$.
 Here, $M_s$ and $K_("ads",s)$ are both fitting parameters determined from an experimentally measured adsorption isotherm. 
 Generally, it is impossible to enumerate all possible surface sites, and even if one could, the number of fitting parameters would be huge.
@@ -1538,7 +1538,7 @@ The site balance can be rewritten as
 $ conc("*")_0 = conc("*") + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance>
 Once again, we seek to get rid of #conc("*"). To do so, we start by solving for #conc("*") in #ref(<eq:competitive_ads_Ka>) and plugging this into #ref(<eq:competitive_ads_site_balance>):
 $ conc("*")_0 = conc("A^*") / (K_"ads,A" p_("A ")) + conc("A^*") + conc("B^*"). $<eq:competitive_ads_site_balance2>
-Since we will ultimately want an expression for $theta_ce("a")$ that is independent of #conc("B^*"), we will solve for #conc("B^*") in #ref(<eq:competitive_ads_Kb>) and plug this into #ref(<eq:competitive_ads_site_balance2>):
+Since we will ultimately want an expression for $theta_ce("A")$ that is independent of #conc("B^*"), we will solve for #conc("B^*") in #ref(<eq:competitive_ads_Kb>) and plug this into #ref(<eq:competitive_ads_site_balance2>):
 $ conc("*")_0 = conc("A^*") / (K_"ads,A" p_("A ")) + conc("A^*") + K_"ads,B" p_("B ") conc("*"). $
 It looks like we have #conc("*") in our expression again, so we substitute in #conc("*") from #ref(<eq:competitive_ads_Ka>) to get
 $
@@ -1553,7 +1553,7 @@ conc("A^*") (1/(K_"ads,A" p_("A "))
 $
 Therefore,
 $
-theta_ce("a") equiv conc("A^*")/conc("*")_0 =
+theta_ce("A") equiv conc("A^*")/conc("*")_0 =
 1 /
 (
   1 / (K_"ads,A" p_("A "))
@@ -1568,11 +1568,11 @@ By analogy for species B, the following result can be found:
 $ theta_"B " = (K_"ads,B" p_("B ")) / (1 + K_"ads,A" p_("A ") + K_"ads,B" p_("B ")). $
 
 As you might be able to already tell, we can generalize the adsorption isotherm for arbitrary numbers of adsorbates as
-$ theta_ce("a") = (K_("ads,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $<eq:general_multi_langmuir>
+$ theta_ce("A") = (K_("ads,A ") p_("A "))/(1+sum_j K_("ads",j) p_j). $<eq:general_multi_langmuir>
 
 Finally, we can revisit our rates of adsorption and desorption to write them in terms of fractional coverages:
 $
-r_("ads",ce("A")) &= k_("ads",ce("A")) p_ce("a") conc("*") = k_("ads",ce("A")) p_ce("a") conc("*")_0 theta_* = k_("ads",ce("A")) p_ce("a") conc("*")_0 (1-theta_ce("A") - theta_ce("B"))  \
+r_("ads",ce("A")) &= k_("ads",ce("A")) p_ce("A") conc("*") = k_("ads",ce("A")) p_ce("A") conc("*")_0 theta_* = k_("ads",ce("A")) p_ce("A") conc("*")_0 (1-theta_ce("A") - theta_ce("B"))  \
 r_("des",ce("A")) &= k_("des",ce("A")) conc("A^*") = k_("des",ce("A")) conc("*")_0 theta_ce("A").
 $
 If the adsorption and desorption processes are equilibrated, then we can use #ref(<eq:general_multi_langmuir>) to substitute in for $theta_ce("A")$ and $theta_ce("B")$.
@@ -1637,10 +1637,10 @@ $
 
 Therefore,
 $
-theta_ce("a") &= 1 / (1 / sqrt(K_"ads" p_ce("A2")) + 1)
+theta_ce("A") &= 1 / (1 / sqrt(K_"ads" p_ce("A2")) + 1)
 $
 $
-theta_ce("a") &= sqrt(K_"ads" p_("A ")) / (1 + sqrt(K_"ads" p_("A "))).
+theta_ce("A") &= sqrt(K_"ads" p_("A ")) / (1 + sqrt(K_"ads" p_("A "))).
 $<eq:competitive_theta>
 We can see that when $sqrt(K_"ads" p_ce("A")) <<1$ (i.e. in the limit of low partial pressures of #ce("A2")), $theta_ce("A")->sqrt(K_"ads" p_ce("A"))$, which is significantly different than the linear behavior observed for the non-dissociative Langmuir adsorption isotherm.
 
@@ -1658,12 +1658,12 @@ If the adsorption and desorption processes are equilibrated, we can use #ref(<eq
 
 The simplest adsorption model is given by Henry's isotherm.
 Henry's isotherm states, in analogy with Henry's law, that
-$ theta_ce("a") = K_"H " p_ce("a") $
+$ theta_ce("A") = K_"H " p_ce("A") $
 where $K_"H "$ is Henry's adsorption constant and is generally a fitting parameter.
 Henry's isotherm states that there is a direct, linear relationship between coverage and partial pressure.
 This is clearly false for many adsorption processes but is valid when the partial pressure of the adsorbate is low, such that there are negligible interactions between adsorbed molecules and the adsorption sites are plentiful.
-We can see that Henry's isotherm is related to the Langmuir isotherm in the limit of small $p_ce("a")$:
-$ theta_ce("a") = (K_"ads" p_ce("a")) / (1 + K_"ads" p_ce("a")) -> K_"ads" p_ce("a") quad (K_"ads" p_ce("a")<<1). $
+We can see that Henry's isotherm is related to the Langmuir isotherm in the limit of small $p_ce("A")$:
+$ theta_ce("A") = (K_"ads" p_ce("A")) / (1 + K_"ads" p_ce("A")) -> K_"ads" p_ce("A") quad (K_"ads" p_ce("A")<<1). $
 That said, it is also true that Henry's isotherm can be applicable at more appreciable partial pressures, provided the adsorption of the molecule is very weak.
 This is by no means an improvement on the Langmuir model but can make sense to use if the adsorption isotherm is in the linear regime.
 
@@ -1675,18 +1675,18 @@ Perhaps the most notable is the assumption that the adsorption enthalpy of each 
 There are many models that attempt to directly or indirectly capture this behavior, some of which are outlined below:
 #footnote[For some cautionary comments about the Temkin isotherm, refer to K. Chu, "Revisiting the Temkin Isotherm: Dimensional Inconsistency and Approximate Forms", _Ind. Eng. Chem. Res._, 60, 13140--13147 (2021).]
 $
-theta_ce("a") &= alpha p_ce("a")^(1\/beta) quad ("Freundlich isotherm")
+theta_ce("A") &= alpha p_ce("A")^(1\/beta) quad ("Freundlich isotherm")
 $
 $
-theta_ce("a") &= (K_"ads" p_ce("a")) / (1 + (K_"ads" p_ce("a"))^beta)^(1\/beta) quad ("Tóth isotherm")
+theta_ce("A") &= (K_"ads" p_ce("A")) / (1 + (K_"ads" p_ce("A"))^beta)^(1\/beta) quad ("Tóth isotherm")
 $
 $
-theta_ce("a") &= (R T)/alpha ln(beta p_ce("a")) quad ("Temkin isotherm").
+theta_ce("A") &= (R T)/alpha ln(beta p_ce("A")) quad ("Temkin isotherm").
 $
 There are many other functional forms that have been proposed and that can potentially be dreamed up.
 In all three cases presented here, there is additional flexibility compared to the (single-site) Langmuir adsorption isotherm, as there are two fitting parameters instead of one if the practitioner is attempting to fit an experimentally measured adsorption isotherm.
 Naturally, each of these models have their own limitations.
-Most notably, many alternate models have the unphysical scenario where $theta_ce("a")$ can become greater than one for large $p_ce("a")$.
+Most notably, many alternate models have the unphysical scenario where $theta_ce("A")$ can become greater than one for large $p_ce("A")$.
 Nonetheless, these models can capture adsorption on surface complexities better than the single-site Langmuir equation because of their additional flexibility, at the expense of reduced interpretability.
 Both the Freundlich and Tóth isotherms were proposed as ways to deal with surface heterogeneity.
 The Temkin isotherm was proposed as a way to indirectly deal with adsorbate--adsorbate interactions.
@@ -1840,18 +1840,18 @@ $ r_"P " = k_2 conc("A^*"). $<eq:lhhw_sample_rate>
 
 We ultimately want to write our rate without transient intermediates.
 If we assume that the adsorption of A is quasi-equilibrated, then we have
-$ K_"ads"  = conc("A^*") /(p_ce("a") conc("*")) $
-$ conc("A^*") = K_"ads" p_ce("a") conc("*"). $<eq:conc_a_star_lhhw>
+$ K_"ads"  = conc("A^*") /(p_ce("A") conc("*")) $
+$ conc("A^*") = K_"ads" p_ce("A") conc("*"). $<eq:conc_a_star_lhhw>
 The quasi-equilibrium approximation is fairly reasonable to invoke here because the surface reaction is expected to be substantially slower than the adsorption or desorption steps.
 
 Additionally, we have the site balance of 
 $ conc("*")_0 = conc("*") + conc("A^*"), $
 which if we solve for #conc("*") and plug the resulting expression into #ref(<eq:conc_a_star_lhhw>) yields
-$ conc("A^*") = K_"ads" p_ce("a") (conc("*")_0-conc("A^*")) $
-$ conc("A^*") +  K_"ads" p_ce("a") conc("A^*") = K_"ads" p_ce("a") conc("*")_0 $
-$ conc("A^*") =  (K_"ads" p_ce("a") conc("*")_0)/(1+K_"ads" p_ce("a")). $
+$ conc("A^*") = K_"ads" p_ce("A") (conc("*")_0-conc("A^*")) $
+$ conc("A^*") +  K_"ads" p_ce("A") conc("A^*") = K_"ads" p_ce("A") conc("*")_0 $
+$ conc("A^*") =  (K_"ads" p_ce("A") conc("*")_0)/(1+K_"ads" p_ce("A")). $
 Plugging this into our original rate expression from #ref(<eq:lhhw_sample_rate>) results in
-$ r_"P " = (k_2 K_"ads" p_ce("a") conc("*")_0)/(1+K_"ads" p_ce("a")). $<eq:co_quasi>
+$ r_"P " = (k_2 K_"ads" p_ce("A") conc("*")_0)/(1+K_"ads" p_ce("A")). $<eq:co_quasi>
 Note that if we chose to write the above expression in terms of a turnover frequency, there would be no $conc("*")_0$ term remaining, which is a common feature of LHHW rate expressions.
 
 #plot[#align(center+horizon)[https://marimo.app/l/25oabe]]
@@ -1880,13 +1880,13 @@ This is expected to be the case for the quasi-equilibrium approach since $k_"des
 ===== Strong Adsorption <strong-adsorption>
 
 Here, we will explore some limiting cases for $r_ce("P")$ using the quasi-equilibrium form from #ref(<eq:co_quasi>):
-$ r_"P " = (k_2 K_"ads" p_ce("a") conc("*")_0)/(1+K_"ads" p_ce("a")). $
+$ r_"P " = (k_2 K_"ads" p_ce("A") conc("*")_0)/(1+K_"ads" p_ce("A")). $
 If A adsorbs strongly to the surface (and/or we are in the high pressure limit of $p_ce("A")$), then we arrive at
-$ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_ce("a")>>1). $
+$ r_"P " approx k_2 conc("*")_0 quad (K_"ads" p_ce("A")>>1). $
 In this scenario, the apparent reaction order of A is 0 because virtually all the sites are covered in A, such that slight variations in A do not have an appreciable influence on the overall rate.
-We know the apparent reaction order is 0 in A from the fact that there is no $p_ce("a")$ term in the simplified rate law.
+We know the apparent reaction order is 0 in A from the fact that there is no $p_ce("A")$ term in the simplified rate law.
 We can also see this from the formal definition given in #ref(<eq:apparent_order>):
-$ alpha_("A,app") = p_ce("a") ((diff ln(r))/(diff p_ce("a")))_(p_i,i!=j) = p_ce("a") (diff ln(k_2 conc("*")_0))/(diff p_ce("a")) = 0. $
+$ alpha_("A,app") = p_ce("A") ((diff ln(r))/(diff p_ce("A")))_(p_i,i!=j) = p_ce("A") (diff ln(k_2 conc("*")_0))/(diff p_ce("A")) = 0. $
 
 In this scenario, the apparent rate constant would simply be
 #footnote[Since $conc("*")_0$ is typically constant, you could in principle lump this term into $k_"app"$. However, since we typically treat $k$ as being independent of concentrations, it is left out here.]
@@ -1899,7 +1899,7 @@ $ E_"app" = R T^2 (diff ln(A_2 e^(- E_("a,2")/(R T))))/(diff T) = R T^2 (diff (A
 ===== Weak Adsorption
 
 In the opposite extreme, if A adsorbs very weakly to the surface (and/or we are in the low $p_ce("A")$ limit), then we arrive at
-$ r_"P " approx k_2 K_"ads" p_ce("a") conc("*")_0 quad (K_"ads" p_ce("a")<<1). $
+$ r_"P " approx k_2 K_"ads" p_ce("A") conc("*")_0 quad (K_"ads" p_ce("A")<<1). $
 Here, the apparent reaction order of A is 1.
 Additionally, the apparent rate constant would now be
 $ k_"app" = k_2 K_"ads". $
@@ -2986,9 +2986,10 @@ $
 where $Theta_("rot")$ is the characteristic rotational temperature.
 In these equations, $sigma$ represents the rotational symmetry number and is determined by the number of spatial orientations of the subject molecule that are identical.
 For instance, $sigma$ is a value of 2 for linear molecules with a center of symmetry (e.g. a homonuclear diatomic molecule) and 1 for linear molecules without a center of symmetry (e.g. a heteronuclear diatomic molecule).
+#footnote[
 The NIST Chemistry WebBook has a variety of physical properties, including rotational symmetry numbers of common molecules.
 The rotational properties (e.g. moments of inertia, rotational symmetry number) of common molecules can be found on the NIST Chemsitry WebBook as well NIST's Computational Chemistry Comparison and Benchmark DataBase, among other resources.
-
+]
 
 The quantity $I$ is the moment of inertia, and for the nonlinear case they are the three principal moments.
 The moment of inertia is defined as
