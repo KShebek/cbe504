@@ -6,6 +6,7 @@
 // 5. Add a brief discussion on lumped rate constants.
 // 6. Shorten exam period.
 // 7. Make exam corrections a required homework.
+// 8. No writeup for the project. Decrease weighting to 5%.
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
