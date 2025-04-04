@@ -4,9 +4,6 @@
 // 3. Do reactor archetypes after the midterm.
 // 4. Sprinkle in more examples in-class.
 // 5. Add a brief discussion on lumped rate constants.
-// 6. Shorten exam period.
-// 7. Make exam corrections a required homework.
-// 8. No writeup for the project. Decrease weighting to 5%.
 #import "@preview/xarrow:0.3.1": xarrow
 #import "@preview/gentle-clues:1.0.0": tip, clue
 #import "@preview/whalogen:0.2.0": ce
@@ -57,7 +54,7 @@
 #let delplot(rank) = $""^rank ce("P")_ce("A")$
 
 #show: ilm.with(
-  title: [Chemical Reaction Engineering],
+  title: [Chemical Kinetics and Reaction Engineering],
   author: "Andrew S. Rosen",
   abstract: [Lectures notes for a graduate-level course.\ Compiled on #datetime.today().display().],
   paper-size: "us-letter",
@@ -2104,7 +2101,7 @@ ce("H2") + ce("2 *") &eqArrow(k_1,opposite:k_(-1)) ce("2 H^*")\
 ce("2 H^*") + ce("C2H2") &fwdArrow(k_"H ") ce("C2H4") + ce("2 *")
 $
 with the net reaction #ce("C2H2 + H2 -> C2H4").
-#footnote[The second step is an example of a termolecular reaction that is actually quite likely to occur. Since the adsorbates are anchored onto the surface, it is quite natural for #ce("C2H2") to be hydrogenated in this way if it is well-aligned with the two hydrogen adsorbates.]
+#footnote[The second step is an example of a termolecular reaction that is actually quite likely to occur. Since the adsorbates are anchored onto the surface, it is natural for #ce("C2H2") to be hydrogenated in this way if it is well-aligned with the two hydrogen adsorbates.]
 We will assume that the hydrogenation reaction is rate-limiting, such that the #ce("H2") adsorption is quasi-equilibrated.
 
 Here, we have a reaction between an adsorbed species and gas-phase species (i.e. an Eley--Rideal mechanism), which is very slightly different than the typical LHHW kinetics since the reaction is not taking place solely on the surface.
